@@ -1,4 +1,4 @@
-/*body{
+body{
 	font-family: lato, verdana;
 		background-color: #ffffff;
 }
@@ -11,7 +11,7 @@
 
 	
 }
-/*--------------------------------------------------------------------------------------------------*//*
+/*--------------------------------------------------------------------------------------------------*/
 div.head{
 	background-color: #3CB371;	
 	margin: auto;
@@ -60,12 +60,9 @@ div.head div.menu a{
 	color: #ffffff;
 
 }
-*/
+
 /*-----------------------------------------------------------------------------------------------------------*/
-div.login {
-	border-top: 20px;
-}
-/*
+
 #container section.infoHospital{
 	
 	max-width: 1200px;
@@ -147,7 +144,7 @@ footer{
 
 
 /*--------------------------------------------------------------------------------------------------------------------*/
-/*
+
 div.head div.dropdown{
 	float: right;
 	position: relative;
@@ -157,7 +154,7 @@ div.head div.dropdown{
 div.head div.dropdown:hover{
 	background-color: red;
 }
-*//*
+*/
 div.head ul.dropdown-content{
 	display: none;
 	position: absolute;
