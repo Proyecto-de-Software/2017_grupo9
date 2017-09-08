@@ -1,0 +1,204 @@
+body{
+	font-family: lato, verdana;
+		background-color: #ffffff;
+}
+
+#container{
+	padding:25px;
+	margin:  0 auto;
+	width: 	1200px;
+	height: 500px;
+
+	
+}
+/*--------------------------------------------------------------------------------------------------*/
+div.head{
+	background-color: #3CB371;	
+	margin: auto;
+	padding:  15px;
+	height: 40px;
+}
+div.head img {
+	float:left;
+	width: 48px;
+	height: 49px;
+	margin-right: 10px;
+}
+div.head div.user{
+	float:right;
+	margin: 10px auto auto 25px ; 	
+}
+div.head div.button{
+	float:left;
+	margin: 10px auto auto 25px ;
+}
+div.head div.shearch{
+	float:right;
+	margin-right: 50px;
+}
+div.head div.shearch input{
+	padding: 3px;
+	margin-left: 50px;
+	height: 35px;
+	width: 250px;
+	display: inline-block;
+}
+div.head div.shearch button{
+	padding: 3px;
+	font-weight: 20px;
+	height: 35px;
+	width: 60px;
+
+}
+
+div.head div.menu{
+	float:left;	
+}
+div.head div.menu a{
+	text-decoration: none;
+	line-height:40px;
+	color: #ffffff;
+
+}
+
+/*-----------------------------------------------------------------------------------------------------------*/
+
+#container section.infoHospital{
+	
+	max-width: 1200px;
+	height: 450px;
+
+	
+}
+#container section.infoHospital article.containerInfo{
+	background-color: #eeeeee;
+	float:left;
+	margin: 50px 50px 50px 50px;
+	height: 300px;
+	width: 300px;
+	box-shadow: 2px 2px 5px #999;
+	
+	
+	
+}
+#container section.infoHospital div.title h3{
+	letter-spacing: 1.5px;
+
+	color: #ffffff;
+	text-align: center;
+}
+
+#container section.infoHospital article.containerInfo div.info{
+	display: inline-block;
+	font-size: 16px;
+
+	
+	text-align: center;
+	padding:10px;
+	height: 230px;
+	
+
+	
+}
+#container section.infoHospital  article.containerInfo div.title{
+	background-color: #3CB371;	
+	padding-top: 2.5px ;
+	padding-bottom: 2.5px;
+	}
+
+#container section.infoHospital div.moreInfo {
+
+	float: right;
+	text-align: center;
+	background-color: #3CB371;
+	text-decoration:none;
+	color: #ffffff;
+	padding:10px;
+	margin-top:5px;
+	margin-bottom: 5px;
+	
+
+
+}
+#container section.infoHospital div.moreInfo:hover {
+
+	background-color: #ffffff;
+	color: #3CB371 ;
+	border: solid 1.5px #3CB371;
+
+}
+
+
+
+
+footer{
+
+	text-align: center;
+	margin-left: 0 auto;
+	margin-right: : 0 auto;
+	margin-top: 20px;
+	margin-bottom: 20px;
+
+	display: block;
+}
+
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+
+div.head div.dropdown{
+	float: right;
+	position: relative;
+	margin: 10px auto auto 25px ;
+}
+/*
+div.head div.dropdown:hover{
+	background-color: red;
+}
+*/
+div.head ul.dropdown-content{
+	display: none;
+	position: absolute;
+	min-width: 250px;
+	background: #49505A;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+div.head div.dropdown:hover ul.dropdown-content{
+	display: block;
+	box-shadow: 6px 6px 5px #888888;
+	background: #ffffff;
+}
+
+div.head div.dropdown ul.dropdown-content li:hover{
+	background: #3CB371;
+}
+
+div.login {
+	padding-top: 40px;
+	padding-left: 50px;
+	border: solid 1px;
+	margin-left: 300px;
+	margin-top: 120px;
+	width: 550px;
+}
+
+.input {
+	font-family: lato, verdana;
+	margin-bottom: 30px;
+	border: solid 1px ;
+	width: 500px;
+	height: 40px;
+	padding-left: 10px;
+	display:block;
+}
+
+#buttonLogin {
+	padding-left: 0px;
+	color: white;
+	text-align: center;/*
+	font-weight: bold;*/
+	border-color: none ;
+	background-color: #3CB371;
+}
