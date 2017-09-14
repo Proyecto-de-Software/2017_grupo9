@@ -1,9 +1,9 @@
-@media screen and (min-width: 850px){
+
 	body{
 		font-family: lato, verdana;
 			background-color: #ffffff;
 	}
-
+@media screen and (min-width: 850px){
 	#container{
 		padding:25px;
 		margin:  0 auto;
@@ -223,13 +223,15 @@
 	}
 }
 
+
+
 @media screen and (min-width: 400px) and (max-width: 850px){
 
 	#container{
-		padding:25px;
-		margin: 0 auto;
-		width: 	400px;
-		height: 400px;
+		padding: 25px;
+		width: 	550px;
+		height: 600px;
+		margin: 100px auto 0 auto;
 	}
 
 	div.head{
@@ -277,7 +279,9 @@
 	}
 
 	div.head div.menu{
-		float:left;	
+		padding-right: 60px;
+		text-align: center;
+		font-size: 26px;
 	}
 
 	div.head div.menu a{
@@ -375,17 +379,27 @@
 		padding-top: 40px;
 		padding-left: 50px;
 		border: solid 1px;
-		margin: 0 auto;
 		margin-top: 80px;
-		width: 300px;
+		width: 500px;
+
+			
+
+	}
+	#tituloLogin {
+		text-align: center;
+		font-size: 30px;
+		color: #0E6655;
+		font-weight: bold;
 	}
 
 	.input {
 		font-family: lato, verdana;
+		font-size: 25px;
+		padding: 10px 0 10px 0;
 		margin-bottom: 30px;
 		border: solid 1px  ;
-		width: 250px;
-		height: 40px;
+		width: 450px;
+		height: 60px;
 		padding-left: 10px;
 		display:block;
 	}
@@ -395,7 +409,7 @@
 	}
 
 	#buttonLogin {
-		padding-left: 0px;
+		
 		color: white;
 		text-align: center;
 		border-color: none ;
