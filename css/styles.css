@@ -28,10 +28,22 @@ div.head div.user{
 	float:right;
 	margin: 10px auto auto 25px ; 	
 }
+
+div.head div.user a{
+	text-decoration: none;
+	color: white;
+}
+
 div.head div.button{
 	float:left;
 	margin: 10px auto auto 25px ;
 }
+
+div.head div.button a{
+	color: white;
+	text-decoration: none;
+}
+
 div.head div.shearch{
 	float:right;
 	margin-right: 50px;
@@ -90,7 +102,7 @@ div.head div.menu a{
 
 #container section.infoHospital article.containerInfo div.info{
 	display: inline-block;
-	font-size: 16px;
+	font-size: 14px;
 
 	
 	text-align: center;
@@ -150,6 +162,10 @@ div.head div.dropdown{
 	position: relative;
 	margin: 10px auto auto 25px ;
 }
+div.head div.dropdown a{
+	text-decoration: none;
+	color: white;
+}
 /*
 div.head div.dropdown:hover{
 	background-color: red;
@@ -173,4 +189,43 @@ div.head div.dropdown:hover ul.dropdown-content{
 
 div.head div.dropdown ul.dropdown-content li:hover{
 	background: #3CB371;
+}
+
+div.login {
+	padding-top: 40px;
+	padding-left: 50px;
+	border: solid 1px;
+	margin-left: 300px;
+	margin-top: 120px;
+	width: 550px;
+}
+
+.input {
+	font-family: lato, verdana;
+	margin-bottom: 30px;
+	border: solid 1px  ;
+	width: 500px;
+	height: 40px;
+	padding-left: 10px;
+	display:block;
+}
+
+.input:focus{
+	border: #3CB371 solid 1px;
+}
+
+#buttonLogin {
+	padding-left: 0px;
+	color: white;
+	text-align: center;
+	border-color: none ;
+	background-color: #3CB371;
+	cursor:hand;
+}
+
+#buttonLogin:hover{
+	background-color: #ffffff;
+	color: #3CB371;
+	border: solid 1.5px #3CB371;
+	font-weight: bold;
 }
