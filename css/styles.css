@@ -1,3 +1,7 @@
+
+
+
+
 /* Comunes a todas las resoluciones */
 	body{
 		font-family: freeSans, verdana;
@@ -29,51 +33,62 @@
 		height: 49px;
 		margin-right: 10px;
 	}
-	header nav.user{
+	header .user{
 		float:right;
-		margin: 10px auto auto 25px ; 
-
+		padding-top: 10px;
+		margin: 0px auto auto 25px ; 
+		height: 100%;	
+		
 	}
 
-	header nav.user a{
+
+	header .user a{
 		text-decoration: none;
 		color: white;
 
+
 	}
 
-	header nav.button{
+	header .button{
 		float:left;
 		margin: 10px auto auto 25px ;
 	}
 
-	header nav.button a{
+	header .button a{
 		color: white;
 		text-decoration: none;
 	}
 
-	header nav.shearch{
+	header .shearch{
 		float:right;
 		margin-right: 50px;
 	}
-	header nav.shearch input{
+	header .shearch input{
 		padding: 3px;
 		margin-left: 50px;
 		height: 35px;
 		width: 250px;
 		display: inline-block;
 	}
-	header nav.shearch button{
-		padding: 3px;
-		font-weight: 20px;
-		height: 35px;
-		width: 60px;
+	#buttonSearch{
+		float:right;
+		display: inline;
+		margin-left: 5px; 
+		
 
 	}
+	#buttonSearch img{
+		height: 40px;
+		width: 40px;
+	}
 
-	header nav.menu{
+	header .menu{
 		float:left;	
 	}
-	header nav.menu a{
+	header .menu:hover{
+		
+	}
+	header .menu a{
 		text-decoration: none;
 		line-height:40px;
 		color: #ffffff;
@@ -109,7 +124,7 @@
 
 	#container section.infoHospital article.containerInfo div.info{
 		display: inline-block;
-		font-size: 100%;		
+		font-size: 14px;		
 		text-align: center;
 		padding:10px;
 		height: 230px;
@@ -150,19 +165,21 @@
 		margin-bottom: 20px;
 		width: 100%;
 		display: block;
-
-		background-color: blue;
+		border-top: 1px solid #3CB371;
+		padding-top: 10px;
+		padding-bottom: 10px;
+			
 	}
 
 
 	/*--------------------------------------------------------------------------------------------------------------------*/
 
-	header nav.dropdown{
+	header .dropdown{
 		float: right;
 		position: relative;
 		margin: 10px auto auto 25px ;
 	}
-	header nav.dropdown a{
+	header .dropdown a{
 		text-decoration: none;
 		color: white;
 	}
@@ -181,7 +198,7 @@
 		list-style-type: none;
 	}
 
-	header nav.dropdown:hover ul.dropdown-content{
+	header .dropdown a.linkDown:hover ul.dropdown-content{
 		display: block;
 		box-shadow: 6px 6px 5px #888888;
 		background: #ffffff;
@@ -192,18 +209,18 @@
 		color: #ffffff;
 	} */
 
-	header nav.dropdown ul.dropdown-content a{
+	header .dropdown ul.dropdown-content a{
 		background: #ffffff;
 		color: #3CB371;
 	}
 
 	
-	header nav.dropdown ul.dropdown-content a li:hover{
+	header .dropdown ul.dropdown-content a li:hover{
 		background: #3CB371;
 		color: #ffffff;
 	}
 
-	header nav.dropdown ul.dropdown-content a li{
+	header .dropdown ul.dropdown-content a li{
 		padding: 10px 0px 10px 10px;
 	}
 
@@ -282,9 +299,9 @@
 	#container{
 		padding: 25px;
 		width: 	550px;
-		height: 100%;
+		height: 1350px;
 		margin: 100px auto 0 auto;
-		position: absolute;
+		position: relative;
 		display: block;
 
 	}
@@ -293,7 +310,7 @@
 		background-color: #3CB371;	
 		margin: auto;
 		width: auto;
-		height: auto;
+		height: 120px;
 		padding: 15px;
 		position: relative;
 		
@@ -308,40 +325,65 @@
 
 	}
 
-	header nav.user{
-		float:right;
-		margin: 10px auto auto 25px ; 	
+	header .user{
+		float: right;
+		position: relative;
+		display: block;
+		background-color: rgba(14, 99, 69, 0.6);
+		animation: none;
+		padding: 5px;
+		border-radius:10px;
+		text-align: center;
+	}
+	header .user a{
+		font-size: 35px;
+		text-decoration: none;
+		color: rgba(255, 255, 255, 0.9);
+
 	}
 
-	header nav.button{
-		float:left;
-		margin: 10px auto auto 25px;
+	
+	#buttonSearch{
+		float:right;		
+		margin-left: 5px; 
 	}
 
-	header nav.shearch{
-		float:left;
-		margin-right: 50px;
-		position: absolute;
+	#buttonSearch img{
+		height: 40px;
+		width: 40px;
 	}
-	header nav.shearch input{
+	
+
+	header .shearch{
+		display: block;
+		float:left;
+		position: relative;
+		margin-top: 25px;
+		margin-left: 200px; 
+
+	}
+	header .shearch input{
 		padding: 3px;
-		margin-left: 50px;
-		height: 30px;
-		width: 250px;
+		height: 40px;
+		width: 350px;
 		display: inline-block;
+		font-size: 25px;
 	}
 
-	header nav.shearch button{
-		padding: 3px;
-		font-weight: 20px;
-		height: 30px;
-		width: 60px;
+	header .shearch button{
+		
+		font-size: 25px;
+		height: 40px;
+		
 	}
 
 	header nav.menu{
-		padding-right: 60px;
-		text-align: center;
-		font-size: 20px;
+		text-align: left;
+		height: 50px;
+		font-size: 35px;
+		display: block;
+		float: left;
+	
 
 	}
 
@@ -353,16 +395,15 @@
 	}
 
 	#container section.infoHospital{
-		max-width: 1200px;
-
-		height: 450px;		
+		max-width: 1200px;		
 		position: absolute;
+		margin:auto;
 	}
 
 	#container section.infoHospital article.containerInfo{
 		background-color: #eeeeee;
 		float:left;
-		margin: 50px 50px 50px 50px;
+		margin: 0px 50px 50px 0px;
 		
 		width: 100%;
 		box-shadow: 2px 2px 5px #999;	
@@ -375,8 +416,8 @@
 	}
 
 	#container section.infoHospital article.containerInfo div.info{
-		display: inline-block;
-		font-size: 100%;
+		display: block;
+		font-size: 25px;
 		text-align: center;
 		padding:10px;
 			
@@ -387,17 +428,19 @@
 		background-color: #3CB371;	
 		padding-top: 2.5px ;
 		padding-bottom: 2.5px;
+		font-size: 25px;
 	}
 
 	#container section.infoHospital div.moreInfo {
+		font-size:25px;
 		float: right;
 		text-align: center;
 		background-color: #3CB371;
 		text-decoration:none;
 		color: #ffffff;
 		padding:10px;
-		margin-right: 5px;
-		margin-bottom: 5px;
+		margin-right: 10px;
+		margin-bottom: 10px;
 		border: solid 1.5px #eeeeee;
 	}
 
@@ -412,14 +455,17 @@
 		width: auto;
 		margin-top: 20px;
 		margin-bottom: 20px;		
-		background-color:blue;
 		display: block;
 		position: relative;
-	
+		font-size: 25px;
+		border-top: 1px solid #3CB371;
+		padding-top: 10px;
+		padding-bottom: 10px;
+		
 
 	}
 
-	header nav.dropdown{
+	header .dropdown{
 		float: right;
 		position: relative;
 		margin: 10px auto auto 25px ;
@@ -434,10 +480,12 @@
 		list-style-type: none;
 	}
 
-	header nav.dropdown:hover ul.dropdown-content{
+	header .dropdown:hover ul.dropdown-content{
 		display: block;
 		box-shadow: 6px 6px 5px #888888;
 		background: #ffffff;
+		float: left;
+		font-size: 25px;
 	}
 	/*
 	header nav.dropdown ul.dropdown-content a:hover{
@@ -445,18 +493,18 @@
 		color: #ffffff;
 	} */
 
-	header nav.dropdown ul.dropdown-content a{
+	header .dropdown ul.dropdown-content a{
 		background: #ffffff;
 		color: #3CB371;
 	}
 
 	
-	header nav.dropdown ul.dropdown-content a li:hover{
+	header .dropdown ul.dropdown-content a li:hover{
 		background: #3CB371;
 		color: #ffffff;
 	}
 
-	header nav.dropdown ul.dropdown-content a li{
+	header .dropdown ul.dropdown-content a li{
 		padding: 10px 0px 10px 10px;
 	}
 	
@@ -508,4 +556,5 @@
 		border: solid 1.5px #3CB371;
 		font-weight: bold;
 	}
+
 }
