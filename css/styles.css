@@ -1,8 +1,13 @@
-
+/* Comunes a todas las resoluciones */
 	body{
 		font-family: freeSans, verdana;
 		background-color: #ffffff;
+		
 	}
+
+
+
+/* Estilos para pantallas de mas de 850px de ancho */
 @media screen and (min-width: 850px){
 	#container{
 		padding:25px;
@@ -14,8 +19,9 @@
 	header{
 		background-color: #3CB371;	
 		margin: auto;
-		padding:  15px;
+		padding: 15px;
 		height: 40px;
+		
 	}
 	header img {
 		float:left;
@@ -142,8 +148,10 @@
 		margin-right: : 0 auto;
 		margin-top: 20px;
 		margin-bottom: 20px;
-
+		width: 100%;
 		display: block;
+
+		background-color: blue;
 	}
 
 
@@ -268,21 +276,28 @@
 
 
 
-
+/* Estilos para pantallas de entre 400px y 850px de ancho */
 @media screen and (min-width: 400px) and (max-width: 850px){
 
 	#container{
 		padding: 25px;
 		width: 	550px;
-		height: 600px;
+		height: 100%;
 		margin: 100px auto 0 auto;
+		position: absolute;
+		display: block;
+
 	}
 
 	header{
 		background-color: #3CB371;	
 		margin: auto;
-		padding:  15px;
-		height: 40px;
+		width: auto;
+		height: auto;
+		padding: 15px;
+		position: relative;
+		
+
 	}
 
 	header img {
@@ -290,6 +305,7 @@
 		width: 48px;
 		height: 49px;
 		margin-right: 10px;
+
 	}
 
 	header nav.user{
@@ -299,18 +315,18 @@
 
 	header nav.button{
 		float:left;
-		margin: 10px auto auto 25px ;
+		margin: 10px auto auto 25px;
 	}
 
 	header nav.shearch{
-		float:right;
+		float:left;
 		margin-right: 50px;
+		position: absolute;
 	}
-
 	header nav.shearch input{
 		padding: 3px;
 		margin-left: 50px;
-		height: 35px;
+		height: 30px;
 		width: 250px;
 		display: inline-block;
 	}
@@ -318,33 +334,37 @@
 	header nav.shearch button{
 		padding: 3px;
 		font-weight: 20px;
-		height: 35px;
+		height: 30px;
 		width: 60px;
 	}
 
 	header nav.menu{
 		padding-right: 60px;
 		text-align: center;
-		font-size: 26px;
+		font-size: 20px;
+
 	}
 
 	header nav.menu a{
 		text-decoration: none;
-		line-height:40px;
 		color: #ffffff;
+		line-height: 40px;
+
 	}
 
 	#container section.infoHospital{
 		max-width: 1200px;
+
 		height: 450px;		
+		position: absolute;
 	}
 
 	#container section.infoHospital article.containerInfo{
 		background-color: #eeeeee;
 		float:left;
 		margin: 50px 50px 50px 50px;
-		height: 300px;
-		width: 300px;
+		
+		width: 100%;
 		box-shadow: 2px 2px 5px #999;	
 	}
 
@@ -359,7 +379,8 @@
 		font-size: 100%;
 		text-align: center;
 		padding:10px;
-		height: 230px;		
+			
+
 	}
 
 	#container section.infoHospital  article.containerInfo div.title{
@@ -375,8 +396,9 @@
 		text-decoration:none;
 		color: #ffffff;
 		padding:10px;
-		margin-top:5px;
+		margin-right: 5px;
 		margin-bottom: 5px;
+		border: solid 1.5px #eeeeee;
 	}
 
 	#container section.infoHospital div.moreInfo:hover {
@@ -387,11 +409,14 @@
 
 	footer{
 		text-align: center;
-		margin-left: 0 auto;
-		margin-right: : 0 auto;
+		width: auto;
 		margin-top: 20px;
-		margin-bottom: 20px;
+		margin-bottom: 20px;		
+		background-color:blue;
 		display: block;
+		position: relative;
+	
+
 	}
 
 	header nav.dropdown{
