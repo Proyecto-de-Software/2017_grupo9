@@ -1,7 +1,7 @@
 
 	body{
-		font-family: lato, verdana;
-			background-color: #ffffff;
+		font-family: freeSans, verdana;
+		background-color: #ffffff;
 	}
 @media screen and (min-width: 850px){
 	#container{
@@ -11,50 +11,52 @@
 		height: 500px;
 	}
 	/*--------------------------------------------------------------------------------------------------*/
-	div.head{
+	header{
 		background-color: #3CB371;	
 		margin: auto;
 		padding:  15px;
 		height: 40px;
 	}
-	div.head img {
+	header img {
 		float:left;
 		width: 48px;
 		height: 49px;
 		margin-right: 10px;
 	}
-	div.head div.user{
+	header nav.user{
 		float:right;
-		margin: 10px auto auto 25px ; 	
+		margin: 10px auto auto 25px ; 
+
 	}
 
-	div.head div.user a{
+	header nav.user a{
 		text-decoration: none;
 		color: white;
+
 	}
 
-	div.head div.button{
+	header nav.button{
 		float:left;
 		margin: 10px auto auto 25px ;
 	}
 
-	div.head div.button a{
+	header nav.button a{
 		color: white;
 		text-decoration: none;
 	}
 
-	div.head div.shearch{
+	header nav.shearch{
 		float:right;
 		margin-right: 50px;
 	}
-	div.head div.shearch input{
+	header nav.shearch input{
 		padding: 3px;
 		margin-left: 50px;
 		height: 35px;
 		width: 250px;
 		display: inline-block;
 	}
-	div.head div.shearch button{
+	header nav.shearch button{
 		padding: 3px;
 		font-weight: 20px;
 		height: 35px;
@@ -62,10 +64,10 @@
 
 	}
 
-	div.head div.menu{
+	header nav.menu{
 		float:left;	
 	}
-	div.head div.menu a{
+	header nav.menu a{
 		text-decoration: none;
 		line-height:40px;
 		color: #ffffff;
@@ -101,9 +103,7 @@
 
 	#container section.infoHospital article.containerInfo div.info{
 		display: inline-block;
-		font-size: 14px;
-
-		
+		font-size: 100%;		
 		text-align: center;
 		padding:10px;
 		height: 230px;
@@ -149,21 +149,21 @@
 
 	/*--------------------------------------------------------------------------------------------------------------------*/
 
-	div.head div.dropdown{
+	header nav.dropdown{
 		float: right;
 		position: relative;
 		margin: 10px auto auto 25px ;
 	}
-	div.head div.dropdown a{
+	header nav.dropdown a{
 		text-decoration: none;
 		color: white;
 	}
 	/*
-	div.head div.dropdown:hover{
+	header nav.dropdown:hover{
 		background-color: red;
 	}
 	*/
-	div.head ul.dropdown-content{
+	header ul.dropdown-content{
 		display: none;
 		position: absolute;
 		min-width: 250px;
@@ -173,48 +173,54 @@
 		list-style-type: none;
 	}
 
-	div.head div.dropdown:hover ul.dropdown-content{
+	header nav.dropdown:hover ul.dropdown-content{
 		display: block;
 		box-shadow: 6px 6px 5px #888888;
 		background: #ffffff;
 	}
 	/*
-	div.head div.dropdown ul.dropdown-content a:hover{
+	header nav.dropdown ul.dropdown-content a:hover{
 		background: #3CB371;
 		color: #ffffff;
 	} */
 
-	div.head div.dropdown ul.dropdown-content a{
+	header nav.dropdown ul.dropdown-content a{
 		background: #ffffff;
 		color: #3CB371;
 	}
 
 	
-	div.head div.dropdown ul.dropdown-content a li:hover{
+	header nav.dropdown ul.dropdown-content a li:hover{
 		background: #3CB371;
 		color: #ffffff;
 	}
 
-	div.head div.dropdown ul.dropdown-content a li{
+	header nav.dropdown ul.dropdown-content a li{
 		padding: 10px 0px 10px 10px;
 	}
 
-
+	#tituloLogin {
+		text-align: center;
+		font-size: 30px;
+		color: #0E6655;
+		font-weight: bold;
+	}
 	div.login {
-		padding-top: 40px;
+		padding-top: 50px;
 		padding-left: 50px;
 		border: solid 1px;
-		margin-left: 300px;
-		margin-top: 120px;
-		width: 550px;
+		margin: auto;
+		width: 550px
+		
+
 	}
 
 	.input {
-		font-family: lato, verdana;
-		margin-bottom: 30px;
+		font-family: freeSans, verdana;
+		margin-bottom: 30px;	
 		border: solid 1px  ;
 		width: 500px;
-		height: 40px;
+		height: 8%;
 		padding-left: 10px;
 		display:block;
 	}
@@ -242,6 +248,27 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media screen and (min-width: 400px) and (max-width: 850px){
 
 	#container{
@@ -251,36 +278,36 @@
 		margin: 100px auto 0 auto;
 	}
 
-	div.head{
+	header{
 		background-color: #3CB371;	
 		margin: auto;
 		padding:  15px;
 		height: 40px;
 	}
 
-	div.head img {
+	header img {
 		float:left;
 		width: 48px;
 		height: 49px;
 		margin-right: 10px;
 	}
 
-	div.head div.user{
+	header nav.user{
 		float:right;
 		margin: 10px auto auto 25px ; 	
 	}
 
-	div.head div.button{
+	header nav.button{
 		float:left;
 		margin: 10px auto auto 25px ;
 	}
 
-	div.head div.shearch{
+	header nav.shearch{
 		float:right;
 		margin-right: 50px;
 	}
 
-	div.head div.shearch input{
+	header nav.shearch input{
 		padding: 3px;
 		margin-left: 50px;
 		height: 35px;
@@ -288,20 +315,20 @@
 		display: inline-block;
 	}
 
-	div.head div.shearch button{
+	header nav.shearch button{
 		padding: 3px;
 		font-weight: 20px;
 		height: 35px;
 		width: 60px;
 	}
 
-	div.head div.menu{
+	header nav.menu{
 		padding-right: 60px;
 		text-align: center;
 		font-size: 26px;
 	}
 
-	div.head div.menu a{
+	header nav.menu a{
 		text-decoration: none;
 		line-height:40px;
 		color: #ffffff;
@@ -329,7 +356,7 @@
 
 	#container section.infoHospital article.containerInfo div.info{
 		display: inline-block;
-		font-size: 14px;
+		font-size: 100%;
 		text-align: center;
 		padding:10px;
 		height: 230px;		
@@ -367,12 +394,12 @@
 		display: block;
 	}
 
-	div.head div.dropdown{
+	header nav.dropdown{
 		float: right;
 		position: relative;
 		margin: 10px auto auto 25px ;
 	}
-	div.head ul.dropdown-content{
+	header ul.dropdown-content{
 		display: none;
 		position: absolute;
 		min-width: 250px;
@@ -382,29 +409,29 @@
 		list-style-type: none;
 	}
 
-	div.head div.dropdown:hover ul.dropdown-content{
+	header nav.dropdown:hover ul.dropdown-content{
 		display: block;
 		box-shadow: 6px 6px 5px #888888;
 		background: #ffffff;
 	}
 	/*
-	div.head div.dropdown ul.dropdown-content a:hover{
+	header nav.dropdown ul.dropdown-content a:hover{
 		background: #3CB371;
 		color: #ffffff;
 	} */
 
-	div.head div.dropdown ul.dropdown-content a{
+	header nav.dropdown ul.dropdown-content a{
 		background: #ffffff;
 		color: #3CB371;
 	}
 
 	
-	div.head div.dropdown ul.dropdown-content a li:hover{
+	header nav.dropdown ul.dropdown-content a li:hover{
 		background: #3CB371;
 		color: #ffffff;
 	}
 
-	div.head div.dropdown ul.dropdown-content a li{
+	header nav.dropdown ul.dropdown-content a li{
 		padding: 10px 0px 10px 10px;
 	}
 	
@@ -426,7 +453,7 @@
 	}
 
 	.input {
-		font-family: lato, verdana;
+		font-family: freeSans, verdana;
 		font-size: 25px;
 		padding: 10px 0 10px 0;
 		margin-bottom: 30px;
