@@ -1,7 +1,6 @@
 
 
 
-
 /* Comunes a todas las resoluciones */
 	body{
 		font-family: freeSans, verdana;
@@ -66,7 +65,7 @@
 	header .shearch input{
 		padding: 3px;
 		margin-left: 50px;
-		height: 35px;
+		height: 30px;
 		width: 250px;
 		display: inline-block;
 	}
