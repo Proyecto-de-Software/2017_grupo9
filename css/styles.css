@@ -243,21 +243,20 @@
 	.input {
 		font-family: freeSans, verdana;
 		margin-bottom: 30px;	
-		border: solid 1px  ;
+		border: solid 1px;
 		width: 500px;
 		height: 40px;
 		padding-left: 10px;
 		display:block;
 	}
 
-	.input:focus{
-		border: #3CB371 solid 1px;
-	}
+
 
 	#buttonLogin {
 		padding-left: 0px;
 		color: white;
 		text-align: center;
+		border: solid 1.5px transparent;
 		background-color: #3CB371;
 	}
 
