@@ -1,15 +1,17 @@
-<html>	
+<!DOCTYPE html>
+<html lang="es">	
 <head>
 	<link rel="stylesheet" type="text/css" href="./css/styles.css">
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title> Inicio de sesión</title> 
 </head>
 <body>
 	
 	<header>
 		<nav class="menu">
-			<a href="index.html"><img src="img/logo.JPG" > </a>
+			<img src="img/logo.JPG" alt="logo del hospital" width="48px" height="49px" >
 			<a href="index.html"> Hospital Dr. Ricardo Gutierrez </a>
-		</nav>
+		</nav> 
 	</header>
 
 	<div id="container">
@@ -17,9 +19,18 @@
 		<div class="login">
 			<form  action="admin.html" method="POST">
 				
-					<input class="input" type="text" name="user" placeholder="Usuario" required>
-					<input class="input" id="password" type="password" name="password" placeholder="Contraseña" required>
-					<input class="input" id="buttonLogin" type="submit" name="buttonLogin" value="Entrar">
+					<label for="user" hidden>
+						Usuario
+					</label>
+					<input class="input" type="text" name="user" id="user" placeholder="Usuario" required>
+					<label for="password" hidden>
+						Contraseña
+					</label>					
+					<input class="input" id="password" type="password" is="user" name="password" placeholder="Contraseña" required>
+					<label for="buttonLogin" hidden>
+						Entrar
+					</label>					
+					<input class="input" id="buttonLogin" type="submit" id="buttonLogin" name="buttonLogin" value="Entrar">
 			</form>
 		</div>
 	</div>		

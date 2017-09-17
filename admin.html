@@ -1,23 +1,28 @@
-<html>	
+<!DOCTYPE html>
+<html lang="es">	
 <head>
 	<link rel="stylesheet" type="text/css" href="./css/styles.css">
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title> Area de administración </title> 
 </head>
 <body>
 	
 	<header>
 		<nav class="menu">
-			<a href="index.html"><img src="img/logo.JPG" > </a>
-			<a href="index.html"> Hospital Dr. Ricardo Gutierrez </a>
-		</nav>
+			<img src="img/logo.JPG" alt="logo del hospital" width="48px" height="49px" >
+			<a href="#"> Hospital Dr. Ricardo Gutierrez </a>
+		</nav> 
 
 
 		<nav class="button">
 			<a href="#"> Pacientes </a>
 		</nav>
 		<nav class="shearch" >
-			<input type="text" />
-			<a id="buttonSearch" href="index.html"><img src="img/buscar.png" > </a>
+			<label for="buscar" hidden>Buscar</label>
+          	<input name="buscar" id="buscar" type="text" /> 
+			<a id="buttonSearch" href="buscar.html">
+				<img src="img/buscar.png" alt="buscar en la pagina" width="40px" height="40px"> 
+			</a>
 		</nav>
 		<nav class="user">
 			<a href="#">Nombre de usuario</a>
