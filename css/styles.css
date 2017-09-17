@@ -197,7 +197,7 @@
 		list-style-type: none;
 	}
 
-	header .dropdown a.linkDown:hover ul.dropdown-content{
+	header .dropdown ul.dropdown-content{
 		display: block;
 		box-shadow: 6px 6px 5px #888888;
 		background: #ffffff;
