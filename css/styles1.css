@@ -1,0 +1,30 @@
+.myHeader{
+	background: #3CB371 !important;
+	color:white;
+}
+.infoPrincipal{
+	background-color:#EAFAF1;
+	padding-right:0 !important; 
+	padding-left:0 !important;
+}
+
+
+.btn-own-info{
+	border-color: #3CB371 !important;
+}
+.btn-own-info:hover{
+	background-color:#3CB371 !important;
+}
+.nav-own{
+	background-color: rgba(60,179,113,0.8);
+	
+}
+.btn-search{
+	border-color: white !important;
+	color:white !important;
+
+}
+.nav-bar-link-own{
+	color:white !important;
+}
+/*#EAFAF1 */
