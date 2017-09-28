@@ -30,27 +30,12 @@
 .login{
 	background-color: rgba(60,179,113,0.2);!important;
 }
-.dropdown-items a{
-	text-decoration: none;
-	color: #3CB371;
+.dropdown-item-own{
+	color: #3CB371 !important;
 }
-
-.dropdown-items li a:hover{
-	text-decoration: none;
-	background: #3CB371;
-	color: #ffffff;
+.dropdown-item-own:hover{
+	color: #ffffff !important;
+	background-color: rgba(60,179,113,0.8) !important;
 }
-.btn-group .dropdown-items{
-	margin: 0;
-	padding: 0;
 }
-.btn-group .dropdown-items li:hover{
-	text-decoration: none;
-	background: #3CB371;
-	color: #ffffff;
-}
-.btn-group .dropdown-items li:hover a{
-	color: #ffffff;
-}
-
 /*#EAFAF1 */
