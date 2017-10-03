@@ -1,0 +1,44 @@
+	<header>
+	<nav class="navbar navbar-expand-lg navbar-light nav-own" role="navigation">
+		<a class="navbar-brand nav-bar-link-own " href="#">
+	 		<img class="mr-2" src="img/logo.JPG" alt="logo del hospital" width="48px" height="49px" class="d-inline-block align-top">
+			Hospital Dr. Ricardo Gutierrez
+	  	</a>
+
+	    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	 		<span class="navbar-toggler-icon"></span>
+	    </button>
+	  	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+	  		{% if rolAdmin == true %}
+	  		<ul class="navbar-nav float-right">
+	  			<li class="nav-item active">
+	  				<a class="nav-link  nav-bar-link-own" role="button" href="#"> Pacientes </a>
+	  			</li>
+	  			<li class="nav-item dropdown">
+        			<a class="nav-link dropdown-toggle nav-bar-link-own" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         			 Administración
+        			</a>
+			        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+			          <a class="dropdown-item dropdown-item-own" href="#">Usuarios</a>
+			          <a class="dropdown-item dropdown-item-own" href="#">Roles</a>
+			          <a class="dropdown-item dropdown-item-own" href="#">Permisos</a>
+			          <div class="dropdown-divider"></div>
+			          <a class="dropdown-item dropdown-item-own" href="#">Configuración</a>
+			        </div>
+      			</li>
+	    	</ul>
+	    	{% end if %}
+	  		<form class="form-inline my-2 my-lg-0 ml-auto mr-5 d-flex justify-content-center">
+	      		<input class="form-control mr-sm-2" type="text" placeholder="Buscar" aria-label="Buscar">
+	      		<button class="btn btn-outline-success btn-search  my-2 my-sm-0" type="submit"> Buscar </button>
+	    	</form>
+
+	    	<ul class="navbar-nav  float-right">
+	    		<li class="nav-item active">
+	        		<a class="nav-link nav-bar-link-own" role="button" href="#"> Nombre de usuario </a>
+	      		</li>
+	    	</ul>
+
+	  	</div>
+	</nav> 
+</header>

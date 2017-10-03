@@ -13,10 +13,10 @@
  */
 abstract class PDORepository {
     
-    const USERNAME = "grupo_16";
-    const PASSWORD = "xxxxxx";
+    const USERNAME = "grupo9";
+    const PASSWORD = "YTVjYTYzM2IxNmMy";
 	const HOST ="localhost";
-	const DB = "grupo_16";
+	const DB = "grupo9";
     
     
     private function getConnection(){
