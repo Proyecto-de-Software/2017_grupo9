@@ -11,9 +11,9 @@ class Home extends TwigView {
     
     public function show() {
         
-        echo self::getTwig()->render('head.html.twig');
-        echo self::getTwig()->render('container.html.twig','index');
-        echo self::getTwig()->render('footer.html.twig');	        
+        echo self::getTwig()->render('head.twig.html');
+        echo self::getTwig()->render('container.twig.html', array('tipo' => 'index'));
+        echo self::getTwig()->render('footer.twig.html');	        
         
     }
     
