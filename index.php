@@ -15,11 +15,11 @@ require_once('view/Admin.php');
 
 
 
-if(isset($_GET["action"]) && $_GET["action"] == 'home'){
-    ResourceController::getInstance()->home();
-}elseif(isset($_GET["action"]) && $_GET["action"] == 'login'){
+if(isset($_GET["action"]) && $_GET["action"] == 'login'){
     ResourceController::getInstance()->login();
 }elseif(isset($_GET["action"]) && $_GET["action"] == 'admin'){
     ResourceController::getInstance()->admin();
 }
+else
+	ResourceController::getInstance()->home();
 
