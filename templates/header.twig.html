@@ -1,28 +1,33 @@
 <header>
 	<nav class="navbar navbar-expand-lg navbar-light nav-own" role="navigation">
 		<a class="navbar-brand nav-bar-link-own " href="#">
-	 		<img class="mr-2" src="img/logo.JPG" alt="logo del hospital" width="48px" height="49px" class="d-inline-block align-top">
+	 		<img class="mr-2" src="./templates/img/logo.JPG" alt="logo del hospital" width="48px" height="49px" class="d-inline-block align-top">
 			Hospital Dr. Ricardo Gutierrez
 	  	</a>
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	  <span class="navbar-toggler-icon"></span>
 	  </button>
 	  	<div class="collapse navbar-collapse" id="navbarSupportedContent">
-	  		{{% if rol == admin %}}
-	  			{% include 'opcionesAdmin.html.twig' %}
-	  		{{% end if %}}
+	  		{% if rol == 'admin' %}
+	  			{% include 'opcionesAdmin.twig.html' %}
+	  		{% endif %}
 		  		<form  id="form" class="form-inline my-2 my-lg-0 ml-auto mr-5 d-flex justify-content-center">
 		      		<input class="form-control mr-sm-2" type="text" placeholder="Buscar" aria-label="Buscar">
 		      		<button class="btn btn-outline-success btn-search  my-2 my-sm-0" type="submit">Buscar</button>
 		    	</form>
 		    
 	    	<ul class="navbar-nav float-right ">
+	    		{% if tipo == 'index' %}
 	      		<li class="nav-item active">
 	        		<a class="nav-link  nav-bar-link-own" role="button" href="login.html">Iniciar sesión</a>
 	      		</li>
 	      		<li class="nav-item">
 	        		<a class="nav-link  nav-bar-link-own" role="button" href="logup.html">Registrarse</a>
 	      		</li>
+	      		{% elseif rol == 'admin' %}
+	      		<a class="nav-link  nav-bar-link-own" role="button" href="logup.html">Nombre User</a>
+	      		{% endif %}
+
 	    	</ul>
 	    	
 	  	</div>
