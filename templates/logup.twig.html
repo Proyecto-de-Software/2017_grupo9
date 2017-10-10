@@ -1,7 +1,7 @@
 <section class="row mx-auto mt-5 ">
 	<div class="login col-md-4  mx-auto mt-4 mb-4 pb-5 pt-5 pr-5 pl-5 border rounded ">
 		<h3 class="card-header text-center myHeader">Registrarse </h3>
-		<form class="text-center" role="form" action=/grupo9/controller/controllerUsuario.php/agregarUsuario>
+		<form class="text-center" role="form" method="POST" action=/grupo9/controller/controllerUsuario.php?action=agregarUsuario>
 			<div class="form-group ">
 			    <label for="name" hidden>Nombre</label>
 			    <input type="text" class="form-control mt-3" id="name" placeholder="Nombre">
@@ -26,7 +26,18 @@
 		    	<label for="password2" hidden>Repita contraseña</label>
 		   		<input type="password" class="form-control mt-3" id="password2" placeholder="Repita contraseña">
 			</div>
-			<button type="submit" class="btn btn-outline-success  btn-own-info">Registrarse</button>
+			<p class="text-left">Roles:</p>
+			<div class="form-check text-left	">
+    			<input type="checkbox" name="rol[]" id="rol[]" class="checkbox" value=1> 
+    			<label for="admin">Administrador</label><br/>
+     			 				
+   				<input type="checkbox" name="rol[]" id="rol[]" class="checkbox" value=2>
+    			<label for="recepcionista">Recepcionista</label><br/>	
+     						
+   				<input type="checkbox" name="rol[]" id="rol[]" class="checkbox" value=3>
+    			<label for="pediatra">Pediatra</label><br/>
+  			</div>
+			<button type="submit" class="btn btn-outline-success  btn-own-info">Registrar</button>
 		</form>
 	</div>
 </section>

@@ -15,14 +15,14 @@
   			$query->bindParam(':created_at', $usuario->getFechaCreacion());
   			$query->bindParam(':first_name', $usuario->getNombre());
   			$query->bindParam(':last_name', $usuario->getApellido());
-			if($query->execute() == 1){
-				$newId = $conexion->lastInsertId();
-				$query2 = $conexion->prepare("INSERT INTO usuario_tiene_rol(usuario_id, rol_id) VALUES(:usuario_id, :rol_id)");
-				$query2->bindParam(':usuario_id', $newId);
-				foreach($usuario->getIdRoles() as $idRol)
-					$query2->bindParam(':rol_id', $idRol);
-					$query2->execute();
-			else
+			  if($query->execute() == 1){
+  				$newId = $conexion->lastInsertId();
+  				$query2 = $conexion->prepare("INSERT INTO usuario_tiene_rol(usuario_id, rol_id) VALUES(:usuario_id, :rol_id)");
+  				$query2->bindParam(':usuario_id', $newId);
+  				foreach($usuario->getIdRoles() as $idRol)
+  					$query2->bindParam(':rol_id', $idRol);
+  					$query2->execute();
+			  else
 				return false;
 
   		}
@@ -44,7 +44,7 @@
 
   		public function eliminarUsuario($idUsuario){
   			$conexion = $this->getConnection();
-  			$query = "DELETE FROM usuario WHERE id =  :id"
+  			$query = "DELETE FROM usuario WHERE id = :id"
   			$query->bindParam(':id',$idUsuario);
   			return $query->execute() == 1;	
   		}
@@ -60,7 +60,9 @@
         	$usuario = $query->fetchAll();
         	$roles = array_values($queryRoles->fetchAll());
 	        if(sizeof($usuario)>0){
-	          return new Usuario($resultado[0]['id'],$resultado[0]['username'],$resultado[0]['email'],$resultado[0]['password'],$resultado[0]['activo'], $resultado[0]['created_at'], $resultado[0]['updated_at'], $resultado[0]['first_name'],$resultado[0]['last_name'],$roles);
+	          $usuario = new Usuario($resultado[0]['username'],$resultado[0]['email'],$resultado[0]['password'],$resultado[0]['activo'], $resultado[0]['created_at'], $resultado[0]['updated_at'], $resultado[0]['first_name'],$resultado[0]['last_name'],$roles);
+            $usuario->setId($resultado[0]['id']);
+            return $usuario;
 	        }
 	        else
 	        	return false;

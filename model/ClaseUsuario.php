@@ -11,8 +11,7 @@
 		private $apellido;
 		private $idRoles[];
 
-		private function __construct($id,$nombreUsuario,$email,$password,$activo, $creadoEn, $actualizadoEn, $nombre,$apellido,$idRoles) {
-            $this->$id = $id;
+		private function __construct($nombreUsuario,$email,$password,$activo, $creadoEn, $actualizadoEn, $nombre,$apellido,$idRoles) {
         	$this->$nombreUsuario = $nombreUsuario;
         	$this->$email = $email; 
         	$this->$password = $password;
@@ -23,6 +22,26 @@
         	$this->$actualizadoEn = $actualizadoEn;
         	$this->$idRoles = $idRoles;
     	}
+        public function esAdministrador(){
+            foreach($idRoles[] as $idRol){
+                if($idRol == 1) return true;
+            }
+            return false;
+        }
+        public function esRecepcionista(){
+           foreach($idRoles[] as $idRol){
+                if($idRol == 2) return true;
+            }
+            return false;
+        }
+        }
+        public function esPediatra(){
+           foreach($idRoles[] as $idRol){
+                if($idRol == 3) return true;
+            }
+            return false;
+        }
+        }
     	public function getId(){
             return $id;
         }
