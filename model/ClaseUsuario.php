@@ -1,5 +1,6 @@
 <?php
 	class Usuario{
+        private $id;
 		private $nombreUsuario;
 		private $email;
 		private $password;
@@ -8,58 +9,79 @@
 		private $creadoEn;
 		private $nombre;
 		private $apellido;
-		private $rol;
+		private $idRoles[];
 
-		private function __construct($nombreUsuario,$email,$password,$nombre,$apellido,$rol) {
+		private function __construct($id,$nombreUsuario,$email,$password,$activo, $creadoEn, $actualizadoEn, $nombre,$apellido,$idRoles) {
+            $this->$id = $id;
         	$this->$nombreUsuario = $nombreUsuario;
         	$this->$email = $email; 
         	$this->$password = $password;
         	$this->$nombre = $nombre;
         	$this->$apellido = $apellido;
-        	$this->$activo = true;
-        	$this->$creadoEn = getDate();
-        	$this->$actualizadoEn = getDate();
-        	$this->$rol = $rol;
+        	$this->$activo = $activo;
+        	$this->$creadoEn = $creadoEn;
+        	$this->$actualizadoEn = $actualizadoEn;
+        	$this->$idRoles = $idRoles;
     	}
-    	
-    	public getNombreUsuario(){
+    	public function getId(){
+            return $id;
+        }
+        public functionsetId($id){
+           $this->$id = $id;
+        }
+    	public function getNombreUsuario(){
     		return $this->$nombreUsuario;
     	}
-    	public setNombreUsuario($nombreUsuario){
+    	public function setNombreUsuario($nombreUsuario){
     		$this->$nombreUsuario = $nombreUsuario;
     	}
-        public getPassword(){
+        public function getPassword(){
             return $this->$password;
         }
-        public setPassword($password){
+        public function setPassword($password){
             $this->$password = $password;
         }
-    	public getEmail(){
+    	public function getEmail(){
     		return $this->$email;
     	}
-    	public setEmail($email){
+    	public function setEmail($email){
     		$this->$email = $email;
     	}
-    	public getActivo(){
+    	public function getActivo(){
     		return $this->$activo;
     	}
-    	public setActivo($boolean){
+    	public function setActivo($boolean){
     		$this->$activo = $boolean;
     	}
-    	public getFechaCreacion(){
+    	public function getFechaCreacion(){
     		return $this->$creadoEn;
     	}
-    	public setFechaActualizacion($fecha){
+        public function setFechaCreacion($fecha){
+            $this->$creadoEn = $fecha;
+        }
+    	public function setFechaActualizacion($fecha){
     		$this->$actualizadoEn = $fecha;
     	}
-    	public getFechaActualizacion(){
+    	public function getFechaActualizacion(){
     		return $this->$actualizadoEn;
     	}
-    	public getRol(){
-    		return $this->$rol;
+    	public function getIdRoles(){
+    		return $this->$idRoles;
     	}
-    	public setRol($rol){
-    		$this->$rol = $rol;
+    	public function setIdRoles($idRoles){
+    		$this->$idRoles = $roidRolesles;
     	}
+        public function getNombre(){
+            return $this->$nombre;
+        }
+        public function setNombre($nombre){
+            $this->$nombre = $nombre;
+        }
+        public function getApellido(){
+            return $this->$apellido;
+        }
+        public function setApellido($apellido){
+            $this->$apellido = $apellido;
+        }
 	}
 ?>
