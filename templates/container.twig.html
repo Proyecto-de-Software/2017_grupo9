@@ -1,10 +1,14 @@
 <div class="container mt-5">
-	{% if tipo == 'index' %}
-		{% include 'infoHome.twig.html' %}
-	{% elseif tipo == 'login' %}
+	{% if tipo == 'login' %}
 		{% include 'login.twig.html' %}
 	{% elseif tipo == 'logup' %}
 		{% include 'logup.twig.html' %}
+	{% elseif tipo == 'pacientes' %}
+		{% include 'pacientes.twig.html' %}
+	{% elseif tipo == 'mostrarPaciente' %}
+		{% include 'mostrarPaciente.twig.html' %}
+	{% elseif tipo == 'agregarPaciente' %}
+		{% include 'agregarPaciente.twig.html' %}
 	{% else %}
 		{% include 'infoHome.twig.html' %}
 	{% endif %}

@@ -48,4 +48,19 @@ class ResourceController {
         $view = new Logup();
         $view->show();
     }
+
+    public function pacientes(){
+        $view = new Pacientes();
+        $view->show();
+    }
+
+    public function mostrarPaciente(){
+        $view = new Paciente();
+        $view->show();
+    }
+
+    public function agregarPaciente(){
+        $view = new AgregarPacientes();
+        $view->show();
+    }    
 }
