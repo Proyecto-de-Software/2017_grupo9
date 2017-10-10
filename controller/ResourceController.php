@@ -34,12 +34,18 @@ class ResourceController {
         $view->show();
     }
     
-     public function login(){
+    public function login(){
         $view = new Login();
         $view->show();
     }
-     public function admin(){
+
+    public function admin(){
         $view = new Admin();
+        $view->show();
+    }
+
+    public function logup(){
+        $view = new Logup();
         $view->show();
     }
 }
