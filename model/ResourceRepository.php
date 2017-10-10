@@ -6,7 +6,7 @@
  * @author fede
  */
 class ResourceRepository extends PDORepository {
-
+    /* hecho en PDORepositiory
     private static $instance;
 
     public static function getInstance() {
@@ -17,7 +17,7 @@ class ResourceRepository extends PDORepository {
 
         return self::$instance;
     }
-
+    */
     private function __construct() {
         
     }

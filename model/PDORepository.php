@@ -17,7 +17,7 @@ abstract class PDORepository {
     const PASSWORD = "YTVjYTYzM2IxNmMy";
 	const HOST ="localhost";
 	const DB = "grupo9";
-    
+    private static $instance;
     
     private function getConnection(){
         $u=self::USERNAME;
@@ -38,5 +38,14 @@ abstract class PDORepository {
         }
         return $list;
     }
+    
+    public static function getInstance() {
+        if (!isset(self::$instance)) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }   
+
     
 }
