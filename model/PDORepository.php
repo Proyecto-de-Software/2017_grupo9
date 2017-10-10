@@ -11,15 +11,15 @@
  *
  * @author fede
  */
-abstract class PDORepository {
+ abstract class PDORepository {
     
-    const USERNAME = "grupo9";
+    const USERNAME = "root";
     const PASSWORD = "YTVjYTYzM2IxNmMy";
 	const HOST ="localhost";
 	const DB = "grupo9";
-    private static $instance;
     
-    private function getConnection(){
+    
+    protected function getConnection(){
         $u=self::USERNAME;
         $p=self::PASSWORD;
         $db=self::DB;
@@ -38,14 +38,6 @@ abstract class PDORepository {
         }
         return $list;
     }
-    
-    public static function getInstance() {
-        if (!isset(self::$instance)) {
-            self::$instance = new self();
-        }
-
-        return self::$instance;
-    }   
 
     
 }

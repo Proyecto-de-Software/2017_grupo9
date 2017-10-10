@@ -2,11 +2,20 @@
 	require_once("PDORepository.php");
 	require_once("ClaseUsuario.php");
 	class RepositorioUsuario extends PDORepository{
+      private static $instance;
 
-		//CRUD
+      public static function getInstance() {
+          if (!isset(self::$instance)) {
+              self::$instance = new RepositorioUsuario();
+          }
+
+          return self::$instance;
+      }       
+
   		public function agregarUsuario($usuario){
   			$conexion = $this->getConnection();
-  			$query = $conexion->prepare("INSERT INTO usuario(email, username, password, activo, updated_at, created_at, first_name, last_name) VALUES(:email, :username, :password, :activo, :updated_at, :created_at, :first_name, :last_name)");
+
+  			$query = $conexion->prepare("INSERT INTO usuario(id,email, username, password, activo, updated_at, created_at, first_name, last_name) VALUES(null,:email, :username, :password, :activo, :updated_at, :created_at, :first_name, :last_name)");
   			$query->bindParam(':email', $usuario->getEmail());
   			$query->bindParam(':username', $usuario->getNombreUsuario());
   			$query->bindParam(':password', $usuario->getPassword());
@@ -19,9 +28,12 @@
   				$newId = $conexion->lastInsertId();
   				$query2 = $conexion->prepare("INSERT INTO usuario_tiene_rol(usuario_id, rol_id) VALUES(:usuario_id, :rol_id)");
   				$query2->bindParam(':usuario_id', $newId);
-  				foreach($usuario->getIdRoles() as $idRol)
+  				foreach($usuario->getIdRoles() as $idRol){
   					$query2->bindParam(':rol_id', $idRol);
   					$query2->execute();
+          }
+          echo("se agrego");
+        }
 			  else
 				return false;
 
@@ -44,7 +56,7 @@
 
   		public function eliminarUsuario($idUsuario){
   			$conexion = $this->getConnection();
-  			$query = "DELETE FROM usuario WHERE id = :id"
+  			$query = "DELETE FROM usuario WHERE id = :id";
   			$query->bindParam(':id',$idUsuario);
   			return $query->execute() == 1;	
   		}
@@ -67,7 +79,7 @@
 	        else
 	        	return false;
       }
-  		}
+
   		public function activarUsuario($idUsuario){
   			$conexion = $this->getConnection();
   			$query = $conexion->prepare("UPDATE  usuario SET activo=:activo");
@@ -80,4 +92,7 @@
   			$query->bindParam(':activo', false);
   			return $query->execute()==1;	
   		}
+
+    
+        
 	}
