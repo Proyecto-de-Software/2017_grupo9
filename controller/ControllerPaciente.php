@@ -1,55 +1,81 @@
 <?php
 
 	session_start();
-	require_once("ClasePaciente.php");
-	require_once("RepositorioPaciente.php");
-	require_once("RepositorioUsuario.php");
+	require_once("../model/ClasePaciente.php");
+	require_once("../model/RepositorioPaciente.php");
+	require_once("../model/RepositorioUsuario.php");
 
-	public function crearPaciente(){
+	function crearPaciente(){
 		$paciente = new Paciente($_POST['apellido'], $_POST['nombre'], $_POST['domicilio'], $_POST['telefono'], $_POST['fechaNacimiento'], $_POST['genero'], $_POST['idDatosDemograficos'], $_POST['idObraSocial'], $_POST['idTipoDocumento'], $_POST['numeroDoc']);
 		return $paciente;
 	}
 
-	if(isset($_GET['action']){
+	function listarPacientes($pacientes){
+        require_once("../view/ListarPacientes.php");
+        $view = new ListarPacientes();
+        $view->show($pacientes);
+    }
+
+    function mostrarPaciente(){
+        require_once("../view/MostrarPacientes.php");
+        $view = new MostrarPaciente();
+        $view->show();
+    }
+
+    function agregarPaciente(){
+        require_once("../view/AgregarPacientes.php");
+        $view = new AgregarPacientes();
+        $view->show();
+    }
+
+    function modificarPaciente(){
+        require_once("./view/ModificarPaciente.php");
+        $view = new ModificarPaciente();
+        $view->show();
+    } 
+
+	if(isset($_GET['action'])){
 		switch ($_GET['action']) {
 		    case 'agregarPaciente':
-		    	if(RepositorioUsuario::getInstance()->esPediatra($_SESSION['roles']) || RepositorioUsuario::getInstance()->esRecepcionista($_SESSION['roles'])){
+		    	//if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista()){
 		    		$paciente = crearPaciente();
 		       		if(RepositorioPaciente::getInstance()->agregarPaciente($paciente)){
-		       			ResourceController::getInstance()->mostrarPaciente($paciente);
+		       			mostrarPaciente($paciente);
 		       		}
 		       		else{
-		       			ResourceController::getInstance()->agregarPaciente();
+		       			agregarPaciente();
 		       		}
-		       	}
+		       //	}
 		        break;
 		    case 'modificarPaciente':
-		    	if(RepositorioUsuario::getInstance()->esPediatra($_SESSION['roles']) || RepositorioUsuario::getInstance()->esRecepcionista($_SESSION['roles'])){
-		        	RepositorioPaciente::getInstance()->modificarPaciente(crearPaciente());
-		        	ResourceController::getInstance()->pacientes();
-		        }
+		    //	if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista()){
+		        	$paciente = crearPaciente();
+		        	if(RepositorioPaciente::getInstance()->modificarPaciente($paciente)){
+		        		listarPacientes();
+		        	}
+		       // }
 		        break;
 		    case 'eliminarPaciente':
-		    	if(RepositorioUsuario::getInstance()->esAdministrador($_SESSION['roles'])){
-		        	RepositorioPaciente::getInstance()->eliminarPaciente(crearPaciente());
-		        	ResourceController::getInstance()->pacientes();
-		        }
+		    	//if(($_SESSION['usuario'])->esAdministrador()){
+		    		$paciente = crearPaciente();
+		        	if(RepositorioPaciente::getInstance()->eliminarPaciente($paciente)){
+		        		listarPacientes();
+		        	}
+		       // }
 		        break;
-		    }
 		    case 'mostrarPaciente':
-		    	if(RepositorioUsuario::getInstance()->esPediatra($_SESSION['roles']) || RepositorioUsuario::getInstance()->esRecepcionista($_SESSION['roles'])){
-		        	RepositorioPaciente::getInstance()->eliminarPaciente(crearPaciente());
-		        	ResourceController::getInstance()->paciente();
-		        }
+		    	//if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista()){
+		        	mostrarPaciente();
+		       // }
 		        break;
-		    }
 		    case 'listarPacientes':
-		    	if(RepositorioUsuario::getInstance()->esPediatra($_SESSION['roles']) || RepositorioUsuario::getInstance()->esRecepcionista($_SESSION['roles'])){
-		        	RepositorioPaciente::getInstance()->eliminarPaciente(crearPaciente());
-		        	ResourceController::getInstance()->pacientes();
-		        }
+		    	//if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista() || ($_SESSION['usuario'])->esAdministrador()){
+		    		$pacientes = RepositorioPaciente::getInstance()->devolverPacientes();
+		        	listarPacientes($pacientes);
+		       // }
 		        break;
 		    }
 		}
 
 	
+

@@ -28,11 +28,13 @@ class ResourceController {
     }
     
     public function home(){
+        require_once("../view/Home.php");
         $view = new Home();
         $view->show();
     }
     
     public function login(){
+        require_once("../view/Login.php");
         $view = new Login();
         $view->show();
     }
@@ -43,22 +45,32 @@ class ResourceController {
     }
 
     public function logup(){
+        require_once("../view/Logup.php");
         $view = new Logup();
         $view->show();
     }
 
-    public function pacientes(){
-        $view = new Pacientes();
-        $view->show();
+    public function listarPacientes($pacientes){
+        require_once("../view/ListarPacientes.php");
+        $view = new ListarPacientes();
+        $view->show($pacientes);
     }
 
     public function mostrarPaciente(){
-        $view = new Paciente();
+        require_once("../view/MostrarPacientes.php");
+        $view = new MostrarPaciente();
         $view->show();
     }
 
     public function agregarPaciente(){
+        require_once("../view/AgregarPacientes.php");
         $view = new AgregarPacientes();
         $view->show();
-    }    
+    }
+
+    public function modificarPaciente(){
+        require_once("./view/ModificarPaciente.php");
+        $view = new ModificarPaciente();
+        $view->show();
+    } 
 }

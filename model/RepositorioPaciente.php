@@ -4,6 +4,15 @@
   require_once("ClasePaciente.php");
 
 	class RepositorioPaciente extends PDORepository{
+      private static $instance;
+
+      public static function getInstance() {
+          if (!isset(self::$instance)) {
+              self::$instance = new RepositorioPaciente();
+          }
+
+          return self::$instance;
+      }   
 
 
   		public function agregarPaciente($paciente){
@@ -11,7 +20,7 @@
 
   			$query = $conexion->prepare("INSERT INTO paciente(id, apellido, nombre, domicilio, telefono, fecha_nacimiento, genero, id_datos_demograficos, id_obra_social, id_tipo_documento, numero_doc) VALUES(null, :apellido, :nombre, :domicilio, :telefono, :fechaNacimiento, :genero, :idDatosDemograficos, :idObraSocial, :idTipoDocumento, :numeroDoc)");
   			$query->bindParam(':apellido', $paciente->getApellido());
-  			$query->bindParam(':nombre', $paciente->getNombre()));
+  			$query->bindParam(':nombre', $paciente->getNombre());
   			$query->bindParam(':domicilio', $paciente->getDomicilio());
   			$query->bindParam(':telefono', $paciente->getTelefono());
   			$query->bindParam(':fechaNacimiento', $paciente->getFechaNacimiento());
@@ -44,7 +53,7 @@
       public function eliminarPaciente($id){
         $conexion = $this->getConnection();
         $query = $conexion->prepare("DELETE FROM paciente WHERE id=:id");
-        $query->bindParam(':id', $paciente->getId());
+        $query->bindParam(':id', $id);
 
         return $query->execute() == 1;
       }
@@ -52,24 +61,30 @@
       public function buscarPacientePorId($id){
         $conexion = $this->getConnection();
         $query = $conexion->prepare("SELECT * FROM paciente WHERE id=:id");
-        $query->bindParam(':id', $paciente->getId());
+        $query->bindParam(':id', $id);
         $query->execute();
-        $resultado = $query->fetchAll();
-        if (sizeof($resultado) > 0){
-          return new Paciente($resultado[0]['id'],$resultado[0]['apellido'],$resultado[0]['nombre'],$resultado[0]['domicilio'], $resultado[0]['telefono'],$resultado[0]['fecha_nacimiento'],$resultado[0]['genero'],$resultado[0]['id_datos_demograficos'], $resultado[0]['id_obra_social'], $resultado[0]['id_tipo_documento'], $resultado[0]['numero_doc']);
+        $paciente = $query->fetchAll();
+        if (sizeof($paciente) > 0){
+          return new Paciente($paciente[0]['id'],$paciente[0]['apellido'],$paciente[0]['nombre'],$paciente[0]['domicilio'], $paciente[0]['telefono'],$paciente[0]['fecha_nacimiento'],$paciente[0]['genero'],$paciente[0]['id_datos_demograficos'], $paciente[0]['id_obra_social'], $paciente[0]['id_tipo_documento'], $paciente[0]['numero_doc']);
         }
 
         return false;
       }
 
-      public function activarPaciente($id){
+      public function devolverPacientes(){
         $conexion = $this->getConnection();
-        $query = $conexion->prepare("UPDATE paciente SET "
+        $query = $conexion->prepare("SELECT * FROM paciente");
+        $query->execute();
+        $resultado = $query->fetchAll();
+        if(sizeof($resultado) > 0){
+          return $pacientes;
+        }
+        return false;
       }
+
 
   		//CRUD
   		//buscar paciente por ID
-  		//activar / bloquear paciente
-  		//asignar o desasignar roles
+      //devolverPacientes
 
 	}

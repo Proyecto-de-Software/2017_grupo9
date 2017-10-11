@@ -1,0 +1,45 @@
+<section class="row mx-auto mt-5 ">
+	<div class="login col-md-4  mx-auto mt-4 mb-4 pb-5 pt-5 pr-5 pl-5 border rounded ">
+		<h3 class="card-header text-center myHeader">Agregar paciente </h3>
+		<form class="text-center" role="form" method="POST" action="/grupo9/controller/ControllerPaciente.php?action=agregarPaciente">
+			<div class="form-group ">
+			    <label for="name" hidden>Nombre</label>
+			    <input type="text" class="form-control mt-3" id="name" name="name" placeholder="Nombre">
+		  	</div>
+		  	<div class="form-group ">
+			    <label for="apellido" hidden>Apellido</label>
+			    <input type="text" class="form-control mt-3" id="apellido" name="apellido" placeholder="Apellido">
+		  	</div>
+		  	<div class="form-group ">
+			    <label for="fechaNacimiento" hidden>Fecha de nacimiento</label>
+			    <input type="text" class="form-control mt-3" id="fechaNacimiento" name="fechaNacimiento" placeholder="Fecha de nacimiento">
+		  	</div>
+		  	<div class="form-group ">
+			    <label for="genero" hidden>Género</label>
+			    <input type="text" class="form-control mt-3" id="genero" name="genero" placeholder="Género">
+		  	</div>
+		  	<div class="form-group ">
+			    <label for="tipoDoc" hidden>Tipo de documento</label>
+			    <input type="text" class="form-control mt-3" id="tipoDoc" name="tipoDoc" placeholder="Tipo de documento">
+		  	</div>
+		  	<div class="form-group ">
+			    <label for="numeroDoc" hidden>Nro de documento</label>
+			    <input type="text" class="form-control mt-3" id="numeroDoc" name="numeroDoc" placeholder="Nro de documento">
+		  	</div>
+		  	<div class="form-group ">
+			    <label for="domicilio" hidden>Domicilio</label>
+			    <input type="text" class="form-control mt-3" id="domicilio" name="domicilio" placeholder="Domicilio">
+		  	</div>
+		  	<div class="form-group ">
+			    <label for="telefono" hidden>Teléfono</label>
+			    <input type="text" class="form-control mt-3" id="telefono" name="telefono" placeholder="Teléfono">
+		  	</div>
+		  	<div class="form-group ">
+			    <label for="obraSocial" hidden>Obra social</label>
+			    <input type="text" class="form-control mt-3" id="obraSocial" name="obraSocial" placeholder="Obra social">
+		  	</div>
+			
+			<button type="submit" class="btn btn-outline-success  btn-own-info">Agregar</button>
+		</form>
+	</div>
+</section>
