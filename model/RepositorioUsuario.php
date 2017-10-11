@@ -1,6 +1,8 @@
 <?php
+
 	require_once("PDORepository.php");
 	require_once("ClaseUsuario.php");
+
 	class RepositorioUsuario extends PDORepository{
       private static $instance;
 

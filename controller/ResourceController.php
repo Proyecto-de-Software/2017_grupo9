@@ -2,8 +2,6 @@
 
 /**
  * Description of ResourceController
- *
- * @author fede
  */
 class ResourceController {
     

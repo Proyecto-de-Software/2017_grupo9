@@ -1,7 +1,10 @@
 <?php
+#Mostrar errores:
 ini_set('display_startup_errors',1);
 ini_set('display_errors',1);
+#Notificar todos los errores de PHP:
 error_reporting(-1);
+
 
 require_once('controller/ResourceController.php');
 require_once('model/PDORepository.php');

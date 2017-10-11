@@ -3,7 +3,6 @@
 /**
  * Description of SimpleResourceList
  *
- * @author fede
  */
 
 class SimpleResourceList extends TwigView {

@@ -3,7 +3,6 @@
 /**
  * Description of ResourceRepository
  *
- * @author fede
  */
 class ResourceRepository extends PDORepository {
     /* hecho en PDORepositiory
