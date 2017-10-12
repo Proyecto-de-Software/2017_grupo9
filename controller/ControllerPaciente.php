@@ -1,9 +1,11 @@
 <?php
+	
+	chdir($_SERVER['DOCUMENT_ROOT']);
 
 	session_start();
-	require_once("../model/ClasePaciente.php");
-	require_once("../model/RepositorioPaciente.php");
-	require_once("../model/RepositorioUsuario.php");
+	require_once($_SERVER['DOCUMENT_ROOT']."/model/ClasePaciente.php");
+	require_once($_SERVER['DOCUMENT_ROOT']."/model/RepositorioPaciente.php");
+	require_once($_SERVER['DOCUMENT_ROOT']."/model/RepositorioUsuario.php");
 
 	function crearPaciente(){
 		$paciente = new Paciente($_POST['apellido'], $_POST['nombre'], $_POST['domicilio'], $_POST['telefono'], $_POST['fechaNacimiento'], $_POST['genero'], $_POST['idDatosDemograficos'], $_POST['idObraSocial'], $_POST['idTipoDocumento'], $_POST['numeroDoc']);
@@ -11,25 +13,25 @@
 	}
 
 	function listarPacientes($pacientes){
-        require_once("../view/ListarPacientes.php");
+        require_once($_SERVER['DOCUMENT_ROOT']."/view/ListarPacientes.php");
         $view = new ListarPacientes();
         $view->show($pacientes);
     }
 
     function mostrarPaciente(){
-        require_once("../view/MostrarPacientes.php");
+        require_once($_SERVER['DOCUMENT_ROOT']."/view/MostrarPacientes.php");
         $view = new MostrarPaciente();
         $view->show();
     }
 
     function agregarPaciente(){
-        require_once("../view/AgregarPacientes.php");
+        require_once($_SERVER['DOCUMENT_ROOT']."/view/AgregarPacientes.php");
         $view = new AgregarPacientes();
         $view->show();
     }
 
     function modificarPaciente(){
-        require_once("./view/ModificarPaciente.php");
+        require_once($_SERVER['DOCUMENT_ROOT']."/view/ModificarPaciente.php");
         $view = new ModificarPaciente();
         $view->show();
     } 

@@ -1,6 +1,6 @@
 <?php
-	require_once("../model/RepositorioUsuario.php");
-	require_once("../model/ClaseUsuario.php");
+	require_once($_SERVER['DOCUMENT_ROOT']."/model/RepositorioUsuario.php");
+	require_once($_SERVER['DOCUMENT_ROOT']."/model/ClaseUsuario.php");
 
 	function crearUsuario(){
 		if(isset($_POST['rol'])){

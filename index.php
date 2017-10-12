@@ -5,17 +5,16 @@ ini_set('display_errors',1);
 #Notificar todos los errores de PHP:
 error_reporting(-1);
 
-
-require_once('controller/ResourceController.php');
-require_once('model/PDORepository.php');
-require_once('model/ResourceRepository.php');
-require_once('model/Resource.php');
-require_once('view/TwigView.php');
-require_once('view/SimpleResourceList.php');
-require_once('view/Home.php');
-require_once('view/Login.php');
-require_once('view/Admin.php');
-require_once('view/Logup.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/controller/ResourceController.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/model/PDORepository.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/model/ResourceRepository.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/model/Resource.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/view/TwigView.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/view/SimpleResourceList.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/view/Home.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/view/Login.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/view/Admin.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/view/Logup.php');
 
 
 
