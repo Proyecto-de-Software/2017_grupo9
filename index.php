@@ -15,6 +15,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/view/Home.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/view/Login.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/view/Admin.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/view/Logup.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/view/Config.php');
 
 
 
@@ -24,5 +25,7 @@ if(isset($_GET["action"]) && $_GET["action"] == 'login'){
     ResourceController::getInstance()->admin();
 }elseif(isset($_GET["action"]) && $_GET["action"] == 'logup'){
 	ResourceController::getInstance()->logup();
+}elseif(isset($_GET["action"]) && $_GET["action"] == 'config'){
+	ResourceController::getInstance()->config();
 }else
 	ResourceController::getInstance()->home();

@@ -1,0 +1,33 @@
+<section class="row mx-auto mt-5 ">
+	<div class="login col-md-4  mx-auto mt-4 mb-4 pb-5 pt-5 pr-5 pl-5 border rounded ">
+		<h3 class="card-header text-center myHeader">Configuración </h3>
+		<form class="text-center" role="form" method="POST" action="/controller/ControllerConfiguracion.php">
+		  	<div class="form-group ">
+			    <label for="titulo" hidden>Titulo</label>
+			    <input type="text" class="form-control mt-3" id="titulo" name="titulo" placeholder="Cambiar título">
+		  	</div>
+		 	 <div class="form-group">
+		    	<label for="descripcion" hidden>Descripcion</label>
+		    	<textarea class="form-control mt-3" rows ="20" id="descripcion" name="descripcion" placeholder="Cambiar descripcion"></textarea>
+		   		<!--<input type="text" class="form-control mt-3" id="descripcion" placeholder="Cambiar descripcion"> -->
+			</div>
+			<div class="form-group ">
+			    <label for="email" hidden>Email</label>
+			    <input type="text" class="form-control mt-3" id="email" name="email" placeholder="Cambiar email">
+		  	</div>
+		  	<div class="form-group ">
+			    <label for="elementos" hidden>Elementos</label>
+			    Cantidad de elementos por página:
+			    <input type="number" id="elementos" name="elementos" min="1" max="100">
+		  	</div>
+		  	<div class="form-group ">
+				<label for="habilitado" hidden>Habilitado</label>
+				Habilitar o deshabilitar sitio:<br>
+			    <input type="radio" id="habilitado" name="habilitado" value="habilitar" checked> Habilitar<br>
+  				<input type="radio" id="habilitado" name="habilitado" value="deshabilitar"> Deshabilitar<br>
+		  	</div>
+
+			<button type="submit" class="btn btn-outline-success  btn-own-info">Aplicar</button>
+		</form>
+	</div>
+</section>

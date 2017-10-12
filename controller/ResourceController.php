@@ -50,6 +50,12 @@ class ResourceController {
         $view->show();
     }
 
+    public function config(){
+        require_once($_SERVER['DOCUMENT_ROOT']."/view/Config.php");
+        $view = new Config();
+        $view->show();
+    }
+
     public function listarPacientes($pacientes){
         require_once($_SERVER['DOCUMENT_ROOT']."/view/ListarPacientes.php");
         $view = new ListarPacientes();

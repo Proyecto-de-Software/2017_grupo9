@@ -8,7 +8,7 @@
 		private $cantElem;
 		private $habilitado;
 
-		private function __construct($id, $titulo, $descripcion, $contacto, $cantElem, $habilitado){
+		public function __construct($id, $titulo, $descripcion, $contacto, $cantElem, $habilitado){
 			$this->id = $id;
             $this->titulo = $titulo;
         	$this->descripcion = $descripcion;
@@ -46,7 +46,7 @@
         }
 
         public function getCantElem(){
-        	$this->catElem;
+        	$this->cantElem;
         }
 
         public function setCantElem($cantElem){
@@ -60,3 +60,4 @@
         public function setHabilitado($habilitado){
         	$this->habilitado = $habilitado;
         }
+    }
