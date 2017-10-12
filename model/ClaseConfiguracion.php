@@ -8,18 +8,13 @@
 		private $cantElem;
 		private $habilitado;
 
-		public function __construct($id, $titulo, $descripcion, $contacto, $cantElem, $habilitado){
-			$this->id = $id;
+		public function __construct($titulo, $descripcion, $contacto, $cantElem, $habilitado){
             $this->titulo = $titulo;
         	$this->descripcion = $descripcion;
         	$this->contacto = $contacto;
         	$this->cantElem = $cantElem;
         	$this->habilitado = $habilitado;
 		}
-
-		public function getId(){
-            return $this->id;
-        }
 
         public function getTitulo(){
         	$this->titulo;

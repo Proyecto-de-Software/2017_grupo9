@@ -18,7 +18,7 @@
 		public function modificarConfiguracionHospital($datosConfiguracion) {
 				$conexion = $this->getConnection();
 
-				$query = $conexion->prepare("UPDATE configuracion SET titulo=:titulo, descripcion=:descripcion, email_contacto=:contacto, cantidad_elementos=:cantElem, habilitado=:habilitado");
+				$query = $conexion->prepare("UPDATE configuracion SET id=null titulo=:titulo, descripcion=:descripcion, email_contacto=:contacto, cantidad_elementos=:cantElem, habilitado=:habilitado");
 
 				$query->bindParam(':titulo', $datosConfiguracion->getTitulo());
 				$query->bindParam(':descripcion', $datosConfiguracion->getDescripcion());

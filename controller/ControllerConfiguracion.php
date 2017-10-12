@@ -4,7 +4,7 @@
 
 	function crearConfiguracion(){
 
-		return new Configuracion(NULL, $_POST['titulo'], $_POST['descripcion'], $_POST['email'], $_POST['elementos'], $_POST['habilitado']);
+		return new Configuracion($_POST['titulo'], $_POST['descripcion'], $_POST['email'], $_POST['elementos'], $_POST['habilitado']);
 	}
 
 	RepositorioConfiguracion::getInstance()->modificarConfiguracionHospital(crearConfiguracion());
