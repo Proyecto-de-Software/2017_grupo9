@@ -73,7 +73,7 @@
 
       public function devolverPacientes(){
         $conexion = $this->getConnection();
-        $query = $conexion->prepare("SELECT * FROM paciente");
+        $query = $conexion->prepare("SELECT nombre,apellido FROM paciente");
         $query->execute();
         $resultado = $query->fetchAll();
         if(sizeof($resultado) > 0){

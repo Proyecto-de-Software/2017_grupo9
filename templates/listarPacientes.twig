@@ -1,4 +1,24 @@
 <section>
-	{% paciente in pacientes %}
-		{{ paciente.nombre }}
+	<table class="table">
+		<t
+		
+			{{ paciente.nombre }}
+	</table>
 </section>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Apellido</th>
+    </tr>
+  </thead>
+  <tbody>
+  	{% elemento in lista %}
+    <tr>
+      <th scope="row">1</th>
+      <td>elemento.nombre</td>
+      <td>elemento.apellido</td>
+    </tr>
+  </tbody>
+</table>

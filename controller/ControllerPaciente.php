@@ -7,6 +7,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT']."/model/ClasePaciente.php");
 	require_once($_SERVER['DOCUMENT_ROOT']."/model/RepositorioPaciente.php");
 	require_once($_SERVER['DOCUMENT_ROOT']."/model/RepositorioUsuario.php");
+	require_once($_SERVER['DOCUMENT_ROOT'].'/view/TwigView.php');
 
 	function crearPaciente(){
 		$paciente = new Paciente($_POST['apellido'], $_POST['nombre'], $_POST['domicilio'], $_POST['telefono'], $_POST['fechaNacimiento'], $_POST['genero'], $_POST['idDatosDemograficos'], $_POST['idObraSocial'], $_POST['idTipoDocumento'], $_POST['numeroDoc']);

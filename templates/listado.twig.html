@@ -1,0 +1,26 @@
+<section>
+	<h2> {{titulo}}</h2>
+	{% if titulo=='Usuarios' %} 
+	<a class="btn btn-success mt-3 mb-5" role="button" href="./Controller/ControllerUsuario.php?action=agregarUsuarioView">Agregar nuevo usuario</a>
+	{% elseif titulo=='Pacientes '%}
+	<a class="btn btn-success mt-3 mb-5" role="button" href="">Agregar nuevo paciente</a>
+	{% endif %}
+	<table class="table table-bordered">
+	  <thead>
+	    <tr>
+	      <th>Nombre</th>
+	      <th>Apellido</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	  	{% for elemento in lista %}
+	    <tr>
+	      <td>{{elemento.0}}</td>
+	      <td>{{elemento.1}}</td>
+	      <td>Editar</td>
+	      <td>Eliminar</td>
+	    </tr>
+	    {% endfor %}
+	  </tbody>
+	</table>
+</section>

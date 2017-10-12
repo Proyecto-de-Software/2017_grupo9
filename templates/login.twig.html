@@ -1,14 +1,17 @@
 <section class="row mx-auto mt-5 ">
 	<div class="login col-md-4  mx-auto mt-4 mb-4 pb-5 pt-5 pr-5 pl-5 border rounded ">
+		{%if mensaje !="" %}
+		<p class="alert alert-danger"> {{mensaje}} </p> 
+		{% endif %}
 		<h3 class="card-header text-center myHeader">Iniciar sesión </h3>
-		<form class="text-center" role="form">
+		<form class="text-center" role="form" method="POST" action="./ControllerUsuario.php?action=loginUsuario">
 		  	<div class="form-group ">
-			    <label for="user" hidden>Usuario</label>
-			    <input type="text" class="form-control mt-3" id="user" placeholder="Usuario">
+			    <label for="email" hidden>Usuario</label>
+			    <input type="email" class="form-control mt-3" id="email" name="email" placeholder="Email" required>
 		  	</div>
 		 	 <div class="form-group">
 		    	<label for="password" hidden>Contraseña</label>
-		   		<input type="password" class="form-control mt-3" id="password" placeholder="Contraseña">
+		   		<input type="password" class="form-control mt-3" id="password" name="password" placeholder="Contraseña" required>
 			</div>
 			<button type="submit" class="btn btn-outline-success  btn-own-info">Iniciar sesión</button>
 		</form>

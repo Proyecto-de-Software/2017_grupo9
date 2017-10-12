@@ -32,12 +32,6 @@ class ResourceController {
         $view = new Home();
         $view->show();
     }
-    
-    public function login(){
-        require_once($_SERVER['DOCUMENT_ROOT']."/view/Login.php");
-        $view = new Login();
-        $view->show();
-    }
 
     public function admin(){
         $view = new Admin();
@@ -78,5 +72,5 @@ class ResourceController {
         require_once($_SERVER['DOCUMENT_ROOT']."/view/ModificarPaciente.php");
         $view = new ModificarPaciente();
         $view->show();
-    } 
+    }
 }

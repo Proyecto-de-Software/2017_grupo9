@@ -35,7 +35,6 @@
   					$query2->bindParam(':rol_id', $idRol);
   					$query2->execute();
           }
-          echo("se agrego");
         }
 			  else
 				return false;
@@ -82,7 +81,39 @@
 	        else
 	        	return false;
       }
+      public function devolverUsuarios(){
+        $conexion = $this->getConnection();
+        $query = $conexion->prepare("SELECT first_name,last_name FROM usuario");
+        $query->execute();
+        $resultado = $query->fetchAll();
+        if(sizeof($resultado) > 0){
+          return $resultado;
+        }
+        return false;
 
+      }
+      public function loguearUsuario($email,$password){
+        $conexion = $this->getConnection();
+        $query = $conexion->prepare("SELECT * FROM usuario WHERE email=:email and password=:password");
+        $query->bindParam(':email',$email);
+          $query->bindParam(':password',$password);
+        $query->execute();
+        $resultado = $query->fetchAll();
+        if(sizeof($resultado) > 0){
+          $id = $resultado[0]['id'];
+          $query2 = $conexion->prepare("SELECT r.nombre FROM usuario_tiene_rol as ur INNER JOIN rol as r  WHERE ur.usuario_id=:id");
+          $query2->bindParam(':id',$id);
+          $query2->execute();
+          $roles = $query2->fetchAll();
+          session_start();
+          $_SESSION['ususario'] = (new Usuario($resultado[0]['username'],$resultado[0]['email'],$resultado[0]['password'],$resultado[0]['activo'], $resultado[0]['created_at'], $resultado[0]['updated_at'], $resultado[0]['first_name'],$resultado[0]['last_name'],$roles))->setId($resultado[0]['id']);
+          return true;
+        }
+        else{
+          throw new Exception("EL usuario o la contraseña son incorrectos");   
+          return false;      
+        }
+      }
   		public function activarUsuario($idUsuario){
   			$conexion = $this->getConnection();
   			$query = $conexion->prepare("UPDATE  usuario SET activo=:activo");

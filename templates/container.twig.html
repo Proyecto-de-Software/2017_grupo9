@@ -11,6 +11,10 @@
 		{% include 'mostrarPaciente.twig.html' %}
 	{% elseif tipo == 'agregarPaciente' %}
 		{% include 'agregarPaciente.twig.html' %}
+	{% elseif tipo == 'agregarUsuario' %}
+		{% include 'logup.twig.html' %}
+	{% elseif tipo == 'listarPacientes' or tipo == 'listarUsuarios' %}
+		{% include 'listado.twig.html' %}
 	{% else %}
 		{% include 'infoHome.twig.html' %}
 	{% endif %}
