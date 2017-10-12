@@ -6,7 +6,7 @@
  *
  */
 
-require_once $_SERVER['DOCUMENT_ROOT'].'/vendor/autoload.php';
+require_once './vendor/autoload.php';
 
 abstract class TwigView {
 
@@ -17,7 +17,7 @@ abstract class TwigView {
         if (!isset(self::$twig)) {
 
             Twig_Autoloader::register();
-            $loader = new Twig_Loader_Filesystem($_SERVER['DOCUMENT_ROOT'].'./templates');
+            $loader = new Twig_Loader_Filesystem('./templates');
             self::$twig = new Twig_Environment($loader, array('cache' => false));
         }
         return self::$twig;
