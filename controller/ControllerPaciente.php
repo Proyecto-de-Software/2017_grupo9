@@ -1,5 +1,6 @@
 <?php
 	
+	#Nos ubicamos en el document_root para evitar problemas al usar twig, ya que twig usa paths relativos.
 	chdir($_SERVER['DOCUMENT_ROOT']);
 
 	session_start();
