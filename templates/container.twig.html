@@ -9,7 +9,7 @@
 		{% include 'pacientes.twig.html' %}
 	{% elseif tipo == 'mostrarPaciente' %}
 		{% include 'mostrarPaciente.twig.html' %}
-	{% elseif tipo == 'agregarPaciente' %}
+	{% elseif tipo == 'agregarPaciente' or tipo == 'altaDePaciente' %}
 		{% include 'agregarPaciente.twig.html' %}
 	{% elseif tipo == 'agregarUsuario' %}
 		{% include 'logup.twig.html' %}

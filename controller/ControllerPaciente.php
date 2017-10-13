@@ -27,8 +27,8 @@
     }
 
     function agregarPaciente(){
-        require_once($_SERVER['DOCUMENT_ROOT']."/view/AgregarPacientes.php");
-        $view = new AgregarPacientes();
+        require_once($_SERVER['DOCUMENT_ROOT']."/view/AgregarPaciente.php");
+        $view = new AgregarPaciente();
         $view->show();
     }
 
@@ -40,6 +40,11 @@
 
 	if(isset($_GET['action'])){
 		switch ($_GET['action']) {
+			case 'altaDePaciente':
+				//if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista()){
+		       		agregarPaciente();
+		       	//	}
+		       	break;
 		    case 'agregarPaciente':
 		    	//if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista()){
 		    		$paciente = crearPaciente();

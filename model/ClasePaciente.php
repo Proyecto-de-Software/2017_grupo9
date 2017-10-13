@@ -12,8 +12,8 @@
 		private $idTipoDocumento;
 		private $numeroDoc;
 
-		private function __construct($id,$apellido,$nombre,$domicilio,$telefono,$fechaNacimiento,$genero,$idDatosDemograficos,$idObraSocial,$idTipoDocumento,$numeroDoc){
-        	$this->id = $id;
+		private function __construct($apellido,$nombre,$domicilio,$telefono,$fechaNacimiento,$genero,$idDatosDemograficos,$idObraSocial,$idTipoDocumento,$numeroDoc){
+        	//$this->id = $id;
             $this->apellido = $apellido;
         	$this->nombre = $nombre;
         	$this->domicilio = $domicilio;
