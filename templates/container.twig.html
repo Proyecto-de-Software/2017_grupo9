@@ -7,10 +7,12 @@
 		{% include 'config.twig.html' %}
 	{% elseif tipo == 'pacientes' %}
 		{% include 'pacientes.twig.html' %}
-	{% elseif tipo == 'mostrarPaciente' %}
+	{% elseif tipo == 'mostrarPaciente' or tipo == 'modificarPaciente' %}
 		{% include 'mostrarPaciente.twig.html' %}
-	{% elseif tipo == 'agregarPaciente' or tipo == 'altaDePaciente' %}
+	{% elseif tipo == 'agregarPaciente' or tipo == 'formularioAgregarPaciente' %}
 		{% include 'agregarPaciente.twig.html' %}
+	{% elseif tipo == 'formularioModificarPaciente' %}
+		{% include 'modificarPaciente.twig.html' %}
 	{% elseif tipo == 'agregarUsuario' %}
 		{% include 'logup.twig.html' %}
 	{% elseif tipo == 'listarPacientes' or tipo == 'listarUsuarios' %}

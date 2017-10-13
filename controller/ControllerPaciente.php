@@ -10,20 +10,20 @@
 	require_once($_SERVER['DOCUMENT_ROOT'].'/view/TwigView.php');
 
 	function crearPaciente(){
-		$paciente = new Paciente($_POST['apellido'], $_POST['nombre'], $_POST['domicilio'], $_POST['telefono'], $_POST['fechaNacimiento'], $_POST['genero'], $_POST['idDatosDemograficos'], $_POST['idObraSocial'], $_POST['idTipoDocumento'], $_POST['numeroDoc']);
+		$paciente = new Paciente($_POST['id'], $_POST['apellido'], $_POST['nombre'], $_POST['domicilio'], $_POST['telefono'], $_POST['fechaNacimiento'], $_POST['genero'], $_POST['idDatosDemograficos'], $_POST['idObraSocial'], $_POST['idTipoDocumento'], $_POST['numeroDoc']);
 		return $paciente;
 	}
 
-	function listarPacientes($pacientes){
+	function listarPacientes(){
         require_once($_SERVER['DOCUMENT_ROOT']."/view/ListarPacientes.php");
         $view = new ListarPacientes();
-        $view->show($pacientes);
+        $view->show(RepositorioPaciente::getInstance()->devolverPacientes());
     }
 
-    function mostrarPaciente(){
+    function mostrarPaciente($paciente){
         require_once($_SERVER['DOCUMENT_ROOT']."/view/MostrarPacientes.php");
         $view = new MostrarPaciente();
-        $view->show();
+        $view->show($paciente);
     }
 
     function agregarPaciente(){
@@ -32,10 +32,10 @@
         $view->show();
     }
 
-    function modificarPaciente(){
-        require_once($_SERVER['DOCUMENT_ROOT']."/view/ModificarPaciente.php");
+    function modificarPaciente($paciente,$obrasSociales,$tiposDeDocumento){
+        require_once($_SERVER['DOCUMENT_ROOT']."/view/FormularioModificarPaciente.php");
         $view = new ModificarPaciente();
-        $view->show();
+        $view->show($paciente,$obrasSociales,$tiposDeDocumento);
     } 
 
 	if(isset($_GET['action'])){
@@ -56,25 +56,29 @@
 		       		}
 		       //	}
 		        break;
+		    case 'modificacionDePaciente':
+		    	$paciente = RepositorioPaciente::getInstance()->buscarPacientePorId($_POST['id']);
+		    	$obrasSociales = RepositorioPaciente::getInstance()->devolverObrasSociales();
+		    	$tiposDeDocumento = RepositorioPaciente::getInstance()->devolverTiposDeDocumento();
+		    	modificarPaciente($paciente,$obrasSociales,$tiposDeDocumento);
+		    	break;
 		    case 'modificarPaciente':
 		    //	if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista()){
-		        	$paciente = crearPaciente();
-		        	if(RepositorioPaciente::getInstance()->modificarPaciente($paciente)){
-		        		listarPacientes();
-		        	}
+		        	RepositorioPaciente::getInstance()->modificarPaciente(crearPaciente());
+		        	//listarPacientes();
 		       // }
 		        break;
 		    case 'eliminarPaciente':
 		    	//if(($_SESSION['usuario'])->esAdministrador()){
-		    		$paciente = crearPaciente();
-		        	if(RepositorioPaciente::getInstance()->eliminarPaciente($paciente)){
+		        	if(RepositorioPaciente::getInstance()->eliminarPaciente($_POST['id'])){
 		        		listarPacientes();
 		        	}
 		       // }
 		        break;
 		    case 'mostrarPaciente':
 		    	//if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista()){
-		        	mostrarPaciente();
+		    		$paciente = RepositorioPaciente::getInstance()->buscarPacientePorId($_POST['id']);
+		        	mostrarPaciente($paciente);
 		       // }
 		        break;
 		    case 'listarPacientes':

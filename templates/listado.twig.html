@@ -1,26 +1,66 @@
 <section>
-	<h2> {{titulo}}</h2>
-	{% if titulo=='Usuarios' %} 
-	<a class="btn btn-success mt-3 mb-5" role="button" href="./Controller/ControllerUsuario.php?action=agregarUsuarioView">Agregar nuevo usuario</a>
-	{% elseif titulo=='Pacientes '%}
-	<a class="btn btn-success mt-3 mb-5" role="button" href="">Agregar nuevo paciente</a>
-	{% endif %}
-	<table class="table table-bordered">
-	  <thead>
-	    <tr>
-	      <th>Nombre</th>
-	      <th>Apellido</th>
-	    </tr>
-	  </thead>
-	  <tbody>
-	  	{% for elemento in lista %}
-	    <tr>
-	      <td>{{elemento.0}}</td>
-	      <td>{{elemento.1}}</td>
-	      <td>Editar</td>
-	      <td>Eliminar</td>
-	    </tr>
-	    {% endfor %}
-	  </tbody>
+	<h2> {{titulo}}</h2><br>
+	<table class="table table-hover">
+	  	<thead>
+		    <tr>
+		    {% if tipo == 'listarPacientes' %}
+		      <th>Nombre</th>
+		      <th>Apellido</th>
+		      <th></th>
+		      <th></th>
+		      <th></th>
+		    {% elseif tipo == 'listarUsuarios' %}
+		    	<th>Nombre de usuario</th>
+		      	<th></th>
+		      	<th></th>
+		      	<th></th>
+		    {% endif %}
+		    </tr>
+	  	</thead>
+		<tbody>
+		  	{% for elemento in lista %}
+		    <tr>
+		    {% if tipo == 'listarPacientes' %}
+		      	<td>{{elemento.nombre}}</td>
+		    	<td>{{elemento.apellido}}</td>
+		   	{% endif %}
+		      	<td>
+		      		{% if tipo == 'listarPacientes' %}
+		      		<form class="text-center" method="POST" action="./ControllerPaciente.php?action=modificacionDePaciente">
+		      		{% elseif tipo == 'listarUsuarios' %}
+		      		<form class="text-center" method="POST" action="./ControllerUsuario.php?action=modificacionDeUsuario">
+		      		{% endif %}
+		      			<input type="hidden" name="id" value={{elemento.id}}>
+		      			<button type="submit" class="btn btn-outline-success  btn-own-info">Editar</button>
+		      		</form>
+		      	</td>
+		      	<td>
+		      		{% if tipo == 'listarPacientes' %}
+		      		<form class="text-center" method="POST" action="./ControllerPaciente.php?action=eliminarPaciente">
+		      		{% elseif tipo == 'listarUsuarios' %}
+		      		<form class="text-center" method="POST" action="./ControllerUsuario.php?action=eliminarUsuario">
+		      		{% endif %}
+		      			<input type="hidden" name="id" value="{{elemento.id}}">
+		      			<button type="submit" class="btn btn-outline-success  btn-own-info">Eliminar</button>
+		      		</form>
+		      	</td>
+		      	<td>
+		      		{% if tipo == 'listarPacientes' %}
+		      		<form class="text-center" method="POST" action="./ControllerPaciente.php?action=mostrarPaciente">
+		      		{% elseif tipo == 'listarUsuarios' %}
+		      		<form class="text-center" method="POST" action="./ControllerUsuario.php?action=mostrarUsuario">
+		      		{% endif %}
+		      			<input type="hidden" name="id" value="{{elemento.id}}">
+		      			<button type="submit" class="btn btn-outline-success  btn-own-info ">Más información</button>
+		      		</form>
+		      	</td>
+		    </tr>
+		    {% endfor %}
+		</tbody>
 	</table>
+	{% if tipo == 'listarPacientes' %}
+	<a class="btn btn-success mt-3 mb-5 text-right" role="button" href="./Controller/ControllerPaciente.php?action=altaDePaciente">Agregar nuevo paciente</a>
+	{% elseif tipo == 'listarUsuarios' %} 
+	<a class="btn btn-success mt-3 mb-5 text-right" role="button" href="./Controller/ControllerUsuario.php?action=agregarUsuarioView">Agregar nuevo usuario</a>
+	{% endif %}
 </section>
