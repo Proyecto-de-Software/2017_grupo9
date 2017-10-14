@@ -1,7 +1,7 @@
 <?php
 	class Configuracion{
 
-		private $id;
+		//private $id;
 		private $titulo;
 		private $descripcion;
 		private $contacto;
