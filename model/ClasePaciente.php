@@ -23,7 +23,7 @@
         	$this->idDatosDemograficos = $idDatosDemograficos;
         	$this->idObraSocial = $idObraSocial;
         	$this->idTipoDocumento = $idTipoDocumento;
-        	$this->numero = $numeroDoc;
+        	$this->numeroDoc = $numeroDoc;
     	}
 
         public function getId(){

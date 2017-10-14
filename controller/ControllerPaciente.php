@@ -21,15 +21,15 @@
     }
 
     function mostrarPaciente($paciente){
-        require_once($_SERVER['DOCUMENT_ROOT']."/view/MostrarPacientes.php");
+        require_once($_SERVER['DOCUMENT_ROOT']."/view/MostrarPaciente.php");
         $view = new MostrarPaciente();
         $view->show($paciente);
     }
 
-    function agregarPaciente(){
+    function agregarPaciente($obrasSociales,$tiposDeDocumento){
         require_once($_SERVER['DOCUMENT_ROOT']."/view/AgregarPaciente.php");
         $view = new AgregarPaciente();
-        $view->show();
+        $view->show($obrasSociales,$tiposDeDocumento);
     }
 
     function modificarPaciente($paciente,$obrasSociales,$tiposDeDocumento){
@@ -42,7 +42,9 @@
 		switch ($_GET['action']) {
 			case 'altaDePaciente':
 				//if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista()){
-		       		agregarPaciente();
+					$obrasSociales = RepositorioPaciente::getInstance()->devolverObrasSociales();
+		    		$tiposDeDocumento = RepositorioPaciente::getInstance()->devolverTiposDeDocumento();
+		       		agregarPaciente($obrasSociales,$tiposDeDocumento);
 		       	//	}
 		       	break;
 		    case 'agregarPaciente':
@@ -65,7 +67,7 @@
 		    case 'modificarPaciente':
 		    //	if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista()){
 		        	RepositorioPaciente::getInstance()->modificarPaciente(crearPaciente());
-		        	//listarPacientes();
+		        	mostrarPaciente(RepositorioPaciente::getInstance()->buscarPacientePorId($_POST['id']));
 		       // }
 		        break;
 		    case 'eliminarPaciente':

@@ -10,18 +10,12 @@
 		  	</div>
 		  	<div class="form-group ">
 			    <label for="apellido" hidden>Apellido</label>
-			    <input type="text" class="form-control mt-3" id="apellido" name="apellido" value="{{paciente.nombre}}">
+			    <input type="text" class="form-control mt-3" id="apellido" name="apellido" value="{{paciente.apellido}}">
 		  	</div>
 		  	<div class="form-group ">
 			    <label for="fechaNacimiento" hidden>Fecha de nacimiento</label>
-			    <input type="text" class="form-control mt-3" id="datepicker" name="fechaNacimiento" >
+			    <input type="date" min="2005-01-01" class="form-control mt-3" id="fechaNacimiento" name="fechaNacimiento" value="{{paciente.fechaNacimiento}}">
 		  	</div>
-		  	<script>
-  				$("#datepicker").datepicker();
-  			</script>
-  			<script>
-  				$("#datepicker").datepicker("option", "yearRange", "-100:-10");
-  			</script>
 		  	<div class="form-group ">
 			    <label for="genero" hidden>Género</label>
 			    <select name="genero" class="form-control mt-3">
@@ -38,17 +32,17 @@
 			    <label for="tipoDoc" hidden>Tipo de documento</label>
 			    <select name="idTipoDocumento" class="form-control mt-3">
 			    	{% for tipoDoc in tiposDeDocumento %}
-				    	{% if paciente.idTipoDocumento == 'tipoDoc.id' %}
-				    		<option value="tipoDoc.id" selected>{{ tipoDoc.nombre | upper }}</option>
+				    	{% if paciente.idTipoDocumento == tipoDoc.id %}
+				    		<option value="{{ tipoDoc.id }}" selected>{{ tipoDoc.nombre | upper }}</option>
 				    	{% else %}
-				    		<option value="tipoDoc.id">{{ tipoDoc.nombre | upper }}</option>
+				    		<option value="{{ tipoDoc.id }}">{{ tipoDoc.nombre | upper }}</option>
 				    	{% endif %}
 				    {% endfor %}
 			    </select>
 		  	</div>
 		  	<div class="form-group ">
 			    <label for="numeroDoc" hidden>Nro de documento</label>
-			    <input type="number" pattern="[0-9]" class="form-control mt-3" id="numeroDoc" name="numeroDoc" value="{{paciente.numeroDoc}}">
+			    <input type="number" class="form-control mt-3" id="numeroDoc" name="numeroDoc" value="{{paciente.numeroDoc}}">
 		  	</div>
 		  	<div class="form-group ">
 			    <label for="domicilio" hidden>Domicilio</label>
@@ -56,21 +50,30 @@
 		  	</div>
 		  	<div class="form-group ">
 			    <label for="telefono" hidden>Teléfono</label>
-			    <input type="text" class="form-control mt-3" id="telefono" name="telefono" value="{{paciente.telefono}}">
+			    {% if (paciente.telefono is null) or (paciente.telefono == '') %}
+			    	<input type="number" class="form-control mt-3" id="telefono" name="telefono" placeholder="Ingrese teléfono">
+			    {% else %}
+			    	<input type="number" class="form-control mt-3" id="telefono" name="telefono" value="{{paciente.telefono}}">
+			    {% endif %}	
 		  	</div>
 		  	<div class="form-group ">
 			    <label for="obraSocial" hidden>Obra social</label>
 			    <select name="idObraSocial" class="form-control mt-3">
+			    	{% if (paciente.idObraSocial is null) or (paciente.idObraSocial == '') %}
+			    		<option value="NULL" selected>Ingrese obra social</option>
+			    	{% else %}
+				    	<option value="NULL">Ingrese obra social</option>
+			    	{% endif %}
 			    	{% for obraSocial in obrasSociales %}
-				    	{% if paciente.idObraSocial == 'obraSocial.id' %}
-				    		<option value="obraSocial.id" selected>{{ obraSocial.nombre | upper }}</option>
+				    	{% if paciente.idObraSocial == obraSocial.id %}
+				    		<option value="{{ obraSocial.id }}" selected>{{ obraSocial.nombre | upper }}</option>
 				    	{% else %}
-				    		<option value="obraSocial.id">{{ obraSocial.nombre | upper }}</option>
+				    		<option value="{{ obraSocial.id }}">{{ obraSocial.nombre | upper }}</option>
 				    	{% endif %}
 			    	{% endfor %}
 			    </select>
 		  	</div>
-		  	<input name="idDatosDemograficos" value="{{paciente.idDatosDemograficos}}" hidden>
+		  	<input name="idDatosDemograficos" value="{{ paciente.idDatosDemograficos }}" hidden>
 			
 			<button type="submit" class="btn btn-outline-success  btn-own-info">Modificar paciente</button>
 		</form>

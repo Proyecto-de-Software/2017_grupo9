@@ -34,14 +34,20 @@
 
       public function modificarPaciente($paciente){
         $conexion = $this->getConnection();
-        $query = $conexion->prepare("UPDATE paciente SET apellido=:apellido, nombre=:nombre, domicilio=:domicilio, telefono=:telefono, fecha_nacimiento=:fechaNacimiento, genero=:genero, id_datos_demograficos=:idDatosDemograficos, id_obra_social=:idObraSocial, id_tipo_documento=:idTipoDocumento, numero_doc=:numeroDoc WHERE id=:id");
+        if($paciente->getIdObraSocial() == 'NULL'){
+          echo 'holaaaa';
+          $query = $conexion->prepare("UPDATE paciente SET obra_social_id=NULL WHERE id=:id");
+          $query->bindParam(':id', $paciente->getId());
+          $query->execute();
+        }
+        $query = $conexion->prepare("UPDATE paciente SET apellido=:apellido, nombre=:nombre, domicilio=:domicilio, telefono=:telefono, fecha_nacimiento=:fechaNacimiento, genero=:genero, datos_demograficos_id=:idDatosDemograficos, obra_social_id=:idObraSocial, tipo_doc_id=:idTipoDocumento, numero_doc=:numeroDoc WHERE id=:id");
         $query->bindParam(':apellido', $paciente->getApellido());
         $query->bindParam(':nombre', $paciente->getNombre());
         $query->bindParam(':domicilio', $paciente->getDomicilio());
         $query->bindParam(':telefono', $paciente->getTelefono());
         $query->bindParam(':fechaNacimiento', $paciente->getFechaNacimiento());
         $query->bindParam(':genero', $paciente->getGenero());
-        $query->bindParam(':idDatosDemograficos', $paciente->getIdDatosDemograficos());
+        $query->bindParam(':idDatosDemograficos', $paciente->getIdDatosDemograficos());        
         $query->bindParam(':idObraSocial', $paciente->getIdObraSocial());
         $query->bindParam(':idTipoDocumento', $paciente->getIdTipoDocumento());
         $query->bindParam(':numeroDoc', $paciente->getNumeroDoc());
