@@ -1,7 +1,7 @@
 <?php
 	class Configuracion{
 
-		private $id;
+		//private $id;
 		private $titulo;
 		private $descripcion;
 		private $contacto;
@@ -17,7 +17,7 @@
 		}
 
         public function getTitulo(){
-        	$this->titulo;
+        	return $this->titulo;
         }
 
         public function setTitulo($titulo){
@@ -25,7 +25,7 @@
         }
 
         public function getDescripcion(){
-        	$this->descripcion;
+        	return $this->descripcion;
         }
 
         public function setDescripcion($descripcion){
@@ -33,7 +33,7 @@
         }
 
         public function getContacto(){
-        	$this->contacto;
+        	return $this->contacto;
         }
 
         public function setContacto($contacto){
@@ -41,7 +41,7 @@
         }
 
         public function getCantElem(){
-        	$this->cantElem;
+        	return $this->cantElem;
         }
 
         public function setCantElem($cantElem){
@@ -49,7 +49,7 @@
         }
 
         public function getHabilitado(){
-        	$this->habilitado;
+        	return $this->habilitado;
         }
 
         public function setHabilitado($habilitado){
