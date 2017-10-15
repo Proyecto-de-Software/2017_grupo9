@@ -57,7 +57,7 @@
         $rolesQuery = $conexion->prepare("SELECT * FROM usuario_tiene_rol WHERE usuario_id=:idUsuario");
         $rolesQuery->bindParam(':idUsuario',$usuario->getId());
         foreach($usuario->getIdRoles() as $rol){
-          $rolDeUsuario = $conexion->porepare("SELECT * FROM usuario_tiene_rol WHERE usuario_id=:idUsuario and rol_id=:idRol");
+          $rolDeUsuario = $conexion->prepare("SELECT * FROM usuario_tiene_rol WHERE usuario_id=:idUsuario and rol_id=:idRol");
           $rolDeUsuario->bindParam(':id',$usuario->getId());
           $rolDeUsuario->bindParam(':idRol',$rol);
           if($rolDeUsuario->execute()){
