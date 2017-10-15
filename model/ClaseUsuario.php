@@ -9,9 +9,9 @@
 		private $creadoEn;
 		private $nombre;
 		private $apellido;
-		private $idRoles;
+		private $roles; // se guarda un array con id y nombre de rol. Ej: $roles[0] tiene ['id']['nombre']
 
-		public function __construct($nombreUsuario,$email,$password,$activo, $creadoEn, $actualizadoEn, $nombre,$apellido, $idRoles) {
+		public function __construct($nombreUsuario,$email,$password,$activo, $creadoEn, $actualizadoEn, $nombre,$apellido, $roles) {
         	$this->nombreUsuario = $nombreUsuario;
         	$this->email = $email; 
         	$this->password = $password;
@@ -20,27 +20,33 @@
         	$this->activo = $activo;
         	$this->creadoEn = $creadoEn;
         	$this->actualizadoEn = $actualizadoEn;
-        	$this->idRoles = $idRoles;
+        	$this->roles = $roles;
 
     	}
         public function esAdministrador(){
-            foreach($idRoles as $idRol){
-                if($idRol == 1) return true;
+            foreach($roles as $rol){
+                if($rol['nombre'] == 'administrador') 
+                    return true;
+                else
+                    return false;
             }
-            return false;
         }
         public function esRecepcionista(){
-           foreach($idRoles as $idRol){
-                if($idRol == 2) return true;
+            foreach($roles as $rol){
+                if($rol['nombre'] == 'recepcionista') 
+                    return true;
+                else
+                    return false;
             }
-            return false;
         }
         
         public function esPediatra(){
-           foreach($idRoles as $idRol){
-                if($idRol == 3) return true;
+            foreach($roles as $rol){
+                if($rol['nombre'] == 'pediatra') 
+                    return true;
+                else
+                    return false;
             }
-            return false;
         }
         
     	public function getId(){
@@ -85,11 +91,11 @@
     	public function getFechaActualizacion(){
     		return $this->actualizadoEn;
     	}
-    	public function getIdRoles(){
-    		return $this->idRoles;
+    	public function getRoles(){
+    		return $this->roles;
     	}
-    	public function setIdRoles($idRoles){
-    		$this->idRoles = $idRoles;
+    	public function setRoles($roles){
+    		$this->roles = $roles;
     	}
         public function getNombre(){
             return $this->nombre;

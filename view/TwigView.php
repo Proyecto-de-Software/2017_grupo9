@@ -18,7 +18,8 @@ abstract class TwigView {
 
             Twig_Autoloader::register();
             $loader = new Twig_Loader_Filesystem('./templates');
-            self::$twig = new Twig_Environment($loader, array('cache' => false));
+            self::$twig = new Twig_Environment($loader, array('cache' => false, 'debug' => true));
+             self::$twig->addExtension(new Twig_Extension_Debug());
         }
         return self::$twig;
     }

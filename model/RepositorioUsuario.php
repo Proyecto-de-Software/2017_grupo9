@@ -17,8 +17,7 @@
 
   		public function agregarUsuario($usuario){
   			$conexion = $this->getConnection();
-
-  			$query = $conexion->prepare("INSERT INTO usuario(id,email, username, password, activo, updated_at, created_at, first_name, last_name) VALUES(null,:email, :username, :password, :activo, :updated_at, :created_at, :first_name, :last_name)");
+  			$query = $conexion->prepare("INSERT INTO usuario(email, username, password, activo, updated_at, created_at, first_name, last_name) VALUES(:email, :username, :password, :activo, :updated_at, :created_at, :first_name, :last_name)");
   			$query->bindParam(':email', $usuario->getEmail());
   			$query->bindParam(':username', $usuario->getNombreUsuario());
   			$query->bindParam(':password', $usuario->getPassword());
@@ -31,17 +30,18 @@
   				$newId = $conexion->lastInsertId();
   				$query2 = $conexion->prepare("INSERT INTO usuario_tiene_rol(usuario_id, rol_id) VALUES(:usuario_id, :rol_id)");
   				$query2->bindParam(':usuario_id', $newId);
-  				foreach($usuario->getIdRoles() as $rol){
+  				foreach($usuario->getRoles() as $rol){
   					$query2->bindParam(':rol_id', $rol['id']);
   					$query2->execute();
           }
         }
 			  else
-				return false;
+				  return false;
 
   		}
 
   		public function modificarUsuario($usuario){
+
   			$conexion = $this->getConnection();
   			$query = $conexion->prepare("UPDATE  usuario SET email=:email, username=:username, password=:password, activo=:activo, updated_at=:updated_at, created_at=:created_at, first_name=:first_name, last_name=:last_name WHERE id=:id");
         $now = date('Y-m-d');
@@ -56,15 +56,15 @@
         $query->bindParam(':id',$usuario->getId());
         $rolesQuery = $conexion->prepare("SELECT * FROM usuario_tiene_rol WHERE usuario_id=:idUsuario");
         $rolesQuery->bindParam(':idUsuario',$usuario->getId());
-        foreach($usuario->getIdRoles() as $rol){
+        foreach($usuario->getRoles() as $rol){
           $rolDeUsuario = $conexion->prepare("SELECT * FROM usuario_tiene_rol WHERE usuario_id=:idUsuario and rol_id=:idRol");
-          $rolDeUsuario->bindParam(':id',$usuario->getId());
-          $rolDeUsuario->bindParam(':idRol',$rol);
-          if($rolDeUsuario->execute()){
+          $rolDeUsuario->bindParam(':idUsuario',$usuario->getId());
+          $rolDeUsuario->bindParam(':idRol', $rol['id']);
+          if( $rolDeUsuario->execute() ==1){
             if(sizeOf($rolDeUsuario->fetchAll()) == 0){
               $nuevoRol = $conexion->prepare("INSERT INTO usuario_tiene_rol(id,usuario_id,rol_id) VALUES(null,:idUsuario, :idRol) ");
-              $rolDeUsuario->bindParam(':id',$usuario->getId());
-              $rolDeUsuario->bindParam(':idRol',$rol);
+              $rolDeUsuario->bindParam(':idUsuario',$usuario->getId());
+              $rolDeUsuario->bindParam(':idRol',$rol['id']);
             }
           }
 
@@ -89,17 +89,14 @@
         	$query->bindParam(':idUsuario', $idUsuario);
         	$query->execute();
           $usuario = $query->fetchAll();
-
           $queryRoles = $conexion->prepare("SELECT r.id, r.nombre FROM rol as r INNER JOIN usuario_tiene_rol as ur ON r.id=ur.rol_id  WHERE ur.usuario_id=:idUsuario");
           $queryRoles->bindParam(':idUsuario', $idUsuario);
         	$queryRoles->execute();     
           $roles = $queryRoles->fetchAll();
-          $roles = array_values($roles);
-        	
-
 	        if(sizeof($usuario)>0){
 	          $user = new Usuario($usuario[0]['username'],$usuario[0]['email'],$usuario[0]['password'],$usuario[0]['activo'], $usuario[0]['created_at'], $usuario[0]['updated_at'], $usuario[0]['first_name'],$usuario[0]['last_name'],$roles);
             $user->setId($usuario[0]['id']);
+            
             return $user;
 	        }
 	        else
@@ -107,13 +104,19 @@
       }
       public function devolverUsuarios(){
         $conexion = $this->getConnection();
-        $query = $conexion->prepare("SELECT * FROM usuario");
+        $query = $conexion->prepare("SELECT id FROM usuario");
         $query->execute();
         $resultado = $query->fetchAll();
+        $usuarios = [];
         if(sizeof($resultado) > 0){
-          return $resultado;
+          foreach($resultado as $usuario){
+            array_push($usuarios, $this->buscarUsuarioPorId($usuario['id']));
+          }
+
+          return $usuarios;
         }
-        return false;
+        else
+          return false;
 
       }
      
