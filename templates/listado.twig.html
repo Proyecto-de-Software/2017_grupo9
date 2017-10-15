@@ -28,9 +28,9 @@
 		   	{% endif %}
 		      	<td>
 		      		{% if tipo == 'listarPacientes' %}
-		      		<form class="text-center" method="POST" action="/Controller/ControllerPaciente.php?action=modificacionDePaciente">
+		      		<form class="text-center" method="POST" action="/controller/ControllerPaciente.php?action=modificacionDePaciente">
 		      		{% elseif tipo == 'listarUsuarios' %}
-		      		<form class="text-center" method="POST" action="/Controller/ControllerUsuario.php?action=modificacionDeUsuario">
+		      		<form class="text-center" method="POST" action="/controller/ControllerUsuario.php?action=modificacionDeUsuario">
 		      		{% endif %}
 		      			<input type="hidden" name="id" id="id" value={{elemento.id}}>
 		      			<button type="submit" class="btn btn-outline-success  btn-own-info">Editar</button>
@@ -43,9 +43,9 @@
 		      		{% elseif tipo == 'listarUsuarios' %}
 		      		<form class="text-center" method="POST" onsubmit="return confirm('Seguro?')" action="./ControllerUsuario.php?action=eliminarUsuario">
 
-		      		<form class="text-center" method="POST" action="/Controller/ControllerPaciente.php?action=eliminarPaciente">
+		      		<form class="text-center" method="POST" action="/controller/ControllerPaciente.php?action=eliminarPaciente">
 		      		{% elseif tipo == 'listarUsuarios' %}
-		      		<form class="text-center" method="POST" action="/Controller/ControllerUsuario.php?action=eliminarUsuario">
+		      		<form class="text-center" method="POST" action="/controller/ControllerUsuario.php?action=eliminarUsuario">
 
 		      		{% endif %}
 		      			<input type="hidden" name="id" value="{{elemento.id}}">
@@ -54,9 +54,9 @@
 		      	</td>
 		      	<td>
 		      		{% if tipo == 'listarPacientes' %}
-		      		<form class="text-center" method="POST" action="/Controller/ControllerPaciente.php?action=mostrarPaciente">
+		      		<form class="text-center" method="POST" action="/controller/ControllerPaciente.php?action=mostrarPaciente">
 		      		{% elseif tipo == 'listarUsuarios' %}
-		      		<form class="text-center" method="POST" action="/Controller/ControllerUsuario.php?action=mostrarUsuario">
+		      		<form class="text-center" method="POST" action="/controller/ControllerUsuario.php?action=mostrarUsuario">
 		      		{% endif %}
 		      			<input type="hidden" name="id" value="{{elemento.id}}">
 		      			<button type="submit" class="btn btn-outline-success  btn-own-info ">Más información</button>
@@ -68,8 +68,8 @@
 	</table>
 	{% if tipo == 'listarPacientes' %}
 
-	<a class="btn btn-success mt-3 mb-5 text-right" role="button" href="/../Controller/ControllerPaciente.php?action=altaDePaciente">Agregar nuevo paciente</a>
+	<a class="btn btn-success mt-3 mb-5 text-right" role="button" href="/../controller/ControllerPaciente.php?action=altaDePaciente">Agregar nuevo paciente</a>
 	{% elseif tipo == 'listarUsuarios' %} 
-	<a class="btn btn-success mt-3 mb-5 text-right" role="button" href="/../Controller/ControllerUsuario.php?action=agregarUsuarioView">Agregar nuevo usuario</a>
+	<a class="btn btn-success mt-3 mb-5 text-right" role="button" href="/../controller/ControllerUsuario.php?action=agregarUsuarioView">Agregar nuevo usuario</a>
 	{% endif %}
 </section>
