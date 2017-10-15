@@ -24,8 +24,9 @@
 			$actualizadoEn = $_POST['fechaActualizacion'];
 		}
 		else{
-			$creadoEn = date("Y-m-d");
-			$actualizadoEn = date("Y-m-d");
+			$now = date("Y-m-d");
+			$creadoEn = $now;
+			$actualizadoEn = $now;
 		}
 		$user =  new Usuario($_POST['user'], $_POST['email'], $_POST['password'], true, $creadoEn, $actualizadoEn, $_POST['name'], $_POST['apellido'], $rolesCompletos);
 		if($modif) $user->setId($_POST['id']);
@@ -93,7 +94,7 @@
 			case 'modificarUsuario':
 				if(isset($_POST['password']) && isset($_POST['password2']) && $_POST['password'] == $_POST['password2']){
 					$resultado = RepositorioUsuario::getInstance()->modificarUsuario(crearUsuario(true));
-					var_dump($resultado);
+					
 					if($resultado){
 						mostrarUsuario($resultado);
 					}

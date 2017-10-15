@@ -2,7 +2,7 @@
 	<div class="login col-md-5  mx-auto mt-4 mb-4 pb-5 pt-5 pr-5 pl-5 border rounded ">
 		{% if mensaje is defined %}<p class="text-danger">{{mensaje}}</p>{% endif %}
 		<h3 class="card-header text-center myHeader">Modificar usuario </h3>
-		<form class="text-center" role="form" method="POST" action="/controller/ControllerUsuario.php?action=modificarUsuario">
+		<form class="text-center" role="form" method="POST" onsubmit="return validarRoles()" action="/controller/ControllerUsuario.php?action=modificarUsuario">
 			<label for="name" hidden>Id</label>
 			<input name="id" value="{{usuario.id}}" hidden>
 			<input name="fechaActualizacion" value="{{usuario.actualizadoEn}}" hidden>
