@@ -127,6 +127,10 @@
 			case 'listarUsuarios':
 				listarUsuarios(RepositorioUsuario::getInstance()->devolverUsuarios());
 				break;
+			case 'cerrarSesion':
+				session_destroy();
+				header("Location: /../");
+				break;
 			case 'loginUsuarioView':
 				loginUsuario("");
 				break;
