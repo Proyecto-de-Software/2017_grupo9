@@ -39,6 +39,21 @@
       }
       else return false;
     }
-}
+    public function buscarRolesPorNombre($nombresRoles){
+     
+      $stringQuery = "SELECT * FROM rol WHERE nombre=";
+      foreach ($nombresRoles as $key => $value) {
+        $stringQuery = $stringQuery."'$value'";
+        if(!($value === end($nombresRoles))){
+          $stringQuery = $stringQuery.' or nombre=';
+        }
+      }
+      $conexion = $this->getConnection();
+      $query = $conexion->prepare($stringQuery);
+      $query->execute();
+      return $query->fetchAll();
 
+    }
+}
+// if(!($nombreRol === end($nombresRoles))){
 ?>

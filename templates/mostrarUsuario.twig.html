@@ -32,7 +32,7 @@
 			    <tr>
 	     			 <th scope="row">Roles: </th>
 	     			 <td>
-	     			 	{% for rol in usuario.idRoles %}
+	     			 	{% for rol in usuario.roles %}
 	     			 		{{ rol.nombre }}
 	     			 	{% endfor %}
 	     			 </td>
@@ -46,11 +46,15 @@
 	     		<tr>
 	     			 <th scope="row">Fecha de ultima actualización: </th>
 	     			 <td>
-	     			 	{{usuario.actualizadoEn|date('d-m-Y')}}
+	     			 	{{usuario.actualizadoEn|date('d-m-Y')}} 
 	     			 </td>
 			    </tr>
  			 </tbody>
 		</table>
-		
+		<form class="text-center" method="POST" action="/controller/ControllerUsuario.php?action=modificacionDeUsuario">
+   			<input type="hidden" name="id" id="id" value="{{ usuario.id }}">
+		    <button type="submit" class="btn btn-outline-success  btn-own-info">Editar</button>
+		</form>
 	</div>
+
 </section>

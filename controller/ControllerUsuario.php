@@ -10,16 +10,28 @@
 	require_once($_SERVER['DOCUMENT_ROOT'].'/view/TwigView.php');
 
 
-	function crearUsuario(){
+	function crearUsuario($modif){
 		if(isset($_POST['rol'])){
 			$roles = [];
 			for($i=0; $i < count($_POST['rol']); $i++) {
 				array_push($roles,$_POST['rol'][$i]);	
 			}
-			$roles = RepositorioRol::getInstance()->buscarRolesPorId($roles);
-			$user =  new Usuario($_POST['user'], $_POST['email'], $_POST['password'], true, date("Y-m-d"), date("Y-m-d"), $_POST['name'], $_POST['apellido'], $roles);
-			return $user;
+			
+			$rolesCompletos = RepositorioRol::getInstance()->buscarRolesPorNombre($roles);
 		}
+		if($modif){
+			$creadoEn = $_POST['fechaCreacion'];
+			$actualizadoEn = $_POST['fechaActualizacion'];
+		}
+		else{
+			$now = date("Y-m-d");
+			$creadoEn = $now;
+			$actualizadoEn = $now;
+		}
+		$user =  new Usuario($_POST['user'], $_POST['email'], $_POST['password'], true, $creadoEn, $actualizadoEn, $_POST['name'], $_POST['apellido'], $rolesCompletos);
+		if($modif) $user->setId($_POST['id']);
+		return $user;
+		
 	}
 	function listarUsuarios($usuarios){
 		// Asi quedarían las funciones con el control de permisos:
@@ -36,10 +48,10 @@
 	    $view = new AgregarUsuario();
 	    $view->show($mensaje,$roles);
     }
-    function modificacionDeUsuario($usuario,$mensaje){
+    function modificacionDeUsuario($usuario,$mensaje,$roles){
     	require_once($_SERVER['DOCUMENT_ROOT']."/view/FormularioModificarUsuario.php");
     	$view = new ModificarUsuario();
-    	$view ->show($usuario,$mensaje);
+    	$view ->show($usuario,$mensaje,$roles);
     }
     function loginUsuario($msj){
     	require_once($_SERVER['DOCUMENT_ROOT']."/view/Login.php");
@@ -70,27 +82,33 @@
 		switch($_GET['action']){
 			case "agregarUsuario":
 				if(isset($_POST['password']) && isset($_POST['password2']) && $_POST['password'] == $_POST['password2']){
-					RepositorioUsuario::getInstance()->agregarUsuario(crearUsuario());
+					RepositorioUsuario::getInstance()->agregarUsuario(crearUsuario(false));
 					listarUsuarios(RepositorioUsuario::getInstance()->devolverUsuarios());
 				} else {
-					agregarUsuario("Las contraseñas no coinciden");
+					agregarUsuario("Las contraseñas no coinciden",RepositorioRol::getInstance()->devolverRoles());
 				}				
 				break;
 			case "agregarUsuarioView":
 				agregarUsuario("", RepositorioRol::getInstance()->devolverRoles());
 				break;
 			case 'modificarUsuario':
-				$resultado = RepositorioUsuario::getInstance()->modificarUsuario(crearUsuario());
-				if($resultado){
-					mostrarUsuario($resultado);
+				if(isset($_POST['password']) && isset($_POST['password2']) && $_POST['password'] == $_POST['password2']){
+					$resultado = RepositorioUsuario::getInstance()->modificarUsuario(crearUsuario(true));
+					
+					if($resultado){
+						mostrarUsuario($resultado);
+					}
+					else{
+						modificacionDeUsuario(crearUsuario(true),"No se pudieron modificar los datos",RepositorioRol::getInstance()->devolverRoles());
+					}
 				}
 				else{
-					modificacionDeUsuario(crearUsuario(),"No se pudieron modificar los datos");
+					modificacionDeUsuario(crearUsuario(true),"Deben coincidir las contraseñas",RepositorioRol::getInstance()->devolverRoles());
 				}
 				break;
 			case 'modificacionDeUsuario':
 				$usuario = RepositorioUsuario::getInstance()->buscarUsuarioPorId($_POST['id']);
-		    	modificacionDeUsuario($usuario,"");
+		    	modificacionDeUsuario($usuario,"",RepositorioRol::getInstance()->devolverRoles());
 				break;
 			case 'eliminarUsuario':
 				RepositorioUsuario::getInstance()->eliminarUsuario($_POST['id']);
