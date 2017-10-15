@@ -39,9 +39,9 @@
 		      	<td>
 		      		{% if tipo == 'listarPacientes' %}
 
-		      		<form class="text-center" method="POST" onsubmit="return confirm('Seguro?')" action="./ControllerPaciente.php?action=eliminarPaciente">
+		      		<form class="text-center" method="POST" onsubmit="return confirm('Seguro?')" action="/controller/ControllerPaciente.php?action=eliminarPaciente">
 		      		{% elseif tipo == 'listarUsuarios' %}
-		      		<form class="text-center" method="POST" onsubmit="return confirm('Seguro?')" action="./ControllerUsuario.php?action=eliminarUsuario">
+		      		<form class="text-center" method="POST" onsubmit="return confirm('Seguro?')" action="/controller/ControllerUsuario.php?action=eliminarUsuario">
 
 		      		<form class="text-center" method="POST" action="/controller/ControllerPaciente.php?action=eliminarPaciente">
 		      		{% elseif tipo == 'listarUsuarios' %}
