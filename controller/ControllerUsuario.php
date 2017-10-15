@@ -66,6 +66,7 @@
     function loguearUsuario($usuario){
     	session_start();
     	$_SESSION['usuario'] = $usuario;
+    	$_SESSION['logueado'] = true;
     	require_once($_SERVER['DOCUMENT_ROOT']."/view/Home.php");
 	    $view = new Home();
 	    $view->show();
@@ -128,8 +129,11 @@
 				listarUsuarios(RepositorioUsuario::getInstance()->devolverUsuarios());
 				break;
 			case 'cerrarSesion':
-				session_destroy();
-				header("Location: /../");
+					session_start();
+					$_SESSION = array();
+					session_destroy();
+
+					header("Location: /../");
 				break;
 			case 'loginUsuarioView':
 				loginUsuario("");
