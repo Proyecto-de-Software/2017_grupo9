@@ -38,15 +38,15 @@
 		      	</td>
 		      	<td>
 		      		{% if tipo == 'listarPacientes' %}
-<<<<<<< HEAD
+
 		      		<form class="text-center" method="POST" onsubmit="return confirm('Seguro?')" action="./ControllerPaciente.php?action=eliminarPaciente">
 		      		{% elseif tipo == 'listarUsuarios' %}
 		      		<form class="text-center" method="POST" onsubmit="return confirm('Seguro?')" action="./ControllerUsuario.php?action=eliminarUsuario">
-=======
+
 		      		<form class="text-center" method="POST" action="/Controller/ControllerPaciente.php?action=eliminarPaciente">
 		      		{% elseif tipo == 'listarUsuarios' %}
 		      		<form class="text-center" method="POST" action="/Controller/ControllerUsuario.php?action=eliminarUsuario">
->>>>>>> c81463093aeb4060b28337adeda3ad8ca3605fe7
+
 		      		{% endif %}
 		      			<input type="hidden" name="id" value="{{elemento.id}}">
 		      			<button type="submit"  class="btn btn-outline-success  btn-own-info">Eliminar</button>
@@ -67,14 +67,9 @@
 		</tbody>
 	</table>
 	{% if tipo == 'listarPacientes' %}
-<<<<<<< HEAD
+
 	<a class="btn btn-success mt-3 mb-5 text-right" role="button" href="/../Controller/ControllerPaciente.php?action=altaDePaciente">Agregar nuevo paciente</a>
 	{% elseif tipo == 'listarUsuarios' %} 
 	<a class="btn btn-success mt-3 mb-5 text-right" role="button" href="/../Controller/ControllerUsuario.php?action=agregarUsuarioView">Agregar nuevo usuario</a>
-=======
-	<a class="btn btn-success mt-3 mb-5 text-right" role="button" href="/Controller/ControllerPaciente.php?action=altaDePaciente">Agregar nuevo paciente</a>
-	{% elseif tipo == 'listarUsuarios' %} 
-	<a class="btn btn-success mt-3 mb-5 text-right" role="button" href="/Controller/ControllerUsuario.php?action=agregarUsuarioView">Agregar nuevo usuario</a>
->>>>>>> c81463093aeb4060b28337adeda3ad8ca3605fe7
 	{% endif %}
 </section>
