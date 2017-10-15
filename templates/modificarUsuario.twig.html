@@ -1,6 +1,7 @@
 <section class="row mx-auto mt-5 ">
 	<div class="login col-md-5  mx-auto mt-4 mb-4 pb-5 pt-5 pr-5 pl-5 border rounded ">
 		{% if mensaje is defined %}<p class="text-danger">{{mensaje}}</p>{% endif %}
+
 		<h3 class="card-header text-center myHeader">Modificar usuario </h3>
 		<form class="text-center" role="form" method="POST" onsubmit="return validarRoles()" action="/controller/ControllerUsuario.php?action=modificarUsuario">
 			<label for="name" hidden>Id</label>
@@ -32,10 +33,11 @@
 		   		<input type="password" class="form-control mt-3" id="password2" name="password2" placeholder="Repita contraseña">
 			</div>
 			<p class="text-left">Roles:</p>
-			<div class="form-check text-left">
+			<p class="text-danger" name="mensajeRoles"> </p>
+			<div class="form-check text-left" required>
 				{% for rol in roles %}
 					{% if rol in usuario.roles %}
-							<input type="checkbox" name="rol[]" id="rol[]" class="checkbox" value={{rol.nombre}} checked="true"> 
+							<input type="checkbox" name="rol[]" id="rol[]" class="checkbox" value={{rol.nombre}} checked> 
 	    					<label for="rol">{{rol.nombre}}</label><br/>
 	    			{% else %}
 	    					<input type="checkbox" name="rol[]" id="rol[]" class="checkbox" value={{rol.nombre}}> 

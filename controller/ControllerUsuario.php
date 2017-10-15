@@ -108,7 +108,6 @@
 				break;
 			case 'modificacionDeUsuario':
 				$usuario = RepositorioUsuario::getInstance()->buscarUsuarioPorId($_POST['id']);
-				var_dump($usuario);
 		    	modificacionDeUsuario($usuario,"",RepositorioRol::getInstance()->devolverRoles());
 				break;
 			case 'eliminarUsuario':

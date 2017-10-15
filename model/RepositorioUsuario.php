@@ -61,7 +61,7 @@
           $rolDeUsuario->bindParam(':idUsuario',$usuario->getId());
           $rolDeUsuario->bindParam(':idRol', $rol['id']);
           if( $rolDeUsuario->execute() ==1){
-            var_dump($rolDeUsuario->fetchAll());
+          
             if(sizeOf($rolDeUsuario->fetchAll()) == 0){
               $nuevoRol = $conexion->prepare("INSERT INTO usuario_tiene_rol(usuario_id,rol_id) VALUES(:idUsuario, :idRol) ");
               $rolDeUsuario->bindParam(':idUsuario',$usuario->getId());
