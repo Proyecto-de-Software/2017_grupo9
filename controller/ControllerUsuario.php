@@ -23,7 +23,7 @@
 	}
 	function listarUsuarios($usuarios){
 		// Asi quedarían las funciones con el control de permisos:
-		//if(UsuarioTienePermiso('usuario_index'){
+		//if(RepositorioPermiso::getInstance()->UsuarioTienePermiso('usuario_index'){
 	        require_once($_SERVER['DOCUMENT_ROOT']."/view/ListarUsuarios.php");
 	        $view = new ListarUsuarios();
 	        $view->show($usuarios);
