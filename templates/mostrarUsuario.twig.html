@@ -1,0 +1,56 @@
+<h2 class="text-center" ></h2>
+<section class="row mx-auto mt-5 ">
+	<div class="login col-md-8  mx-auto mt-4 mb-4 pb-5 pt-5 pr-5 pl-5 border rounded ">
+		<table class="table table-hover">
+			<tbody>
+   				 <tr>
+	     			 <th scope="row">Nombre</th>
+	     			 <td>{{usuario.nombre}}</td>
+    			</tr>
+			    <tr>
+	     			 <th scope="row">Apellido</th>
+	     			 <td>{{usuario.apellido}}</td>
+			    </tr>
+			    <tr>
+	     			 <th scope="row">Email</th>
+	     			 <td>{{usuario.email}}</td>
+			    </tr>
+			    <tr>
+	     			 <th scope="row">Estado</th>
+	     			 <td>
+	     			 	{% if usuario.activo %}
+	     			 		<p class="text-success">
+	     			 			Activo
+	     			 		</p>
+						{% else %}
+							 <p class="text-danger">
+	     			 			Inactivo
+	     			 		</p>
+	     			 	{% endif %}
+	     			 </td>
+			    </tr>
+			    <tr>
+	     			 <th scope="row">Roles: </th>
+	     			 <td>
+	     			 	{% for rol in usuario.idRoles %}
+	     			 		{{ rol.nombre }}
+	     			 	{% endfor %}
+	     			 </td>
+	     		</tr>
+	     		<tr>
+	     			 <th scope="row">Fecha de alta: </th>
+	     			 <td>
+	     			 	{{usuario.creadoEn|date('d-m-Y')}}
+	     			 </td>
+	     		</tr>
+	     		<tr>
+	     			 <th scope="row">Fecha de ultima actualización: </th>
+	     			 <td>
+	     			 	{{usuario.actualizadoEn|date('d-m-Y')}}
+	     			 </td>
+			    </tr>
+ 			 </tbody>
+		</table>
+		
+	</div>
+</section>

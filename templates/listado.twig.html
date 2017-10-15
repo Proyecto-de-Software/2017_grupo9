@@ -23,6 +23,8 @@
 		    {% if tipo == 'listarPacientes' %}
 		      	<td>{{elemento.nombre}}</td>
 		    	<td>{{elemento.apellido}}</td>
+		   	{% elseif tipo == 'listarUsuarios' %}
+		   		<td>{{ elemento.username }}</td>
 		   	{% endif %}
 		      	<td>
 		      		{% if tipo == 'listarPacientes' %}
@@ -30,18 +32,18 @@
 		      		{% elseif tipo == 'listarUsuarios' %}
 		      		<form class="text-center" method="POST" action="./ControllerUsuario.php?action=modificacionDeUsuario">
 		      		{% endif %}
-		      			<input type="hidden" name="id" value={{elemento.id}}>
+		      			<input type="hidden" name="id" id="id" value={{elemento.id}}>
 		      			<button type="submit" class="btn btn-outline-success  btn-own-info">Editar</button>
 		      		</form>
 		      	</td>
 		      	<td>
 		      		{% if tipo == 'listarPacientes' %}
-		      		<form class="text-center" method="POST" action="./ControllerPaciente.php?action=eliminarPaciente">
+		      		<form class="text-center" method="POST" onsubmit="return confirm('Seguro?')" action="./ControllerPaciente.php?action=eliminarPaciente">
 		      		{% elseif tipo == 'listarUsuarios' %}
-		      		<form class="text-center" method="POST" action="./ControllerUsuario.php?action=eliminarUsuario">
+		      		<form class="text-center" method="POST" onsubmit="return confirm('Seguro?')" action="./ControllerUsuario.php?action=eliminarUsuario">
 		      		{% endif %}
 		      			<input type="hidden" name="id" value="{{elemento.id}}">
-		      			<button type="submit" class="btn btn-outline-success  btn-own-info">Eliminar</button>
+		      			<button type="submit"  class="btn btn-outline-success  btn-own-info">Eliminar</button>
 		      		</form>
 		      	</td>
 		      	<td>
@@ -59,8 +61,8 @@
 		</tbody>
 	</table>
 	{% if tipo == 'listarPacientes' %}
-	<a class="btn btn-success mt-3 mb-5 text-right" role="button" href="./Controller/ControllerPaciente.php?action=altaDePaciente">Agregar nuevo paciente</a>
+	<a class="btn btn-success mt-3 mb-5 text-right" role="button" href="/../Controller/ControllerPaciente.php?action=altaDePaciente">Agregar nuevo paciente</a>
 	{% elseif tipo == 'listarUsuarios' %} 
-	<a class="btn btn-success mt-3 mb-5 text-right" role="button" href="./Controller/ControllerUsuario.php?action=agregarUsuarioView">Agregar nuevo usuario</a>
+	<a class="btn btn-success mt-3 mb-5 text-right" role="button" href="/../Controller/ControllerUsuario.php?action=agregarUsuarioView">Agregar nuevo usuario</a>
 	{% endif %}
 </section>

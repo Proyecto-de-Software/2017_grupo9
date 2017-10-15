@@ -31,8 +31,8 @@
   				$newId = $conexion->lastInsertId();
   				$query2 = $conexion->prepare("INSERT INTO usuario_tiene_rol(usuario_id, rol_id) VALUES(:usuario_id, :rol_id)");
   				$query2->bindParam(':usuario_id', $newId);
-  				foreach($usuario->getIdRoles() as $idRol){
-  					$query2->bindParam(':rol_id', $idRol);
+  				foreach($usuario->getIdRoles() as $rol){
+  					$query2->bindParam(':rol_id', $rol['id']);
   					$query2->execute();
           }
         }
@@ -41,49 +41,73 @@
 
   		}
 
-  		public function actualizarUsuario($usuario){
+  		public function modificarUsuario($usuario){
   			$conexion = $this->getConnection();
   			$query = $conexion->prepare("UPDATE  usuario SET email=:email, username=:username, password=:password, activo=:activo, updated_at=:updated_at, created_at=:created_at, first_name=:first_name, last_name=:last_name WHERE id=:id");
-  			$query->bindParam(':id',$usuario->getId());
+        $now = date('Y-m-d');
   			$query->bindParam(':email', $usuario->getEmail());
   			$query->bindParam(':username', $usuario->getNombreUsuario());
   			$query->bindParam(':password', $usuario->getPassword());
   			$query->bindParam(':activo', $usuario->getActivo());
-  			$query->bindParam(':updated_at', $usuario->getFechaActualizacion());
+  			$query->bindParam(':updated_at', $now);
   			$query->bindParam(':created_at', $usuario->getFechaCreacion());
   			$query->bindParam(':first_name', $usuario->getNombre());
   			$query->bindParam(':last_name', $usuario->getApellido());
-			return $query->execute() == 1;		
-  		}
+        $query->bindParam(':id',$usuario->getId());
+        $rolesQuery = $conexion->prepare("SELECT * FROM usuario_tiene_rol WHERE usuario_id=:idUsuario");
+        $rolesQuery->bindParam(':idUsuario',$usuario->getId());
+        foreach($usuario->getIdRoles() as $rol){
+          $rolDeUsuario = $conexion->porepare("SELECT * FROM usuario_tiene_rol WHERE usuario_id=:idUsuario and rol_id=:idRol");
+          $rolDeUsuario->bindParam(':id',$usuario->getId());
+          $rolDeUsuario->bindParam(':idRol',$rol);
+          if($rolDeUsuario->execute()){
+            if(sizeOf($rolDeUsuario->fetchAll()) == 0){
+              $nuevoRol = $conexion->prepare("INSERT INTO usuario_tiene_rol(id,usuario_id,rol_id) VALUES(null,:idUsuario, :idRol) ");
+              $rolDeUsuario->bindParam(':id',$usuario->getId());
+              $rolDeUsuario->bindParam(':idRol',$rol);
+            }
+          }
+
+        }
+  			if($query->execute() == 1){
+          $usuario->setFechaActualizacion($now);
+          return $usuario;		
+    		}
+        else return false;
+     }
 
   		public function eliminarUsuario($idUsuario){
   			$conexion = $this->getConnection();
-  			$query = "DELETE FROM usuario WHERE id = :id";
-  			$query->bindParam(':id',$idUsuario);
-  			return $query->execute() == 1;	
+  			$query = $conexion->prepare("DELETE FROM usuario WHERE id=:id");
+  			$query->bindParam(':id', $idUsuario);
+  			return $query->execute();	
   		}
   		//buscar usuario por ID
   		public function buscarUsuarioPorId($idUsuario){
 	       	$conexion = $this->getConnection();
         	$query = $conexion->prepare("SELECT * FROM usuario WHERE id=:idUsuario");
         	$query->bindParam(':idUsuario', $idUsuario);
-        	$queryRoles = $conexion->prepare("SELECT rol_id FROM usuario_tiene_rol WHERE id=$idUsuario");
-        	$queryRoles->bindParam(':idUsuario', $idUsuario);
-        	$resultado = $query->execute();
-        	$resultadoRoles = $queryRoles->execute();
-        	$usuario = $query->fetchAll();
-        	$roles = array_values($queryRoles->fetchAll());
+        	$query->execute();
+          $usuario = $query->fetchAll();
+
+          $queryRoles = $conexion->prepare("SELECT r.id, r.nombre FROM rol as r INNER JOIN usuario_tiene_rol as ur ON r.id=ur.rol_id  WHERE ur.usuario_id=:idUsuario");
+          $queryRoles->bindParam(':idUsuario', $idUsuario);
+        	$queryRoles->execute();     
+          $roles = $queryRoles->fetchAll();
+          $roles = array_values($roles);
+        	
+
 	        if(sizeof($usuario)>0){
-	          $usuario = new Usuario($resultado[0]['username'],$resultado[0]['email'],$resultado[0]['password'],$resultado[0]['activo'], $resultado[0]['created_at'], $resultado[0]['updated_at'], $resultado[0]['first_name'],$resultado[0]['last_name'],$roles);
-            $usuario->setId($resultado[0]['id']);
-            return $usuario;
+	          $user = new Usuario($usuario[0]['username'],$usuario[0]['email'],$usuario[0]['password'],$usuario[0]['activo'], $usuario[0]['created_at'], $usuario[0]['updated_at'], $usuario[0]['first_name'],$usuario[0]['last_name'],$roles);
+            $user->setId($usuario[0]['id']);
+            return $user;
 	        }
 	        else
 	        	return false;
       }
       public function devolverUsuarios(){
         $conexion = $this->getConnection();
-        $query = $conexion->prepare("SELECT first_name,last_name FROM usuario");
+        $query = $conexion->prepare("SELECT * FROM usuario");
         $query->execute();
         $resultado = $query->fetchAll();
         if(sizeof($resultado) > 0){
@@ -92,28 +116,7 @@
         return false;
 
       }
-      public function loguearUsuario($email,$password){
-        $conexion = $this->getConnection();
-        $query = $conexion->prepare("SELECT * FROM usuario WHERE email=:email and password=:password");
-        $query->bindParam(':email',$email);
-          $query->bindParam(':password',$password);
-        $query->execute();
-        $resultado = $query->fetchAll();
-        if(sizeof($resultado) > 0){
-          $id = $resultado[0]['id'];
-          $query2 = $conexion->prepare("SELECT r.nombre FROM usuario_tiene_rol as ur INNER JOIN rol as r  WHERE ur.usuario_id=:id");
-          $query2->bindParam(':id',$id);
-          $query2->execute();
-          $roles = $query2->fetchAll();
-          session_start();
-          $_SESSION['ususario'] = (new Usuario($resultado[0]['username'],$resultado[0]['email'],$resultado[0]['password'],$resultado[0]['activo'], $resultado[0]['created_at'], $resultado[0]['updated_at'], $resultado[0]['first_name'],$resultado[0]['last_name'],$roles))->setId($resultado[0]['id']);
-          return true;
-        }
-        else{
-          throw new Exception("EL usuario o la contraseña son incorrectos");   
-          return false;      
-        }
-      }
+     
   		public function activarUsuario($idUsuario){
   			$conexion = $this->getConnection();
   			$query = $conexion->prepare("UPDATE  usuario SET activo=:activo");
@@ -121,12 +124,32 @@
   			return $query->execute()==1;
   		}
   		public function bloquearUsuario($idUsuario){
- 			$conexion = $this->getConnection();
+ 			  $conexion = $this->getConnection();
   			$query = $conexion->prepare("UPDATE  usuario SET activo=:activo");
   			$query->bindParam(':activo', false);
   			return $query->execute()==1;	
   		}
-
+      public function existeUsuario($email,$password){
+        $conexion = $this->getConnection();
+        $query = $conexion->prepare("SELECT id FROM usuario WHERE email=:email and password=:password");
+        $query->bindParam(':email',$email);
+        $query->bindParam(':password',$password);
+        $query->execute();
+       
+        $resultado = $query->fetchAll();
+        return sizeof($resultado) == 1;
+      }
+      public function buscarUsuarioPorEmail($email){
+        $conexion = $this->getConnection();
+        $query = $conexion->prepare("SELECT * FROM usuario WHERE email=:email");  
+        $query->bindParam(':email',$email);
+        $query->execute();
+        $resultado = $query->fetchAll();
+        if(sizeof($resultado) > 0){
+          return $this->buscarUsuarioPorId($resultado[0]['id']);
+        }
+        else return false;
+      }
     
         
 	}

@@ -1,5 +1,6 @@
 <section class="row mx-auto mt-5 ">
 	<div class="login col-md-4  mx-auto mt-4 mb-4 pb-5 pt-5 pr-5 pl-5 border rounded ">
+		{% if mensaje is defined %}<p class="text-danger">{{mensaje}}</p>{% endif %}
 		<h3 class="card-header text-center myHeader">Agregar usuario </h3>
 		<form class="text-center" role="form" method="POST" action="/controller/ControllerUsuario.php?action=agregarUsuario">
 			<div class="form-group ">
@@ -28,14 +29,10 @@
 			</div>
 			<p class="text-left">Roles:</p>
 			<div class="form-check text-left	">
-    			<input type="checkbox" name="rol[]" id="rol[]" class="checkbox" value=1> 
-    			<label for="admin">Administrador</label><br/>
-     			 				
-   				<input type="checkbox" name="rol[]" id="rol[]" class="checkbox" value=2>
-    			<label for="recepcionista">Recepcionista</label><br/>	
-     						
-   				<input type="checkbox" name="rol[]" id="rol[]" class="checkbox" value=3>
-    			<label for="pediatra">Pediatra</label><br/>
+				{% for rol in roles %}
+    			<input type="checkbox" name="rol[]" id="rol[]" class="checkbox" value={{rol.id}}> 
+    			<label for="admin">{{rol.nombre}}</label><br/>
+     			{% endfor %}
   			</div>
 			<button type="submit" class="btn btn-outline-success  btn-own-info">Registrar</button>
 		</form>

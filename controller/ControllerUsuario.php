@@ -4,16 +4,20 @@
 	chdir($_SERVER['DOCUMENT_ROOT']);
 	
 	require_once($_SERVER['DOCUMENT_ROOT']."/model/RepositorioUsuario.php");
+	require_once($_SERVER['DOCUMENT_ROOT']."/model/RepositorioRol.php");
 	require_once($_SERVER['DOCUMENT_ROOT']."/model/ClaseUsuario.php");
 	require_once($_SERVER['DOCUMENT_ROOT'].'/view/TwigView.php');
 
+
 	function crearUsuario(){
 		if(isset($_POST['rol'])){
+			$roles = [];
 			for($i=0; $i < count($_POST['rol']); $i++) {
-				$roles[$i] = $_POST['rol'][$i];
+				array_push($roles,$_POST['rol'][$i]);	
 			}
-	
-			return new Usuario($_POST['user'], $_POST['email'], $_POST['password'], true, date("Y-m-d"), date("Y-m-d"), $_POST['name'], $_POST['apellido'], $roles);
+			$roles = RepositorioRol::getInstance()->buscarRolesPorId($roles);
+			$user =  new Usuario($_POST['user'], $_POST['email'], $_POST['password'], true, date("Y-m-d"), date("Y-m-d"), $_POST['name'], $_POST['apellido'], $roles);
+			return $user;
 		}
 	}
 	function listarUsuarios($usuarios){
@@ -21,10 +25,15 @@
         $view = new ListarUsuarios();
         $view->show($usuarios);
     }
-    function agregarUsuario(){
+    function agregarUsuario($mensaje,$roles){
 	    require_once($_SERVER['DOCUMENT_ROOT']."/view/AgregarUsuario.php");
 	    $view = new AgregarUsuario();
-	    $view->show();
+	    $view->show($mensaje,$roles);
+    }
+    function modificacionDeUsuario($usuario,$mensaje){
+    	require_once($_SERVER['DOCUMENT_ROOT']."/view/FormularioModificarUsuario.php");
+    	$view = new ModificarUsuario();
+    	$view ->show($usuario,$mensaje);
     }
     function loginUsuario($msj){
     	require_once($_SERVER['DOCUMENT_ROOT']."/view/Login.php");
@@ -36,6 +45,20 @@
 	    $view = new Home();
 	    $view->show();
     }
+    function loguearUsuario($usuario){
+    	session_start();
+    	$_SESSION['usuario'] = $usuario;
+    	$_SESSION['roles'] = $usuario->getIdRoles();
+    	require_once($_SERVER['DOCUMENT_ROOT']."/view/Home.php");
+	    $view = new Home();
+	    $view->show();
+
+    }
+    function mostrarUsuario($usuario){
+	    require_once($_SERVER['DOCUMENT_ROOT']."/view/MostrarUsuario.php");
+	    $view = new MostrarUsuario();
+	    $view->show($usuario);
+    }
 
 	if(isset($_GET['action'])){
 		switch($_GET['action']){
@@ -44,36 +67,39 @@
 					RepositorioUsuario::getInstance()->agregarUsuario(crearUsuario());
 					listarUsuarios(RepositorioUsuario::getInstance()->devolverUsuarios());
 				} else {
-					echo("Las contraseñas no coinciden");
-					agregarUsuario();
+					agregarUsuario("Las contraseñas no coinciden");
 				}				
 				break;
 			case "agregarUsuarioView":
-				agregarUsuario();
+				agregarUsuario("", RepositorioRol::getInstance()->devolverRoles());
 				break;
 			case 'modificarUsuario':
-				RepositorioUsuario::getInstance()->actualizarUsuario(crearUsuario());
+				$resultado = RepositorioUsuario::getInstance()->modificarUsuario(crearUsuario());
+				if($resultado){
+					mostrarUsuario($resultado);
+				}
+				else{
+					modificacionDeUsuario(crearUsuario(),"No se pudieron modificar los datos");
+				}
+				break;
+			case 'modificacionDeUsuario':
+				$usuario = RepositorioUsuario::getInstance()->buscarUsuarioPorId($_POST['id']);
+		    	modificacionDeUsuario($usuario,"");
 				break;
 			case 'eliminarUsuario':
-				RepositorioUsuario::getInstance()->eliminarUsuario($_POST['idUsuario']);
+				RepositorioUsuario::getInstance()->eliminarUsuario($_POST['id']);
+				listarUsuarios(RepositorioUsuario::getInstance()->devolverUsuarios());
 				break;
 			case 'loginUsuario': 
-				try {
-					if(RepositorioUsuario::getInstance()->loguearUsuario($_POST['email'],$_POST['password'])){
-						usuarioLogueado();
+					if(RepositorioUsuario::getInstance()->existeUsuario($_POST['email'],$_POST['password'])){
+						loguearUsuario(RepositorioUsuario::getInstance()->buscarUsuarioPorEmail($_POST['email']));
 					}
 					else{
-						throw new Exception();
-						
+						loginUsuario("Es posible que no exista el usuario o este ingresando mal la contraseña");
 					}
-
-				} catch (Exception $e) {
-					loginUsuario("Es posible que no exista el usuario o este ingresando mal la contraseña");
-				}
-				 
 				break;
 			case 'mostrarUsuario':
-				RepositorioUsuario::getInstance()->eliminarUsuario($_POST['idUsuario']);
+				mostrarUsuario(RepositorioUsuario::getInstance()->buscarUsuarioPorId($_POST['id']));
 				break;
 			case 'listarUsuarios':
 				listarUsuarios(RepositorioUsuario::getInstance()->devolverUsuarios());
