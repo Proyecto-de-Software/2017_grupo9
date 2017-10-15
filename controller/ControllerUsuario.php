@@ -5,6 +5,7 @@
 	
 	require_once($_SERVER['DOCUMENT_ROOT']."/model/RepositorioUsuario.php");
 	require_once($_SERVER['DOCUMENT_ROOT']."/model/RepositorioRol.php");
+	require_once($_SERVER['DOCUMENT_ROOT']."/model/RepositorioPermiso.php");
 	require_once($_SERVER['DOCUMENT_ROOT']."/model/ClaseUsuario.php");
 	require_once($_SERVER['DOCUMENT_ROOT'].'/view/TwigView.php');
 
@@ -21,9 +22,14 @@
 		}
 	}
 	function listarUsuarios($usuarios){
-        require_once($_SERVER['DOCUMENT_ROOT']."/view/ListarUsuarios.php");
-        $view = new ListarUsuarios();
-        $view->show($usuarios);
+		// Asi quedarían las funciones con el control de permisos:
+		//if(UsuarioTienePermiso('usuario_index'){
+	        require_once($_SERVER['DOCUMENT_ROOT']."/view/ListarUsuarios.php");
+	        $view = new ListarUsuarios();
+	        $view->show($usuarios);
+    	//} else {
+	        //redirigir al index
+    	//}
     }
     function agregarUsuario($mensaje,$roles){
 	    require_once($_SERVER['DOCUMENT_ROOT']."/view/AgregarUsuario.php");
