@@ -10,7 +10,7 @@ class Home extends TwigView {
     
     public function show() {
         if(isset($_SESSION['usuario'])){
-        	$parametro = $_SESSION['usuario'];
+        	$parametro = unserialize($_SESSION['usuario']);
         }
         else $parametro = "home";
         

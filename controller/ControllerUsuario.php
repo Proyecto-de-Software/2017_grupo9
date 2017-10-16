@@ -65,7 +65,7 @@
     }
     function loguearUsuario($usuario){
     	session_start();
-    	$_SESSION['usuario'] = $usuario;
+    	$_SESSION['usuario'] = serialize($usuario);
     	require_once($_SERVER['DOCUMENT_ROOT']."/view/Home.php");
 	    $view = new Home();
 	    $view->show();

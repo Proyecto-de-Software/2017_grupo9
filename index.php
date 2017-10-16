@@ -9,6 +9,8 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/controller/ResourceController.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/model/PDORepository.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/model/ResourceRepository.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/model/Resource.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioUsuario.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/model/ClaseUsuario.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/view/TwigView.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/view/SimpleResourceList.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/view/Home.php');
@@ -17,6 +19,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/view/Admin.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/view/Logup.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/view/Config.php');
 
+session_start();
 
 
 if(isset($_GET["action"]) && $_GET["action"] == 'login'){
