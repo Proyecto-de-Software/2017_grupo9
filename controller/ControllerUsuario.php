@@ -9,7 +9,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT']."/model/ClaseUsuario.php");
 	require_once($_SERVER['DOCUMENT_ROOT'].'/view/TwigView.php');
 
-
+	
 	function crearUsuario($modif){
 		if(isset($_POST['rol'])){
 			$roles = [];

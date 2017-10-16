@@ -1,9 +1,9 @@
 <?php
 
-	require_once("PDORepository.php");
+  require_once("PDORepository.php");
   require_once("ClasePaciente.php");
 
-	class RepositorioPaciente extends PDORepository{
+  class RepositorioPaciente extends PDORepository{
       private static $instance;
 
       public static function getInstance() {
@@ -15,22 +15,40 @@
       }   
 
 
-  		public function agregarPaciente($paciente){
-  			$conexion = $this->getConnection();
-  			$query = $conexion->prepare("INSERT INTO paciente(id, apellido, nombre, domicilio, telefono, fecha_nacimiento, genero, id_datos_demograficos, id_obra_social, id_tipo_documento, numero_doc) VALUES(null, :apellido, :nombre, :domicilio, :telefono, :fechaNacimiento, :genero, :idDatosDemograficos, :idObraSocial, :idTipoDocumento, :numeroDoc)");
-  			$query->bindParam(':apellido', $paciente->getApellido());
-  			$query->bindParam(':nombre', $paciente->getNombre());
-  			$query->bindParam(':domicilio', $paciente->getDomicilio());
-  			$query->bindParam(':telefono', $paciente->getTelefono());
-  			$query->bindParam(':fechaNacimiento', $paciente->getFechaNacimiento());
-  			$query->bindParam(':genero', $paciente->getGenero());
-        $query->bindParam(':idDatosDemograficos', $paciente->getIdDatosDemograficos());
-        $query->bindParam(':idObraSocial', $paciente->getIdObraSocial());
-        $query->bindParam(':idTipoDocumento', $paciente->getIdTipoDocumento());
-        $query->bindParam(':numeroDoc', $paciente->getNumeroDoc());
+      public function agregarPaciente($paciente){
+        $conexion = $this->getConnection();
+        $queryDatosDemograficos = $conexion->prepare("INSERT INTO datos_demograficos(id, heladera, electricidad, mascota, tipo_vivienda_id, tipo_calefaccion_id, tipo_agua_id) VALUES(null, :heladera, :electricidad, :mascota, :tipoVivienda, :tipoCalefaccion, :tipoAgua)");
+        $queryDatosDemograficos->bindParam(':heladera', $_POST['heladera']);
+        $queryDatosDemograficos->bindParam(':electricidad', $_POST['electricidad']);
+        $queryDatosDemograficos->bindParam(':mascota', $_POST['mascota']);
+        $queryDatosDemograficos->bindParam(':tipoVivienda', $_POST['tipoVivienda']);
+        $queryDatosDemograficos->bindParam(':tipoCalefaccion', $_POST['tipoCalefaccion']);
+        $queryDatosDemograficos->bindParam(':tipoAgua', $_POST['tipoAgua']);
 
-        return $query->execute() == 1;
-  		}
+        if($queryDatosDemograficos->execute() == 1){
+          
+          $datosDemograficos = $conexion->lastInsertId();
+
+          $query = $conexion->prepare("INSERT INTO paciente(id, apellido, nombre, domicilio, telefono, fecha_nacimiento, genero, datos_demograficos_id, obra_social_id, tipo_doc_id, numero_doc) VALUES(null, :apellido, :nombre, :domicilio, :telefono, :fechaNacimiento, :genero, :idDatosDemograficos, :idObraSocial, :idTipoDocumento, :numeroDoc)");
+          $query->bindParam(':apellido', $paciente->getApellido());
+          $query->bindParam(':nombre', $paciente->getNombre());
+          $query->bindParam(':domicilio', $paciente->getDomicilio());
+          $query->bindParam(':telefono', $paciente->getTelefono());
+          $query->bindParam(':fechaNacimiento', $paciente->getFechaNacimiento());
+          $query->bindParam(':genero', $paciente->getGenero());
+          $query->bindParam(':idDatosDemograficos', $datosDemograficos);
+          $query->bindParam(':idObraSocial', $paciente->getIdObraSocial());
+          $query->bindParam(':idTipoDocumento', $paciente->getIdTipoDocumento());
+          $query->bindParam(':numeroDoc', $paciente->getNumeroDoc());
+
+
+          if($query->execute() == 1){
+            $paciente = $this->buscarPacientePorId($conexion->lastInsertId());
+            return $paciente;
+          }
+        }
+        return false;
+      }
 
       public function modificarPaciente($paciente){
         $conexion = $this->getConnection();
@@ -40,7 +58,7 @@
           $query->bindParam(':id', $paciente->getId());
           $query->execute();
         }
-        $query = $conexion->prepare("UPDATE paciente SET apellido=:apellido, nombre=:nombre, domicilio=:domicilio, telefono=:telefono, fecha_nacimiento=:fechaNacimiento, genero=:genero, datos_demograficos_id=:idDatosDemograficos, obra_social_id=:idObraSocial, tipo_doc_id=:idTipoDocumento, numero_doc=:numeroDoc WHERE id=:id");
+        $query = $conexion->prepare("UPDATE paciente SET apellido=:apellido, nombre=:nombre, domicilio=:domicilio, telefono=:telefono, tipo_calefaccion_id=:fechaNacimiento, genero=:genero, datos_demograficos_id=:idDatosDemograficos, obra_social_id=:idObraSocial, tipo_doc_id=:idTipoDocumento, numero_doc=:numeroDoc WHERE id=:id");
         $query->bindParam(':apellido', $paciente->getApellido());
         $query->bindParam(':nombre', $paciente->getNombre());
         $query->bindParam(':domicilio', $paciente->getDomicilio());
@@ -103,8 +121,8 @@
         $tiposDeDocumento = $query->fetchAll();
         return $tiposDeDocumento;
       }
-  		//CRUD
-  		//buscar paciente por ID
+      //CRUD
+      //buscar paciente por ID
       //devolverPacientes
 
-	}
+  }
