@@ -58,43 +58,41 @@
     }
 
     function modificarPaciente($paciente,$obrasSociales,$tiposDeDocumento,$datosDemograficos,$tiposDeVivienda,$tiposDeCalefaccion,$tiposDeAgua){
-    	//if(RepositorioPermiso::getInstance()->UsuarioTienePermiso('paciente_update')){
+  
 	        require_once($_SERVER['DOCUMENT_ROOT']."/view/FormularioModificarPaciente.php");
 	        $view = new ModificarPaciente();
 	        $view->show($paciente,$obrasSociales,$tiposDeDocumento,$datosDemograficos,$tiposDeVivienda,$tiposDeCalefaccion,$tiposDeAgua);
-	    //}
+
     } 
 
 	if(isset($_GET['action'])){
 		switch ($_GET['action']) {
 			case 'altaDePaciente':
-				//if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista()){
-					$obrasSociales = RepositorioPaciente::getInstance()->devolverObrasSociales();
+				$obrasSociales = RepositorioPaciente::getInstance()->devolverObrasSociales();
+	    		$tiposDeDocumento = RepositorioPaciente::getInstance()->devolverTiposDeDocumento();
+		    	$tiposDeVivienda = RepositorioDatosDemograficos::getInstance()->devolverTiposDeVivienda();
+		    	$tiposDeCalefaccion = RepositorioDatosDemograficos::getInstance()->devolverTiposDeCalefaccion();
+		    	$tiposDeAgua = RepositorioDatosDemograficos::getInstance()->devolverTiposDeAgua();
+	       		agregarPaciente($obrasSociales,$tiposDeDocumento,$tiposDeVivienda,$tiposDeCalefaccion,$tiposDeAgua);
+		       	
+		       	break;
+		    case 'agregarPaciente':
+
+	    		$paciente = crearPaciente();
+
+	       		if($pacienteAgregado = RepositorioPaciente::getInstance()->agregarPaciente($paciente)){
+	       			mostrarPaciente($pacienteAgregado);
+	       		}
+	       		else{
+	       		
+	       			$obrasSociales = RepositorioPaciente::getInstance()->devolverObrasSociales();
 		    		$tiposDeDocumento = RepositorioPaciente::getInstance()->devolverTiposDeDocumento();
 			    	$tiposDeVivienda = RepositorioDatosDemograficos::getInstance()->devolverTiposDeVivienda();
 			    	$tiposDeCalefaccion = RepositorioDatosDemograficos::getInstance()->devolverTiposDeCalefaccion();
 			    	$tiposDeAgua = RepositorioDatosDemograficos::getInstance()->devolverTiposDeAgua();
-		       		agregarPaciente($obrasSociales,$tiposDeDocumento,$tiposDeVivienda,$tiposDeCalefaccion,$tiposDeAgua);
-		       	//	}
-		       	break;
-		    case 'agregarPaciente':
-		    	//if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista()){
-
-		    		$paciente = crearPaciente();
-
-		       		if($pacienteAgregado = RepositorioPaciente::getInstance()->agregarPaciente($paciente)){
-		       			mostrarPaciente($pacienteAgregado);
-		       		}
-		       		else{
-		       		
-		       			$obrasSociales = RepositorioPaciente::getInstance()->devolverObrasSociales();
-			    		$tiposDeDocumento = RepositorioPaciente::getInstance()->devolverTiposDeDocumento();
-				    	$tiposDeVivienda = RepositorioDatosDemograficos::getInstance()->devolverTiposDeVivienda();
-				    	$tiposDeCalefaccion = RepositorioDatosDemograficos::getInstance()->devolverTiposDeCalefaccion();
-				    	$tiposDeAgua = RepositorioDatosDemograficos::getInstance()->devolverTiposDeAgua();
-		       			agregarPaciente($obrasSociales,$tiposDeDocumento,$tiposDeVivienda,$tiposDeCalefaccion,$tiposDeAgua);
-		       		}
-		            break;
+	       			agregarPaciente($obrasSociales,$tiposDeDocumento,$tiposDeVivienda,$tiposDeCalefaccion,$tiposDeAgua);
+	       		}
+	            break;
 		    case 'modificacionDePaciente':
 		    	$paciente = RepositorioPaciente::getInstance()->buscarPacientePorId($_POST['id']);
 		    	$obrasSociales = RepositorioPaciente::getInstance()->devolverObrasSociales();
