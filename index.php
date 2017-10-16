@@ -20,7 +20,9 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/view/Logup.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/view/Config.php');
 
 
-session_start();
+if(isset($_SESSION['usuario'])){
+	session_start();
+}
 
 
 if(isset($_GET["action"]) && $_GET["action"] == 'login'){

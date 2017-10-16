@@ -9,7 +9,7 @@
 		private $tipoCalefaccion;
 		private $tipoAgua;
 
-		public function __construct($id, $heladera, $electricidad, $mascota, $tipoVivienda, $tipoCalefaccion, $tipoAgua){
+		function __construct($id,$heladera,$electricidad,$mascota,$tipoVivienda,$tipoCalefaccion,$tipoAgua){
 			$this->id = $id;
             $this->heladera = $heladera;
         	$this->electricidad = $electricidad;
@@ -70,3 +70,4 @@
         public function setTipoAgua($tipoAgua){
         	$this->tipoAgua = $tipoAgua;
         }
+    }
