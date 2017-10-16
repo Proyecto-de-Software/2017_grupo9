@@ -12,7 +12,7 @@
 		private $idTipoDocumento;
 		private $numeroDoc;
 
-        function __construct($id,$apellido,$nombre,$domicilio,$telefono,$fechaNacimiento,$genero,$idDatosDemograficos,$idObraSocial,$idTipoDocumento,$numeroDoc){
+        public function __construct($id,$apellido,$nombre,$domicilio,$telefono,$fechaNacimiento,$genero,$idDatosDemograficos,$idObraSocial,$idTipoDocumento,$numeroDoc){
         	$this->id = $id;
             $this->apellido = $apellido;
         	$this->nombre = $nombre;

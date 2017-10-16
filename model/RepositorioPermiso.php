@@ -5,7 +5,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioUsuario.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/model/ClaseUsuario.php');
 
-	session_start();
+	if(isset($_SESSION['usuario'])) session_start();
 
 	class RepositorioPermiso extends PDORepository{
 	    
