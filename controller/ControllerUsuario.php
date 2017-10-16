@@ -65,7 +65,12 @@
     }
     function loguearUsuario($usuario){
     	session_start();
+<<<<<<< HEAD
     	$_SESSION['usuario'] = serialize($usuario);
+=======
+    	$_SESSION['usuario'] = $usuario;
+    	$_SESSION['logueado'] = true;
+>>>>>>> 264b2717564545209e81b76cd8f42b71bd99ad26
     	require_once($_SERVER['DOCUMENT_ROOT']."/view/Home.php");
 	    $view = new Home();
 	    $view->show();
@@ -126,6 +131,13 @@
 				break;
 			case 'listarUsuarios':
 				listarUsuarios(RepositorioUsuario::getInstance()->devolverUsuarios());
+				break;
+			case 'cerrarSesion':
+					session_start();
+					$_SESSION = array();
+					session_destroy();
+
+					header("Location: /../");
 				break;
 			case 'loginUsuarioView':
 				loginUsuario("");
