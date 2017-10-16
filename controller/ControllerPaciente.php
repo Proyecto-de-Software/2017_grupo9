@@ -11,7 +11,8 @@
 	require_once($_SERVER['DOCUMENT_ROOT']."/model/ClaseUsuario.php");
 	require_once($_SERVER['DOCUMENT_ROOT']."/view/TwigView.php");
 
-	session_start();
+	if(!isset($_SESSION))
+		session_start();
 
 	function crearPaciente(){
 		$paciente = new Paciente($_POST['id'], $_POST['apellido'], $_POST['nombre'], $_POST['domicilio'], $_POST['telefono'], $_POST['fechaNacimiento'], $_POST['genero'], $_POST['idDatosDemograficos'], $_POST['idObraSocial'], $_POST['idTipoDocumento'], $_POST['numeroDoc']);

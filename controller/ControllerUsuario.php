@@ -10,6 +10,10 @@
 	require_once($_SERVER['DOCUMENT_ROOT'].'/view/TwigView.php');
 
 
+	if(!isset($_SESSION))
+		session_start();
+
+
 	function crearUsuario($modif){
 		if(isset($_POST['rol'])){
 			$roles = [];
@@ -71,9 +75,33 @@
 	    $view->show();
     }
     function loguearUsuario($usuario){
-    	session_start();
+    	if(!isset($_SESSION)) {
+			session_start();
+		} else {
+			session_destroy();
+			session_start();
+		}
     	$_SESSION['usuario'] = serialize($usuario);
     	$_SESSION['logueado'] = true;
+        $_SESSION['administrador']=0;
+        $_SESSION['recepcionista']=0;
+        $_SESSION['pediatra']=0;
+       	$user = unserialize($_SESSION['usuario']);
+            foreach($user->getRoles() as $rol){
+                switch ($rol['nombre']) {
+                    case 'administrador':
+                        $_SESSION['administrador']=1;
+                        break;
+                    case 'recepcionista':
+                        $_SESSION['recepcionista']=1;
+                        break;
+                    case 'pediatra':
+                        $_SESSION['pediatra']=1;
+                        break;
+                }
+            }      
+        
+
     	require_once($_SERVER['DOCUMENT_ROOT']."/view/Home.php");
 	    $view = new Home();
 	    $view->show();

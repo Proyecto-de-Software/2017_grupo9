@@ -8,7 +8,7 @@
 	  <span class="navbar-toggler-icon"></span>
 	  </button>
 	  	<div class="collapse navbar-collapse" id="navbarSupportedContent">
-	  		{% if recepcionista == 1 %}
+	  		{% if recepcionista == 1 or pediatra == 1 %}
 	  			{% include 'opcionesPaciente.twig.html' %}
 	  		{% endif %}
 	  		{% if administrador == 1 %}
@@ -20,11 +20,11 @@
 		    	</form>
 		    
 	    	<ul class="navbar-nav float-right ">
-	    		{% if parametro == 'home' %}
+	    		{% if iniciar_sesion == 1 %}
 	      		<li class="nav-item active">
 	        		<a class="nav-link  nav-bar-link-own" role="button" href="/controller/ControllerUsuario.php?action=loginUsuarioView">Iniciar sesión</a>
 	      		</li>
-	      		{% elseif parametro is defined %}
+	      		{% elseif iniciar_sesion == 0 %}
 	      			<a class="nav-link nav-bar-link-own" role="submit" href="#">{{parametro.nombreUsuario}}</a>
 	      			<a class="nav-link nav-bar-link-own" role="submit" href="/controller/ControllerUsuario.php?action=cerrarSesion">Cerrar sesión</a>
 	      		{% endif %}
