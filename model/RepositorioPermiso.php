@@ -2,6 +2,10 @@
 
 	require_once("PDORepository.php");
 	require_once("ClasePaciente.php");
+	require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioUsuario.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/model/ClaseUsuario.php');
+
+	session_start();
 
 	class RepositorioPermiso extends PDORepository{
 	    
@@ -19,7 +23,7 @@
 			$conexion = $this->getConnection();
 			$query = $conexion->prepare("SELECT * FROM permiso INNER JOIN rol_tiene_permiso ON permiso.id=rol_tiene_permiso.permiso_id WHERE permiso.nombre= :permiso AND rol_tiene_permiso.rol_id = :rol_id");
 			$query->bindParam(':permiso', $permiso);
-			foreach($_SESSION['roles'] as $rol){
+			foreach(unserialize($_SESSION['usuario'])->getRoles() as $rol){
 	  			$query->bindParam(':rol_id', $rol['id']);
 	  			if($query->execute()){
 	  				if(sizeOf($query->fetchAll()) > 0) {

@@ -34,24 +34,31 @@
 		
 	}
 	function listarUsuarios($usuarios){
-		// Asi quedarían las funciones con el control de permisos:
-		//if(RepositorioPermiso::getInstance()->UsuarioTienePermiso('usuario_index'){
+		if(RepositorioPermiso::getInstance()->UsuarioTienePermiso('usuario_index')){
 	        require_once($_SERVER['DOCUMENT_ROOT']."/view/ListarUsuarios.php");
 	        $view = new ListarUsuarios();
 	        $view->show($usuarios);
-    	//} else {
-	        //redirigir al index
-    	//}
+    	} else {
+	        header("Location: /../");
+    	}
     }
     function agregarUsuario($mensaje,$roles){
-	    require_once($_SERVER['DOCUMENT_ROOT']."/view/AgregarUsuario.php");
-	    $view = new AgregarUsuario();
-	    $view->show($mensaje,$roles);
+    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso('usuario_new')){
+		    require_once($_SERVER['DOCUMENT_ROOT']."/view/AgregarUsuario.php");
+		    $view = new AgregarUsuario();
+		    $view->show($mensaje,$roles);
+		} else {
+			header("Location: /../");
+		}
     }
     function modificacionDeUsuario($usuario,$mensaje,$roles){
-    	require_once($_SERVER['DOCUMENT_ROOT']."/view/FormularioModificarUsuario.php");
-    	$view = new ModificarUsuario();
-    	$view ->show($usuario,$mensaje,$roles);
+    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso('usuario_update')){
+	    	require_once($_SERVER['DOCUMENT_ROOT']."/view/FormularioModificarUsuario.php");
+	    	$view = new ModificarUsuario();
+	    	$view ->show($usuario,$mensaje,$roles);
+	    } else {
+	    	header("Location: /../");
+	    }
     }
     function loginUsuario($msj){
     	require_once($_SERVER['DOCUMENT_ROOT']."/view/Login.php");
@@ -59,27 +66,27 @@
 	    $view->show($msj);
     }
     function usuarioLogueado(){
-    	 require_once($_SERVER['DOCUMENT_ROOT']."/view/Home.php");
+    	require_once($_SERVER['DOCUMENT_ROOT']."/view/Home.php");
 	    $view = new Home();
 	    $view->show();
     }
     function loguearUsuario($usuario){
     	session_start();
-<<<<<<< HEAD
     	$_SESSION['usuario'] = serialize($usuario);
-=======
-    	$_SESSION['usuario'] = $usuario;
     	$_SESSION['logueado'] = true;
->>>>>>> 264b2717564545209e81b76cd8f42b71bd99ad26
     	require_once($_SERVER['DOCUMENT_ROOT']."/view/Home.php");
 	    $view = new Home();
 	    $view->show();
 
     }
     function mostrarUsuario($usuario){
-	    require_once($_SERVER['DOCUMENT_ROOT']."/view/MostrarUsuario.php");
-	    $view = new MostrarUsuario();
-	    $view->show($usuario);
+    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso('usuario_show')){
+		    require_once($_SERVER['DOCUMENT_ROOT']."/view/MostrarUsuario.php");
+		    $view = new MostrarUsuario();
+		    $view->show($usuario);
+		} else {
+			header("Location: /../");
+		}
     }
 
 	if(isset($_GET['action'])){
@@ -132,15 +139,17 @@
 			case 'listarUsuarios':
 				listarUsuarios(RepositorioUsuario::getInstance()->devolverUsuarios());
 				break;
+			case 'loginUsuarioView':
+				loginUsuario("");
+				break;
 			case 'cerrarSesion':
+				session_destroy();
+				header("Location: /../");
 					session_start();
 					$_SESSION = array();
 					session_destroy();
 
 					header("Location: /../");
-				break;
-			case 'loginUsuarioView':
-				loginUsuario("");
 				break;
 		}
 	}

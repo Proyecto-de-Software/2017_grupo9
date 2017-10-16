@@ -3,11 +3,13 @@
 	#Nos ubicamos en el document_root para evitar problemas al usar twig, ya que twig usa paths relativos y si no estamos en la raiz no funciona.
 	chdir($_SERVER['DOCUMENT_ROOT']);
 
-	session_start();
 	require_once($_SERVER['DOCUMENT_ROOT']."/model/ClasePaciente.php");
 	require_once($_SERVER['DOCUMENT_ROOT']."/model/RepositorioPaciente.php");
 	require_once($_SERVER['DOCUMENT_ROOT']."/model/RepositorioUsuario.php");
+	require_once($_SERVER['DOCUMENT_ROOT']."/model/ClaseUsuario.php");
 	require_once($_SERVER['DOCUMENT_ROOT'].'/view/TwigView.php');
+
+	session_start();
 
 	function crearPaciente(){
 		$paciente = new Paciente($_POST['id'], $_POST['apellido'], $_POST['nombre'], $_POST['domicilio'], $_POST['telefono'], $_POST['fechaNacimiento'], $_POST['genero'], $_POST['idDatosDemograficos'], $_POST['idObraSocial'], $_POST['idTipoDocumento'], $_POST['numeroDoc']);
@@ -15,27 +17,40 @@
 	}
 
 	function listarPacientes(){
-        require_once($_SERVER['DOCUMENT_ROOT']."/view/ListarPacientes.php");
-        $view = new ListarPacientes();
-        $view->show(RepositorioPaciente::getInstance()->devolverPacientes());
-    }
+		if(RepositorioPermiso::getInstance()->UsuarioTienePermiso('paciente_index')){
+	        require_once($_SERVER['DOCUMENT_ROOT']."/view/ListarPacientes.php");
+	        $view = new ListarPacientes();
+	        $view->show(RepositorioPaciente::getInstance()->devolverPacientes());
+	    } else {
+	        header("Location: /../");
+    	}
 
     function mostrarPaciente($paciente){
-        require_once($_SERVER['DOCUMENT_ROOT']."/view/MostrarPaciente.php");
-        $view = new MostrarPaciente();
-        $view->show($paciente);
+    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso('paciente_show')){
+	        require_once($_SERVER['DOCUMENT_ROOT']."/view/MostrarPaciente.php");
+	        $view = new MostrarPaciente();
+	        $view->show($paciente);
+	    } else {
+	        header("Location: /../");
+    	}
     }
 
     function agregarPaciente($obrasSociales,$tiposDeDocumento){
-        require_once($_SERVER['DOCUMENT_ROOT']."/view/AgregarPaciente.php");
-        $view = new AgregarPaciente();
-        $view->show($obrasSociales,$tiposDeDocumento);
+    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso('paciente_new')){
+	        require_once($_SERVER['DOCUMENT_ROOT']."/view/AgregarPaciente.php");
+	        $view = new AgregarPaciente();
+	        $view->show($obrasSociales,$tiposDeDocumento);
+	    } else {
+	    	header("Location: /../");
+	    }
     }
 
     function modificarPaciente($paciente,$obrasSociales,$tiposDeDocumento){
-        require_once($_SERVER['DOCUMENT_ROOT']."/view/FormularioModificarPaciente.php");
-        $view = new ModificarPaciente();
-        $view->show($paciente,$obrasSociales,$tiposDeDocumento);
+    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso('paciente_update')){
+	        require_once($_SERVER['DOCUMENT_ROOT']."/view/FormularioModificarPaciente.php");
+	        $view = new ModificarPaciente();
+	        $view->show($paciente,$obrasSociales,$tiposDeDocumento);
+	    }
     } 
 
 	if(isset($_GET['action'])){
@@ -91,6 +106,5 @@
 		        break;
 		    }
 		}
-
-	
+	}	
 
