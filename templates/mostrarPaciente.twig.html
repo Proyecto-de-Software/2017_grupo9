@@ -1,0 +1,50 @@
+<h2 class="text-center" ></h2>
+<section class="row mx-auto mt-5 ">
+	<div class="login col-md-8  mx-auto mt-4 mb-4 pb-5 pt-5 pr-5 pl-5 border rounded ">
+		<table class="table table-hover">
+			<tbody>
+   				 <tr>
+	     			 <th scope="row">Nombre</th>
+	     			 <td>{{ paciente.nombre }}</td>
+    			</tr>
+			    <tr>
+	     			 <th scope="row">Apellido</th>
+	     			 <td>{{ paciente.apellido }}</td>
+			    </tr>
+			    <tr>
+	     			 <th scope="row">Fecha de nacimiento</th>
+	     			 <td>{{ paciente.fechaNacimiento|date('d-m-Y') }}</td>
+			    </tr>
+			    <tr>
+	     			 <th scope="row">Género</th>
+	     			 <td>
+	     			 	{{ paciente.genero }}
+	     			 </td>
+			    </tr>
+			    <tr>
+	     			 <th scope="row">Tipo de documento</th>
+	     			 <td>
+	     			 	{{ tipoDocumento }}
+	     			 </td>
+	     		</tr>
+	     		<tr>
+	     			 <th scope="row">Número de documento</th>
+	     			 <td>
+	     			 	{{ paciente.numeroDoc }}
+	     			 </td>
+	     		</tr>
+	     		<tr>
+	     			 <th scope="row">Domicilio</th>
+	     			 <td>
+	     			 	{{ paciente.domicilio }}
+	     			 </td>
+			    </tr>
+ 			 </tbody>
+		</table>
+		<form class="text-center" method="POST" action="/controller/ControllerPaciente.php?action=modificacionDePaciente">
+   			<input type="hidden" name="id" id="id" value="{{ paciente.id }}">
+		    <button type="submit" class="btn btn-outline-success  btn-own-info">Editar</button>
+		</form>
+	</div>
+
+</section>

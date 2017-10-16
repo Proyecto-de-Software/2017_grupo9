@@ -73,6 +73,78 @@
 			    	{% endfor %}
 			    </select>
 		  	</div>
+		  	<div class="form-group ">
+			    <label for="heladera" hidden>Heladera</label>
+			    <select name="heladera" class="form-control mt-3">
+			    	{% if datosDemograficos.heladera == '1' %}
+			    		<option value="1" selected>{{datosDemograficos.heladera}}</option>
+			    		<option value="0">No</option>
+			    	{% else %}
+			    		<option value="1">{{datosDemograficos.heladera}}</option>
+			    		<option value="0" selected>No</option>
+			    	{% endif %}
+			    </select>
+		  	</div>
+		  	<div class="form-group ">
+			    <label for="electricidad" hidden>Electricidad</label>
+			    <select name="electricidad" class="form-control mt-3">
+			    	{% if datosDemograficos.electricidad == 1 %}
+			    		<option value="1" selected>Si</option>
+			    		<option value="0">No</option>
+			    	{% else %}
+			    		<option value="1">Si</option>
+			    		<option value="0" selected>No</option>
+			    	{% endif %}
+			    </select>
+		  	</div>
+		  	<div class="form-group ">
+			    <label for="mascota" hidden>Mascota</label>
+			    <select name="mascota" class="form-control mt-3">
+			    	{% if datosDemograficos.mascota == 1 %}
+			    		<option value="1" selected>Si</option>
+			    		<option value="0">No</option>
+			    	{% else %}
+			    		<option value="1">Si</option>
+			    		<option value="0" selected>No</option>
+			    	{% endif %}
+			    </select>
+		  	</div>
+		  	<div class="form-group ">
+			    <label for="tipoVivienda" hidden>Tipo de vivienda</label>
+			    <select name="tipoVivienda" class="form-control mt-3">
+			    	{% for tipoVivienda in tiposDeVivienda %}
+			    		{% if tipoVivienda.id == datosDemograficos.tipo_vivienda_id %}
+			    			<option value="{{ tipoVivienda.id }}" selected>{{ tipoVivienda.nombre | upper }}</option>
+			    		{% else %}
+			    			<option value="{{ tipoVivienda.id }}">{{ tipoVivienda.nombre | upper }}</option>
+			    		{% endif %}
+			    	{% endfor %}
+			    </select>
+		  	</div>
+		  	<div class="form-group ">
+			    <label for="tipoCalefaccion" hidden>Género</label>
+			    <select name="tipoCalefaccion" class="form-control mt-3">
+			    	{% for tipoCalefaccion in tiposDeCalefaccion %}
+			    		{% if tipoCalefaccion.id == datosDemograficos.tipo_calefaccion_id %}
+			    			<option value="{{ tipoCalefaccion.id }}" selected>{{ tipoCalefaccion.nombre | upper }}</option>
+			    		{% else %}
+			    			<option value="{{ tipoCalefaccion.id }}">{{ tipoCalefaccion.nombre | upper }}</option>
+			    		{% endif %}
+			    	{% endfor %}
+			    </select>
+		  	</div>
+		  	<div class="form-group ">
+			    <label for="tipoAgua" hidden>Tipo de agua</label>
+			    <select name="tipoAgua" class="form-control mt-3">
+			    	{% for tipoAgua in tiposDeAgua %}
+			    		{% if tipoAgua.id == datosDemograficos.tipo_agua_id %}
+			    			<option value="{{ tipoAgua.id }}" selected>{{ tipoAgua.nombre | upper }}</option>
+			    		{% else %}
+			    			<option value="{{ tipoAgua.id }}">{{ tipoAgua.nombre | upper }}</option>
+			    		{% endif %}
+			    	{% endfor %}
+			    </select>
+		  	</div>
 		  	<input name="idDatosDemograficos" value="{{ paciente.idDatosDemograficos }}" hidden>
 			
 			<button type="submit" class="btn btn-outline-success  btn-own-info">Modificar paciente</button>
