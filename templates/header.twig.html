@@ -8,7 +8,10 @@
 	  <span class="navbar-toggler-icon"></span>
 	  </button>
 	  	<div class="collapse navbar-collapse" id="navbarSupportedContent">
-	  		{% if rol == 'admin' %}
+	  		{% if recepcionista == 1 %}
+	  			{% include 'opcionesPaciente.twig.html' %}
+	  		{% endif %}
+	  		{% if administrador == 1 %}
 	  			{% include 'opcionesAdmin.twig.html' %}
 	  		{% endif %}
 		  		<form  id="form" class="form-inline my-2 my-lg-0 ml-auto mr-5 d-flex justify-content-center">

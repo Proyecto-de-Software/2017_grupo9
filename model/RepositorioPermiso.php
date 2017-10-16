@@ -28,10 +28,9 @@
 	  			if($query->execute()){
 	  				if(sizeOf($query->fetchAll()) > 0) {
 	  					return true;
-	  				} else {
-	  					echo "La consulta de permisos no se realizó correctamente";
-	  				}
-	  			}
+	  				}	
+	  			} else
+	  				echo "La consulta de permisos no se realizó correctamente";
 	        }
 	        return false;
 		}

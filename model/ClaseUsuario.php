@@ -9,7 +9,7 @@
 		private $creadoEn;
 		private $nombre;
 		private $apellido;
-		private $roles; // se guarda un array con id y nombre de rol. Ej: $roles[0] tiene ['id']['nombre']
+		public $roles; // se guarda un array con id y nombre de rol. Ej: $roles[0] tiene ['id']['nombre']
 
 		public function __construct($nombreUsuario,$email,$password,$activo, $creadoEn, $actualizadoEn, $nombre,$apellido, $roles) {
         	$this->nombreUsuario = $nombreUsuario;

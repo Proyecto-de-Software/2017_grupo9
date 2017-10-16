@@ -19,6 +19,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/view/Admin.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/view/Logup.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/view/Config.php');
 
+
 session_start();
 
 
