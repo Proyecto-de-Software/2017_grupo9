@@ -24,6 +24,7 @@
 				$query->bindParam(':descripcion', $datosConfiguracion->getDescripcion());
 				$query->bindParam(':contacto', $datosConfiguracion->getContacto());
 				$query->bindParam(':cantElem', $datosConfiguracion->getCantElem());
+				$query->bindParam(':habilitado', $datosConfiguracion->getHabilitado());
 
 				return $query->execute() == 1;
 		}

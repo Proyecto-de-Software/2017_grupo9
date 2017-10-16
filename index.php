@@ -23,10 +23,12 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/view/Config.php');
 if(!isset($_SESSION))
 	session_start(); 
 
-$_SESSION['administrador']=0;
-$_SESSION['recepcionista']=0;
-$_SESSION['pediatra']=0;
-
+if(!isset($_SESSION['usuario'])) {
+	$_SESSION['usuario'] = NULL;
+	$_SESSION['administrador']=0;
+	$_SESSION['recepcionista']=0;
+	$_SESSION['pediatra']=0;
+}
 
 if(isset($_GET["action"]) && $_GET["action"] == 'login'){
     ResourceController::getInstance()->login();
@@ -34,7 +36,5 @@ if(isset($_GET["action"]) && $_GET["action"] == 'login'){
     ResourceController::getInstance()->admin();
 }elseif(isset($_GET["action"]) && $_GET["action"] == 'logup'){
 	ResourceController::getInstance()->logup();
-}elseif(isset($_GET["action"]) && $_GET["action"] == 'config'){
-	ResourceController::getInstance()->config();
 }else
 	ResourceController::getInstance()->home();

@@ -24,8 +24,8 @@
 	      		<li class="nav-item active">
 	        		<a class="nav-link  nav-bar-link-own" role="button" href="/controller/ControllerUsuario.php?action=loginUsuarioView">Iniciar sesión</a>
 	      		</li>
-	      		{% elseif iniciar_sesion == 0 %}
-	      			<a class="nav-link nav-bar-link-own" role="submit" href="#">{{parametro.nombreUsuario}}</a>
+	      		{% else %}
+	      			<a class="nav-link nav-bar-link-own" role="submit" href="#">{{usuario.nombreUsuario}}</a>
 	      			<a class="nav-link nav-bar-link-own" role="submit" href="/controller/ControllerUsuario.php?action=cerrarSesion">Cerrar sesión</a>
 	      		{% endif %}
 
