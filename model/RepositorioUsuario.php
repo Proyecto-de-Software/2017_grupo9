@@ -54,26 +54,19 @@
   			$query->bindParam(':first_name', $usuario->getNombre());
   			$query->bindParam(':last_name', $usuario->getApellido());
         $query->bindParam(':id',$usuario->getId());
-        $rolesQuery = $conexion->prepare("SELECT * FROM usuario_tiene_rol WHERE usuario_id=:idUsuario");
+        $rolesQuery = $conexion->prepare("DELETE FROM usuario_tiene_rol WHERE usuario_id=:idUsuario");
         $rolesQuery->bindParam(':idUsuario',$usuario->getId());
-        foreach($usuario->getRoles() as $rol){
-          $rolDeUsuario = $conexion->prepare("SELECT * FROM usuario_tiene_rol WHERE usuario_id=:idUsuario and rol_id=:idRol");
-          $rolDeUsuario->bindParam(':idUsuario',$usuario->getId());
-          $rolDeUsuario->bindParam(':idRol', $rol['id']);
-          if( $rolDeUsuario->execute() ==1){
-          
-            if(sizeOf($rolDeUsuario->fetchAll()) == 0){
-              $nuevoRol = $conexion->prepare("INSERT INTO usuario_tiene_rol(usuario_id,rol_id) VALUES(:idUsuario, :idRol) ");
-              $rolDeUsuario->bindParam(':idUsuario',$usuario->getId());
-              $rolDeUsuario->bindParam(':idRol',$rol['id']);
-            }
+        $rolesQuery->execute(); //Elimino los roles anteriores que tenga, y le pongo los actuales.
+        $ok = $query->execute();
+        if($ok){
+          $nuevosRoles = $conexion->prepare("INSERT INTO usuario_tiene_rol(usuario_id,rol_id) VALUES(:idUsuario, :idRol) ");
+          foreach($usuario->getRoles() as $rol){          
+            $nuevosRoles->bindParam(':idUsuario',$usuario->getId());
+            $nuevosRoles->bindParam(':idRol', $rol['id']);
+            $ok = $ok && $nuevosRoles->execute();
           }
-
+          return $usuario;
         }
-  			if($query->execute() == 1){
-          $usuario->setFechaActualizacion($now);
-          return $usuario;		
-    		}
         else return false;
      }
 
