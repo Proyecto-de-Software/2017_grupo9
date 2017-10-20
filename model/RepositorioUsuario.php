@@ -113,7 +113,22 @@
           return false;
 
       }
-     
+      public function existeNombreUsuario($nombreUsuario){
+        //devuelv true si el nombre de usuario ya existe
+        $conexion = $this->getConnection();
+        $query = $conexion->prepare("SELECT * FROM usuario WHERE username=:username");
+        $query->bindParam(':username', $nombreUsuario);
+        $query->execute();
+        return (sizeof($query->fetchAll()) > 0);
+      }
+      public function existeEmail($email){
+        //devuelv true si el nombre de usuario ya existe
+        $conexion = $this->getConnection();
+        $query = $conexion->prepare("SELECT * FROM usuario WHERE email=:email");
+        $query->bindParam(':email', $email);
+        $query->execute();
+        return (sizeof($query->fetchAll()) > 0);
+      }
   		public function activarUsuario($idUsuario){
   			$conexion = $this->getConnection();
   			$query = $conexion->prepare("UPDATE  usuario SET activo=:activo");

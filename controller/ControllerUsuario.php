@@ -132,29 +132,55 @@
 		switch($_GET['action']){
 			case "agregarUsuario":
 				if(validarCampos()){
-					RepositorioUsuario::getInstance()->agregarUsuario(crearUsuario(false));
-					header("Location: /../controller/ControllerUsuario.php?action=listarUsuarios");
+					if(!RepositorioUsuario::getInstance()->existeNombreUsuario($_POST['usuario'])){
+						if(!RepositorioUsuario::getInstance()->existeEmail($_POST['email'])){
+							RepositorioUsuario::getInstance()->agregarUsuario(crearUsuario(false));
+							header("Location: /../controller/ControllerUsuario.php?action=listarUsuarios");
+						}
+						else{
+							header("Location: /../controller/ControllerUsuario.php?action=agregarUsuarioEmailNoValido");
+						}
+					}
+					else{
+						header("Location: /../controller/ControllerUsuario.php?action=agregarUsuarioNickNoValidado");	
+					}
 				} 
 				else{
 					header("Location: /../controller/ControllerUsuario.php?action=agregarUsuarioNoValidado");
+					
 				}	
 				break;
 			case 'agregarUsuarioNoValidado':
 				agregarUsuario("Debe llenar todos los campos. Tenga en cuenta: *Debe elegir al menos un rol. *Las contraseñas deben coincidir. *	El email debe tener un formato valido.",RepositorioRol::getInstance()->devolverRoles());
 				break;
+			case 'agregarUsuarioEmailNoValido':
+				agregarUsuario("El email que ha ingresado ya esta registrado, elija otro.",RepositorioRol::getInstance()->devolverRoles());
+				break;
+			case 'agregarUsuarioNickNoValidado':
+			 	agregarUsuario("El nombre de usuario que ha ingresado ya esta registrado, elija otro.",RepositorioRol::getInstance()->devolverRoles());
+			 	break;			 
 			case "agregarUsuarioView":
 				agregarUsuario("", RepositorioRol::getInstance()->devolverRoles());
 				break;
 			case 'modificarUsuario':
 				if(validarCampos()){
-					$resultado = RepositorioUsuario::getInstance()->modificarUsuario(crearUsuario(true));
-					
-					if($resultado){
-						$id = $resultado->getId();
-						header("Location: /../controller/ControllerUsuario.php?action=mostrarUsuario&id=$id");
+					if(!RepositorioUsuario::getInstance()->existeNombreUsuario($_POST['usuario'])){
+						if(!RepositorioUsuario::getInstance()->existeMail($_POST['email'])){	
+							$resultado = RepositorioUsuario::getInstance()->modificarUsuario(crearUsuario(true));
+							if($resultado){
+								$id = $resultado->getId();
+								header("Location: /../controller/ControllerUsuario.php?action=mostrarUsuario&id=$id");
+							}
+							else{
+								modificacionDeUsuario(crearUsuario(true),"No se pudieron modificar los datos",RepositorioRol::getInstance()->devolverRoles());
+							}
+						}
+						else{
+							modificacionDeUsuario(crearUsuario(true),"El email ya esta registrado, elija otro.",RepositorioRol::getInstance()->devolverRoles());
+						}
 					}
 					else{
-						modificacionDeUsuario(crearUsuario(true),"No se pudieron modificar los datos",RepositorioRol::getInstance()->devolverRoles());
+						modificacionDeUsuario(crearUsuario(true),"El nombre de usuario ya esta registrado, elija otro.",RepositorioRol::getInstance()->devolverRoles());
 					}
 				}
 				else{
