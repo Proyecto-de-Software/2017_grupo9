@@ -56,56 +56,33 @@
 		   	{% endif %}
 		      	<td>
 		      		{% if tipo == 'listarPacientes' %}
-		      		<form class="text-center" method="POST" action="/controller/ControllerPaciente.php?action=modificacionDePaciente">
+		      		<a href="/controller/ControllerPaciente.php?action=modificacionDePaciente&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info">Editar</a>
 
 		      		{% elseif tipo == 'listarUsuarios' %}
 		      		<a href="/controller/ControllerUsuario.php?action=modificacionDeUsuario&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info">Editar</a>
-		      <!--	<form class="text-center" method="POST" action="/controller/ControllerUsuario.php?action=modificacionDeUsuario"> -->
 		      		{% endif %}
-		      	 <!--		
-		      	 		<input type="hidden" name="id" id="id" value={{elemento.id}}>
-		      			<button type="submit" class="btn btn-outline-success  btn-own-info">Editar</button>
-		      		</form> 
-		      		-->
 		      	</td>
 		      	<td>
 		      		{% if tipo == 'listarPacientes' %}
-		      		<!--
-		      		<form class="text-center" method="POST" onsubmit="return confirm('Seguro?')" action="/controller/ControllerPaciente.php?action=eliminarPaciente">
-		      		-->
+			      		<a onclick="return confirm('Seguro?')"  href="/controller/ControllerPaciente.php?action=eliminarPaciente&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info">Eliminar </a>
 		      		{% elseif tipo == 'listarUsuarios' %}
-		      		<!--
-		      		<form class="text-center" method="POST" onsubmit="return confirm('Seguro?')" action="/controller/ControllerUsuario.php?action=eliminarUsuario">
-					-->
-					<a onclick="return confirm('Seguro?')"  href="/controller/ControllerUsuario.php?action=eliminarUsuario&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info">Eliminar </a>
+						<a onclick="return confirm('Seguro?')"  href="/controller/ControllerUsuario.php?action=eliminarUsuario&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info">Eliminar </a>
 		      		{% endif %}
-		      		<!--
-		      			<input type="hidden" name="id" value="{{elemento.id}}">
-		      			<button type="submit"  class="btn btn-outline-success  btn-own-info">Eliminar</button>
-		      		</form>
-		      		-->
 		      	</td>
-
-		      	<td>
-		      		{% if elemento.activo %}
-		      			<a href="/controller/ControllerUsuario.php?action=desactivarUsuario&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info"> Bloquear </a>
-		      		{% else %}
-		      			<a href="/controller/ControllerUsuario.php?action=activarUsuario&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info"> Activar </a>
-		      		{% endif %}		      			
-		      		<!--
-		      			<input type="hidden" name="id" value="{{elemento.id}}">
-		      			<button type="submit" class="btn btn-outline-success  btn-own-info ">Más información</button>
-		      		-->
-		      		</form>
-		      	</td>
+		      	{% if tipo == 'listarUsuarios' %}
+		      		<td>
+			      		{% if elemento.activo %}
+			      			<a href="/controller/ControllerUsuario.php?action=desactivarUsuario&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info"> Bloquear </a>
+			      		{% else %}
+			      			<a href="/controller/ControllerUsuario.php?action=activarUsuario&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info"> Activar </a>
+		      			{% endif %}	
+			      	</td>
+		      	{% endif %}	
 		      	<td>
 		      		{% if tipo == 'listarPacientes' %}
-		      		<form class="text-center" method="POST" action="/controller/ControllerPaciente.php?action=mostrarPaciente">
+		      			<a href="/controller/ControllerPaciente.php?action=mostrarPaciente&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info">Mas información</a>
 		      		{% elseif tipo == 'listarUsuarios' %}
-		      		<!--
-		      		<form class="text-center" method="POST" action="/controller/ControllerUsuario.php?action=mostrarUsuario">
-					-->
-					<a href="/controller/ControllerUsuario.php?action=mostrarUsuario&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info">Mas información</a>
+						<a href="/controller/ControllerUsuario.php?action=mostrarUsuario&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info">Mas información</a>
 		      		{% endif %}
 		      	</td>
 		    </tr>

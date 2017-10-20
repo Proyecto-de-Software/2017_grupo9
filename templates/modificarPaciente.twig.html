@@ -1,12 +1,12 @@
 <section class="row mx-auto mt-5 ">
-	<div class="login col-md-4  mx-auto mt-4 mb-4 pb-5 pt-5 pr-5 pl-5 border rounded ">
+	<div class="login col-md-5  mx-auto mt-4 mb-4 pb-5 pt-5 pr-5 pl-5 border rounded ">
 		<h3 class="card-header text-center myHeader">Modificar paciente </h3>
 		<form class="text-center" role="form" method="POST" action="/controller/ControllerPaciente.php?action=modificarPaciente">
 			<label for="name" hidden>Id</label>
 			<input name="id" value="{{paciente.id}}" hidden>
 			<div class="form-group ">
-			    <label for="name" hidden>Nombre</label>
-			    <input type="text" class="form-control mt-3" id="name" name="nombre" value="{{paciente.nombre}}">
+			    <label for="nombre" hidden>Nombre</label>
+			    <input type="text" class="form-control mt-3" id="nombre" name="nombre" value="{{paciente.nombre}}">
 		  	</div>
 		  	<div class="form-group ">
 			    <label for="apellido" hidden>Apellido</label>
@@ -19,7 +19,7 @@
 		  	<div class="form-group ">
 			    <label for="genero" hidden>Género</label>
 			    <select name="genero" class="form-control mt-3">
-			    	{% if paciente.genero == 'femenino' %}
+			    	{% if paciente.genero == 'masculino' %}
 			    		<option value="masculino" selected>Masculino</option>
 			    		<option value="femenino">Femenino</option>
 			    	{% else %}

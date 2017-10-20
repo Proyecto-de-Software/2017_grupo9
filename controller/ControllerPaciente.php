@@ -96,7 +96,7 @@
 		        break;
 		    case 'eliminarPaciente':
 		    	//if(($_SESSION['usuario'])->esAdministrador()){
-		        	if(RepositorioPaciente::getInstance()->eliminarPaciente($_POST['id'])){
+		        	if(RepositorioPaciente::getInstance()->eliminarPaciente($_GET['id'])){
 		        		listarPacientes();
 		        	}
 		       // }

@@ -87,7 +87,10 @@
         $query->execute();
         $paciente = $query->fetchAll();
         if (sizeof($paciente) > 0){
-          return new Paciente($paciente[0]['id'],$paciente[0]['apellido'],$paciente[0]['nombre'],$paciente[0]['domicilio'], $paciente[0]['telefono'],$paciente[0]['fecha_nacimiento'],$paciente[0]['genero'], $paciente[0]['obra_social_id'], $paciente[0]['tipo_doc_id'], $paciente[0]['numero_doc']);
+          $nuevoPaciente = new Paciente($paciente[0]['apellido'],$paciente[0]['nombre'],$paciente[0]['domicilio'], $paciente[0]['telefono'],$paciente[0]['fecha_nacimiento'],$paciente[0]['genero'], $paciente[0]['obra_social_id'], $paciente[0]['tipo_doc_id'], $paciente[0]['numero_doc']);
+
+          $nuevoPaciente->setId($id);
+          return $nuevoPaciente;
         }
 
         return false;
