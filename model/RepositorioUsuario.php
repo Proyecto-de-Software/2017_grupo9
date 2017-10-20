@@ -96,9 +96,12 @@
 	        else
 	        	return false;
       }
-      public function devolverUsuarios(){
+      public function devolverUsuarios($username = ""){
         $conexion = $this->getConnection();
-        $query = $conexion->prepare("SELECT id FROM usuario");
+        $queryString = "SELECT id FROM usuario";
+        if ($username) $queryString.=" WHERE username=:username";
+        $query = $conexion->prepare($queryString);
+        if ($username)  $query->bindParam(':username', $username);
         $query->execute();
         $resultado = $query->fetchAll();
         $usuarios = [];
@@ -131,16 +134,68 @@
       }
   		public function activarUsuario($idUsuario){
   			$conexion = $this->getConnection();
-  			$query = $conexion->prepare("UPDATE  usuario SET activo=:activo");
-  			$query->bindParam(':activo', true);
+  			$query = $conexion->prepare("UPDATE  usuario SET activo=:activo WHERE id=:id");
+        $activo = 1;
+  			$query->bindParam(':activo', $activo);
+        $query->bindParam(':id', $idUsuario);
   			return $query->execute()==1;
   		}
   		public function bloquearUsuario($idUsuario){
  			  $conexion = $this->getConnection();
-  			$query = $conexion->prepare("UPDATE  usuario SET activo=:activo");
-  			$query->bindParam(':activo', false);
+  			$query = $conexion->prepare("UPDATE  usuario SET activo=:activo WHERE id=:id");
+        $activo = 0;
+  			$query->bindParam(':activo', $activo);
+        $query->bindParam(':id', $idUsuario);
   			return $query->execute()==1;	
   		}
+      public function listarUsuariosActivos($porNombreUsuario = false,$nombreUsuario =""){
+        $conexion = $this->getConnection();
+        $queryString = "SELECT id FROM usuario WHERE activo=:activo";
+        if($porNombreUsuario) $queryString.=" and username=:username";
+        $query = $conexion->prepare($queryString);
+        if($porNombreUsuario) $query->bindParam(':username',$nombreUsuario);
+        $activo = 1;
+        $query->bindParam(':activo',$activo);
+        $query->execute();
+        $resultado = $query->fetchAll();
+        $usuarios = [];
+        if(sizeof($resultado) > 0){
+          foreach($resultado as $usuario){
+            array_push($usuarios, $this->buscarUsuarioPorId($usuario['id']));
+          }
+
+          return $usuarios;
+        }
+        else
+          return false;
+
+      }
+      public function listarUsuariosBloqueados($porNombreUsuario = false, $nombreUsuario =""){
+        $conexion = $this->getConnection();
+        $conexion = $this->getConnection();
+        $queryString = "SELECT id FROM usuario WHERE activo=:activo";
+        if($porNombreUsuario) $queryString.=" and username=:username";
+        $query = $conexion->prepare($queryString);
+        if($porNombreUsuario) $query->bindParam(':username',$nombreUsuario);
+        $activo = 0;
+        $query->bindParam(':activo',$activo);
+        $query->execute();
+        $resultado = $query->fetchAll();
+        $usuarios = [];
+        if(sizeof($resultado) > 0){
+          foreach($resultado as $usuario){
+            array_push($usuarios, $this->buscarUsuarioPorId($usuario['id']));
+          }
+
+          return $usuarios;
+        }
+        else
+          return false;
+
+      }
+      public function listarUsuariosPorNombreUsuario($nombreUsuario){
+
+      }
       public function existeUsuario($email,$password){
         $conexion = $this->getConnection();
         $query = $conexion->prepare("SELECT id FROM usuario WHERE email=:email and password=:password");
@@ -162,6 +217,16 @@
         }
         else return false;
       }
-    
+      public function buscarPorNombreDeUsuario($nombreUsuario){
+        $conexion = $this->getConnection();
+        $query = $conexion->prepare("SELECT * FROM usuario WHERE username=:username");  
+        $query->bindParam(':username',$username);
+        $query->execute();
+        $resultado = $query->fetchAll();
+        if(sizeof($resultado) > 0){
+          return $this->buscarUsuarioPorId($resultado[0]['id']);
+        }
+        else return false;
+      }
         
 	}

@@ -38,11 +38,11 @@
 		return $user;
 		
 	}
-	function listarUsuarios($usuarios){
+	function listarUsuarios($usuarios,$filtrado=null){
 		if(RepositorioPermiso::getInstance()->UsuarioTienePermiso('usuario_index')){
 	        require_once($_SERVER['DOCUMENT_ROOT']."/view/ListarUsuarios.php");
 	        $view = new ListarUsuarios();
-	        $view->show($usuarios);
+	        $view->show($usuarios,$filtrado);
     	} else {
 	        header("Location: /../");
     	}
@@ -126,6 +126,9 @@
     	$roles = isset($_POST['rol']);
     	return ($nombre && $apellido && $usuario && $email && $passwords && $roles);
     	
+    }
+    function obtenerListado(){
+
     }
 
 	if(isset($_GET['action'])){
@@ -211,6 +214,56 @@
 				break;
 			case 'loginUsuarioView':
 				loginUsuario("");
+				break;
+			case 'activarUsuario':
+				RepositorioUsuario::getInstance()->activarUsuario($_GET['id']);
+				header("Location: /../controller/ControllerUsuario.php?action=listarUsuarios");
+				break;
+			case 'desactivarUsuario':
+				RepositorioUsuario::getInstance()->bloquearUsuario($_GET['id']);
+				header("Location: /../controller/ControllerUsuario.php?action=listarUsuarios");
+				break;
+			case 'filtradoUsuario':
+				
+				$listado = [];
+				$activoChecked = isset($_POST['activo']);
+				$bloqueadoChecked = isset($_POST['bloqueado']);
+				$filtrado['activo'] = $activoChecked;
+				$filtrado['bloqueado'] = $bloqueadoChecked;
+				$filtrado['campoBuscar'] = "";
+				if(isset($_POST['buscar']) && trim($_POST['buscar']) !=''){
+					$nombreUsuario = $_POST['buscar'];			
+					$filtrado['campoBuscar'] =$nombreUsuario;
+					if($activoChecked){
+						$activos = RepositorioUsuario::getInstance()->listarUsuariosActivos(true,$nombreUsuario);
+						if($activos) $listado = array_merge($listado,$activos);
+						
+					}
+					if($bloqueadoChecked){
+						$bloqueados = RepositorioUsuario::getInstance()->listarUsuariosBloqueados(true,$nombreUsuario);
+						if($bloqueados) $listado = array_merge($listado,$bloqueados);
+						
+					}
+					if(!$activoChecked && !$bloqueadoChecked){
+						$listado = RepositorioUsuario::getInstance()->devolverUsuarios($nombreUsuario);
+					}
+
+					listarUsuarios($listado,$filtrado);
+				}
+				elseif($activoChecked){
+					$activos = RepositorioUsuario::getInstance()->listarUsuariosActivos();
+					if($activos) $listado = array_merge($listado,$activos);
+					listarUsuarios($listado,$filtrado);
+				}
+				elseif($bloqueadoChecked){
+					$bloqueados = RepositorioUsuario::getInstance()->listarUsuariosBloqueados();
+					if($bloqueados) $listado = array_unshift($listado,$bloqueados);
+					listarUsuarios($listado,$filtrado);
+					}
+				else{
+					header("Location: /../controller/ControllerUsuario.php?action=listarUsuarios");
+				}
+			
 				break;
 			case 'cerrarSesion':
 				session_destroy();
