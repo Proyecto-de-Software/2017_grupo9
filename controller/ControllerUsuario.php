@@ -15,6 +15,7 @@
 
 
 	function crearUsuario($modif){
+		//si $modif == true, quiere decir que el usuario ya existe en la bd, si es false, es la primera vez
 		if(isset($_POST['rol'])){
 			$roles = [];
 			for($i=0; $i < count($_POST['rol']); $i++) {
@@ -32,7 +33,7 @@
 			$creadoEn = $now;
 			$actualizadoEn = $now;
 		}
-		$user =  new Usuario($_POST['user'], $_POST['email'], $_POST['password'], true, $creadoEn, $actualizadoEn, $_POST['name'], $_POST['apellido'], $rolesCompletos);
+		$user =  new Usuario($_POST['usuario'], $_POST['email'], $_POST['password'], true, $creadoEn, $actualizadoEn, $_POST['nombre'], $_POST['apellido'], $rolesCompletos);
 		if($modif) $user->setId($_POST['id']);
 		return $user;
 		
@@ -116,42 +117,57 @@
 			header("Location: /../");
 		}
     }
+    function validarCampos(){
+    	$nombre = isset($_POST['nombre']) && trim($_POST['nombre']) !='';
+    	$apellido = isset($_POST['apellido']) && trim($_POST['apellido']) !='';
+    	$usuario = isset($_POST['usuario']) && trim($_POST['usuario']) !='';
+    	$email = isset($_POST['email']) && filter_var($_POST['email'],FILTER_VALIDATE_EMAIL);
+    	$passwords = isset($_POST['password']) && isset($_POST['password2']) && ($_POST['password'] == $_POST['password2']);
+    	$roles = isset($_POST['rol']);
+    	return ($nombre && $apellido && $usuario && $email && $passwords && $roles);
+    	
+    }
 
 	if(isset($_GET['action'])){
 		switch($_GET['action']){
 			case "agregarUsuario":
-				if(isset($_POST['password']) && isset($_POST['password2']) && $_POST['password'] == $_POST['password2']){
+				if(validarCampos()){
 					RepositorioUsuario::getInstance()->agregarUsuario(crearUsuario(false));
-					listarUsuarios(RepositorioUsuario::getInstance()->devolverUsuarios());
-				} else {
-					agregarUsuario("Las contraseñas no coinciden",RepositorioRol::getInstance()->devolverRoles());
-				}				
+					header("Location: /../controller/ControllerUsuario.php?action=listarUsuarios");
+				} 
+				else{
+					header("Location: /../controller/ControllerUsuario.php?action=agregarUsuarioNoValidado");
+				}	
+				break;
+			case 'agregarUsuarioNoValidado':
+				agregarUsuario("Debe llenar todos los campos. Tenga en cuenta: *Debe elegir al menos un rol. *Las contraseñas deben coincidir. *	El email debe tener un formato valido.",RepositorioRol::getInstance()->devolverRoles());
 				break;
 			case "agregarUsuarioView":
 				agregarUsuario("", RepositorioRol::getInstance()->devolverRoles());
 				break;
 			case 'modificarUsuario':
-				if(isset($_POST['password']) && isset($_POST['password2']) && $_POST['password'] == $_POST['password2']){
+				if(validarCampos()){
 					$resultado = RepositorioUsuario::getInstance()->modificarUsuario(crearUsuario(true));
 					
 					if($resultado){
-						mostrarUsuario($resultado);
+						$id = $resultado->getId();
+						header("Location: /../controller/ControllerUsuario.php?action=mostrarUsuario&id=$id");
 					}
 					else{
 						modificacionDeUsuario(crearUsuario(true),"No se pudieron modificar los datos",RepositorioRol::getInstance()->devolverRoles());
 					}
 				}
 				else{
-					modificacionDeUsuario(crearUsuario(true),"Deben coincidir las contraseñas",RepositorioRol::getInstance()->devolverRoles());
+					modificacionDeUsuario(crearUsuario(true),"Debe llenar todos los campos. Tenga en cuenta: *Debe elegir al menos un rol. *Las contraseñas deben coincidir. *	El email debe tener un formato valido.",RepositorioRol::getInstance()->devolverRoles());
 				}
 				break;
 			case 'modificacionDeUsuario':
-				$usuario = RepositorioUsuario::getInstance()->buscarUsuarioPorId($_POST['id']);
+				$usuario = RepositorioUsuario::getInstance()->buscarUsuarioPorId($_GET['id']);
 		    	modificacionDeUsuario($usuario,"",RepositorioRol::getInstance()->devolverRoles());
 				break;
 			case 'eliminarUsuario':
-				RepositorioUsuario::getInstance()->eliminarUsuario($_POST['id']);
-				listarUsuarios(RepositorioUsuario::getInstance()->devolverUsuarios());
+				RepositorioUsuario::getInstance()->eliminarUsuario($_GET['id']);
+				header("Location: /../controller/ControllerUsuario.php?action=listarUsuarios");
 				break;
 			case 'loginUsuario': 
 					if(RepositorioUsuario::getInstance()->existeUsuario($_POST['email'],$_POST['password'])){
@@ -162,7 +178,7 @@
 					}
 				break;
 			case 'mostrarUsuario':
-				mostrarUsuario(RepositorioUsuario::getInstance()->buscarUsuarioPorId($_POST['id']));
+				mostrarUsuario(RepositorioUsuario::getInstance()->buscarUsuarioPorId($_GET['id']));
 				break;
 			case 'listarUsuarios':
 				listarUsuarios(RepositorioUsuario::getInstance()->devolverUsuarios());

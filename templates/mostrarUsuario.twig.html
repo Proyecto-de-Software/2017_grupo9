@@ -51,10 +51,8 @@
 			    </tr>
  			 </tbody>
 		</table>
-		<form class="text-center" method="POST" action="/controller/ControllerUsuario.php?action=modificacionDeUsuario">
-   			<input type="hidden" name="id" id="id" value="{{ usuario.id }}">
-		    <button type="submit" class="btn btn-outline-success  btn-own-info">Editar</button>
-		</form>
+		<a href="/controller/ControllerUsuario.php?action=modificacionDeUsuario&id={{ usuario.id }}" class="btn btn-outline-success btn-own-info">Editar</a>
+
 	</div>
 
 </section>
