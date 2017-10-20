@@ -1,0 +1,48 @@
+<h2 class="text-center" ></h2>
+<section class="row mx-auto mt-5 ">
+	<div class="login col-md-8  mx-auto mt-4 mb-4 pb-5 pt-5 pr-5 pl-5 border rounded ">
+		<table class="table table-hover">
+			<tbody>
+   				 <tr>
+	     			 <th scope="row">Nombre</th>
+	     			 <td>{{ paciente.nombre }}</td>
+    			</tr>
+			    <tr>
+	     			 <th scope="row">Apellido</th>
+	     			 <td>{{ paciente.apellido }}</td>
+			    </tr>
+			    <tr>
+	     			 <th scope="row">Domicilio</th>
+	     			 <td>{{ paciente.domicilio }}</td>
+			    </tr>
+			    <tr>
+	     			 <th scope="row">Teléfono</th>
+	     			 <td>{{ paciente.telefono }}</td>
+			    </tr>
+			    <tr>
+	     			 <th scope="row">Fecha de nacimiento</th>
+	     			 <td>{{ paciente.fechaNacimiento }}</td>
+			    </tr>
+			    <tr>
+	     			 <th scope="row">Género</th>
+	     			 <td>{{ paciente.genero }}</td>
+			    </tr>
+			    <tr>
+	     			 <th scope="row">Obra social</th>
+	     			 <td>{{ obraSocial.nombre }}</td>
+			    </tr>
+			    <tr>
+	     			 <th scope="row">Tipo de documento</th>
+	     			 <td>{{ tipoDocumento.nombre }}</td>
+			    </tr>
+			    <tr>
+	     			 <th scope="row">Nro de documento</th>
+	     			 <td>{{ paciente.numeroDoc }}</td>
+			    </tr>
+ 			 </tbody>
+		</table>
+		<a href="/controller/ControllerPaciente.php?action=modificacionDePaciente&id={{ paciente.id }}" class="btn btn-outline-success btn-own-info">Editar</a>
+
+	</div>
+
+</section>

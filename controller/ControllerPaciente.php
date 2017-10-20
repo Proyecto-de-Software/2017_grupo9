@@ -29,11 +29,11 @@
     	}
    	}
 
-    function mostrarPaciente($paciente){
+    function mostrarPaciente($paciente,$obraSocial,$tipoDeDocumento){
     	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso('paciente_show')){
 	        require_once($_SERVER['DOCUMENT_ROOT']."/view/MostrarPaciente.php");
 	        $view = new MostrarPaciente();
-	        $view->show($paciente);
+	        $view->show($paciente,$obraSocial,$tipoDeDocumento);
 	    } else {
 	        header("Location: /../");
     	}
@@ -49,7 +49,7 @@
 	    }
     }
 
-    function modificarPaciente($paciente,$obrasSociales,$tiposDeDocumento){
+    function modificarPaciente($paciente, $obrasSociales, $tiposDeDocumento){
     	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso('paciente_update')){
 	        require_once($_SERVER['DOCUMENT_ROOT']."/view/FormularioModificarPaciente.php");
 	        $view = new ModificarPaciente();
@@ -69,19 +69,24 @@
 		    case 'agregarPaciente':
 		    	//if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista()){
 		    		$paciente = crearPaciente();
-		       		if(RepositorioPaciente::getInstance()->agregarPaciente($paciente)){
-		       			mostrarPaciente($paciente);
+		    		$obraSocial = RepositorioPaciente::getInstance()->devolverObrasSociales($paciente->getIdObraSocial());
+		    		$tipoDeDocumento = RepositorioPaciente::getInstance()->devolverTipoDeDocumentoPorId($paciente->getIdTipoDocumento());
+
+        			if(RepositorioPaciente::getInstance()->agregarPaciente($paciente)){
+		       			mostrarPaciente($paciente,$obraSocial,$tipoDeDocumento);
 		       		}
 		       		else{
-		       			agregarPaciente();
+						$obrasSociales = RepositorioPaciente::getInstance()->devolverObrasSociales();
+		    			$tiposDeDocumento = RepositorioPaciente::getInstance()->devolverTiposDeDocumento();
+		       			agregarPaciente($obrasSociales,$tiposDeDocumento);
 		       		}
 		       //	}
 		        break;
 		    case 'modificacionDePaciente':
-		    	$paciente = RepositorioPaciente::getInstance()->buscarPacientePorId($_POST['id']);
+		    	$paciente = RepositorioPaciente::getInstance()->buscarPacientePorId($_GET['id']);
 		    	$obrasSociales = RepositorioPaciente::getInstance()->devolverObrasSociales();
 		    	$tiposDeDocumento = RepositorioPaciente::getInstance()->devolverTiposDeDocumento();
-		    	modificarPaciente($paciente,$obrasSociales,$tiposDeDocumento);
+		    	modificarPaciente($paciente, $obrasSociales, $tiposDeDocumento);
 		    	break;
 		    case 'modificarPaciente':
 		    //	if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista()){

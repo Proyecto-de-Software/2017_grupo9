@@ -2,6 +2,8 @@
 
 	require_once("PDORepository.php");
   require_once("ClasePaciente.php");
+  require_once("ClaseObraSocial.php");
+  require_once("ClaseTipoDocumento.php");
 
 	class RepositorioPaciente extends PDORepository{
       private static $instance;
@@ -17,23 +19,34 @@
 
   		public function agregarPaciente($paciente){
   			$conexion = $this->getConnection();
-  			$query = $conexion->prepare("INSERT INTO paciente(id, apellido, nombre, domicilio, telefono, fecha_nacimiento, genero, id_datos_demograficos, id_obra_social, id_tipo_documento, numero_doc) VALUES(null, :apellido, :nombre, :domicilio, :telefono, :fechaNacimiento, :genero, :idDatosDemograficos, :idObraSocial, :idTipoDocumento, :numeroDoc)");
+  			$query = $conexion->prepare("INSERT INTO paciente(id, apellido, nombre, domicilio, telefono, fecha_nacimiento, genero, obra_social_id, tipo_doc_id, numero_doc) VALUES(null, :apellido, :nombre, :domicilio, :telefono, :fechaNacimiento, :genero, :idObraSocial, :idTipoDocumento, :numeroDoc)");
   			$query->bindParam(':apellido', $paciente->getApellido());
   			$query->bindParam(':nombre', $paciente->getNombre());
   			$query->bindParam(':domicilio', $paciente->getDomicilio());
-  			$query->bindParam(':telefono', $paciente->getTelefono());
   			$query->bindParam(':fechaNacimiento', $paciente->getFechaNacimiento());
   			$query->bindParam(':genero', $paciente->getGenero());
-        $query->bindParam(':idDatosDemograficos', $paciente->getIdDatosDemograficos());
-        $query->bindParam(':idObraSocial', $paciente->getIdObraSocial());
+        $nulo = null;
+        if($paciente->getTelefono() == ''){
+          $query->bindParam(':telefono', $nulo);
+        }
+        else {
+          $query->bindParam(':telefono', $paciente->getTelefono());
+        }
+        if($paciente->getIdObraSocial() == 0){
+          $query->bindParam(':idObraSocial', $nulo);
+        }
+        else {
+          $query->bindParam(':idObraSocial', $paciente->getIdObraSocial());
+        }
         $query->bindParam(':idTipoDocumento', $paciente->getIdTipoDocumento());
         $query->bindParam(':numeroDoc', $paciente->getNumeroDoc());
 
         if($query->execute() == 1){
-            return $conexion->lastInsertId();
+          $paciente->setId($conexion->lastInsertId());
+          return true;
         }
-        else false;
-  		}
+        return false;
+      }
 
       public function modificarPaciente($paciente){
         $conexion = $this->getConnection();
@@ -105,6 +118,18 @@
         $query->execute();
         $tiposDeDocumento = $query->fetchAll();
         return $tiposDeDocumento;
+      }
+
+      public function devolverTipoDeDocumentoPorId($id){
+        $conexion = $this->getConnection();
+        $query = $conexion->prepare("SELECT * FROM tipo_documento WHERE id=:id");
+        $query->bindParam(':id', $id);
+        $query->execute();
+        $tipoDeDocumento = $query->fetchAll();
+        if (sizeof($tipoDeDocumento) > 0){
+          return new TipoDocumento($tipoDeDocumento[0]['id'],$tipoDeDocumento[0]['nombre']);
+        }
+        return false;
       }
   		//CRUD
   		//buscar paciente por ID
