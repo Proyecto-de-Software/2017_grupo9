@@ -29,7 +29,10 @@
         $query->bindParam(':idTipoDocumento', $paciente->getIdTipoDocumento());
         $query->bindParam(':numeroDoc', $paciente->getNumeroDoc());
 
-        return $query->execute() == 1;
+        if($query->execute() == 1){
+            return $conexion->lastInsertId();
+        }
+        else false;
   		}
 
       public function modificarPaciente($paciente){
@@ -71,7 +74,7 @@
         $query->execute();
         $paciente = $query->fetchAll();
         if (sizeof($paciente) > 0){
-          return new Paciente($paciente[0]['id'],$paciente[0]['apellido'],$paciente[0]['nombre'],$paciente[0]['domicilio'], $paciente[0]['telefono'],$paciente[0]['fecha_nacimiento'],$paciente[0]['genero'],$paciente[0]['datos_demograficos_id'], $paciente[0]['obra_social_id'], $paciente[0]['tipo_doc_id'], $paciente[0]['numero_doc']);
+          return new Paciente($paciente[0]['id'],$paciente[0]['apellido'],$paciente[0]['nombre'],$paciente[0]['domicilio'], $paciente[0]['telefono'],$paciente[0]['fecha_nacimiento'],$paciente[0]['genero'], $paciente[0]['obra_social_id'], $paciente[0]['tipo_doc_id'], $paciente[0]['numero_doc']);
         }
 
         return false;
