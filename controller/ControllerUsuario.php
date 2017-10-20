@@ -248,19 +248,22 @@
 						$listado = RepositorioUsuario::getInstance()->devolverUsuarios($nombreUsuario);
 					}
 
-					
+
 					listarUsuarios($listado,$filtrado);
 				}
-				elseif($activoChecked){
-					$activos = RepositorioUsuario::getInstance()->listarUsuariosActivos();
-					if($activos) $listado = array_merge($listado,$activos);
-					listarUsuarios($listado,$filtrado);
-				}
-				elseif($bloqueadoChecked){
-					$bloqueados = RepositorioUsuario::getInstance()->listarUsuariosBloqueados();
-					if($bloqueados) $listado = array_merge($listado,$bloqueados);
-					listarUsuarios($listado,$filtrado);
+				elseif($activoChecked || $bloqueadoChecked){
+					if($activoChecked){
+						$activos = RepositorioUsuario::getInstance()->listarUsuariosActivos();
+						if($activos) $listado = array_merge($listado,$activos);
+						
 					}
+					if($bloqueadoChecked){
+						$bloqueados = RepositorioUsuario::getInstance()->listarUsuariosBloqueados();
+						if($bloqueados) $listado = array_merge($listado,$bloqueados);
+						
+					}
+					listarUsuarios($listado,$filtrado);
+				}
 				else{
 					header("Location: /../controller/ControllerUsuario.php?action=listarUsuarios");
 				}
