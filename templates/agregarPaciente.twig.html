@@ -1,10 +1,10 @@
 <section class="row mx-auto mt-5 ">
-	<div class="login col-md-4  mx-auto mt-4 mb-4 pb-5 pt-5 pr-5 pl-5 border rounded ">
+	<div class="login col-md-5  mx-auto mt-4 mb-4 pb-5 pt-5 pr-5 pl-5 border rounded ">
 		<h3 class="card-header text-center myHeader">Agregar paciente </h3>
 		<form class="text-center" role="form" method="POST" action="/controller/ControllerPaciente.php?action=agregarPaciente">
 			<div class="form-group ">
-			    <label for="name" hidden>Nombre</label>
-			    <input type="text" class="form-control mt-3" id="name" name="name" placeholder="Nombre" required>
+			    <label for="nombre" hidden>Nombre</label>
+			    <input type="text" class="form-control mt-3" id="nombre" name="nombre" placeholder="Nombre" required>
 		  	</div>
 		  	<div class="form-group ">
 			    <label for="apellido" hidden>Apellido</label>
@@ -44,13 +44,15 @@
 		  	<div class="form-group ">
 			    <label for="obraSocial" hidden>Obra social</label>
 			    	<select name="idObraSocial" class="form-control mt-3">
-				    	<option value="NULL">Ingrese obra social</option>
+				    	<option value="0">Ingrese obra social</option>
 				    	{% for obraSocial in obrasSociales %}
 				    		<option value="{{ obraSocial.id }}">{{ obraSocial.nombre | upper }}</option>
 				    	{% endfor %}
 			    	</select>
 		  	</div>			
-		  	<button type="submit" class="btn btn-outline-success  btn-own-info">Agregar</button>
+		  	<a href="/controller/ControllerDatosDemograficos.php?action=altaDeDatosDemograficos&id={{ paciente.id }}" class="btn btn-outline-success btn-own-info">Agregar datos demográficos</a>
+		  	<br><br>
+		  	<button type="submit" class="btn btn-outline-success  btn-own-info">Agregar paciente</button>
 		</form>
 	</div>
 </section>
