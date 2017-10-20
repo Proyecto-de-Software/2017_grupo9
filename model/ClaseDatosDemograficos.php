@@ -8,15 +8,16 @@
 		private $tipoVivienda;
 		private $tipoCalefaccion;
 		private $tipoAgua;
+        private $paciente;
 
-		private function __construct($id, $heladera, $electricidad, $mascota, $tipoVivienda, $tipoCalefaccion, $tipoAgua){
-			$this->id = $id;
+		private function __construct($heladera, $electricidad, $mascota, $tipoVivienda, $tipoCalefaccion, $tipoAgua, $paciente){
             $this->heladera = $heladera;
         	$this->electricidad = $electricidad;
         	$this->mascota = $mascota;
         	$this->tipoVivienda = $tipoVivienda;
         	$this->tipoCalefaccion = $tipoCalefaccion;
         	$this->tipoAgua = $tipoAgua;
+            $this->paciente = $paciente;
 		}
 
 		public function getId(){
@@ -69,4 +70,12 @@
 
         public function setTipoAgua($tipoAgua){
         	$this->tipoAgua = $tipoAgua;
+        }
+
+        public function getPaciente(){
+            $this->paciente;
+        }
+
+        public function setPaciente($paciente){
+            $this->paciente = $paciente;
         }

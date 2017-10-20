@@ -15,7 +15,7 @@
 		session_start();
 
 	function crearPaciente(){
-		$paciente = new Paciente($_POST['id'], $_POST['apellido'], $_POST['nombre'], $_POST['domicilio'], $_POST['telefono'], $_POST['fechaNacimiento'], $_POST['genero'], $_POST['idDatosDemograficos'], $_POST['idObraSocial'], $_POST['idTipoDocumento'], $_POST['numeroDoc']);
+		$paciente = new Paciente($_POST['apellido'], $_POST['nombre'], $_POST['domicilio'], $_POST['telefono'], $_POST['fechaNacimiento'], $_POST['genero'], $_POST['idObraSocial'], $_POST['idTipoDocumento'], $_POST['numeroDoc']);
 		return $paciente;
 	}
 

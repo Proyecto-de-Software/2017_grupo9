@@ -7,20 +7,17 @@
 		private $telefono;
 		private $fechaNacimiento;
 		private $genero;
-		private $idDatosDemograficos;
 		private $idObraSocial;
 		private $idTipoDocumento;
 		private $numeroDoc;
 
-        function __construct($id,$apellido,$nombre,$domicilio,$telefono,$fechaNacimiento,$genero,$idDatosDemograficos,$idObraSocial,$idTipoDocumento,$numeroDoc){
-        	$this->id = $id;
+        function __construct($apellido,$nombre,$domicilio,$telefono,$fechaNacimiento,$genero,$idObraSocial,$idTipoDocumento,$numeroDoc){
             $this->apellido = $apellido;
         	$this->nombre = $nombre;
         	$this->domicilio = $domicilio;
         	$this->telefono = $telefono;
         	$this->fechaNacimiento = $fechaNacimiento;
         	$this->genero = $genero;
-        	$this->idDatosDemograficos = $idDatosDemograficos;
         	$this->idObraSocial = $idObraSocial;
         	$this->idTipoDocumento = $idTipoDocumento;
         	$this->numeroDoc = $numeroDoc;
@@ -76,14 +73,6 @@
 
     	public function setGenero($genero){
     		$this->genero = $genero;
-    	}
-
-    	public function getIdDatosDemograficos(){
-    		return $this->idDatosDemograficos;
-    	}
-
-    	public function setIdDatosDemograficos($idDatosDemograficos){
-    		$this->idDatosDemograficos = $idDatosDemograficos;
     	}
 
     	public function getIdObraSocial(){
