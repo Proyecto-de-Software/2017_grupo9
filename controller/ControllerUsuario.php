@@ -248,6 +248,7 @@
 						$listado = RepositorioUsuario::getInstance()->devolverUsuarios($nombreUsuario);
 					}
 
+					
 					listarUsuarios($listado,$filtrado);
 				}
 				elseif($activoChecked){
@@ -257,7 +258,7 @@
 				}
 				elseif($bloqueadoChecked){
 					$bloqueados = RepositorioUsuario::getInstance()->listarUsuariosBloqueados();
-					if($bloqueados) $listado = array_unshift($listado,$bloqueados);
+					if($bloqueados) $listado = array_merge($listado,$bloqueados);
 					listarUsuarios($listado,$filtrado);
 					}
 				else{
