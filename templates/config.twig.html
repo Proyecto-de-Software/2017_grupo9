@@ -1,30 +1,90 @@
 <section class="row mx-auto mt-5 ">
 	<div class="login col-md-6  mx-auto mt-4 mb-4 pb-5 pt-5 pr-5 pl-5 border rounded ">
-		<h3 class="card-header text-center myHeader">Configuración </h3>
-		<form class="text-center" role="form" method="POST" action="/controller/ControllerConfiguracion.php?action=modificarConfiguracion">
-		  	<div class="form-group ">
-			    <label for="titulo" hidden>Titulo</label>
-			    <input type="text" class="form-control mt-3" id="titulo" name="titulo" placeholder="Cambiar título">
+		<h3 class="card-header text-center myHeader mb-4">Configuración </h3>
+		<form class="text-left" role="form" method="POST" action="/controller/ControllerConfiguracion.php?action=modificarConfiguracion">
+			{% if mensaje is defined %}<p class="text-danger">{{mensaje}}</p>{% endif %}
+			<label for="id" hidden>Id</label>
+			<input name="id" value="{{configuracionActual.id}}" hidden>
+			{% if configuracionActual == null %}
+			<label for="edit" hidden>Id</label>
+			<input name="edit" value='agregar' hidden>
+			{% else %}
+			<label for="edit" hidden>Id</label>
+			<input name="edit" value='editar' hidden>
+			{% endif %}
+		  	<div class="form-group">
+			    <label for="titulo" > <b>Titulo del sitio </b></label>
+			    {% if configuracionActual != null %}
+			    <input type="text" class="form-control " id="titulo" name="titulo" placeholder="Cambiar título" value="{{configuracionActual.titulo}}">
+			   	{% else %}
+			   	<input type="text" class="form-control " id="titulo" name="titulo" placeholder="Cambiar título">
+			   	{% endif %}
 		  	</div>
-		 	 <div class="form-group">
-		    	<label for="descripcion" hidden>Descripcion</label>
-		    	<textarea class="form-control mt-3" rows ="10" id="descripcion" name="descripcion" placeholder="Cambiar descripcion"></textarea>
-		   		<!--<input type="text" class="form-control mt-3" id="descripcion" placeholder="Cambiar descripcion"> -->
+
+		 	<div class="form-group">
+		    	<label for="descripcion" ><b>Descripcion del hospital</b></label>
+
+		    	<textarea class="form-control"  rows="4" id="descripcionHospital" name="descripcionHospital" placeholder="Descripcion del hospital">
+		    		{% if configuracionActual != null %}
+		    			{{configuracionActual.descripcionHospital}}
+		    		{% endif %}
+		    	</textarea>
+		    	
+
+			</div>
+
+		 	<div class="form-group">
+		    	<label for="descripcion" ><b>Descripcion de la guardia</b></label>
+		    	<textarea class="form-control " rows ="4" id="descripcionGuardia" name="descripcionGuardia" placeholder="Descripcion de la guardia">
+		    		{% if configuracionActual != null %}
+		    			{{configuracionActual.descripcionGuardia}}
+		    		{% endif %}
+		    	</textarea>
+		    	
+
+			</div>
+
+		 	<div class="form-group">
+		    	<label for="descripcion" ><b>Descripcion de especialidades</b></label>
+		    	<textarea class="form-control" rows ="4" id="descripcionEspecialidades" name="descripcionEspecialidades" placeholder="Descripcion de especialidades">
+		    		{% if configuracionActual != null %}
+		    			{{configuracionActual.descripcionEspecialidades}}
+		    		{% endif %}		    		
+
+		    	</textarea>
+
+
 			</div>
 			<div class="form-group ">
-			    <label for="email" hidden>Email</label>
-			    <input type="text" class="form-control mt-3" id="email" name="email" placeholder="Cambiar email">
+			    <label for="email" ><b>Email</b></label>
+			    {% if configuracionActual != null %}
+			    <input type="text" class="form-control" id="email" name="email" placeholder="Cambiar email" value="{{configuracionActual.contacto}}">
+			    {% else %}
+			    <input type="text" class="form-control" id="email" name="email" placeholder="Cambiar email">
+			   	{% endif %}
 		  	</div>
 		  	<div class="form-group ">
-			    <label for="elementos" hidden>Elementos</label>
-			    Cantidad de elementos por página:
+			    <label for="elementos" ><b>Número de elementos por página:</b></label>
+		    	{% if configuracionActual != null %}
+		    	<input type="number" id="elementos" name="elementos" min="1" max="100" value="{{configuracionActual.cantElem}}">
+		    	{% else %}			    
 			    <input type="number" id="elementos" name="elementos" min="1" max="100">
+			    {% endif %}
 		  	</div>
 		  	<div class="form-group ">
-				<label for="habilitado" hidden>Habilitado</label>
-				Habilitar o deshabilitar sitio:<br>
-			    <input type="radio" id="habilitado" name="habilitado" value=1 checked> Habilitar<br>
-  				<input type="radio" id="habilitado" name="habilitado" value=0> Deshabilitar<br>
+				<label for="estado" ><b>Estado del sitio:</b> </label><br>
+				{% if configuracionActual != null %}
+					{% if configuracionActual.habilitado %}
+					<input type="radio" id="estado" name="estado" value='habilitado' checked> Habilitado<br>
+  					<input type="radio" id="estado" name="estado" value='deshabilitado'> Deshabilitado<br>
+  					{% else %}
+  					<input type="radio" id="estado" name="estado" value='habilitado' > Habilitado<br>
+  					<input type="radio" id="estado" name="estado" value='deshabilitado' checked> Deshabilitado<br>
+  					{% endif %}
+				{% else %}
+			    <input type="radio" id="estado" name="estado" value='habilitado' checked> Habilitado<br>
+  				<input type="radio" id="estado" name="estado" value='deshabilitado' > Deshabilitado<br>
+  				{% endif %}
 		  	</div>
 
 			<button type="submit" class="btn btn-outline-success  btn-own-info">Aplicar</button>

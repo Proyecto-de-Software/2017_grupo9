@@ -6,6 +6,8 @@
 	require_once($_SERVER['DOCUMENT_ROOT']."/model/RepositorioUsuario.php");
 	require_once($_SERVER['DOCUMENT_ROOT']."/model/RepositorioRol.php");
 	require_once($_SERVER['DOCUMENT_ROOT']."/model/RepositorioPermiso.php");
+	require_once($_SERVER['DOCUMENT_ROOT']."/model/RepositorioConfiguracion.php");
+	require_once($_SERVER['DOCUMENT_ROOT']."/model/ClaseConfiguracion.php");
 	require_once($_SERVER['DOCUMENT_ROOT']."/model/ClaseUsuario.php");
 	require_once($_SERVER['DOCUMENT_ROOT'].'/view/TwigView.php');
 
@@ -65,7 +67,7 @@
 	    	header("Location: /../");
 	    }
     }
-    function loginUsuario($msj){
+    function loginUsuario($msj=''){
     	require_once($_SERVER['DOCUMENT_ROOT']."/view/Login.php");
 	    $view = new Login();
 	    $view->show($msj);
@@ -104,8 +106,15 @@
         
 
     	require_once($_SERVER['DOCUMENT_ROOT']."/view/Home.php");
+    	$config = RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion();
+    	$datosConfigurados =array(
+            'hospital' => $config->getDescripcionHospital(),
+            'guardia' => $config->getDescripcionGuardia(),
+            'especialidades' => $config->getDescripcionEspecialidades(),
+            'contacto' => $config->getContacto()
+        );
 	    $view = new Home();
-	    $view->show();
+	    $view->show($datosConfigurados);
 
     }
     function mostrarUsuario($usuario){
@@ -199,12 +208,17 @@
 				header("Location: /../controller/ControllerUsuario.php?action=listarUsuarios");
 				break;
 			case 'loginUsuario': 
+				if(isset($_POST['email']) && isset($_POST['password'])){
 					if(RepositorioUsuario::getInstance()->existeUsuario($_POST['email'],$_POST['password'])){
 						loguearUsuario(RepositorioUsuario::getInstance()->buscarUsuarioPorEmail($_POST['email']));
 					}
 					else{
 						loginUsuario("Es posible que no exista el usuario o este ingresando mal la contraseña");
 					}
+				}
+				else{
+					header("Location: /../controller/ControllerUsuario.php?action=loginUsuarioView");
+				}
 				break;
 			case 'mostrarUsuario':
 				mostrarUsuario(RepositorioUsuario::getInstance()->buscarUsuarioPorId($_GET['id']));
@@ -213,7 +227,7 @@
 				listarUsuarios(RepositorioUsuario::getInstance()->devolverUsuarios());
 				break;
 			case 'loginUsuarioView':
-				loginUsuario("");
+				loginUsuario();
 				break;
 			case 'activarUsuario':
 				RepositorioUsuario::getInstance()->activarUsuario($_GET['id']);

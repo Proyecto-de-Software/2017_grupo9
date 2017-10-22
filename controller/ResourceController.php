@@ -1,5 +1,7 @@
 <?php
-
+chdir($_SERVER['DOCUMENT_ROOT']);
+require_once($_SERVER['DOCUMENT_ROOT']."/model/RepositorioConfiguracion.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/model/ClaseConfiguracion.php");
 /**
  * Description of ResourceController
  */
@@ -29,8 +31,15 @@ class ResourceController {
     
     public function home(){
         require_once($_SERVER['DOCUMENT_ROOT']."/view/Home.php");
+        $config = RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion();
+        $datosConfigurados =array(
+            'hospital' => $config->getDescripcionHospital(),
+            'guardia' => $config->getDescripcionGuardia(),
+            'especialidades' => $config->getDescripcionEspecialidades(),
+            'contacto' => $config->getContacto()
+        );
         $view = new Home();
-        $view->show();
+        $view->show($datosConfigurados);
     }
 
     public function admin(){

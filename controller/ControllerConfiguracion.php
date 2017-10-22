@@ -15,23 +15,57 @@
 		session_start();
 
 	function crearConfiguracion(){
-		return new Configuracion($_POST['titulo'], $_POST['descripcion'], $_POST['email'], $_POST['elementos'], $_POST['habilitado']);
+		if( $_POST['estado'] == 'habilitado'){
+			$habilitado = 1;
+		}
+		else{
+			$habilitado = 0;
+		}
+		$configuracion = new Configuracion($_POST['titulo'], $_POST['descripcionHospital'],$_POST['descripcionGuardia'],$_POST['descripcionEspecialidades'], $_POST['email'], $_POST['elementos'],$habilitado);
+		if($_POST['edit'] == 'editar') $configuracion->setId($_POST['id']);
+		return $configuracion;
 	}
 
-	function config(){
+	function mostrarFormularioConfiguracion($configuracionActual=null,$mensaje=null){
         require_once($_SERVER['DOCUMENT_ROOT']."/view/Config.php");
         $view = new Config();
-        $view->show();
+        $view->show($configuracionActual,$mensaje);
+    }
+    function validarCampos(){
+    	$titulo = isset($_POST['titulo']) && trim($_POST['titulo']) !='';
+    	$descripcionHospital = isset($_POST['descripcionHospital']) && trim($_POST['descripcionHospital']) !='';
+    	$descripcionGuardia = isset($_POST['descripcionGuardia']) && trim($_POST['descripcionGuardia']) !='';
+    	$descripcionEspecialidades = isset($_POST['descripcionEspecialidades']) && trim($_POST['descripcionEspecialidades']) !='';
+    	$email = isset($_POST['email']) && filter_var($_POST['email'],FILTER_VALIDATE_EMAIL);
+    	$elementos = isset($_POST['elementos']);
+    	return $titulo &&	$descripcionHospital && $descripcionGuardia && $descripcionEspecialidades && $email && $elementos;
+
     }
 
     if(isset($_GET['action'])){
     	switch ($_GET['action']) {
-	    	case 'panel':
-	    		config();
+	    	case 'modificacionConfiguracion':
+	    			mostrarFormularioConfiguracion(RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion());	
 	    		break;
+	    	case 'modificacionConfiguracionNoValidado':
+	    		mostrarFormularioConfiguracion(RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion(),'Debe llenar todos los campos. Tenga en cuenta que el email debe tener un formato válido');
+	    		break;
+
 	    	case 'modificarConfiguracion':
-	    		RepositorioConfiguracion::getInstance()->modificarConfiguracionHospital(crearConfiguracion());
-	    		header("Location: /../");
+	    		if(validarCampos()){
+		    		if($_POST['edit']=='editar'){ 
+		    			RepositorioConfiguracion::getInstance()->modificarConfiguracionHospital(crearConfiguracion());
+
+		    		}
+		    		else{
+		    		RepositorioConfiguracion::getInstance()->crearConfiguracionHospital(crearConfiguracion());
+
+		    		}
+		    		header("Location: /../controller/ControllerConfiguracion.php?action=modificacionConfiguracion");
+		    	}
+		    	else{
+		    		header("Location: /../controller/ControllerConfiguracion.php?action=modificacionConfiguracionNoValidado");
+		    	}
 	    		break;
 	    }
 	}
