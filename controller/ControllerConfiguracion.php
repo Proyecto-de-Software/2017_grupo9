@@ -45,7 +45,11 @@
     if(isset($_GET['action'])){
     	switch ($_GET['action']) {
 	    	case 'modificacionConfiguracion':
-	    			mostrarFormularioConfiguracion(RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion());	
+	    			if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'configuracion_update')){
+	    				mostrarFormularioConfiguracion(RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion());
+	    			} else {
+						header("Location: /../");
+					}
 	    		break;
 	    	case 'modificacionConfiguracionNoValidado':
 	    		mostrarFormularioConfiguracion(RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion(),'Debe llenar todos los campos. Tenga en cuenta que el email debe tener un formato válido');

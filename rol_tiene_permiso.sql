@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-10-2017 a las 05:28:54
+-- Tiempo de generación: 23-10-2017 a las 06:51:34
 -- Versión del servidor: 5.6.24
 -- Versión de PHP: 5.6.8
 
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `rol_tiene_permiso` (
   `id` int(11) NOT NULL,
   `rol_id` int(11) NOT NULL,
   `permiso_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `rol_tiene_permiso`
@@ -57,7 +57,13 @@ INSERT INTO `rol_tiene_permiso` (`id`, `rol_id`, `permiso_id`) VALUES
 (38, 1, 20),
 (39, 1, 21),
 (40, 1, 22),
-(41, 1, 23);
+(41, 1, 23),
+(42, 1, 29),
+(43, 1, 30),
+(44, 1, 31),
+(45, 1, 32),
+(46, 1, 33),
+(50, 1, 32);
 
 --
 -- Índices para tablas volcadas
@@ -77,7 +83,7 @@ ALTER TABLE `rol_tiene_permiso`
 -- AUTO_INCREMENT de la tabla `rol_tiene_permiso`
 --
 ALTER TABLE `rol_tiene_permiso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=47;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=52;
 --
 -- Restricciones para tablas volcadas
 --

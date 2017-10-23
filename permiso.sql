@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-10-2017 a las 05:29:11
+-- Tiempo de generación: 23-10-2017 a las 06:52:24
 -- Versión del servidor: 5.6.24
 -- Versión de PHP: 5.6.8
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `permiso` (
   `id` int(11) NOT NULL,
   `nombre` varchar(255) COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `permiso`
@@ -50,7 +50,12 @@ INSERT INTO `permiso` (`id`, `nombre`) VALUES
 (20, 'usuario_new'),
 (21, 'usuario_destroy'),
 (22, 'usuario_update'),
-(23, 'usuario_show');
+(23, 'usuario_show'),
+(29, 'configuracion_index'),
+(30, 'configuracion_new'),
+(31, 'configuracion_destroy'),
+(32, 'configuracion_update'),
+(33, 'configuracion_show');
 
 --
 -- Índices para tablas volcadas
@@ -70,7 +75,7 @@ ALTER TABLE `permiso`
 -- AUTO_INCREMENT de la tabla `permiso`
 --
 ALTER TABLE `permiso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=39;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
