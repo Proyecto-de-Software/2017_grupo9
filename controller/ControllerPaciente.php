@@ -20,7 +20,7 @@
 	}
 
 	function listarPacientes(){
-		if(RepositorioPermiso::getInstance()->UsuarioTienePermiso('paciente_index')){
+		if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'paciente_index')){
 	        require_once($_SERVER['DOCUMENT_ROOT']."/view/ListarPacientes.php");
 	        $view = new ListarPacientes();
 	        $view->show(RepositorioPaciente::getInstance()->devolverPacientes());
@@ -30,7 +30,7 @@
    	}
 
     function mostrarPaciente($paciente,$obraSocial,$tipoDeDocumento){
-    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso('paciente_show')){
+    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'paciente_show')){
 	        require_once($_SERVER['DOCUMENT_ROOT']."/view/MostrarPaciente.php");
 	        $view = new MostrarPaciente();
 	        $view->show($paciente,$obraSocial,$tipoDeDocumento);
@@ -40,7 +40,7 @@
     }
 
     function agregarPaciente($obrasSociales,$tiposDeDocumento){
-    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso('paciente_new')){
+    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'paciente_new')){
 	        require_once($_SERVER['DOCUMENT_ROOT']."/view/AgregarPaciente.php");
 	        $view = new AgregarPaciente();
 	        $view->show($obrasSociales,$tiposDeDocumento);
@@ -50,7 +50,7 @@
     }
 
     function modificarPaciente($paciente, $obrasSociales, $tiposDeDocumento){
-    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso('paciente_update')){
+    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'paciente_update')){
 	        require_once($_SERVER['DOCUMENT_ROOT']."/view/FormularioModificarPaciente.php");
 	        $view = new ModificarPaciente();
 	        $view->show($paciente,$obrasSociales,$tiposDeDocumento);

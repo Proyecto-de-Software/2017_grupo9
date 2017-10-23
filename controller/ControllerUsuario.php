@@ -41,7 +41,7 @@
 		
 	}
 	function listarUsuarios($usuarios,$filtrado=null){
-		if(RepositorioPermiso::getInstance()->UsuarioTienePermiso('usuario_index')){
+		if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'usuario_index')){
 	        require_once($_SERVER['DOCUMENT_ROOT']."/view/ListarUsuarios.php");
 	        $view = new ListarUsuarios();
 	        $view->show($usuarios,$filtrado);
@@ -50,7 +50,7 @@
     	}
     }
     function agregarUsuario($mensaje,$roles){
-    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso('usuario_new')){
+    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'usuario_new')){
 		    require_once($_SERVER['DOCUMENT_ROOT']."/view/AgregarUsuario.php");
 		    $view = new AgregarUsuario();
 		    $view->show($mensaje,$roles);
@@ -59,7 +59,7 @@
 		}
     }
     function modificacionDeUsuario($usuario,$mensaje,$roles){
-    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso('usuario_update')){
+    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'usuario_update')){
 	    	require_once($_SERVER['DOCUMENT_ROOT']."/view/FormularioModificarUsuario.php");
 	    	$view = new ModificarUsuario();
 	    	$view ->show($usuario,$mensaje,$roles);
@@ -118,7 +118,7 @@
 
     }
     function mostrarUsuario($usuario){
-    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso('usuario_show')){
+    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'usuario_show')){
 		    require_once($_SERVER['DOCUMENT_ROOT']."/view/MostrarUsuario.php");
 		    $view = new MostrarUsuario();
 		    $view->show($usuario);
