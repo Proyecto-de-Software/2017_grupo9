@@ -20,54 +20,45 @@
 	}
 
 	function listarPacientes(){
-		if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'paciente_index')){
-	        require_once($_SERVER['DOCUMENT_ROOT']."/view/ListarPacientes.php");
-	        $view = new ListarPacientes();
-	        $view->show(RepositorioPaciente::getInstance()->devolverPacientes());
-	    } else {
-	        header("Location: /../");
-    	}
+	    require_once($_SERVER['DOCUMENT_ROOT']."/view/ListarPacientes.php");
+	    $view = new ListarPacientes();
+	    $view->show(RepositorioPaciente::getInstance()->devolverPacientes());
    	}
 
     function mostrarPaciente($paciente,$obraSocial,$tipoDeDocumento){
-    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'paciente_show')){
-	        require_once($_SERVER['DOCUMENT_ROOT']."/view/MostrarPaciente.php");
-	        $view = new MostrarPaciente();
-	        $view->show($paciente,$obraSocial,$tipoDeDocumento);
-	    } else {
-	        header("Location: /../");
-    	}
+	    require_once($_SERVER['DOCUMENT_ROOT']."/view/MostrarPaciente.php");
+	    $view = new MostrarPaciente();
+	    $view->show($paciente,$obraSocial,$tipoDeDocumento);
     }
 
     function agregarPaciente($obrasSociales,$tiposDeDocumento){
-    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'paciente_new')){
-	        require_once($_SERVER['DOCUMENT_ROOT']."/view/AgregarPaciente.php");
-	        $view = new AgregarPaciente();
-	        $view->show($obrasSociales,$tiposDeDocumento);
-	    } else {
-	    	header("Location: /../");
-	    }
+	    require_once($_SERVER['DOCUMENT_ROOT']."/view/AgregarPaciente.php");
+	    $view = new AgregarPaciente();
+	    $view->show($obrasSociales,$tiposDeDocumento);
     }
 
     function modificarPaciente($paciente, $obrasSociales, $tiposDeDocumento){
-    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'paciente_update')){
-	        require_once($_SERVER['DOCUMENT_ROOT']."/view/FormularioModificarPaciente.php");
-	        $view = new ModificarPaciente();
-	        $view->show($paciente,$obrasSociales,$tiposDeDocumento);
-	    }
+	    require_once($_SERVER['DOCUMENT_ROOT']."/view/FormularioModificarPaciente.php");
+	    $view = new ModificarPaciente();
+	    $view->show($paciente,$obrasSociales,$tiposDeDocumento);
     } 
 
 	if(isset($_GET['action'])){
 		switch ($_GET['action']) {
 			case 'altaDePaciente':
 				//if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista()){
+				if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'paciente_new')){
 					$obrasSociales = RepositorioPaciente::getInstance()->devolverObrasSociales();
 		    		$tiposDeDocumento = RepositorioPaciente::getInstance()->devolverTiposDeDocumento();
 		       		agregarPaciente($obrasSociales,$tiposDeDocumento);
+		       	} else {
+	    			header("Location: /../");
+	    		}
 		       	//	}
 		       	break;
 		    case 'agregarPaciente':
 		    	//if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista()){
+		    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'paciente_new')){
 		    		$paciente = crearPaciente();
 		    		$obraSocial = RepositorioPaciente::getInstance()->devolverObrasSociales($paciente->getIdObraSocial());
 		    		$tipoDeDocumento = RepositorioPaciente::getInstance()->devolverTipoDeDocumentoPorId($paciente->getIdTipoDocumento());
@@ -80,37 +71,60 @@
 		    			$tiposDeDocumento = RepositorioPaciente::getInstance()->devolverTiposDeDocumento();
 		       			agregarPaciente($obrasSociales,$tiposDeDocumento);
 		       		}
+		       	} else {
+	    			header("Location: /../");
+	    		}
 		       //	}
 		        break;
 		    case 'modificacionDePaciente':
-		    	$paciente = RepositorioPaciente::getInstance()->buscarPacientePorId($_GET['id']);
-		    	$obrasSociales = RepositorioPaciente::getInstance()->devolverObrasSociales();
-		    	$tiposDeDocumento = RepositorioPaciente::getInstance()->devolverTiposDeDocumento();
-		    	modificarPaciente($paciente, $obrasSociales, $tiposDeDocumento);
+		    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'paciente_update')){
+			    	$paciente = RepositorioPaciente::getInstance()->buscarPacientePorId($_GET['id']);
+			    	$obrasSociales = RepositorioPaciente::getInstance()->devolverObrasSociales();
+			    	$tiposDeDocumento = RepositorioPaciente::getInstance()->devolverTiposDeDocumento();
+			    	modificarPaciente($paciente, $obrasSociales, $tiposDeDocumento);
+			    } else {
+	    			header("Location: /../");
+	    		}
 		    	break;
 		    case 'modificarPaciente':
 		    //	if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista()){
+		    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'paciente_update')){
 		        	RepositorioPaciente::getInstance()->modificarPaciente(crearPaciente());
 		        	mostrarPaciente(RepositorioPaciente::getInstance()->buscarPacientePorId($_POST['id']));
+		        } else {
+	        		header("Location: /../");
+    			}
 		       // }
 		        break;
 		    case 'eliminarPaciente':
 		    	//if(($_SESSION['usuario'])->esAdministrador()){
+		   		if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'paciente_destroy')){
 		        	if(RepositorioPaciente::getInstance()->eliminarPaciente($_GET['id'])){
 		        		listarPacientes();
 		        	}
+		        } else {
+	        		header("Location: /../");
+    			}
 		       // }
 		        break;
 		    case 'mostrarPaciente':
 		    	//if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista()){
+		    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'paciente_show')){
 		    		$paciente = RepositorioPaciente::getInstance()->buscarPacientePorId($_POST['id']);
 		        	mostrarPaciente($paciente);
+		        } else {
+	        		header("Location: /../");
+    			}
 		       // }
 		        break;
 		    case 'listarPacientes':
 		    	//if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista() || ($_SESSION['usuario'])->esAdministrador()){
+		    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'paciente_index')){
 		    		$pacientes = RepositorioPaciente::getInstance()->devolverPacientes();
 		        	listarPacientes($pacientes);
+		        } else {
+	        		header("Location: /../");
+    			}
 		       // }
 		        break;
 		}

@@ -41,31 +41,19 @@
 		
 	}
 	function listarUsuarios($usuarios,$filtrado=null){
-		if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'usuario_index')){
-	        require_once($_SERVER['DOCUMENT_ROOT']."/view/ListarUsuarios.php");
-	        $view = new ListarUsuarios();
-	        $view->show($usuarios,$filtrado);
-    	} else {
-	        header("Location: /../");
-    	}
+	    require_once($_SERVER['DOCUMENT_ROOT']."/view/ListarUsuarios.php");
+	    $view = new ListarUsuarios();
+	    $view->show($usuarios,$filtrado);
     }
     function agregarUsuario($mensaje,$roles){
-    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'usuario_new')){
-		    require_once($_SERVER['DOCUMENT_ROOT']."/view/AgregarUsuario.php");
-		    $view = new AgregarUsuario();
-		    $view->show($mensaje,$roles);
-		} else {
-			header("Location: /../");
-		}
+		require_once($_SERVER['DOCUMENT_ROOT']."/view/AgregarUsuario.php");
+		$view = new AgregarUsuario();
+		$view->show($mensaje,$roles);
     }
     function modificacionDeUsuario($usuario,$mensaje,$roles){
-    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'usuario_update')){
-	    	require_once($_SERVER['DOCUMENT_ROOT']."/view/FormularioModificarUsuario.php");
-	    	$view = new ModificarUsuario();
-	    	$view ->show($usuario,$mensaje,$roles);
-	    } else {
-	    	header("Location: /../");
-	    }
+	    require_once($_SERVER['DOCUMENT_ROOT']."/view/FormularioModificarUsuario.php");
+	    $view = new ModificarUsuario();
+	    $view ->show($usuario,$mensaje,$roles);
     }
     function loginUsuario($msj=''){
     	require_once($_SERVER['DOCUMENT_ROOT']."/view/Login.php");
@@ -118,13 +106,9 @@
 
     }
     function mostrarUsuario($usuario){
-    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'usuario_show')){
-		    require_once($_SERVER['DOCUMENT_ROOT']."/view/MostrarUsuario.php");
-		    $view = new MostrarUsuario();
-		    $view->show($usuario);
-		} else {
-			header("Location: /../");
-		}
+		require_once($_SERVER['DOCUMENT_ROOT']."/view/MostrarUsuario.php");
+		$view = new MostrarUsuario();
+		$view->show($usuario);
     }
     function validarCampos(){
     	$nombre = isset($_POST['nombre']) && trim($_POST['nombre']) !='';
@@ -172,7 +156,11 @@
 			 	agregarUsuario("El nombre de usuario que ha ingresado ya esta registrado, elija otro.",RepositorioRol::getInstance()->devolverRoles());
 			 	break;			 
 			case "agregarUsuarioView":
-				agregarUsuario("", RepositorioRol::getInstance()->devolverRoles());
+				if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'usuario_new')){
+					agregarUsuario("", RepositorioRol::getInstance()->devolverRoles());
+				} else {
+					header("Location: /../");
+				}
 				break;
 			case 'modificarUsuario':
 				if(validarCampos()){
@@ -200,12 +188,20 @@
 				}
 				break;
 			case 'modificacionDeUsuario':
-				$usuario = RepositorioUsuario::getInstance()->buscarUsuarioPorId($_GET['id']);
-		    	modificacionDeUsuario($usuario,"",RepositorioRol::getInstance()->devolverRoles());
+				if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'usuario_update')){
+					$usuario = RepositorioUsuario::getInstance()->buscarUsuarioPorId($_GET['id']);
+			    	modificacionDeUsuario($usuario,"",RepositorioRol::getInstance()->devolverRoles());
+			    } else {
+					header("Location: /../");
+				}
 				break;
 			case 'eliminarUsuario':
-				RepositorioUsuario::getInstance()->eliminarUsuario($_GET['id']);
-				header("Location: /../controller/ControllerUsuario.php?action=listarUsuarios");
+				if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'usuario_destroy')){
+					RepositorioUsuario::getInstance()->eliminarUsuario($_GET['id']);
+					header("Location: /../controller/ControllerUsuario.php?action=listarUsuarios");
+				} else {
+					header("Location: /../");
+				}
 				break;
 			case 'loginUsuario': 
 				if(isset($_POST['email']) && isset($_POST['password'])){
@@ -221,21 +217,37 @@
 				}
 				break;
 			case 'mostrarUsuario':
-				mostrarUsuario(RepositorioUsuario::getInstance()->buscarUsuarioPorId($_GET['id']));
+				if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'usuario_show')){
+					mostrarUsuario(RepositorioUsuario::getInstance()->buscarUsuarioPorId($_GET['id']));
+				} else {
+					header("Location: /../");
+				}
 				break;
 			case 'listarUsuarios':
-				listarUsuarios(RepositorioUsuario::getInstance()->devolverUsuarios());
+				if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'usuario_index')){
+					listarUsuarios(RepositorioUsuario::getInstance()->devolverUsuarios());
+				} else {
+	        		header("Location: /../");
+    			}
 				break;
 			case 'loginUsuarioView':
 				loginUsuario();
 				break;
 			case 'activarUsuario':
-				RepositorioUsuario::getInstance()->activarUsuario($_GET['id']);
-				header("Location: /../controller/ControllerUsuario.php?action=listarUsuarios");
+				if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'usuario_update')){
+					RepositorioUsuario::getInstance()->activarUsuario($_GET['id']);
+					header("Location: /../controller/ControllerUsuario.php?action=listarUsuarios");
+				} else {
+	        		header("Location: /../");
+    			}
 				break;
 			case 'desactivarUsuario':
-				RepositorioUsuario::getInstance()->bloquearUsuario($_GET['id']);
-				header("Location: /../controller/ControllerUsuario.php?action=listarUsuarios");
+				if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'usuario_update')){
+					RepositorioUsuario::getInstance()->bloquearUsuario($_GET['id']);
+					header("Location: /../controller/ControllerUsuario.php?action=listarUsuarios");
+				} else {
+	        		header("Location: /../");
+    			}
 				break;
 			case 'filtradoUsuario':
 				
