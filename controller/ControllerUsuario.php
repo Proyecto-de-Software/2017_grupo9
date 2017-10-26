@@ -15,7 +15,22 @@
 	if(!isset($_SESSION))
 		session_start();
 
-
+	function obtenerConfiguracion(){
+    	require_once($_SERVER['DOCUMENT_ROOT']."/view/Home.php");
+    	$config = RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion();
+    	$datosConfigurados =array(
+    		'habilitao' => $config->getHabilitado(),
+            'hospital' => $config->getDescripcionHospital(),
+            'guardia' => $config->getDescripcionGuardia(),
+            'especialidades' => $config->getDescripcionEspecialidades(),
+            'contacto' => $config->getContacto()
+        );
+        return $datosConfigurados;
+    }
+    $config = obtenerConfiguracion();
+	if(!$config['habilitado']){
+	    header("Location: /../");
+	}
 	function crearUsuario($modif){
 		//si $modif == true, quiere decir que el usuario ya existe en la bd, si es false, es la primera vez
 		if(isset($_POST['rol'])){
@@ -43,27 +58,27 @@
 	function listarUsuarios($usuarios,$filtrado=null){
 	    require_once($_SERVER['DOCUMENT_ROOT']."/view/ListarUsuarios.php");
 	    $view = new ListarUsuarios();
-	    $view->show($usuarios,$filtrado);
+	    $view->show($usuarios,$filtrado,obtenerConfiguracion());
     }
     function agregarUsuario($mensaje,$roles){
 		require_once($_SERVER['DOCUMENT_ROOT']."/view/AgregarUsuario.php");
 		$view = new AgregarUsuario();
-		$view->show($mensaje,$roles);
+		$view->show($mensaje,$roles, obtenerConfiguracion());
     }
     function modificacionDeUsuario($usuario,$mensaje,$roles){
 	    require_once($_SERVER['DOCUMENT_ROOT']."/view/FormularioModificarUsuario.php");
 	    $view = new ModificarUsuario();
-	    $view ->show($usuario,$mensaje,$roles);
+	    $view ->show($usuario,$mensaje,$roles,obtenerConfiguracion());
     }
     function loginUsuario($msj=''){
     	require_once($_SERVER['DOCUMENT_ROOT']."/view/Login.php");
 	    $view = new Login();
-	    $view->show($msj);
+	    $view->show($msj,obtenerConfiguracion());
     }
     function usuarioLogueado(){
     	require_once($_SERVER['DOCUMENT_ROOT']."/view/Home.php");
 	    $view = new Home();
-	    $view->show();
+	    $view->show(obtenerConfiguracion());
     }
     function loguearUsuario($usuario){
     	if(!isset($_SESSION)) {
@@ -91,24 +106,15 @@
                         break;
                 }
             }      
-        
-
-    	require_once($_SERVER['DOCUMENT_ROOT']."/view/Home.php");
-    	$config = RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion();
-    	$datosConfigurados =array(
-            'hospital' => $config->getDescripcionHospital(),
-            'guardia' => $config->getDescripcionGuardia(),
-            'especialidades' => $config->getDescripcionEspecialidades(),
-            'contacto' => $config->getContacto()
-        );
+        require_once($_SERVER['DOCUMENT_ROOT']."/view/Home.php");
 	    $view = new Home();
-	    $view->show($datosConfigurados);
+	    $view->show(obtenerConfiguracion());
 
     }
     function mostrarUsuario($usuario){
 		require_once($_SERVER['DOCUMENT_ROOT']."/view/MostrarUsuario.php");
 		$view = new MostrarUsuario();
-		$view->show($usuario);
+		$view->show($usuario,obtenerConfiguracion());
     }
     function validarCampos(){
     	$nombre = isset($_POST['nombre']) && trim($_POST['nombre']) !='';

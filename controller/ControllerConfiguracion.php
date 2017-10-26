@@ -14,6 +14,23 @@
 	if(!isset($_SESSION))
 		session_start();
 
+	function obtenerConfiguracion(){
+    	require_once($_SERVER['DOCUMENT_ROOT']."/view/Home.php");
+    	$config = RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion();
+    	$datosConfigurados =array(
+    		'habilitado' => $config->getHabilitado(),
+            'hospital' => $config->getDescripcionHospital(),
+            'guardia' => $config->getDescripcionGuardia(),
+            'especialidades' => $config->getDescripcionEspecialidades(),
+            'contacto' => $config->getContacto()
+        );
+        return $datosConfigurados;
+    }
+    $config = obtenerConfiguracion();
+	if(!$config['habilitado']){
+	    header("Location: /../");
+	}
+
 	function crearConfiguracion(){
 		if( $_POST['estado'] == 'habilitado'){
 			$habilitado = 1;
@@ -26,10 +43,11 @@
 		return $configuracion;
 	}
 
+
 	function mostrarFormularioConfiguracion($configuracionActual=null,$mensaje=null){
         require_once($_SERVER['DOCUMENT_ROOT']."/view/Config.php");
         $view = new Config();
-        $view->show($configuracionActual,$mensaje);
+        $view->show($configuracionActual,$mensaje,obtenerConfiguracion());
     }
     function validarCampos(){
     	$titulo = isset($_POST['titulo']) && trim($_POST['titulo']) !='';
