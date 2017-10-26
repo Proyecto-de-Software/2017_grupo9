@@ -19,7 +19,7 @@
     	require_once($_SERVER['DOCUMENT_ROOT']."/view/Home.php");
     	$config = RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion();
     	$datosConfigurados =array(
-    		'habilitao' => $config->getHabilitado(),
+    		'habilitado' => $config->getHabilitado(),
             'hospital' => $config->getDescripcionHospital(),
             'guardia' => $config->getDescripcionGuardia(),
             'especialidades' => $config->getDescripcionEspecialidades(),

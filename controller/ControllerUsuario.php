@@ -19,7 +19,7 @@
     	require_once($_SERVER['DOCUMENT_ROOT']."/view/Home.php");
     	$config = RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion();
     	$datosConfigurados =array(
-    		'habilitao' => $config->getHabilitado(),
+    		'habilitado' => $config->getHabilitado(),
             'hospital' => $config->getDescripcionHospital(),
             'guardia' => $config->getDescripcionGuardia(),
             'especialidades' => $config->getDescripcionEspecialidades(),
@@ -30,6 +30,7 @@
     $config = obtenerConfiguracion();
 	if(!$config['habilitado']){
 	    header("Location: /../");
+
 	}
 	function crearUsuario($modif){
 		//si $modif == true, quiere decir que el usuario ya existe en la bd, si es false, es la primera vez
