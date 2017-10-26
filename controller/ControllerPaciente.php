@@ -20,6 +20,7 @@
     	$config = RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion();
     	$datosConfigurados =array(
     		'habilitado' => $config->getHabilitado(),
+    		'titulo' => $config->getTitulo(),
             'hospital' => $config->getDescripcionHospital(),
             'guardia' => $config->getDescripcionGuardia(),
             'especialidades' => $config->getDescripcionEspecialidades(),

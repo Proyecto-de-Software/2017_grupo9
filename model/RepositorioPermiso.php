@@ -20,21 +20,24 @@
 
 
 		public function UsuarioTienePermiso($usuario, $permiso){
-			$conexion = $this->getConnection();
-			$query = $conexion->prepare("SELECT * FROM permiso INNER JOIN rol_tiene_permiso ON permiso.id=rol_tiene_permiso.permiso_id WHERE permiso.nombre= :permiso AND rol_tiene_permiso.rol_id = :rol_id");
-			$query->bindParam(':permiso', $permiso);
-			foreach($usuario->getRoles() as $rol){
-	  			$query->bindParam(':rol_id', $rol['id']);
-	  			if($query->execute()){
-	  				if(sizeOf($query->fetchAll()) > 0) {
-	  					return true;
-	  				}	
-	  			} else
-	  				echo "La consulta de permisos no se realizó correctamente";
-	        }
-	        return false;
+			if (!isset($_SESSION['usuario'])){
+				header("Location: /../");
+			}
+			else{
+				$conexion = $this->getConnection();
+				$query = $conexion->prepare("SELECT * FROM permiso INNER JOIN rol_tiene_permiso ON permiso.id=rol_tiene_permiso.permiso_id WHERE permiso.nombre= :permiso AND rol_tiene_permiso.rol_id = :rol_id");
+				$query->bindParam(':permiso', $permiso);
+				foreach($usuario->getRoles() as $rol){
+		  			$query->bindParam(':rol_id', $rol['id']);
+		  			if($query->execute()){
+		  				if(sizeOf($query->fetchAll()) > 0) {
+		  					return true;
+		  				}	
+		  			}
+	       		return false;
+	       	}
 		}
 	}
-
+}
 
 ?>

@@ -228,5 +228,13 @@
         }
         else return false;
       }
-        
+      public function usuarioActivo($email){
+         $conexion = $this->getConnection();
+        $query = $conexion->prepare("SELECT * FROM usuario WHERE email=:email");  
+        $query->bindParam(':email',$email);
+        $query->execute();
+        $result = $query->fetchAll();
+        return $result[0]['activo'];
+
+      }
 	}

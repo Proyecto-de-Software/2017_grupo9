@@ -36,6 +36,7 @@ class ResourceController {
             'hospital' => $config->getDescripcionHospital(),
             'guardia' => $config->getDescripcionGuardia(),
             'especialidades' => $config->getDescripcionEspecialidades(),
+            'titulo' => $config->getTitulo(),
             'contacto' => $config->getContacto()
         );
         $view = new Home();

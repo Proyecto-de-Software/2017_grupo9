@@ -24,7 +24,7 @@ $config = RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion()
 if(!$config->getHabilitado()){
 	    require_once($_SERVER['DOCUMENT_ROOT']."/view/Mantenimiento.php");
 	    $view = new Mantenimiento();
-	    $view->show($config->getContacto());
+	    $view->show($config->getContacto(),$config->getTitulo());
 }
 else{
 	if(!isset($_SESSION))

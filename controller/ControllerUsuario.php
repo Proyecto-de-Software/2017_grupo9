@@ -22,16 +22,18 @@
     		'habilitado' => $config->getHabilitado(),
             'hospital' => $config->getDescripcionHospital(),
             'guardia' => $config->getDescripcionGuardia(),
+            'titulo' => $config->getTitulo(),
             'especialidades' => $config->getDescripcionEspecialidades(),
             'contacto' => $config->getContacto()
         );
         return $datosConfigurados;
     }
     $config = obtenerConfiguracion();
+
 	if(!$config['habilitado']){
 	    header("Location: /../");
-
 	}
+
 	function crearUsuario($modif){
 		//si $modif == true, quiere decir que el usuario ya existe en la bd, si es false, es la primera vez
 		if(isset($_POST['rol'])){
@@ -213,7 +215,12 @@
 			case 'loginUsuario': 
 				if(isset($_POST['email']) && isset($_POST['password'])){
 					if(RepositorioUsuario::getInstance()->existeUsuario($_POST['email'],$_POST['password'])){
-						loguearUsuario(RepositorioUsuario::getInstance()->buscarUsuarioPorEmail($_POST['email']));
+						if(RepositorioUsuario::getInstance()->usuarioActivo($_POST['email'])){
+							loguearUsuario(RepositorioUsuario::getInstance()->buscarUsuarioPorEmail($_POST['email']));
+						}
+						else{
+							loginUsuario("El usuario con el que quiere ingresar esta bloqueado");
+						}
 					}
 					else{
 						loginUsuario("Es posible que no exista el usuario o este ingresando mal la contraseña");
