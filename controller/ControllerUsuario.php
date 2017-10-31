@@ -16,7 +16,6 @@
 		session_start();
 
 	function obtenerConfiguracion(){
-    	require_once($_SERVER['DOCUMENT_ROOT']."/view/Home.php");
     	$config = RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion();
     	$datosConfigurados =array(
     		'habilitado' => $config->getHabilitado(),
@@ -59,30 +58,23 @@
 		
 	}
 	function listarUsuarios($usuarios,$filtrado=null){
-	    require_once($_SERVER['DOCUMENT_ROOT']."/view/ListarUsuarios.php");
-	    $view = new ListarUsuarios();
-	    $view->show($usuarios,$filtrado,obtenerConfiguracion());
+		echo TwigView::getTwig()->render('administracionUsuarios.twig', array('sesion'=>$_SESSION,'lista'=>$usuarios,'filtrado'=>$filtrado,'configuracion'=>obtenerConfiguracion()));
     }
-    function agregarUsuario($mensaje,$roles){
-		require_once($_SERVER['DOCUMENT_ROOT']."/view/AgregarUsuario.php");
-		$view = new AgregarUsuario();
-		$view->show($mensaje,$roles, obtenerConfiguracion());
+    function agregarUsuario($mensaje='',$roles){
+		echo TwigView::getTwig()->render('administracionAgregarUsuario.twig', array('sesion'=>$_SESSION,'mensaje'=>$mensaje,'roles'=>$roles,'configuracion'=>obtenerConfiguracion()));
+		
     }
-    function modificacionDeUsuario($usuario,$mensaje,$roles){
-	    require_once($_SERVER['DOCUMENT_ROOT']."/view/FormularioModificarUsuario.php");
-	    $view = new ModificarUsuario();
-	    $view ->show($usuario,$mensaje,$roles,obtenerConfiguracion());
+    function modificacionDeUsuario($usuario,$mensaje='',$roles){
+		echo TwigView::getTwig()->render('administracionModificarUsuario.twig', array('sesion'=>$_SESSION,'usuario'=>$usuario, 'mensaje'=>$mensaje,'roles'=>$roles,'configuracion'=>obtenerConfiguracion()));
     }
     function loginUsuario($msj=''){
-    	require_once($_SERVER['DOCUMENT_ROOT']."/view/Login.php");
-	    $view = new Login();
-	    $view->show($msj,obtenerConfiguracion());
+		echo TwigView::getTwig()->render('loginUsuario.twig', array('sesion'=>$_SESSION,'mensaje'=>$msj, 'configuracion'=>obtenerConfiguracion()));
     }
+    /*
     function usuarioLogueado(){
-    	require_once($_SERVER['DOCUMENT_ROOT']."/view/Home.php");
-	    $view = new Home();
-	    $view->show(obtenerConfiguracion());
+	    echo TwigView::getTwig()->render('home.twig', array('configuracion'=>obtenerConfiguracion()));
     }
+    */
     function loguearUsuario($usuario){
     	if(!isset($_SESSION)) {
 			session_start();
@@ -90,6 +82,8 @@
 			session_destroy();
 			session_start();
 		}
+    	$_SESSION['idUsuario'] = $usuario->getId();
+    	$_SESSION['username'] = $usuario->getNombreUsuario();
     	$_SESSION['usuario'] = serialize($usuario);
     	$_SESSION['logueado'] = true;
         $_SESSION['administrador']=0;
@@ -108,16 +102,13 @@
                         $_SESSION['pediatra']=1;
                         break;
                 }
-            }      
-        require_once($_SERVER['DOCUMENT_ROOT']."/view/Home.php");
-	    $view = new Home();
-	    $view->show(obtenerConfiguracion());
+            }
+
+        echo TwigView::getTwig()->render('base.twig.html', array('sesion'=>$_SESSION,'configuracion'=>obtenerConfiguracion()));
 
     }
     function mostrarUsuario($usuario){
-		require_once($_SERVER['DOCUMENT_ROOT']."/view/MostrarUsuario.php");
-		$view = new MostrarUsuario();
-		$view->show($usuario,obtenerConfiguracion());
+		 echo TwigView::getTwig()->render('administracionMostrarUsuario.twig', array('sesion'=>$_SESSION,'usuario'=>$usuario, 'configuracion'=>obtenerConfiguracion()));
     }
     function validarCampos(){
     	$nombre = isset($_POST['nombre']) && trim($_POST['nombre']) !='';
@@ -128,9 +119,6 @@
     	$roles = isset($_POST['rol']);
     	return ($nombre && $apellido && $usuario && $email && $passwords && $roles);
     	
-    }
-    function obtenerListado(){
-
     }
 
 	if(isset($_GET['action'])){
@@ -156,13 +144,22 @@
 				}	
 				break;
 			case 'agregarUsuarioNoValidado':
-				agregarUsuario("Debe llenar todos los campos. Tenga en cuenta: *Debe elegir al menos un rol. *Las contraseñas deben coincidir. *	El email debe tener un formato valido.",RepositorioRol::getInstance()->devolverRoles());
+				if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'usuario_new')){
+					agregarUsuario("Debe llenar todos los campos. Tenga en cuenta: *Debe elegir al menos un rol. *Las contraseñas deben coincidir. *	El email debe tener un formato valido.",RepositorioRol::getInstance()->devolverRoles());
+				}
+				else header("Location: /../");
 				break;
 			case 'agregarUsuarioEmailNoValido':
-				agregarUsuario("El email que ha ingresado ya esta registrado, elija otro.",RepositorioRol::getInstance()->devolverRoles());
+				if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'usuario_new')){
+					agregarUsuario("El email que ha ingresado ya esta registrado, elija otro.",RepositorioRol::getInstance()->devolverRoles());
+				}
+				else header("Location: /../");
 				break;
 			case 'agregarUsuarioNickNoValidado':
-			 	agregarUsuario("El nombre de usuario que ha ingresado ya esta registrado, elija otro.",RepositorioRol::getInstance()->devolverRoles());
+				if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'usuario_new')){
+				 	agregarUsuario("El nombre de usuario que ha ingresado ya esta registrado, elija otro.",RepositorioRol::getInstance()->devolverRoles());
+			 	}
+			 	else header("Location: /../");
 			 	break;			 
 			case "agregarUsuarioView":
 				if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'usuario_new')){
@@ -173,23 +170,13 @@
 				break;
 			case 'modificarUsuario':
 				if(validarCampos()){
-					if(!RepositorioUsuario::getInstance()->existeNombreUsuario($_POST['usuario'])){
-						if(!RepositorioUsuario::getInstance()->existeMail($_POST['email'])){	
-							$resultado = RepositorioUsuario::getInstance()->modificarUsuario(crearUsuario(true));
-							if($resultado){
-								$id = $resultado->getId();
-								header("Location: /../controller/ControllerUsuario.php?action=mostrarUsuario&id=$id");
-							}
-							else{
-								modificacionDeUsuario(crearUsuario(true),"No se pudieron modificar los datos",RepositorioRol::getInstance()->devolverRoles());
-							}
-						}
-						else{
-							modificacionDeUsuario(crearUsuario(true),"El email ya esta registrado, elija otro.",RepositorioRol::getInstance()->devolverRoles());
-						}
+					$resultado = RepositorioUsuario::getInstance()->modificarUsuario(crearUsuario(true));
+					if($resultado){
+						$id = $resultado->getId();
+						header("Location: /../controller/ControllerUsuario.php?action=mostrarUsuario&id=$id");
 					}
 					else{
-						modificacionDeUsuario(crearUsuario(true),"El nombre de usuario ya esta registrado, elija otro.",RepositorioRol::getInstance()->devolverRoles());
+						modificacionDeUsuario(crearUsuario(true),"No se pudieron modificar los datos",RepositorioRol::getInstance()->devolverRoles());
 					}
 				}
 				else{
@@ -310,13 +297,10 @@
 			
 				break;
 			case 'cerrarSesion':
+				session_start();
+				$_SESSION = array();
 				session_destroy();
 				header("Location: /../");
-					session_start();
-					$_SESSION = array();
-					session_destroy();
-
-					header("Location: /../");
 				break;
 		}
 	}

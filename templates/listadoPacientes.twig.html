@@ -1,0 +1,60 @@
+<section>
+	<h2> Pacientes </h2><br>
+	<div class="mb-4 mt-4">
+			<h3 >Búsqueda</h3> 
+			<form  id="form" class="form-inline my-2 my-lg-0 ml-auto mr-5 d-flex justify-content-start" action="/controller/ControllerPaciente.php?action=busquedaPaciente" method="POST">
+				<input class="form-control mr-sm-2 " type="text" placeholder="Buscar" aria-label="busquedaApellidoNombre" name="busquedaApellidoNombre" id="busquedaApellidoNombre">
+		    </form>
+		    <form  id="form" class="form-inline my-2 my-lg-0 ml-auto mr-5 d-flex justify-content-start" action="/controller/ControllerPaciente.php?action=busquedaPaciente" method="POST">
+				<select id="busquedaDni" name="busquedaDni" onchange="myFunction()">
+					<option value="dni">DNI</option>
+					<option value="pasaporte">PASAPORTE</option>
+					<option value="">PARTIDA DE NACIMIENTO</option>
+					<option value="">RUC</option>
+					<option value="">CARNET EXTRANJERO</option>
+				</select>
+				<div id="demo"></div>
+				<input class="form-control mr-sm-2 " type="text" placeholder="Buscar" aria-label="busquedaDni" name="busquedaDni" id="busquedaDni">
+			</form>
+		 </div>
+		 <div id="demo"></div>
+		 <script>
+
+			function myFunction() {
+		    	var x = document.getElementById("busquedaDni").value;
+		    	document.getElementById("demo").innerHTML = '<input class="form-control mr-sm-2 " type="text" placeholder="Buscar" aria-label="busquedaDni" name="busquedaDni" id="busquedaDni">';
+			}	
+		</script>
+		<table class="table table-hover">
+		  	<thead>
+			    <tr>
+			      <th>Nombre</th>
+			      <th>Apellido</th>
+			      <th></th>
+			      <th></th>
+			      <th></th>
+			    </tr>
+			</thead>
+			<tbody>
+			{% for elemento in lista %}
+		   		<tr>
+			      	<td>
+			      		{{elemento.nombre}}
+			      	</td>
+			    	<td>
+			    		{{elemento.apellido}}
+			    	</td>
+			    	<td>
+			    		<a href="/controller/ControllerPaciente.php?action=modificacionDePaciente&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info">Editar</a>
+			    	</td>
+			    	<td>
+			    		<a onclick="return confirm('Seguro?')"  href="/controller/ControllerPaciente.php?action=eliminarPaciente&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info">Eliminar </a>
+			    	</td>
+			    	<td>
+			    		<a href="/controller/ControllerPaciente.php?action=mostrarPaciente&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info">Mas información</a>
+			    	</td>
+			    </tr>
+			</tbody>
+		</table>
+		<a class="btn btn-success mt-3 mb-5 text-right" role="button" href="/../controller/ControllerPaciente.php?action=altaDePaciente">Agregar nuevo paciente</a>
+</section>

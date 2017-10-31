@@ -14,35 +14,36 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/ClaseUsuario.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioConfiguracion.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/model/ClaseConfiguracion.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/view/TwigView.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/view/SimpleResourceList.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/view/Home.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/view/Login.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/view/Admin.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/view/Logup.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/view/Config.php');
-$config = RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion();
-if(!$config->getHabilitado()){
-	    require_once($_SERVER['DOCUMENT_ROOT']."/view/Mantenimiento.php");
-	    $view = new Mantenimiento();
-	    $view->show($config->getContacto(),$config->getTitulo());
+
+function obtenerConfiguracion(){
+	$config = RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion();
+	$datosConfigurados =array(
+		'habilitado' => $config->getHabilitado(),
+        'hospital' => $config->getDescripcionHospital(),
+        'guardia' => $config->getDescripcionGuardia(),
+        'titulo' => $config->getTitulo(),
+        'especialidades' => $config->getDescripcionEspecialidades(),
+        'contacto' => $config->getContacto()
+    );
+    return $datosConfigurados;
+}
+$config = obtenerConfiguracion();
+if(!$config['habilitado']){
+	echo TwigView::getTwig()->render('mantenimiento.twig', array('configuracion'=>obtenerConfiguracion()));
 }
 else{
+
+
 	if(!isset($_SESSION))
 		session_start(); 
 
 	if(!isset($_SESSION['usuario'])) {
 		$_SESSION['usuario'] = NULL;
+		$_SESSION['logueado'] = NULL;
 		$_SESSION['administrador']=0;
 		$_SESSION['recepcionista']=0;
 		$_SESSION['pediatra']=0;
 	}
-
-	if(isset($_GET["action"]) && $_GET["action"] == 'login'){
-	    ResourceController::getInstance()->login();
-	}elseif(isset($_GET["action"]) && $_GET["action"] == 'admin'){
-	    ResourceController::getInstance()->admin();
-	}elseif(isset($_GET["action"]) && $_GET["action"] == 'logup'){
-		ResourceController::getInstance()->logup();
-	}else
-		ResourceController::getInstance()->home();
+	echo TwigView::getTwig()->render('base.twig.html', array('sesion'=>$_SESSION,'configuracion'=>obtenerConfiguracion()));
+	
 }

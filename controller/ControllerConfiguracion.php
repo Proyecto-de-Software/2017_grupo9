@@ -46,9 +46,7 @@
 
 
 	function mostrarFormularioConfiguracion($configuracionActual=null,$mensaje=null){
-        require_once($_SERVER['DOCUMENT_ROOT']."/view/Config.php");
-        $view = new Config();
-        $view->show($configuracionActual,$mensaje,obtenerConfiguracion());
+        echo TwigView::getTwig()->render('administracionConfiguracion.twig', array('sesion'=>$_SESSION,'configuracionActual'=> $configuracionActual,'mensaje'=>$mensaje, 'configuracion'=>obtenerConfiguracion()));
     }
     function validarCampos(){
     	$titulo = isset($_POST['titulo']) && trim($_POST['titulo']) !='';
