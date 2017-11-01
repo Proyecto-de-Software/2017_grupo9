@@ -41,28 +41,22 @@
 		return $paciente;
 	}
 
-	function listarPacientes(){
-	    require_once($_SERVER['DOCUMENT_ROOT']."/view/ListarPacientes.php");
-	    $view = new ListarPacientes();
-	    $view->show(RepositorioPaciente::getInstance()->devolverPacientes(),obtenerConfiguracion());
+	function listarPacientes($pacientes){
+	    echo TwigView::getTwig()->render('administracionPacientes.twig', array('sesion'=>$_SESSION,'lista'=>$pacientes,'configuracion'=>obtenerConfiguracion()));
    	}
 
     function mostrarPaciente($paciente,$obraSocial,$tipoDeDocumento){
-	    require_once($_SERVER['DOCUMENT_ROOT']."/view/MostrarPaciente.php");
-	    $view = new MostrarPaciente();
-	    $view->show($paciente,$obraSocial,$tipoDeDocumento,obtenerConfiguracion());
+	    echo TwigView::getTwig()->render('administracionMostrarPaciente.twig', array('sesion'=>$_SESSION, 'paciente' => $paciente, 'tipoDeDocumento' => $tipoDeDocumento, 'obraSocial' => $obraSocial, 'configuracion'=>obtenerConfiguracion()));
     }
 
     function agregarPaciente($obrasSociales,$tiposDeDocumento){
-	    require_once($_SERVER['DOCUMENT_ROOT']."/view/AgregarPaciente.php");
-	    $view = new AgregarPaciente();
-	    $view->show($obrasSociales,$tiposDeDocumento,obtenerConfiguracion());
+	    echo TwigView::getTwig()->render('administracionAgregarPaciente.twig', array('sesion'=>$_SESSION, 'tiposDeDocumento' => $tiposDeDocumento, 'obrasSociales' => $obrasSociales, 'configuracion'=>obtenerConfiguracion()));
     }
 
     function modificarPaciente($paciente, $obrasSociales, $tiposDeDocumento){
 	    require_once($_SERVER['DOCUMENT_ROOT']."/view/FormularioModificarPaciente.php");
 	    $view = new ModificarPaciente();
-	    $view->show($paciente,$obrasSociales,$tiposDeDocumentoobtenerConfiguracion());
+	    $view->show($paciente,$obrasSociales,$tiposDeDocumento,obtenerConfiguracion());
     } 
 
 	if(isset($_GET['action'])){
@@ -82,10 +76,10 @@
 		    	//if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista()){
 		    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'paciente_new')){
 		    		$paciente = crearPaciente();
-		    		$obraSocial = RepositorioPaciente::getInstance()->devolverObrasSociales($paciente->getIdObraSocial());
-		    		$tipoDeDocumento = RepositorioPaciente::getInstance()->devolverTipoDeDocumentoPorId($paciente->getIdTipoDocumento());
 
         			if(RepositorioPaciente::getInstance()->agregarPaciente($paciente)){
+		    			$obraSocial = RepositorioPaciente::getInstance()->devolverObraSocialPorId($paciente->getIdObraSocial());
+		    			$tipoDeDocumento = RepositorioPaciente::getInstance()->devolverTipoDeDocumentoPorId($paciente->getIdTipoDocumento());
 		       			mostrarPaciente($paciente,$obraSocial,$tipoDeDocumento);
 		       		}
 		       		else{
@@ -122,7 +116,7 @@
 		    	//if(($_SESSION['usuario'])->esAdministrador()){
 		   		if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'paciente_destroy')){
 		        	if(RepositorioPaciente::getInstance()->eliminarPaciente($_GET['id'])){
-		        		listarPacientes();
+		        		listarPacientes(RepositorioPaciente::getInstance()->devolverPacientes());
 		        	}
 		        } else {
 	        		header("Location: /../");
@@ -132,8 +126,10 @@
 		    case 'mostrarPaciente':
 		    	//if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista()){
 		    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'paciente_show')){
-		    		$paciente = RepositorioPaciente::getInstance()->buscarPacientePorId($_POST['id']);
-		        	mostrarPaciente($paciente);
+		    		$paciente = RepositorioPaciente::getInstance()->buscarPacientePorId($_GET['id']);
+		    		$obraSocial = RepositorioPaciente::getInstance()->devolverObraSocialPorId($paciente->getIdObraSocial());
+		    		$tipoDeDocumento = RepositorioPaciente::getInstance()->devolverTipoDeDocumentoPorId($paciente->getIdTipoDocumento());
+		    		mostrarPaciente($paciente,$obraSocial,$tipoDeDocumento);
 		        } else {
 	        		header("Location: /../");
     			}
@@ -142,8 +138,7 @@
 		    case 'listarPacientes':
 		    	//if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista() || ($_SESSION['usuario'])->esAdministrador()){
 		    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'paciente_index')){
-		    		$pacientes = RepositorioPaciente::getInstance()->devolverPacientes();
-		        	listarPacientes($pacientes);
+		        	listarPacientes(RepositorioPaciente::getInstance()->devolverPacientes());
 		        } else {
 	        		header("Location: /../");
     			}

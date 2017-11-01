@@ -76,9 +76,9 @@
         $conexion = $this->getConnection();
         $query = $conexion->prepare("DELETE FROM paciente WHERE id=:id");
         $query->bindParam(':id', $id);
-
-        return $query->execute() == 1;
+        return $query->execute();
       }
+
 
       public function buscarPacientePorId($id){
         $conexion = $this->getConnection();
@@ -113,6 +113,18 @@
         $query->execute();
         $obrasSociales = $query->fetchAll();
         return $obrasSociales;
+      }
+
+      public function devolverObraSocialPorId($id){
+        $conexion = $this->getConnection();
+        $query = $conexion->prepare("SELECT * FROM obra_social WHERE id=:id");
+        $query->bindParam(':id', $id);
+        $query->execute();
+        $obraSocial = $query->fetchAll();
+        if (sizeof($obraSocial) > 0){
+          return new ObraSocial($obraSocial[0]['id'],$obraSocial[0]['nombre']);
+        }
+        return false;
       }
 
       public function devolverTiposDeDocumento(){
