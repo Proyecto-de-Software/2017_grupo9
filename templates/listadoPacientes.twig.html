@@ -31,8 +31,10 @@
 			      <th>Nombre</th>
 			      <th>Apellido</th>
 			      <th>DNI</th>
-			      <th></th>
-			      <th></th>
+			      {% if sesion.pediatra == 1 or sesion.recepcionista == 1 %}
+			      	<th></th>
+			      	<th></th>
+			      {% endif %}
 			      {% if sesion.administrador == 1 %}
 			     	<th></th>
 			     {% endif %}
