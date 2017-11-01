@@ -18,27 +18,7 @@
 	      return self::$instance;
 	    } 
 
-
-		public function UsuarioTienePermiso($usuario, $permiso){
-			if (!isset($_SESSION['usuario'])){
-				header("Location: /../");
-			}
-			else{
-				$conexion = $this->getConnection();
-				$query = $conexion->prepare("SELECT * FROM permiso INNER JOIN rol_tiene_permiso ON permiso.id=rol_tiene_permiso.permiso_id WHERE permiso.nombre= :permiso AND rol_tiene_permiso.rol_id = :rol_id");
-				$query->bindParam(':permiso', $permiso);
-				foreach($usuario->getRoles() as $rol){
-		  			$query->bindParam(':rol_id', $rol['id']);
-		  			if($query->execute()){
-		  				if(sizeOf($query->fetchAll()) > 0) {
-		  					return true;
-		  				}	
-		  			}
-	       		return false;
-	       	}
-		}}
-		
-		public function usuarioTienePermiso2($idUsuario, $permiso){
+		public function usuarioTienePermiso($idUsuario, $permiso){
 			$conexion = $this->getConnection();
 			//Primero, busco que roles tiene el usuario.
 			$queryRoles = $conexion->prepare("SELECT r.id FROM usuario_tiene_rol as utr INNER JOIN rol as r ON utr.rol_id=r.id WHERE utr.usuario_id=:idUsuario");

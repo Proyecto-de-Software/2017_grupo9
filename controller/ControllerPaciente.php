@@ -63,7 +63,7 @@
 		switch ($_GET['action']) {
 			case 'altaDePaciente':
 				//if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista()){
-				if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'paciente_new')){
+				if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_new')){
 					$obrasSociales = RepositorioPaciente::getInstance()->devolverObrasSociales();
 		    		$tiposDeDocumento = RepositorioPaciente::getInstance()->devolverTiposDeDocumento();
 		       		agregarPaciente($obrasSociales,$tiposDeDocumento);
@@ -74,7 +74,7 @@
 		       	break;
 		    case 'agregarPaciente':
 		    	//if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista()){
-		    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'paciente_new')){
+		    	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_new')){
 		    		$paciente = crearPaciente();
 
         			if(RepositorioPaciente::getInstance()->agregarPaciente($paciente)){
@@ -93,7 +93,7 @@
 		       //	}
 		        break;
 		    case 'modificacionDePaciente':
-		    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'paciente_update')){
+		    	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_update')){
 			    	$paciente = RepositorioPaciente::getInstance()->buscarPacientePorId($_GET['id']);
 			    	$obrasSociales = RepositorioPaciente::getInstance()->devolverObrasSociales();
 			    	$tiposDeDocumento = RepositorioPaciente::getInstance()->devolverTiposDeDocumento();
@@ -104,7 +104,7 @@
 		    	break;
 		    case 'modificarPaciente':
 		    //	if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista()){
-		    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'paciente_update')){
+		    	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_update')){
 		        	RepositorioPaciente::getInstance()->modificarPaciente(crearPaciente());
 		        	mostrarPaciente(RepositorioPaciente::getInstance()->buscarPacientePorId($_POST['id']));
 		        } else {
@@ -114,7 +114,7 @@
 		        break;
 		    case 'eliminarPaciente':
 		    	//if(($_SESSION['usuario'])->esAdministrador()){
-		   		if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'paciente_destroy')){
+		   		if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_destroy')){
 		        	if(RepositorioPaciente::getInstance()->eliminarPaciente($_GET['id'])){
 		        		listarPacientes(RepositorioPaciente::getInstance()->devolverPacientes());
 		        	}
@@ -125,7 +125,7 @@
 		        break;
 		    case 'mostrarPaciente':
 		    	//if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista()){
-		    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'paciente_show')){
+		    	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_show')){
 		    		$paciente = RepositorioPaciente::getInstance()->buscarPacientePorId($_GET['id']);
 		    		$obraSocial = RepositorioPaciente::getInstance()->devolverObraSocialPorId($paciente->getIdObraSocial());
 		    		$tipoDeDocumento = RepositorioPaciente::getInstance()->devolverTipoDeDocumentoPorId($paciente->getIdTipoDocumento());
@@ -137,7 +137,7 @@
 		        break;
 		    case 'listarPacientes':
 		    	//if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista() || ($_SESSION['usuario'])->esAdministrador()){
-		    	if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'paciente_index')){
+		    	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_index')){
 		        	listarPacientes(RepositorioPaciente::getInstance()->devolverPacientes());
 		        } else {
 	        		header("Location: /../");

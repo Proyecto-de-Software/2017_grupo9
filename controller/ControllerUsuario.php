@@ -151,47 +151,52 @@
 				}	
 				break;
 			case 'agregarUsuarioNoValidado':
-				if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'usuario_new')){
+				if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'usuario_new')){
 					agregarUsuario("Debe llenar todos los campos. Tenga en cuenta: *Debe elegir al menos un rol. *Las contraseñas deben coincidir. *	El email debe tener un formato valido.",RepositorioRol::getInstance()->devolverRoles());
 				}
 				else header("Location: /../");
 				break;
 			case 'agregarUsuarioEmailNoValido':
-				if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'usuario_new')){
+				if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'usuario_new')){
 					agregarUsuario("El email que ha ingresado ya esta registrado, elija otro.",RepositorioRol::getInstance()->devolverRoles());
 				}
 				else header("Location: /../");
 				break;
 			case 'agregarUsuarioNickNoValidado':
-				if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'usuario_new')){
+				if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'usuario_new')){
 				 	agregarUsuario("El nombre de usuario que ha ingresado ya esta registrado, elija otro.",RepositorioRol::getInstance()->devolverRoles());
 			 	}
 			 	else header("Location: /../");
 			 	break;			 
 			case "agregarUsuarioView":
-				if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'usuario_new')){
+				if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'],'usuario_new')){
 					agregarUsuario("", RepositorioRol::getInstance()->devolverRoles());
 				} else {
 					header("Location: /../");
 				}
 				break;
 			case 'modificarUsuario':
-				if(validarCampos()){
-					$resultado = RepositorioUsuario::getInstance()->modificarUsuario(crearUsuario(true));
-					if($resultado){
-						$id = $resultado->getId();
-						header("Location: /../controller/ControllerUsuario.php?action=mostrarUsuario&id=$id");
+				if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'],'usuario_update')){
+					if(validarCampos()){
+						$resultado = RepositorioUsuario::getInstance()->modificarUsuario(crearUsuario(true));
+						if($resultado){
+							$id = $resultado->getId();
+							header("Location: /../controller/ControllerUsuario.php?action=mostrarUsuario&id=$id");
+						}
+						else{
+							modificacionDeUsuario(crearUsuario(true),"No se pudieron modificar los datos",RepositorioRol::getInstance()->devolverRoles());
+						}
 					}
 					else{
-						modificacionDeUsuario(crearUsuario(true),"No se pudieron modificar los datos",RepositorioRol::getInstance()->devolverRoles());
+						modificacionDeUsuario(crearUsuario(true),"Debe llenar todos los campos. Tenga en cuenta: *Debe elegir al menos un rol. *Las contraseñas deben coincidir. *	El email debe tener un formato valido.",RepositorioRol::getInstance()->devolverRoles());
 					}
 				}
-				else{
-					modificacionDeUsuario(crearUsuario(true),"Debe llenar todos los campos. Tenga en cuenta: *Debe elegir al menos un rol. *Las contraseñas deben coincidir. *	El email debe tener un formato valido.",RepositorioRol::getInstance()->devolverRoles());
+				else {
+					header("Location: /../");
 				}
 				break;
 			case 'modificacionDeUsuario':
-				if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'usuario_update')){
+				if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'usuario_update')){
 					$usuario = RepositorioUsuario::getInstance()->buscarUsuarioPorId($_GET['id']);
 			    	modificacionDeUsuario($usuario,"",RepositorioRol::getInstance()->devolverRoles());
 			    } else {
@@ -199,7 +204,7 @@
 				}
 				break;
 			case 'eliminarUsuario':
-				if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'usuario_destroy')){
+				if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'usuario_destroy')){
 					RepositorioUsuario::getInstance()->eliminarUsuario($_GET['id']);
 					header("Location: /../controller/ControllerUsuario.php?action=listarUsuarios");
 				} else {
@@ -225,14 +230,14 @@
 				}
 				break;
 			case 'mostrarUsuario':
-				if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'usuario_show')){
+				if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'usuario_show')){
 					mostrarUsuario(RepositorioUsuario::getInstance()->buscarUsuarioPorId($_GET['id']));
 				} else {
 					header("Location: /../");
 				}
 				break;
 			case 'listarUsuarios':
-				if(RepositorioPermiso::getInstance()->usuarioTienePermiso2($_SESSION['idUsuario'], 'usuario_index')){
+				if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'usuario_index')){
 					listarUsuarios(RepositorioUsuario::getInstance()->devolverUsuarios());
 				} else {
 	        		header("Location: /../");
@@ -242,7 +247,7 @@
 				loginUsuario();
 				break;
 			case 'activarUsuario':
-				if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'usuario_update')){
+				if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'usuario_update')){
 					RepositorioUsuario::getInstance()->activarUsuario($_GET['id']);
 					header("Location: /../controller/ControllerUsuario.php?action=listarUsuarios");
 				} else {
@@ -250,7 +255,7 @@
     			}
 				break;
 			case 'desactivarUsuario':
-				if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'usuario_update')){
+				if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['usuario'], 'usuario_update')){
 					RepositorioUsuario::getInstance()->bloquearUsuario($_GET['id']);
 					header("Location: /../controller/ControllerUsuario.php?action=listarUsuarios");
 				} else {
@@ -258,50 +263,51 @@
     			}
 				break;
 			case 'filtradoUsuario':
-				
-				$listado = [];
-				$activoChecked = isset($_POST['activo']);
-				$bloqueadoChecked = isset($_POST['bloqueado']);
-				$filtrado['activo'] = $activoChecked;
-				$filtrado['bloqueado'] = $bloqueadoChecked;
-				$filtrado['campoBuscar'] = "";
-				if(isset($_POST['buscar']) && trim($_POST['buscar']) !=''){
-					$nombreUsuario = $_POST['buscar'];			
-					$filtrado['campoBuscar'] =$nombreUsuario;
-					if($activoChecked){
-						$activos = RepositorioUsuario::getInstance()->listarUsuariosActivos(true,$nombreUsuario);
-						if($activos) $listado = array_merge($listado,$activos);
-						
-					}
-					if($bloqueadoChecked){
-						$bloqueados = RepositorioUsuario::getInstance()->listarUsuariosBloqueados(true,$nombreUsuario);
-						if($bloqueados) $listado = array_merge($listado,$bloqueados);
-						
-					}
-					if(!$activoChecked && !$bloqueadoChecked){
-						$listado = RepositorioUsuario::getInstance()->devolverUsuarios($nombreUsuario);
-					}
+				if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'usuario_index')){	
+					$listado = [];
+					$activoChecked = isset($_POST['activo']);
+					$bloqueadoChecked = isset($_POST['bloqueado']);
+					$filtrado['activo'] = $activoChecked;
+					$filtrado['bloqueado'] = $bloqueadoChecked;
+					$filtrado['campoBuscar'] = "";
+					if(isset($_POST['buscar']) && trim($_POST['buscar']) !=''){
+						$nombreUsuario = $_POST['buscar'];			
+						$filtrado['campoBuscar'] =$nombreUsuario;
+						if($activoChecked){
+							$activos = RepositorioUsuario::getInstance()->listarUsuariosActivos(true,$nombreUsuario);
+							if($activos) $listado = array_merge($listado,$activos);
+							
+						}
+						if($bloqueadoChecked){
+							$bloqueados = RepositorioUsuario::getInstance()->listarUsuariosBloqueados(true,$nombreUsuario);
+							if($bloqueados) $listado = array_merge($listado,$bloqueados);
+							
+						}
+						if(!$activoChecked && !$bloqueadoChecked){
+							$listado = RepositorioUsuario::getInstance()->devolverUsuarios($nombreUsuario);
+						}
 
 
-					listarUsuarios($listado,$filtrado);
-				}
-				elseif($activoChecked || $bloqueadoChecked){
-					if($activoChecked){
-						$activos = RepositorioUsuario::getInstance()->listarUsuariosActivos();
-						if($activos) $listado = array_merge($listado,$activos);
-						
+						listarUsuarios($listado,$filtrado);
 					}
-					if($bloqueadoChecked){
-						$bloqueados = RepositorioUsuario::getInstance()->listarUsuariosBloqueados();
-						if($bloqueados) $listado = array_merge($listado,$bloqueados);
-						
+					elseif($activoChecked || $bloqueadoChecked){
+						if($activoChecked){
+							$activos = RepositorioUsuario::getInstance()->listarUsuariosActivos();
+							if($activos) $listado = array_merge($listado,$activos);
+							
+						}
+						if($bloqueadoChecked){
+							$bloqueados = RepositorioUsuario::getInstance()->listarUsuariosBloqueados();
+							if($bloqueados) $listado = array_merge($listado,$bloqueados);
+							
+						}
+						listarUsuarios($listado,$filtrado);
 					}
-					listarUsuarios($listado,$filtrado);
+					else{
+						header("Location: /../controller/ControllerUsuario.php?action=listarUsuarios");
+					}
 				}
-				else{
-					header("Location: /../controller/ControllerUsuario.php?action=listarUsuarios");
-				}
-			
+				else header("Location: /../");
 				break;
 			case 'cerrarSesion':
 				sec_session_start();

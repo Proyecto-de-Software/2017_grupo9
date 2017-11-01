@@ -66,7 +66,7 @@
     if(isset($_GET['action'])){
     	switch ($_GET['action']) {
 	    	case 'modificacionConfiguracion':
-	    			if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'configuracion_update')){
+	    			if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'configuracion_update')){
 	    				mostrarFormularioConfiguracion(RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion());
 	    			} else {
 						header("Location: /../");
