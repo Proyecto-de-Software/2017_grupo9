@@ -5,6 +5,7 @@ ini_set('display_errors',1);
 #Notificar todos los errores de PHP:
 error_reporting(-1);
 
+require_once($_SERVER['DOCUMENT_ROOT']."/controller/ControllerSeguridad.php");
 require_once($_SERVER['DOCUMENT_ROOT'].'/controller/ResourceController.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/model/PDORepository.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/model/ResourceRepository.php');
@@ -34,8 +35,11 @@ if(!$config['habilitado']){
 else{
 
 
-	if(!isset($_SESSION))
-		session_start(); 
+	if(!isset($_SESSION)) {
+		sec_session_start();
+	} else {
+		session_regenerate_id();
+	} 
 
 	if(!isset($_SESSION['usuario'])) {
 		$_SESSION['usuario'] = NULL;

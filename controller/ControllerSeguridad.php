@@ -20,8 +20,7 @@ function sec_session_start() {
         $httponly);
     // Configura el nombre de sesión al configurado arriba.
     //session_name($session_name);
-    if(!isset($_SESSION))
-        session_start();            // Inicia la sesión PHP.
+    session_start();            // Inicia la sesión PHP.
     session_regenerate_id();    // Regenera la sesión, borra la previa. 
 }
 

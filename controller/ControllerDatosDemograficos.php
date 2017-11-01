@@ -14,7 +14,7 @@
 		sec_session_start();
 	} else {
 		session_regenerate_id();
-	}	
+	}
 
 	function crearDatosDemograficos(){
 		$datosDemograficos = new DatosDemograficos($_POST['heladera'], $_POST['electricidad'], $_POST['mascota'], $_POST['tipoVivienda'], $_POST['tipoCalefaccion'], $_POST['tipoAgua'], $_POST['paciente']);

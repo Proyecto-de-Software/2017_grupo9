@@ -12,7 +12,6 @@
 	require_once($_SERVER['DOCUMENT_ROOT'].'/view/TwigView.php');
 	require_once($_SERVER['DOCUMENT_ROOT']."/controller/ControllerSeguridad.php");
 
-
 	if(!isset($_SESSION)) {
 		sec_session_start();
 	} else {
