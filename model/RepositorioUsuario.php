@@ -172,7 +172,6 @@
       }
       public function listarUsuariosBloqueados($porNombreUsuario = false, $nombreUsuario =""){
         $conexion = $this->getConnection();
-        $conexion = $this->getConnection();
         $queryString = "SELECT id FROM usuario WHERE activo=:activo";
         if($porNombreUsuario) $queryString.=" and username=:username";
         $query = $conexion->prepare($queryString);
@@ -193,9 +192,7 @@
           return false;
 
       }
-      public function listarUsuariosPorNombreUsuario($nombreUsuario){
 
-      }
       public function existeUsuario($email,$password){
         $conexion = $this->getConnection();
         $query = $conexion->prepare("SELECT id FROM usuario WHERE email=:email and password=:password");
@@ -235,6 +232,16 @@
         $query->execute();
         $result = $query->fetchAll();
         return $result[0]['activo'];
+
+      }
+      public function usuarioValido($usuario){
+        $nombre = $usuario->getNombre() != null && trim($usuario->getNombre()) !='';
+        $apellido = $usuario->getApellido() != null && trim($usuario->getApellido()) !='';
+        $usuario = $usuario->getNombreUsuario() != null && trim($usuario->getNombreUsuario()) !='';
+        $email = $usuario->getEmail() != null && filter_var($usuario->getEmail(),FILTER_VALIDATE_EMAIL);
+        $password = $usuario->getPassword() != null && trim($usuario->getPassword()) !='';
+        $roles = $usuario->getRoles() != null;
+        return ($nombre && $apellido && $usuario && $email && $passwords && $roles);
 
       }
 	}

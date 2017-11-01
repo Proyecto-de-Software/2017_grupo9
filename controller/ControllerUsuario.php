@@ -36,7 +36,7 @@
 	    header("Location: /../");
 	}
 
-	function crearUsuario($modif){
+	function crearUsuario($modif=false){
 		//si $modif == true, quiere decir que el usuario ya existe en la bd, si es false, es la primera vez
 		if(isset($_POST['rol'])){
 			$roles = [];
@@ -45,6 +45,9 @@
 			}
 			
 			$rolesCompletos = RepositorioRol::getInstance()->buscarRolesPorNombre($roles);
+		}
+		else{
+			$rolesCompletos = null;
 		}
 		if($modif){
 			$creadoEn = $_POST['fechaCreacion'];
@@ -57,6 +60,7 @@
 		}
 		$user =  new Usuario($_POST['usuario'], $_POST['email'], $_POST['password'], true, $creadoEn, $actualizadoEn, $_POST['nombre'], $_POST['apellido'], $rolesCompletos);
 		if($modif) $user->setId($_POST['id']);
+		var_dump($user);
 		return $user;
 		
 	}

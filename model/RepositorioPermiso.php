@@ -37,6 +37,11 @@
 	       		return false;
 	       	}
 		}
+		/*
+		public function usuarioTienePermiso($idUsuario, $permiso){
+
+		}
+		*/
 	}
 }
 
