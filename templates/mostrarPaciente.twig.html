@@ -33,7 +33,7 @@
 			    </tr>
 			    <tr>
 	     			 <th scope="row">Tipo de documento</th>
-	     			 <td>{{ tipoDocumento.nombre }}</td>
+	     			 <td>{{ tipoDeDocumento.nombre }}</td>
 			    </tr>
 			    <tr>
 	     			 <th scope="row">Nro de documento</th>
@@ -42,7 +42,7 @@
  			 </tbody>
 		</table>
 		<a href="/controller/ControllerPaciente.php?action=modificacionDePaciente&id={{ paciente.id }}" class="btn btn-outline-success btn-own-info">Editar</a>
-
+		<a href="/controller/ControllerDatosDemograficos.php?action=altaDeDatosDemograficos&id={{ paciente.id }}" class="btn btn-outline-success btn-own-info">Agregar datos demográficos</a>
 	</div>
 
 </section>

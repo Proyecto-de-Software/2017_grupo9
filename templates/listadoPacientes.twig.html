@@ -30,9 +30,12 @@
 			    <tr>
 			      <th>Nombre</th>
 			      <th>Apellido</th>
+			      <th>DNI</th>
 			      <th></th>
 			      <th></th>
-			      <th></th>
+			      {% if sesion.administrador == 1 %}
+			     	<th></th>
+			     {% endif %}
 			    </tr>
 			</thead>
 			<tbody>
@@ -45,15 +48,23 @@
 			    		{{elemento.apellido}}
 			    	</td>
 			    	<td>
-			    		<a href="/controller/ControllerPaciente.php?action=modificacionDePaciente&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info">Editar</a>
+			    		{{elemento.numero_doc}}
 			    	</td>
-			    	<td>
-			    		<a onclick="return confirm('Seguro?')"  href="/controller/ControllerPaciente.php?action=eliminarPaciente&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info">Eliminar </a>
-			    	</td>
-			    	<td>
-			    		<a href="/controller/ControllerPaciente.php?action=mostrarPaciente&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info">Mas información</a>
-			    	</td>
+			    	{% if sesion.pediatra == 1 or sesion.recepcionista == 1 %}
+				    	<td>
+				    		<a href="/controller/ControllerPaciente.php?action=modificacionDePaciente&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info">Editar</a>
+				    	</td>
+				    	<td>
+				    		<a href="/controller/ControllerPaciente.php?action=mostrarPaciente&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info">Mas información</a>
+				    	</td>
+				    {% endif %}
+			    	{% if sesion.administrador == 1 %}
+				    	<td>
+				    		<a onclick="return confirm('Seguro?')"  href="/controller/ControllerPaciente.php?action=eliminarPaciente&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info">Eliminar </a>
+				    	</td>
+				    {% endif %}
 			    </tr>
+			    {% endfor %}
 			</tbody>
 		</table>
 		<a class="btn btn-success mt-3 mb-5 text-right" role="button" href="/../controller/ControllerPaciente.php?action=altaDePaciente">Agregar nuevo paciente</a>
