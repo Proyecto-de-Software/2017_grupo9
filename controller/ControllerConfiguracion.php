@@ -10,9 +10,13 @@
 	require_once($_SERVER['DOCUMENT_ROOT']."/model/RepositorioPermiso.php");
 	require_once($_SERVER['DOCUMENT_ROOT']."/model/ClaseUsuario.php");
 	require_once($_SERVER['DOCUMENT_ROOT']."/view/TwigView.php");
+	require_once($_SERVER['DOCUMENT_ROOT']."/controller/ControllerSeguridad.php");
 
-	if(!isset($_SESSION))
-		session_start();
+	if(!isset($_SESSION)) {
+		sec_session_start();
+	} else {
+		session_regenerate_id();
+	}
 
 	function obtenerConfiguracion(){
     	require_once($_SERVER['DOCUMENT_ROOT']."/view/Home.php");

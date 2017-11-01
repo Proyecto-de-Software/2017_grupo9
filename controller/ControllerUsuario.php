@@ -10,10 +10,14 @@
 	require_once($_SERVER['DOCUMENT_ROOT']."/model/ClaseConfiguracion.php");
 	require_once($_SERVER['DOCUMENT_ROOT']."/model/ClaseUsuario.php");
 	require_once($_SERVER['DOCUMENT_ROOT'].'/view/TwigView.php');
+	require_once($_SERVER['DOCUMENT_ROOT']."/controller/ControllerSeguridad.php");
 
 
-	if(!isset($_SESSION))
-		session_start();
+	if(!isset($_SESSION)) {
+		sec_session_start();
+	} else {
+		session_regenerate_id();
+	}
 
 	function obtenerConfiguracion(){
     	$config = RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion();
@@ -77,10 +81,10 @@
     */
     function loguearUsuario($usuario){
     	if(!isset($_SESSION)) {
-			session_start();
+			sec_session_start();
 		} else {
 			session_destroy();
-			session_start();
+			sec_session_start();
 		}
     	$_SESSION['idUsuario'] = $usuario->getId();
     	$_SESSION['username'] = $usuario->getNombreUsuario();
@@ -297,7 +301,7 @@
 			
 				break;
 			case 'cerrarSesion':
-				session_start();
+				sec_session_start();
 				$_SESSION = array();
 				session_destroy();
 				header("Location: /../");
