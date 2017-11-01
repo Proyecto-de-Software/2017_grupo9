@@ -3,10 +3,11 @@
 	<div class="mb-4 mt-4">
 			<h3 >Búsqueda</h3> 
 			<form  id="form" class="form-inline my-2 my-lg-0 ml-auto mr-5 d-flex justify-content-start" action="/controller/ControllerPaciente.php?action=busquedaPaciente" method="POST">
-				<input class="form-control mr-sm-2 " type="text" placeholder="Buscar" aria-label="busquedaApellidoNombre" name="busquedaApellidoNombre" id="busquedaApellidoNombre">
+				<input class="form-control mt-3" type="text" placeholder="Buscar" aria-label="busquedaApellidoNombre" name="busquedaApellidoNombre" id="busquedaApellidoNombre">
+				<button class="btn btn-outline-success btn-search  my-2 my-sm-0" type="submit">Buscar</button>
 		    </form>
 		    <form  id="form" class="form-inline my-2 my-lg-0 ml-auto mr-5 d-flex justify-content-start" action="/controller/ControllerPaciente.php?action=busquedaPaciente" method="POST">
-				<select id="busquedaDni" name="busquedaDni" onchange="myFunction()">
+				<select class="form-control mt-3" id="busquedaDni" name="busquedaDni" onchange="myFunction()">
 					<option value="dni">DNI</option>
 					<option value="pasaporte">PASAPORTE</option>
 					<option value="">PARTIDA DE NACIMIENTO</option>
@@ -14,7 +15,8 @@
 					<option value="">CARNET EXTRANJERO</option>
 				</select>
 				<div id="demo"></div>
-				<input class="form-control mr-sm-2 " type="text" placeholder="Buscar" aria-label="busquedaDni" name="busquedaDni" id="busquedaDni">
+				<input class="form-control mt-3" type="text" placeholder="Buscar" aria-label="busquedaDni" name="busquedaDni" id="busquedaDni">
+				<button class="btn btn-outline-success btn-search  my-2 my-sm-0" type="submit">Buscar</button>
 			</form>
 		 </div>
 		 <div id="demo"></div>

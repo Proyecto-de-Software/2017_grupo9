@@ -1,0 +1,54 @@
+<section class="row mx-auto mt-5 ">
+	<div class="login col-md-5  mx-auto mt-4 mb-4 pb-5 pt-5 pr-5 pl-5 border rounded ">
+		<h3 class="card-header text-center myHeader">Agregar datos demográficos </h3><br>
+		<form class="text-center" role="form" method="POST" action="/controller/ControllerDatosDemograficos.php?action=agregarDatosDemograficos">
+		  	<div class="form-group">
+			    <label for="heladera">Heladera</label>
+			    <select name="heladera" class="form-control mt-3">
+			    	<option value="1">Si</option>
+			    	<option value="0">No</option>
+			    </select>
+		  	</div>
+		  	<div class="form-group ">
+			    <label for="electricidad">Electricidad</label>
+			    <select name="electricidad" class="form-control mt-3" required>
+			    	<option value="1">Si</option>
+			    	<option value="0">No</option>
+			    </select>
+		  	</div>
+		  	<div class="form-group ">
+			    <label for="mascota">Mascota</label>
+			    <select name="mascota" class="form-control mt-3" required>
+			    	<option value="1">Si</option>
+			    	<option value="0">No</option>
+			    </select>
+		  	</div>
+		  	<div class="form-group ">
+			    <label for="tipoVivienda">Tipo de vivienda</label>
+			    	<select name="tipoVivienda" class="form-control mt-3">
+				    	{% for tipoVivienda in tiposDeVivienda %}
+				    		<option value="{{ tipoVivienda.id }}">{{ tipoVivienda.nombre | upper }}</option>
+				    	{% endfor %}
+			    	</select>
+		  	</div>
+		  	<div class="form-group ">
+			    <label for="tipoCalefaccion">Tipo de calefacción</label>
+			    	<select name="tipoCalefaccion" class="form-control mt-3">
+				    	{% for tipoCalefaccion in tiposDeCalefaccion %}
+				    		<option value="{{ tipoCalefaccion.id }}">{{ tipoCalefaccion.nombre | upper }}</option>
+				    	{% endfor %}
+			    	</select>
+		  	</div>
+		  	<div class="form-group ">
+			    <label for="tipoAgua">Tipo de agua</label>
+			    	<select name="tipoAgua" class="form-control mt-3">
+				    	{% for tipoAgua in tiposDeAgua %}
+				    		<option value="{{ tipoAgua.id }}">{{ tipoAgua.nombre | upper }}</option>
+				    	{% endfor %}
+			    	</select>
+		  	</div>
+		  	<div><input type="text" name="idPaciente" value="{{ idPaciente }}" hidden></div>
+		  	<button type="submit" class="btn btn-outline-success  btn-own-info">Agregar datos demográficos</button>
+		</form>
+	</div>
+</section>

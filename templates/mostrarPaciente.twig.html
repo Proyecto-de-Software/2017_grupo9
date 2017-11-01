@@ -41,8 +41,10 @@
 			    </tr>
  			 </tbody>
 		</table>
-		<a href="/controller/ControllerPaciente.php?action=modificacionDePaciente&id={{ paciente.id }}" class="btn btn-outline-success btn-own-info">Editar</a>
-		<a href="/controller/ControllerDatosDemograficos.php?action=altaDeDatosDemograficos&id={{ paciente.id }}" class="btn btn-outline-success btn-own-info">Agregar datos demográficos</a>
+		<div class="text-center">
+			<a href="/controller/ControllerPaciente.php?action=modificacionDePaciente&id={{ paciente.id }}" class="btn btn-outline-success btn-own-info">Editar</a>
+			<a href="/controller/ControllerDatosDemograficos.php?action=mostrarDatosDemograficos&id={{ paciente.id }}" class="btn btn-outline-success btn-own-info">Ver datos demográficos</a>
+		</div>
 	</div>
 
 </section>
