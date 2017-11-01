@@ -232,7 +232,7 @@
 				}
 				break;
 			case 'listarUsuarios':
-				if(RepositorioPermiso::getInstance()->UsuarioTienePermiso(unserialize($_SESSION['usuario']), 'usuario_index')){
+				if(RepositorioPermiso::getInstance()->usuarioTienePermiso2($_SESSION['idUsuario'], 'usuario_index')){
 					listarUsuarios(RepositorioUsuario::getInstance()->devolverUsuarios());
 				} else {
 	        		header("Location: /../");
