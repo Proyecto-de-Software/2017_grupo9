@@ -20,18 +20,9 @@
 	}
 
 	function obtenerConfiguracion(){
-    	require_once($_SERVER['DOCUMENT_ROOT']."/view/Home.php");
-    	$config = RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion();
-    	$datosConfigurados =array(
-    		'habilitado' => $config->getHabilitado(),
-    		'titulo' => $config->getTitulo(),
-            'hospital' => $config->getDescripcionHospital(),
-            'guardia' => $config->getDescripcionGuardia(),
-            'especialidades' => $config->getDescripcionEspecialidades(),
-            'contacto' => $config->getContacto()
-        );
-        return $datosConfigurados;
+    	return RepositorioConfiguracion::getInstance()->datosParaLaVista();
     }
+
     $config = obtenerConfiguracion();
 	if(!$config['habilitado']){
 	    header("Location: /../");

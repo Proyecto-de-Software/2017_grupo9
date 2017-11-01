@@ -28,6 +28,18 @@
       		else return false;
 
       	}
+      	public function datosParaLaVista(){
+      		$config = obtenerDatosDeConfiguracion();
+      		$datosConfigurados =array(
+	    		'habilitado' => $config->getHabilitado(),
+	    		'titulo' => $config->getTitulo(),
+	            'hospital' => $config->getDescripcionHospital(),
+	            'guardia' => $config->getDescripcionGuardia(),
+	            'especialidades' => $config->getDescripcionEspecialidades(),
+	            'contacto' => $config->getContacto()
+        	);
+        	return $datosConfigurados;
+      	}
       	public function crearConfiguracionHospital($configuracion){
       		$conexion = $this->getConnection();
 			$query = $conexion->prepare("INSERT INTO configuracion(titulo,descripcion_hospital, email_contacto, cantidad_elementos_pagina, habilitado,descripcion_guardia,descripcion_especialidades) VALUES(:titulo, :descripcion_hospital,:contacto, :cantElem, :habilitado, :descripcion_guardia, :descripcion_especialidades)");

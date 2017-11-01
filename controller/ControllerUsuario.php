@@ -19,16 +19,7 @@
 	}
 
 	function obtenerConfiguracion(){
-    	$config = RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion();
-    	$datosConfigurados =array(
-    		'habilitado' => $config->getHabilitado(),
-            'hospital' => $config->getDescripcionHospital(),
-            'guardia' => $config->getDescripcionGuardia(),
-            'titulo' => $config->getTitulo(),
-            'especialidades' => $config->getDescripcionEspecialidades(),
-            'contacto' => $config->getContacto()
-        );
-        return $datosConfigurados;
+    	return RepositorioConfiguracion::getInstance()->datosParaLaVista();
     }
     $config = obtenerConfiguracion();
 
