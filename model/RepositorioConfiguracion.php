@@ -29,7 +29,7 @@
 
       	}
       	public function datosParaLaVista(){
-      		$config = obtenerDatosDeConfiguracion();
+      		$config = self::obtenerDatosDeConfiguracion();
       		$datosConfigurados =array(
 	    		'habilitado' => $config->getHabilitado(),
 	    		'titulo' => $config->getTitulo(),
