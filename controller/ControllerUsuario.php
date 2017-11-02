@@ -62,7 +62,8 @@
     		return array(	'logueado'=>true, 
     						'username'=>$usuario->getNombreUsuario(),
     						'roles'=>RepositorioRol::getInstance()->buscarRolesDeUsuario($_SESSION['idUsuario']),
-    						'idUsuario'=>$_SESSION['idUsuario']
+    						'idUsuario'=>$_SESSION['idUsuario'],
+    						'token'=>$_SESSION['token']
     					);
     	}
     	else return false;
@@ -137,7 +138,9 @@
 					}
 				}
 				else{
-					header("Location: /../");
+					echo "Post:     ".$_POST['token'];
+					echo "\nSesion: ".$_SESSION['token'];
+					//header("Location: /../");
 				}
 				break;
 			case 'agregarUsuarioNoValidado':
