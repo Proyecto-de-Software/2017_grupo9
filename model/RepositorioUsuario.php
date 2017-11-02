@@ -96,14 +96,49 @@
 	        else
 	        	return false;
       }
-      public function devolverUsuarios($username = ""){
+      public function devolverUsuarios($index,$cantidad,$filtrado = null){
         $conexion = $this->getConnection();
         $queryString = "SELECT id FROM usuario";
-        if ($username) $queryString.=" WHERE username=:username";
-        $query = $conexion->prepare($queryString);
-        if ($username)  $query->bindParam(':username', $username);
+        
+        if ($filtrado != null){
+          if(trim($filtrado['campoBuscar'])!=''){
+            $queryString.=" WHERE username=:username";
+          }
+          else{
+            $queryString.=" WHERE 1";
+          }
+
+          if($filtrado['activo'] && !$filtrado['bloqueado']){
+            $queryString.=" AND activo=:activo";
+            $activo = '1';
+          }
+          elseif(!$filtrado['activo'] && $filtrado['bloqueado']){
+            $queryString.=" AND activo=:activo";
+            $activo = '0';
+          }
+          $queryString.=" LIMIT :limit OFFSET :offset ";
+          $query = $conexion->prepare($queryString);
+          $query->bindParam(':limit', $cantidad,PDO::PARAM_INT);
+          $query->bindParam(':offset', $index,PDO::PARAM_INT);
+          if(isset($activo)){
+             $query->bindParam(':activo', $activo);
+          }
+          if(trim($filtrado['campoBuscar'])!=''){
+            $username = $filtrado['campoBuscar'];
+            $query->bindParam(':username', $username);
+          }
+        }
+        else{
+          $queryString.=" LIMIT :limit OFFSET :offset ";  
+          $query = $conexion->prepare($queryString);
+          $query->bindValue(':limit', $cantidad,PDO::PARAM_INT);
+          $query->bindValue(':offset', $index,PDO::PARAM_INT);
+        }
+
         $query->execute();
         $resultado = $query->fetchAll();
+   
+       
         $usuarios = [];
         if(sizeof($resultado) > 0){
           foreach($resultado as $usuario){
@@ -148,50 +183,6 @@
         $query->bindParam(':id', $idUsuario);
   			return $query->execute()==1;	
   		}
-      public function listarUsuariosActivos($porNombreUsuario = false,$nombreUsuario =""){
-        $conexion = $this->getConnection();
-        $queryString = "SELECT id FROM usuario WHERE activo=:activo";
-        if($porNombreUsuario) $queryString.=" and username=:username";
-        $query = $conexion->prepare($queryString);
-        if($porNombreUsuario) $query->bindParam(':username',$nombreUsuario);
-        $activo = 1;
-        $query->bindParam(':activo',$activo);
-        $query->execute();
-        $resultado = $query->fetchAll();
-        $usuarios = [];
-        if(sizeof($resultado) > 0){
-          foreach($resultado as $usuario){
-            array_push($usuarios, $this->buscarUsuarioPorId($usuario['id']));
-          }
-
-          return $usuarios;
-        }
-        else
-          return false;
-
-      }
-      public function listarUsuariosBloqueados($porNombreUsuario = false, $nombreUsuario =""){
-        $conexion = $this->getConnection();
-        $queryString = "SELECT id FROM usuario WHERE activo=:activo";
-        if($porNombreUsuario) $queryString.=" and username=:username";
-        $query = $conexion->prepare($queryString);
-        if($porNombreUsuario) $query->bindParam(':username',$nombreUsuario);
-        $activo = 0;
-        $query->bindParam(':activo',$activo);
-        $query->execute();
-        $resultado = $query->fetchAll();
-        $usuarios = [];
-        if(sizeof($resultado) > 0){
-          foreach($resultado as $usuario){
-            array_push($usuarios, $this->buscarUsuarioPorId($usuario['id']));
-          }
-
-          return $usuarios;
-        }
-        else
-          return false;
-
-      }
 
       public function existeUsuario($email,$password){
         $conexion = $this->getConnection();
@@ -235,13 +226,33 @@
 
       }
       public function usuarioValido($usuario){
+        $retorno['ok'] = false;
         $nombre = $usuario->getNombre() != null && trim($usuario->getNombre()) !='';
+        if(!$nombre){
+          array_push($retorno, 'El nombre no debe estar vacio');
+        }
         $apellido = $usuario->getApellido() != null && trim($usuario->getApellido()) !='';
+        if(!$apellido){
+          array_push($retorno, 'El nombre no debe estar vacio');
+        }
         $usuario = $usuario->getNombreUsuario() != null && trim($usuario->getNombreUsuario()) !='';
+        if(!$usuario){
+          array_push($retorno, 'El nombre de usuario no debe estar vacio');
+        }
         $email = $usuario->getEmail() != null && filter_var($usuario->getEmail(),FILTER_VALIDATE_EMAIL);
+        if(!$email){
+          array_push($retorno, 'El email no debe estar vacio y debe cumplir con el formato');
+        }
         $password = $usuario->getPassword() != null && trim($usuario->getPassword()) !='';
-        $roles = $usuario->getRoles() != null;
-        return ($nombre && $apellido && $usuario && $email && $passwords && $roles);
-
+        $password2 = $usuario->getPassword() != null && trim($usuario->getPassword2()) !='';
+        if($usuario->getPassword() != $usuario->getPassword2()){
+          array_push($retorno, 'Las contraseñas deben coincidir');
+        }
+        $roles = $usuario->getRoles()!=null;
+        if(!$roles){
+          array_push($retorno, 'Debe seleccionar al menos un rol');
+        }
+        $retorno['ok'] = $nombre && $apellido && $usuario && $email && $password && $password2 && $roles;
+        return $retorno;
       }
 	}

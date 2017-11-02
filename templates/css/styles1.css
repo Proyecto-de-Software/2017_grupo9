@@ -48,8 +48,8 @@
     line-height: 60px;
     background-color: rgba(60,179,113,0.8);
 }
-.paginado{
-	color: #3CB371 !important;;
+.page-link-own {
+	background-color: #3CB371 !important;
 }
 }
 /*#EAFAF1 */

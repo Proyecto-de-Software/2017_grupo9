@@ -1,6 +1,6 @@
 <ul class="navbar-nav float-right">
-	{% if  sesion.logueado %}
-		<a class="nav-link nav-bar-link-own" role="submit" href="/controller/ControllerUsuario.php?action=mostrarUsuario&id={{sesion.idUsuario}}">{{sesion.username}}</a>
+	{% if  usuarioActual.logueado %}
+		<a class="nav-link nav-bar-link-own" role="submit" href="/controller/ControllerUsuario.php?action=mostrarUsuario&id={{usuarioActual.idUsuario}}">{{usuarioActual.username}}</a>
 	    <a class="nav-link nav-bar-link-own" role="submit" href="/controller/ControllerUsuario.php?action=cerrarSesion">Cerrar sesión</a>
 	{% else %} 
 	    <li class="nav-item active">

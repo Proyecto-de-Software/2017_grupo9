@@ -59,7 +59,7 @@
       $query = $conexion->prepare("SELECT r.nombre FROM rol as r INNER JOIN usuario_tiene_rol as utr ON r.id=utr.rol_id WHERE utr.usuario_id=:idUsuario");
       $query->bindParam(':idUsuario',$idUsuario);
       if($query->execute()){
-        return $query->fetchAll();
+        return $query->fetchAll(PDO::FETCH_COLUMN);
       }
       else return false;
 
