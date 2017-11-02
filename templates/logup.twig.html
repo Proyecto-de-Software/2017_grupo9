@@ -35,6 +35,9 @@
     			<label for="rol">{{rol.nombre}}</label><br/>
      			{% endfor %}
   			</div>
+  			<div class="form-group">
+				<input type="hidden" name="token" value={{sesion.token}}>
+			</div>
 			<button type="submit" class="btn btn-outline-success  btn-own-info">Registrar</button>
 		</form>
 	</div>

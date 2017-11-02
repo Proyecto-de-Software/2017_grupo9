@@ -93,6 +93,7 @@
 			session_destroy();
 			sec_session_start();
 		}
+		$_SESSION['token'] = md5(uniqid(mt_rand(), true));
     	$_SESSION['idUsuario'] = $usuario->getId();
         echo TwigView::getTwig()->render('base.twig.html', array('usuarioActual'=>usuarioActual(),'configuracion'=>obtenerConfiguracion()));
 
@@ -111,10 +112,11 @@
     	
     }
 
-	if(isset($_GET['action'])){
+	if(isset($_GET['action'])){	
 		switch($_GET['action']){
-			case "agregarUsuario":
-				if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'usuario_new')){
+			case 'agregarUsuario':
+				if((RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'usuario_new')) && (isset($_POST['token']) && $_POST['token'] == $_SESSION['token'])) {
+
 					if(validarCampos()){
 						if(!RepositorioUsuario::getInstance()->existeNombreUsuario($_POST['usuario'])){
 							if(!RepositorioUsuario::getInstance()->existeEmail($_POST['email'])){
@@ -131,7 +133,7 @@
 					} 
 					else{
 						header("Location: /../controller/ControllerUsuario.php?action=agregarUsuarioNoValidado");
-						
+							
 					}
 				}
 				else{
@@ -164,7 +166,8 @@
 				}
 				break;
 			case 'modificarUsuario':
-				if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'usuario_update')){
+				if((RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'usuario_update')) && (isset($_POST['token']) && $_POST['token'] == $_SESSION['token'])) {
+
 					if(validarCampos()){
 						$resultado = RepositorioUsuario::getInstance()->modificarUsuario(crearUsuario(true));
 						if($resultado){
@@ -277,10 +280,14 @@
 			
 				break;
 			case 'cerrarSesion':
+				//if(isset($_GET['token']) && $_GET['token'] == $_SESSION['token']) {
 				sec_session_start();
 				$_SESSION = array();
 				session_destroy();
 				header("Location: /../");
+				//} else {
+				//	header("Location: /../");
+				//}
 				break;
 		}
 	}

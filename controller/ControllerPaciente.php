@@ -54,7 +54,7 @@
 		switch ($_GET['action']) {
 			case 'altaDePaciente':
 				//if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista()){
-				if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_new')){
+				if((RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_new')) && (isset($_POST['token']) && $_POST['token'] == $_SESSION['token'])) {
 					$obrasSociales = RepositorioPaciente::getInstance()->devolverObrasSociales();
 		    		$tiposDeDocumento = RepositorioPaciente::getInstance()->devolverTiposDeDocumento();
 		       		agregarPaciente($obrasSociales,$tiposDeDocumento);
@@ -65,7 +65,7 @@
 		       	break;
 		    case 'agregarPaciente':
 		    	//if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista()){
-		    	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_new')){
+		    	if((RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_new')) && (isset($_POST['token']) && $_POST['token'] == $_SESSION['token'])) {
 		    		$paciente = crearPaciente();
 
         			if(RepositorioPaciente::getInstance()->agregarPaciente($paciente)){
