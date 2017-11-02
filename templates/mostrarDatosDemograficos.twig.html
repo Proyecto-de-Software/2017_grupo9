@@ -36,20 +36,20 @@
 			    </tr>
 			    <tr>
 	     			 <th scope="row">Tipo de vivienda</th>
-	     			 <td>{{datosDemograficos.tipo_vivienda_id}}</td>
+	     			 <td>{{ tipoDeVivienda.nombre }}</td>
 			    </tr>
 			    <tr>
 	     			 <th scope="row">Tipo de calefacción</th>
-	     			 <td>{{datosDemograficos.tipo_calefaccion_id}}</td>
+	     			 <td>{{ tipoDeCalefaccion.nombre }}</td>
 			    </tr>
 	     		<tr>
 	     			 <th scope="row">Tipo de agua</th>
-	     			 <td>{{datosDemograficos.tipo_agua_id}} </td>
+	     			 <td>{{ tipoDeAgua.nombre }}</td>
 	     		</tr>
  			 </tbody>
 		</table>
 		<div class="text-center">
-			<a href="/controller/ControllerDatosDemograficos.php?action=mostrarDatosDemograficos&id={{ datosDemograficos.id }}" class="btn btn-outline-success btn-own-info">Editar</a>
+			<a href="/controller/ControllerDatosDemograficos.php?action=modificacionDatosDemograficos&id={{ datosDemograficos.id }}" class="btn btn-outline-success btn-own-info">Editar</a>
 		</div>
 		{% else %}
 			<div class="text-center">

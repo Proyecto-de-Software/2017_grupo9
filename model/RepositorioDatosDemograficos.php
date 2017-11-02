@@ -2,6 +2,9 @@
 
 	require_once("PDORepository.php");
 	require_once("ClaseDatosDemograficos.php");
+  require_once("ClaseTipoVivienda.php");
+  require_once("ClaseTipoCalefaccion.php");
+  require_once("ClaseTipoAgua.php");
 
 	class RepositorioDatosDemograficos extends PDORepository{
 
@@ -27,25 +30,38 @@
   			$query->bindParam(':tipoAgua', $datosDemograficos->getTipoAgua());
         $query->bindParam(':idPaciente', $datosDemograficos->getPaciente());
 
-        if($query->execute() == 1){
-          $datosDemograficos->setId($conexion->lastInsertId());
-          return true;
-        }
-        return false;
+        return $query->execute();
   		}
 
   		function modificarDatosDemograficos($datosDemograficos){
         	$conexion = $this->getConnection();
-        	$query = $conexion->prepare("UPDATE datos_demograficos SET heladera=:heladera, electricidad=:electricidad, mascota=:mascota, tipo_vivienda_id=:tipoVivienda, tipo_calefaccion_id=:tipoCalefaccion, tipo_agua_id=:tipoAgua WHERE id=:id");
+        	$query = $conexion->prepare("UPDATE datos_demograficos SET heladera=:heladera, electricidad=:electricidad, mascota=:mascota, tipo_vivienda_id=:tipoVivienda, tipo_calefaccion_id=:tipoCalefaccion, tipo_agua_id=:tipoAgua, paciente_id=:paciente WHERE id=:id");
         	$query->bindParam(':heladera', $datosDemograficos->getHeladera());
-  			$query->bindParam(':electricidad', $datosDemograficos->getElectricidad());
-  			$query->bindParam(':mascota', $datosDemograficos->getMascota());
-  			$query->bindParam(':tipoVivienda', $datosDemograficos->getTipoVivienda());
-  			$query->bindParam(':tipoCalefaccion', $datosDemograficos->getTipoCalefaccion());
-  			$query->bindParam(':tipoAgua', $datosDemograficos->getTipoAgua());
+    			$query->bindParam(':electricidad', $datosDemograficos->getElectricidad());
+    			$query->bindParam(':mascota', $datosDemograficos->getMascota());
+    			$query->bindParam(':tipoVivienda', $datosDemograficos->getTipoVivienda());
+    			$query->bindParam(':tipoCalefaccion', $datosDemograficos->getTipoCalefaccion());
+    			$query->bindParam(':tipoAgua', $datosDemograficos->getTipoAgua());
+          $query->bindParam(':paciente', $datosDemograficos->getPaciente());
+          $query->bindParam(':id', $datosDemograficos->getId());
 
         	return $query->execute() == 1;
   		}
+
+      function buscarDatosDemograficosPorId($id){
+        $conexion = $this->getConnection();
+        $query = $conexion->prepare("SELECT * FROM datos_demograficos WHERE id = :id");
+        $query->bindParam(':id', $id);
+        if ($query->execute()) {
+          $resultado = $query->fetchAll();
+          if(sizeof($resultado) > 0){
+            $datosDemograficos = new DatosDemograficos($resultado[0]['heladera'], $resultado[0]['electricidad'], $resultado[0]['mascota'], $resultado[0]['tipo_vivienda_id'], $resultado[0]['tipo_calefaccion_id'], $resultado[0]['tipo_agua_id'], $resultado[0]['paciente_id']);
+            $datosDemograficos->setId($resultado[0]['id']);
+            return $datosDemograficos;
+          }
+          return false;
+        }
+      }
 
       function buscarDatosDemograficosPorIdPaciente($id){
         $conexion = $this->getConnection();
@@ -55,6 +71,7 @@
           $resultado = $query->fetchAll();
           if(sizeof($resultado) > 0){
             $datosDemograficos = new DatosDemograficos($resultado[0]['heladera'], $resultado[0]['electricidad'], $resultado[0]['mascota'], $resultado[0]['tipo_vivienda_id'], $resultado[0]['tipo_calefaccion_id'], $resultado[0]['tipo_agua_id'], $resultado[0]['paciente_id']);
+            $datosDemograficos->setId($resultado[0]['id']);
             return $datosDemograficos;
           }
           return false;

@@ -29,7 +29,7 @@
         }
 
         public function getHeladera(){
-        	$this->heladera;
+        	return $this->heladera;
         }
 
         public function setHeladera($heladera){
@@ -37,7 +37,7 @@
         }
 
         public function getElectricidad(){
-        	$this->electricidad;
+        	return $this->electricidad;
         }
 
         public function setElectricidad($electricidad){
@@ -45,7 +45,7 @@
         }
 
         public function getMascota(){
-        	$this->mascota;
+        	return $this->mascota;
         }
 
         public function setMascota($mascota){
@@ -53,7 +53,7 @@
         }
 
         public function getTipoVivienda(){
-        	$this->tipoVivienda;
+        	return $this->tipoVivienda;
         }
 
         public function setTipoVivienda($tipoVivienda){
@@ -61,7 +61,7 @@
         }
 
         public function getTipoCalefaccion(){
-        	$this->tipoCalefaccion;
+        	return $this->tipoCalefaccion;
         }
 
         public function setTipoCalefaccion($tipoCalefaccion){
@@ -69,7 +69,7 @@
         }
 
         public function getTipoAgua(){
-        	$this->tipoAgua;
+        	return $this->tipoAgua;
         }
 
         public function setTipoAgua($tipoAgua){
@@ -77,7 +77,7 @@
         }
 
         public function getPaciente(){
-            $this->paciente;
+            return $this->paciente;
         }
 
         public function setPaciente($paciente){
