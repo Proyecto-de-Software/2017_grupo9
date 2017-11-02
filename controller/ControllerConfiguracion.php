@@ -56,7 +56,7 @@
     if(isset($_GET['action'])){
     	switch ($_GET['action']) {
 	    	case 'modificacionConfiguracion':
-	    			if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'configuracion_update')){
+	    			if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'configuracion_update')) {
 	    				mostrarFormularioConfiguracion(RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion());
 	    			} else {
 						header("Location: /../");
@@ -67,20 +67,24 @@
 	    		break;
 
 	    	case 'modificarConfiguracion':
-	    		if(validarCampos()){
-		    		if($_POST['edit']=='editar'){ 
-		    			RepositorioConfiguracion::getInstance()->modificarConfiguracionHospital(crearConfiguracion());
+	    		if((RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'configuracion_update')) && (isset($_POST['token']) && $_POST['token'] == $_SESSION['token'])) {
+		    		if(validarCampos()){
+			    		if($_POST['edit']=='editar'){ 
+			    			RepositorioConfiguracion::getInstance()->modificarConfiguracionHospital(crearConfiguracion());
 
-		    		}
-		    		else{
-		    		RepositorioConfiguracion::getInstance()->crearConfiguracionHospital(crearConfiguracion());
+			    		}
+			    		else{
+			    		RepositorioConfiguracion::getInstance()->crearConfiguracionHospital(crearConfiguracion());
 
-		    		}
-		    		header("Location: /../controller/ControllerConfiguracion.php?action=modificacionConfiguracion");
-		    	}
-		    	else{
-		    		header("Location: /../controller/ControllerConfiguracion.php?action=modificacionConfiguracionNoValidado");
-		    	}
+			    		}
+			    		header("Location: /../controller/ControllerConfiguracion.php?action=modificacionConfiguracion");
+			    	}
+			    	else{
+			    		header("Location: /../controller/ControllerConfiguracion.php?action=modificacionConfiguracionNoValidado");
+			    	}
+			    } else {
+			    	header("Location: /../");
+			    }
 	    		break;
 	    }
 	}
