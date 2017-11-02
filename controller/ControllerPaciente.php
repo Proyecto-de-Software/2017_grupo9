@@ -45,9 +45,7 @@
     }
 
     function modificarPaciente($paciente, $obrasSociales, $tiposDeDocumento){
-	    require_once($_SERVER['DOCUMENT_ROOT']."/view/FormularioModificarPaciente.php");
-	    $view = new ModificarPaciente();
-	    $view->show($paciente,$obrasSociales,$tiposDeDocumento,obtenerConfiguracion());
+	    echo TwigView::getTwig()->render('administracionAgregarPaciente.twig', array('sesion'=>$_SESSION, 'paciente' => $paciente, 'tiposDeDocumento' => $tiposDeDocumento, 'obrasSociales' => $obrasSociales, 'configuracion'=>obtenerConfiguracion()));
     } 
 
 	if(isset($_GET['action'])){
