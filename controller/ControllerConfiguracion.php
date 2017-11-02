@@ -17,7 +17,17 @@
 	} else {
 		session_regenerate_id();
 	}
-
+	function usuarioActual(){
+    	if(isset($_SESSION['idUsuario'])){
+    		$usuario = RepositorioUsuario::getInstance()->buscarUsuarioPorId($_SESSION['idUsuario']);
+    		return array(	'logueado'=>true, 
+    						'username'=>$usuario->getNombreUsuario(),
+    						'roles'=>RepositorioRol::getInstance()->buscarRolesDeUsuario($_SESSION['idUsuario']),
+    						'idUsuario'=>$_SESSION['idUsuario']
+    					);
+    	}
+    	else return false;
+    }
 	function obtenerConfiguracion(){
     	return RepositorioConfiguracion::getInstance()->datosParaLaVista();
     }
@@ -40,7 +50,7 @@
 
 
 	function mostrarFormularioConfiguracion($configuracionActual=null,$mensaje=null){
-        echo TwigView::getTwig()->render('administracionConfiguracion.twig', array('sesion'=>$_SESSION,'configuracionActual'=> $configuracionActual,'mensaje'=>$mensaje, 'configuracion'=>obtenerConfiguracion()));
+        echo TwigView::getTwig()->render('administracionConfiguracion.twig', array('usuarioActual'=>usuarioActual(),'configuracionActual'=> $configuracionActual,'mensaje'=>$mensaje, 'configuracion'=>obtenerConfiguracion()));
     }
     function validarCampos(){
     	$titulo = isset($_POST['titulo']) && trim($_POST['titulo']) !='';
