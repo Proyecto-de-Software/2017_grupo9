@@ -5,6 +5,7 @@
   require_once("ClaseObraSocial.php");
   require_once("ClaseTipoDocumento.php");
 
+
 	class RepositorioPaciente extends PDORepository{
       private static $instance;
 
@@ -109,11 +110,15 @@
         $conexion = $this->getConnection();
         $query = $conexion->prepare("SELECT * FROM paciente");
         $query->execute();
-        $pacientes = $query->fetchAll();
-        if(sizeof($pacientes) > 0){
+        $resultado = $query->fetchAll();
+        $pacientes = [];
+        if(sizeof($resultado) > 0){
+          foreach($resultado as $paciente){
+            array_push($pacientes, $this->buscarPacientePorId($paciente['id']));
+          }
           return $pacientes;
+        //return false;
         }
-        return false;
       }
 
       public function devolverObrasSociales(){
@@ -155,6 +160,41 @@
         }
         return false;
       }
+
+      function busquedaNomYAp($nombre,$apellido){
+        $conexion = $this->getConnection();
+        $query = $conexion->prepare("SELECT * FROM paciente WHERE nombre=:nombre and apellido=:apellido");
+        $query->bindParam(':nombre', $nombre);
+        $query->bindParam(':apellido', $apellido);
+        $query->execute();
+        $resultado = $query->fetchAll();
+        $pacientes = [];
+        if(sizeof($resultado) > 0){
+          foreach($resultado as $paciente){
+            array_push($pacientes, $this->buscarPacientePorId($paciente['id']));
+          }
+          return $pacientes;
+        }
+        return false;
+      }
+
+      function busquedaDocumento($idTipoDoc,$numeroDoc){
+        $conexion = $this->getConnection();
+        $query = $conexion->prepare("SELECT * FROM paciente WHERE tipo_doc_id=:idTipoDoc and numero_doc=:numeroDoc");
+        $query->bindParam(':idTipoDoc', $idTipoDoc);
+        $query->bindParam(':numeroDoc', $numeroDoc);
+        $query->execute();
+        $resultado = $query->fetchAll();
+        $pacientes = [];
+        if(sizeof($resultado) > 0){
+          foreach($resultado as $paciente){
+            array_push($pacientes, $this->buscarPacientePorId($paciente['id']));
+          }
+          return $pacientes;
+        }
+        return false;
+      }
+
   		//CRUD
   		//buscar paciente por ID
       //devolverPacientes

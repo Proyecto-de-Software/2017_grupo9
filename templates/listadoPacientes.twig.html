@@ -2,31 +2,30 @@
 	<h2> Pacientes </h2><br>
 	<div class="mb-4 mt-4">
 			<h3 >Búsqueda</h3> 
-			<form  id="form" class="form-inline my-2 my-lg-0 ml-auto mr-5 d-flex justify-content-start" action="/controller/ControllerPaciente.php?action=busquedaPaciente" method="POST">
-				<input class="form-control mt-3" type="text" placeholder="Buscar" aria-label="busquedaApellidoNombre" name="busquedaApellidoNombre" id="busquedaApellidoNombre">
-				<button class="btn btn-outline-success btn-search  my-2 my-sm-0" type="submit">Buscar</button>
+			<form  id="form" class="form-inline my-2 my-lg-0 ml-auto mr-5 d-flex justify-content-start" action="/controller/ControllerPaciente.php?action=busquedaNomYAp" method="POST">
+				<div class="form-group ">
+					<label for="busquedaNombre" hidden>Nombre</label>
+					<input class="form-control mt-3 mr-3" type="text" aria-label="busquedaNombre" name="busquedaNombre" id="busquedaNombre" placeholder="Nombre">
+					<label for="busquedaApellido" hidden>Apellido</label>
+					<input class="form-control mt-3 mr-3" type="text" aria-label="busquedaApellido" name="busquedaApellido" id="busquedaApellido" placeholder="Apellido">
+				<button class="btn btn-success btn-search mt-3 mb-0 text-right" role="button" type="submit">Buscar</button>
+				</div>
 		    </form>
-		    <form  id="form" class="form-inline my-2 my-lg-0 ml-auto mr-5 d-flex justify-content-start" action="/controller/ControllerPaciente.php?action=busquedaPaciente" method="POST">
-				<select class="form-control mt-3" id="busquedaDni" name="busquedaDni" onchange="myFunction()">
-					<option value="dni">DNI</option>
-					<option value="pasaporte">PASAPORTE</option>
-					<option value="">PARTIDA DE NACIMIENTO</option>
-					<option value="">RUC</option>
-					<option value="">CARNET EXTRANJERO</option>
+		    <form  id="form" class="form-inline my-2 my-lg-0 ml-auto mr-5 d-flex justify-content-start" action="/controller/ControllerPaciente.php?action=busquedaDocumento" method="POST">
+				<select class="form-control mt-3 mr-3" id="busquedaTipoDoc" name="busquedaTipoDoc" onchange="myFunction()">
+					<option value="2">DNI</option>
+					<option value="5">PASAPORTE</option>
+					<option value="5">PARTIDA DE NACIMIENTO</option>
+					<option value="6">RUC</option>
+					<option value="7">CARNET EXTRANJERO</option>
 				</select>
 				<div id="demo"></div>
-				<input class="form-control mt-3" type="text" placeholder="Buscar" aria-label="busquedaDni" name="busquedaDni" id="busquedaDni">
-				<button class="btn btn-outline-success btn-search  my-2 my-sm-0" type="submit">Buscar</button>
+				<label for="busquedaNumeroDoc" hidden> Número de documento</label>
+				<input class="form-control mt-3 mr-3" type="number" placeholder="Número de documento" aria-label="busquedaNumeroDoc" name="busquedaNumeroDoc" id="busquedaNumeroDoc">
+				<button class="btn btn-success btn-search mt-3 mb-0 text-right" role="button" type="submit">Buscar</button>
 			</form>
 		 </div>
 		 <div id="demo"></div>
-		 <script>
-
-			function myFunction() {
-		    	var x = document.getElementById("busquedaDni").value;
-		    	document.getElementById("demo").innerHTML = '<input class="form-control mr-sm-2 " type="text" placeholder="Buscar" aria-label="busquedaDni" name="busquedaDni" id="busquedaDni">';
-			}	
-		</script>
 		<table class="table table-hover">
 		  	<thead>
 			    <tr>
@@ -53,7 +52,7 @@
 			    		{{elemento.apellido}}
 			    	</td>
 			    	<td>
-			    		{{elemento.numero_doc}}
+			    		{{elemento.numeroDoc}}
 			    	</td>
 			    	{% if 'pediatra' in usuarioActual.roles or 'recepcionista' in usuarioActual.roles %}
 				    	<td>

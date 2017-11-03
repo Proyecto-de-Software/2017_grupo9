@@ -138,6 +138,20 @@
 	        		header("Location: /../");
     			}
 		        break;
+		     case 'busquedaNomYAp':
+		     	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_index')){
+		     		listarPacientes(RepositorioPaciente::getInstance()->busquedaNomYAp($_POST['busquedaNombre'],$_POST['busquedaApellido']));
+		     	} else {
+	        		header("Location: /../");
+    			}
+    			break;
+			case 'busquedaDocumento':
+		     	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_index')){
+		     		listarPacientes(RepositorioPaciente::getInstance()->busquedaDocumento($_POST['busquedaTipoDoc'],$_POST['busquedaNumeroDoc']));
+		     	} else {
+	        		header("Location: /../");
+    			}
+    			break;
 		}
 	}	
 
