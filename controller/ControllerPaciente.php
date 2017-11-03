@@ -48,20 +48,46 @@
 	}
 
 	function listarPacientes($pacientes){
-	    echo TwigView::getTwig()->render('administracionPacientes.twig', array('usuarioActual' => usuarioActual(),'lista'=>$pacientes,'configuracion'=>obtenerConfiguracion()));
+	    echo TwigView::getTwig()->render('administracionPacientes.twig', array('usuarioActual' => usuarioActual(),'lista'=>$pacientes,'configuracion'=>obtenerConfiguracion(), 'paginado' => datosDePaginado()));
    	}
 
     function mostrarPaciente($paciente,$obraSocial,$tipoDeDocumento){
 	    echo TwigView::getTwig()->render('administracionMostrarPaciente.twig', array('usuarioActual' => usuarioActual(), 'paciente' => $paciente, 'tipoDeDocumento' => $tipoDeDocumento, 'obraSocial' => $obraSocial, 'configuracion'=>obtenerConfiguracion()));
     }
 
-    function agregarPaciente($obrasSociales,$tiposDeDocumento){
+    function agregarPaciente($obrasSociales,$tiposDeDocumento){ //paranetro validacion = null
 	    echo TwigView::getTwig()->render('administracionAgregarPaciente.twig', array('usuarioActual' => usuarioActual(), 'tiposDeDocumento' => $tiposDeDocumento, 'obrasSociales' => $obrasSociales, 'configuracion'=>obtenerConfiguracion()));
     }
 
     function modificarPaciente($paciente, $obrasSociales, $tiposDeDocumento){
 	    echo TwigView::getTwig()->render('administracionModificarPaciente.twig', array('usuarioActual' => usuarioActual(), 'paciente' => $paciente, 'tiposDeDocumento' => $tiposDeDocumento, 'obrasSociales' => $obrasSociales, 'configuracion'=>obtenerConfiguracion()));
     } 
+
+    function datosDePaginado(){
+
+    	$cantidadPacientes = (int)RepositorioPaciente::getInstance()->cantidadDePacientes();
+    	$cantidadPorPagina = (int)RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion()->getCantElem();
+    	$cantidadDePaginas = ceil($cantidadPacientes/$cantidadPorPagina);
+    	$actual = 1;
+    	if(isset($_GET['page'])){
+    		$actual = $_GET['page'];
+    	}
+    	if($actual <= 1){
+    		$limit = 0;
+    	}
+    	else{
+    		$limit = $cantidadPorPagina * ($actual - 1);
+    	}
+    	
+    	$retorno = array(
+    		'cantidadPorPagina' => $cantidadPorPagina,
+    		'cantPaginas' =>  $cantidadDePaginas,
+    		'actual' => $actual,
+    		'limit' => $limit
+    			);
+
+    	return $retorno;
+    }
 
 	if(isset($_GET['action'])){
 		switch ($_GET['action']) {
@@ -76,6 +102,9 @@
 		       	break;
 		    case 'agregarPaciente':
 		    	if((RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_new')) && (isset($_POST['token']) && $_POST['token'] == $_SESSION['token'])) {
+		    		//paciente = crearPaciente()
+		    		$validacion = //funcion que retorna si es valido o no desde el modelo pacienteValido(paciente)
+		    		//if validacion['ok']
 		    		$paciente = crearPaciente();
 
         			if(RepositorioPaciente::getInstance()->agregarPaciente($paciente)){
@@ -115,7 +144,8 @@
 		   		if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_destroy')){
 		        	if(RepositorioPaciente::getInstance()->eliminarPaciente($_GET['id'])){
 		        		header("location: /../controller/ControllerPaciente.php/?action=listarPacientes");
-		        		listarPacientes(RepositorioPaciente::getInstance()->devolverPacientes());
+						$paginado = datosDePaginado();
+		        		listarPacientes(RepositorioPaciente::getInstance()->devolverPacientes($paginado['limit'],$paginado['cantidadPorPagina']));
 		        	}
 		        } else {
 	        		header("Location: /../");
@@ -133,21 +163,24 @@
 		        break;
 		    case 'listarPacientes':
 		    	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_index')){
-		        	listarPacientes(RepositorioPaciente::getInstance()->devolverPacientes());
+					$paginado = datosDePaginado();
+		        	listarPacientes(RepositorioPaciente::getInstance()->devolverPacientes($paginado['limit'],$paginado['cantidadPorPagina']));
 		        } else {
 	        		header("Location: /../");
     			}
 		        break;
 		     case 'busquedaNomYAp':
 		     	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_index')){
-		     		listarPacientes(RepositorioPaciente::getInstance()->busquedaNomYAp($_POST['busquedaNombre'],$_POST['busquedaApellido']));
+					$paginado = datosDePaginado();
+		     		listarPacientes(RepositorioPaciente::getInstance()->devolverPacientes($paginado['limit'],$paginado['cantidadPorPagina'],$_POST['busquedaNombre'],$_POST['busquedaApellido']));
 		     	} else {
 	        		header("Location: /../");
     			}
     			break;
 			case 'busquedaDocumento':
 		     	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_index')){
-		     		listarPacientes(RepositorioPaciente::getInstance()->busquedaDocumento($_POST['busquedaTipoDoc'],$_POST['busquedaNumeroDoc']));
+					$paginado = datosDePaginado();
+		     		listarPacientes(RepositorioPaciente::getInstance()->devolverPacientes($paginado['limit'],$paginado['cantidadPorPagina'],$_POST['busquedaTipoDoc'],$_POST['busquedaNumeroDoc']));
 		     	} else {
 	        		header("Location: /../");
     			}
