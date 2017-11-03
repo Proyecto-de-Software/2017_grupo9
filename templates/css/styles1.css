@@ -48,8 +48,12 @@
     line-height: 60px;
     background-color: rgba(60,179,113,0.8);
 }
-.page-link-own {
+.page-link-own-active {
 	background-color: #3CB371 !important;
+    border-color: #3CB371 !important;
+}
+.page-link-own{
+		color: #3CB371 !important;
 }
 }
 /*#EAFAF1 */

@@ -70,7 +70,7 @@
     }
 
 	function listarUsuarios($usuarios,$filtrado=null){
-		echo TwigView::getTwig()->render('administracionUsuarios.twig', array('usuarioActual'=>usuarioActual(),'lista'=>$usuarios,'filtrado'=>$filtrado,'configuracion'=>obtenerConfiguracion()));
+		echo TwigView::getTwig()->render('administracionUsuarios.twig', array('usuarioActual'=>usuarioActual(),'lista'=>$usuarios,'filtrado'=>$filtrado,'configuracion'=>obtenerConfiguracion(), 'paginado' => datosDePaginado()));
     }
     function agregarUsuario($mensaje='',$roles){
 		echo TwigView::getTwig()->render('administracionAgregarUsuario.twig', array('usuarioActual'=>usuarioActual(),'mensaje'=>$mensaje,'roles'=>$roles,'configuracion'=>obtenerConfiguracion()));
@@ -112,6 +112,32 @@
     	return ($nombre && $apellido && $usuario && $email && $passwords && $roles);
     	
     }
+    function datosDePaginado(){
+
+    	$cantidadUsuarios = (int)RepositorioUsuario::getInstance()->cantidadDeUsuarios();
+    	$cantidadPorPagina = (int)RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion()->getCantElem();
+    	$cantidadDePaginas = ceil($cantidadUsuarios/$cantidadPorPagina);
+    	$actual = 1;
+    	if(isset($_GET['page'])){
+    		$actual = $_GET['page'];
+    	}
+    	if($actual <= 1){
+    		$limit = 0;
+    	}
+    	else{
+    		$limit = $cantidadPorPagina * ($actual - 1);
+    	}
+    	
+    	$retorno = array(
+    		'cantidadPorPagina' => $cantidadPorPagina,
+    		'cantPaginas' =>  $cantidadDePaginas,
+    		'actual' => $actual,
+    		'limit' => $limit
+    			);
+
+    	return $retorno;
+    }
+
 
 	if(isset($_GET['action'])){	
 		switch($_GET['action']){
@@ -229,14 +255,8 @@
 				break;
 			case 'listarUsuarios':
 				if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'usuario_index')){
-					if(isset($_GET['page'])){
-						$page = $_GET['page'];
-					}
-					else{
-						$page = 0;
-					}
-					$cantidadPorPagina = (int)RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion()->getCantElem();
-					listarUsuarios(RepositorioUsuario::getInstance()->devolverUsuarios($page,$cantidadPorPagina));
+					$paginado = datosDePaginado();
+					listarUsuarios(RepositorioUsuario::getInstance()->devolverUsuarios($paginado['limit'],$paginado['cantidadPorPagina']));
 
 				} else {
 	        		header("Location: /../");
