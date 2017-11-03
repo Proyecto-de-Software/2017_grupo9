@@ -70,8 +70,12 @@
     	else return false;
     }
 
-	function listarUsuarios($usuarios,$filtrado=null){
-		echo TwigView::getTwig()->render('administracionUsuarios.twig', array('usuarioActual'=>usuarioActual(),'lista'=>$usuarios,'filtrado'=>$filtrado,'configuracion'=>obtenerConfiguracion(), 'paginado' => datosDePaginado()));
+	function listarUsuarios($usuarios,$filtrado=null,$filtradoPaginado=false){
+		$paginado = datosDePaginado();
+		if($filtradoPaginado){
+			$paginado['cantPaginas'] = ceil(sizeof(RepositorioUsuario::getInstance()->devolverUsuarios(0,999,$filtrado))/$paginado['cantidadPorPagina']);
+		}
+		echo TwigView::getTwig()->render('administracionUsuarios.twig', array('usuarioActual'=>usuarioActual(),'lista'=>$usuarios,'filtrado'=>$filtrado,'configuracion'=>obtenerConfiguracion(), 'paginado' =>$paginado,'filtradoPaginado'=>$filtradoPaginado));
     }
     function agregarUsuario($validacion=[],$roles){
 		echo TwigView::getTwig()->render('administracionAgregarUsuario.twig', array('usuarioActual'=>usuarioActual(),'validacion'=>$validacion,'roles'=>$roles,'configuracion'=>obtenerConfiguracion()));
@@ -247,13 +251,7 @@
     			}
 				break;
 			case 'filtradoUsuario':
-				if(isset($_GET['page'])){
-					$page = $_GET['page'];
-				}
-				else{
-					$page = 0;
-				}
-				$cantidadPorPagina = (int)RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion()->getCantElem();
+				$paginado = datosDePaginado();
 				$listado = [];
 				$activoChecked = isset($_POST['activo']);
 				$bloqueadoChecked = isset($_POST['bloqueado']);
@@ -264,7 +262,8 @@
 					$nombreUsuario = $_POST['buscar'];			
 					$filtrado['campoBuscar'] =$nombreUsuario;
 				}
-				listarUsuarios(RepositorioUsuario::getInstance()->devolverUsuarios($page,$cantidadPorPagina,$filtrado),$filtrado);
+
+				listarUsuarios(RepositorioUsuario::getInstance()->devolverUsuarios($paginado['limit'],$paginado['cantidadPorPagina'],$filtrado),$filtrado,true);
 			
 				break;
 			case 'cerrarSesion':

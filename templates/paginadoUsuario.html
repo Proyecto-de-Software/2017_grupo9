@@ -1,11 +1,15 @@
-
+{% if filtradoPaginado %}
+	{% set action = 'filtradoUsuario' %}
+{% else %}
+	{% set action = 'listarUsuarios' %}
+{% endif %}
 <div class="d-flex justify-content-center">
 	<nav aria-label="...">
 	  <ul class="pagination ">
 	  	{% if paginado.actual > 1 %}
 	  		{% set anterior = paginado.actual-1 %}
 		    <li class="page-item ">
-		      <a class="page-link page-link-own" href="/../controller/ControllerUsuario.php?action=listarUsuarios&page={{anterior}}" >Anterior</a>
+		      <a class="page-link page-link-own" href="/../controller/ControllerUsuario.php?action={{action}}&page={{anterior}}" >Anterior</a>
 		    </li>
 		{% else %}
 			<li class="page-item disabled">
@@ -16,18 +20,18 @@
 		{% for pagina in 1..paginado.cantPaginas %}
 			{% if paginado.actual == pagina %}
 		    	<li class="page-item active">
-		    		<a class="page-link page-link-own-active " href="/../controller/ControllerUsuario.php?action=listarUsuarios&page={{pagina}}">{{pagina}}</a>
+		    		<a class="page-link page-link-own-active " href="/../controller/ControllerUsuario.php?action={{action}}&page={{pagina}}">{{pagina}}</a>
 		    	</li>
 		    {% else %}
 		    	<li class="page-item">
-		    		<a class="page-link page-link-own " href="/../controller/ControllerUsuario.php?action=listarUsuarios&page={{pagina}}">{{pagina}}</a>
+		    		<a class="page-link page-link-own " href="/../controller/ControllerUsuario.php?action={{action}}&page={{pagina}}">{{pagina}}</a>
 		    	</li>
 		    {% endif %}
 		{% endfor %}
 		{% if paginado.actual < paginado.cantPaginas %}
 			{% set siguiente = paginado.actual +1 %}
 		    <li class="page-item">
-		      <a class="page-link page-link-own" href="/../controller/ControllerUsuario.php?action=listarUsuarios&page={{siguiente}}">Siguiente</a>
+		      <a class="page-link page-link-own" href="/../controller/ControllerUsuario.php?action={{action}}&page={{siguiente}}">Siguiente</a>
 		    </li>
 		{% else %}
 			<li class="page-item disabled">
