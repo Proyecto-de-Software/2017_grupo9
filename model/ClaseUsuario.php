@@ -9,7 +9,8 @@
 		private $creadoEn;
 		private $nombre;
 		private $apellido;
-		public $roles; // se guarda un array con id y nombre de rol. Ej: $roles[0] tiene ['id']['nombre']
+		private $roles; // se guarda un array con id y nombre de rol. Ej: $roles[0] tiene ['id']['nombre']
+        private $password2;
 
 		public function __construct($nombreUsuario,$email,$password,$activo, $creadoEn, $actualizadoEn, $nombre,$apellido, $roles) {
         	$this->nombreUsuario = $nombreUsuario;
@@ -64,8 +65,14 @@
         public function getPassword(){
             return $this->password;
         }
-        public function setPassword($password){
+        public function setPassword($password2){
             $this->password = $password;
+        }
+        public function getPassword2(){
+            return $this->password2;
+        }
+        public function setPassword2($password2){
+            $this->password2 = $password2;
         }
     	public function getEmail(){
     		return $this->email;

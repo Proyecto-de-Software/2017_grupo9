@@ -52,7 +52,8 @@
 		}
 		$user =  new Usuario($_POST['usuario'], $_POST['email'], $_POST['password'], true, $creadoEn, $actualizadoEn, $_POST['nombre'], $_POST['apellido'], $rolesCompletos);
 		if($modif) $user->setId($_POST['id']);
-		var_dump($user);
+		if(isset($_POST['password2'])) $user->setPassword2($_POST['password2']);
+	
 		return $user;
 		
 	}
@@ -72,12 +73,12 @@
 	function listarUsuarios($usuarios,$filtrado=null){
 		echo TwigView::getTwig()->render('administracionUsuarios.twig', array('usuarioActual'=>usuarioActual(),'lista'=>$usuarios,'filtrado'=>$filtrado,'configuracion'=>obtenerConfiguracion(), 'paginado' => datosDePaginado()));
     }
-    function agregarUsuario($mensaje='',$roles){
-		echo TwigView::getTwig()->render('administracionAgregarUsuario.twig', array('usuarioActual'=>usuarioActual(),'mensaje'=>$mensaje,'roles'=>$roles,'configuracion'=>obtenerConfiguracion()));
+    function agregarUsuario($validacion=[],$roles){
+		echo TwigView::getTwig()->render('administracionAgregarUsuario.twig', array('usuarioActual'=>usuarioActual(),'validacion'=>$validacion,'roles'=>$roles,'configuracion'=>obtenerConfiguracion()));
 		
     }
-    function modificacionDeUsuario($usuario,$mensaje='',$roles){
-		echo TwigView::getTwig()->render('administracionModificarUsuario.twig', array('usuarioActual'=>usuarioActual(),'usuario'=>$usuario, 'mensaje'=>$mensaje,'roles'=>$roles,'configuracion'=>obtenerConfiguracion()));
+    function modificacionDeUsuario($usuario,$validacion=[],$roles){
+		echo TwigView::getTwig()->render('administracionModificarUsuario.twig', array('usuarioActual'=>usuarioActual(),'usuario'=>$usuario, 'validacion'=>$validacion,'roles'=>$roles,'configuracion'=>obtenerConfiguracion()));
     }
     function loginUsuario($msj=''){
 		echo TwigView::getTwig()->render('loginUsuario.twig', array('usuarioActual'=>usuarioActual(),'mensaje'=>$msj, 'configuracion'=>obtenerConfiguracion()));
@@ -102,16 +103,7 @@
     function mostrarUsuario($usuario){
 		 echo TwigView::getTwig()->render('administracionMostrarUsuario.twig', array('usuarioActual'=>usuarioActual(),'usuario'=>$usuario, 'configuracion'=>obtenerConfiguracion()));
     }
-    function validarCampos(){
-    	$nombre = isset($_POST['nombre']) && trim($_POST['nombre']) !='';
-    	$apellido = isset($_POST['apellido']) && trim($_POST['apellido']) !='';
-    	$usuario = isset($_POST['usuario']) && trim($_POST['usuario']) !='';
-    	$email = isset($_POST['email']) && filter_var($_POST['email'],FILTER_VALIDATE_EMAIL);
-    	$passwords = isset($_POST['password']) && isset($_POST['password2']) && ($_POST['password'] == $_POST['password2']);
-    	$roles = isset($_POST['rol']);
-    	return ($nombre && $apellido && $usuario && $email && $passwords && $roles);
-    	
-    }
+
     function datosDePaginado(){
 
     	$cantidadUsuarios = (int)RepositorioUsuario::getInstance()->cantidadDeUsuarios();
@@ -143,50 +135,22 @@
 		switch($_GET['action']){
 			case 'agregarUsuario':
 				if((RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'usuario_new')) && (isset($_POST['token']) && $_POST['token'] == $_SESSION['token'])) {
-
-					if(validarCampos()){
-						if(!RepositorioUsuario::getInstance()->existeNombreUsuario($_POST['usuario'])){
-							if(!RepositorioUsuario::getInstance()->existeEmail($_POST['email'])){
-								RepositorioUsuario::getInstance()->agregarUsuario(crearUsuario(false));
-								header("Location: /../controller/ControllerUsuario.php?action=listarUsuarios");
-							}
-							else{
-								header("Location: /../controller/ControllerUsuario.php?action=agregarUsuarioEmailNoValido");
-							}
-						}
-						else{
-							header("Location: /../controller/ControllerUsuario.php?action=agregarUsuarioNickNoValidado");	
-						}
-					} 
+					$u = crearUsuario();
+					$validacion = RepositorioUsuario::getInstance()->usuarioValido();
+					if($validacion['ok']){
+						RepositorioUsuario::getInstance()->agregarUsuario($u);
+						header("Location: /../controller/ControllerUsuario.php?action=listarUsuarios");
+					}
 					else{
-						header("Location: /../controller/ControllerUsuario.php?action=agregarUsuarioNoValidado");
-							
+						agregarUsuario($validacion,RepositorioRol::getInstance()->devolverRoles());
 					}
 				}
-				else{
+				else{//QUE ES ESTO
 					echo "Post:     ".$_POST['token'];
 					echo "\nSesion: ".$_SESSION['token'];
 					//header("Location: /../");
 				}
 				break;
-			case 'agregarUsuarioNoValidado':
-				if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'usuario_new')){
-					agregarUsuario("Debe llenar todos los campos. Tenga en cuenta: *Debe elegir al menos un rol. *Las contraseñas deben coincidir. *	El email debe tener un formato valido.",RepositorioRol::getInstance()->devolverRoles());
-				}
-				else header("Location: /../");
-				break;
-			case 'agregarUsuarioEmailNoValido':
-				if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'usuario_new')){
-					agregarUsuario("El email que ha ingresado ya esta registrado, elija otro.",RepositorioRol::getInstance()->devolverRoles());
-				}
-				else header("Location: /../");
-				break;
-			case 'agregarUsuarioNickNoValidado':
-				if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'usuario_new')){
-				 	agregarUsuario("El nombre de usuario que ha ingresado ya esta registrado, elija otro.",RepositorioRol::getInstance()->devolverRoles());
-			 	}
-			 	else header("Location: /../");
-			 	break;			 
 			case "agregarUsuarioView":
 				if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'],'usuario_new')){
 					agregarUsuario("", RepositorioRol::getInstance()->devolverRoles());
@@ -196,19 +160,20 @@
 				break;
 			case 'modificarUsuario':
 				if((RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'usuario_update')) && (isset($_POST['token']) && $_POST['token'] == $_SESSION['token'])) {
-
-					if(validarCampos()){
-						$resultado = RepositorioUsuario::getInstance()->modificarUsuario(crearUsuario(true));
+					$u = crearUsuario(true);
+					$validacion = $validacion = RepositorioUsuario::getInstance()->usuarioValido($u,true);
+					if($validacion['ok']){
+						$resultado = RepositorioUsuario::getInstance()->modificarUsuario($u);
 						if($resultado){
 							$id = $resultado->getId();
 							header("Location: /../controller/ControllerUsuario.php?action=mostrarUsuario&id=$id");
-						} else{
-							modificacionDeUsuario(crearUsuario(true),"No se pudieron modificar los datos",RepositorioRol::getInstance()->devolverRoles());
 						}
-					} else{
-						modificacionDeUsuario(crearUsuario(true),"Debe llenar todos los campos. Tenga en cuenta: *Debe elegir al menos un rol. *Las contraseñas deben coincidir. *	El email debe tener un formato valido.",RepositorioRol::getInstance()->devolverRoles());
 					}
-				} else {
+					else{
+							modificacionDeUsuario($u,$validacion,RepositorioRol::getInstance()->devolverRoles());
+						}
+				} 
+				else {
 					header("Location: /../");
 				}
 				break;

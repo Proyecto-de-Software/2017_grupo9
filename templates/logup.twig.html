@@ -1,6 +1,10 @@
 <section class="row mx-auto mt-5 ">
 	<div class="login col-md-5  mx-auto mt-4 mb-4 pb-5 pt-5 pr-5 pl-5 border rounded ">
-		{% if mensaje is defined %}<p class="text-danger">{{mensaje}}</p>{% endif %}
+		{% if not validacion.ok  %}
+			{% for mensaje in validacion[1:] %}
+				<p class="alert alert-danger">{{mensaje}}</p>
+			{% endfor %}
+		{% endif %}
 		<p class="text-danger" id="mensajeDeValidacion"></p>
 		<h3 class="card-header text-center myHeader">Agregar usuario </h3>
 		<form class="text-center" role="form" method="POST" onsubmit="return validarRoles()" action="/controller/ControllerUsuario.php?action=agregarUsuario">
