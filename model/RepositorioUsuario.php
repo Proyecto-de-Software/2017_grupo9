@@ -217,7 +217,7 @@
         else return false;
       }
       public function usuarioActivo($email){
-         $conexion = $this->getConnection();
+        $conexion = $this->getConnection();
         $query = $conexion->prepare("SELECT * FROM usuario WHERE email=:email");  
         $query->bindParam(':email',$email);
         $query->execute();
@@ -254,5 +254,12 @@
         }
         $retorno['ok'] = $nombre && $apellido && $usuario && $email && $password && $password2 && $roles;
         return $retorno;
+      }
+
+      public function cantidadDeUsuarios(){
+        $conexion = $this->getConnection();
+        $query = $conexion->prepare("SELECT id FROM usuario"); 
+        $query->execute();
+        return count($query->fetchAll());
       }
 	}
