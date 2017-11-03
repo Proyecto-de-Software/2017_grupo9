@@ -33,11 +33,12 @@
 			      <th>Nombre</th>
 			      <th>Apellido</th>
 			      <th>DNI</th>
-			      {% if sesion.pediatra == 1 or sesion.recepcionista == 1 %}
+			      {% if 'pediatra' in usuarioActual.roles or 'recepcionista' in usuarioActual.roles %}
 			      	<th></th>
 			      	<th></th>
 			      {% endif %}
-			      {% if sesion.administrador == 1 %}
+			      {% if 'administrador' in usuarioActual.roles %}
+			     	<th></th>
 			     	<th></th>
 			     {% endif %}
 			    </tr>
@@ -54,7 +55,7 @@
 			    	<td>
 			    		{{elemento.numero_doc}}
 			    	</td>
-			    	{% if sesion.pediatra == 1 or sesion.recepcionista == 1 %}
+			    	{% if 'pediatra' in usuarioActual.roles or 'recepcionista' in usuarioActual.roles %}
 				    	<td>
 				    		<a href="/controller/ControllerPaciente.php?action=modificacionDePaciente&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info">Editar</a>
 				    	</td>
@@ -62,9 +63,13 @@
 				    		<a href="/controller/ControllerPaciente.php?action=mostrarPaciente&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info">Mas información</a>
 				    	</td>
 				    {% endif %}
-			    	{% if sesion.administrador == 1 %}
+			    	{% if 'administrador' in usuarioActual.roles %}
 				    	<td>
 				    		<a onclick="return confirm('Seguro?')"  href="/controller/ControllerPaciente.php?action=eliminarPaciente&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info">Eliminar </a>
+				    	</td>
+				    	<td>
+				    		{{ elemento.id }}
+				    		<a onclick="return confirm('Seguro?')"  href="/controller/ControllerDatosDemograficos.php?action=eliminarDatosDemograficos&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info">Eliminar datos demográficos</a>
 				    	</td>
 				    {% endif %}
 			    </tr>

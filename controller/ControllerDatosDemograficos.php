@@ -38,21 +38,34 @@
       header("Location: /../");
     }
 
+    function usuarioActual(){
+    	if(isset($_SESSION['idUsuario'])){
+    		$usuario = RepositorioUsuario::getInstance()->buscarUsuarioPorId($_SESSION['idUsuario']);
+    		return array(	'logueado'=>true, 
+    						'username'=>$usuario->getNombreUsuario(),
+    						'roles'=>RepositorioRol::getInstance()->buscarRolesDeUsuario($_SESSION['idUsuario']),
+    						'idUsuario'=>$_SESSION['idUsuario'],
+    						'token'=>$_SESSION['token']
+    					);
+    	}
+    	else return false;
+    }
+
 	function crearDatosDemograficos(){
 		$datosDemograficos = new DatosDemograficos($_POST['heladera'], $_POST['electricidad'], $_POST['mascota'], $_POST['tipoVivienda'], $_POST['tipoCalefaccion'], $_POST['tipoAgua'], $_POST['idPaciente']);
 		return $datosDemograficos;
 	}
 
 	function mostrarDatosDemograficos($datosDemograficos,$tipoDeVivienda=null,$tipoDeCalefaccion=null,$tipoDeAgua=null){
-		echo TwigView::getTwig()->render('administracionMostrarDatosDemograficos.twig', array('sesion' => $_SESSION, 'idPaciente' => $_GET['id'], 'datosDemograficos' => $datosDemograficos, 'tipoDeVivienda' => $tipoDeVivienda, 'tipoDeCalefaccion' => $tipoDeCalefaccion, 'tipoDeAgua' => $tipoDeAgua, 'configuracion'=>obtenerConfiguracion()));
+		echo TwigView::getTwig()->render('administracionMostrarDatosDemograficos.twig', array('usuarioActual' => usuarioActual(), 'idPaciente' => $_GET['id'], 'datosDemograficos' => $datosDemograficos, 'tipoDeVivienda' => $tipoDeVivienda, 'tipoDeCalefaccion' => $tipoDeCalefaccion, 'tipoDeAgua' => $tipoDeAgua, 'configuracion'=>obtenerConfiguracion()));
 	}
 
 	function agregarDatosDemograficos($tiposDeVivienda,$tiposDeCalefaccion,$tiposDeAgua){
-		echo TwigView::getTwig()->render('administracionAgregarDatosDemograficos.twig', array('sesion' => $_SESSION, 'idPaciente' => $_GET['id'], 'tiposDeVivienda' => $tiposDeVivienda, 'tiposDeCalefaccion' => $tiposDeCalefaccion, 'tiposDeAgua' => $tiposDeAgua, 'configuracion'=>obtenerConfiguracion()));
+		echo TwigView::getTwig()->render('administracionAgregarDatosDemograficos.twig', array('usuarioActual' => usuarioActual(), 'idPaciente' => $_GET['id'], 'tiposDeVivienda' => $tiposDeVivienda, 'tiposDeCalefaccion' => $tiposDeCalefaccion, 'tiposDeAgua' => $tiposDeAgua, 'configuracion'=>obtenerConfiguracion()));
 	}
 
 	function modificarDatosDemograficos($datosDemograficos,$tiposDeVivienda,$tiposDeCalefaccion,$tiposDeAgua){
-		echo TwigView::getTwig()->render('administracionModificarDatosDemograficos.twig', array('sesion' => $_SESSION, 'datosDemograficos' => $datosDemograficos, 'tiposDeVivienda' => $tiposDeVivienda, 'tiposDeCalefaccion' => $tiposDeCalefaccion, 'tiposDeAgua' => $tiposDeAgua, 'configuracion' => obtenerConfiguracion()));
+		echo TwigView::getTwig()->render('administracionModificarDatosDemograficos.twig', array('usuarioActual' => usuarioActual(), 'datosDemograficos' => $datosDemograficos, 'tiposDeVivienda' => $tiposDeVivienda, 'tiposDeCalefaccion' => $tiposDeCalefaccion, 'tiposDeAgua' => $tiposDeAgua, 'configuracion' => obtenerConfiguracion()));
 	}
 
 
@@ -88,6 +101,7 @@
 	    		if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'datosdemograficos_show')){
 	    			
 	    			if($datosDemograficos = RepositorioDatosDemograficos::getInstance()->buscarDatosDemograficosPorIdPaciente($_GET['id'])){
+
 	    				$tipoDeVivienda = RepositorioDatosDemograficos::getInstance()->devolverTipoDeViviendaPorId($datosDemograficos->getTipoVivienda());
 	    				$tipoDeCalefaccion = RepositorioDatosDemograficos::getInstance()->devolverTipoDeCalefaccionPorId($datosDemograficos->getTipoCalefaccion());
 	    				$tipoDeAgua = RepositorioDatosDemograficos::getInstance()->devolverTipoDeAguaPorId($datosDemograficos->getTipoAgua());
@@ -136,5 +150,16 @@
 	    			header("Location: /../");
 	    		}
 	    		break;
+    		case 'eliminarDatosDemograficos':
+    			if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'datosdemograficos_destroy')){
+    				if($datosDemograficos = RepositorioDatosDemograficos::getInstance()->buscarDatosDemograficosPorIdPaciente($_GET['id'])){
+    					
+    					RepositorioDatosDemograficos::getInstance()->eliminarDatosDemograficos($datosDemograficos);
+		        	}
+		        	header("location: /../controller/ControllerPaciente.php/?action=listarPacientes");
+		        } else {
+	        		header("Location: /../");
+    			}
+    			break;
 	    	}
 		}

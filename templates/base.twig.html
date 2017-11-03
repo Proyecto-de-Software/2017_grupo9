@@ -31,9 +31,7 @@
 	 			{% block navegacion %}
 			  		<div class="collapse navbar-collapse float-right" id="navbarSupportedContent">	
 						{% block opcionesPaciente %}
-							{% if 'recepcionista' in usuarioActual.roles or 'pediatra' in usuarioActual.roles %}
-								{% include 'opcionesPaciente.twig.html' %}
-							{% endif %}
+							{% include 'opcionesPaciente.twig.html' %}
 						{% endblock %}
 						{% block opcionesAdmin %}
 							{% if 'administrador' in usuarioActual.roles %}

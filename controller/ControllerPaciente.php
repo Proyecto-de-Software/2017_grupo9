@@ -27,25 +27,40 @@
 	if(!$config['habilitado']){
 	    header("Location: /../");
 	}
+
+	function usuarioActual(){
+    	if(isset($_SESSION['idUsuario'])){
+    		$usuario = RepositorioUsuario::getInstance()->buscarUsuarioPorId($_SESSION['idUsuario']);
+    		return array(	'logueado'=>true, 
+    						'username'=>$usuario->getNombreUsuario(),
+    						'roles'=>RepositorioRol::getInstance()->buscarRolesDeUsuario($_SESSION['idUsuario']),
+    						'idUsuario'=>$_SESSION['idUsuario'],
+    						'token'=>$_SESSION['token']
+    					);
+    	}
+    	else return false;
+    }
+
+	
 	function crearPaciente(){
 		$paciente = new Paciente($_POST['apellido'], $_POST['nombre'], $_POST['domicilio'], $_POST['telefono'], $_POST['fechaNacimiento'], $_POST['genero'], $_POST['idObraSocial'], $_POST['idTipoDocumento'], $_POST['numeroDoc']);
 		return $paciente;
 	}
 
 	function listarPacientes($pacientes){
-	    echo TwigView::getTwig()->render('administracionPacientes.twig', array('sesion'=>$_SESSION,'lista'=>$pacientes,'configuracion'=>obtenerConfiguracion()));
+	    echo TwigView::getTwig()->render('administracionPacientes.twig', array('usuarioActual' => usuarioActual(),'lista'=>$pacientes,'configuracion'=>obtenerConfiguracion()));
    	}
 
     function mostrarPaciente($paciente,$obraSocial,$tipoDeDocumento){
-	    echo TwigView::getTwig()->render('administracionMostrarPaciente.twig', array('sesion'=>$_SESSION, 'paciente' => $paciente, 'tipoDeDocumento' => $tipoDeDocumento, 'obraSocial' => $obraSocial, 'configuracion'=>obtenerConfiguracion()));
+	    echo TwigView::getTwig()->render('administracionMostrarPaciente.twig', array('usuarioActual' => usuarioActual(), 'paciente' => $paciente, 'tipoDeDocumento' => $tipoDeDocumento, 'obraSocial' => $obraSocial, 'configuracion'=>obtenerConfiguracion()));
     }
 
     function agregarPaciente($obrasSociales,$tiposDeDocumento){
-	    echo TwigView::getTwig()->render('administracionAgregarPaciente.twig', array('sesion'=>$_SESSION, 'tiposDeDocumento' => $tiposDeDocumento, 'obrasSociales' => $obrasSociales, 'configuracion'=>obtenerConfiguracion()));
+	    echo TwigView::getTwig()->render('administracionAgregarPaciente.twig', array('usuarioActual' => usuarioActual(), 'tiposDeDocumento' => $tiposDeDocumento, 'obrasSociales' => $obrasSociales, 'configuracion'=>obtenerConfiguracion()));
     }
 
     function modificarPaciente($paciente, $obrasSociales, $tiposDeDocumento){
-	    echo TwigView::getTwig()->render('administracionAgregarPaciente.twig', array('sesion'=>$_SESSION, 'paciente' => $paciente, 'tiposDeDocumento' => $tiposDeDocumento, 'obrasSociales' => $obrasSociales, 'configuracion'=>obtenerConfiguracion()));
+	    echo TwigView::getTwig()->render('administracionAgregarPaciente.twig', array('usuarioActual' => usuarioActual(), 'paciente' => $paciente, 'tiposDeDocumento' => $tiposDeDocumento, 'obrasSociales' => $obrasSociales, 'configuracion'=>obtenerConfiguracion()));
     } 
 
 	if(isset($_GET['action'])){

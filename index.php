@@ -11,6 +11,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/PDORepository.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/model/ResourceRepository.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/model/Resource.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioUsuario.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioRol.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/model/ClaseUsuario.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioConfiguracion.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/model/ClaseConfiguracion.php');
@@ -28,6 +29,20 @@ function obtenerConfiguracion(){
     );
     return $datosConfigurados;
 }
+
+function usuarioActual(){
+	if(isset($_SESSION['idUsuario'])){
+		$usuario = RepositorioUsuario::getInstance()->buscarUsuarioPorId($_SESSION['idUsuario']);
+		return array(	'logueado'=>true, 
+						'username'=>$usuario->getNombreUsuario(),
+						'roles'=>RepositorioRol::getInstance()->buscarRolesDeUsuario($_SESSION['idUsuario']),
+						'idUsuario'=>$_SESSION['idUsuario'],
+						'token'=>$_SESSION['token']
+					);
+	}
+	else return false;
+}
+
 $config = obtenerConfiguracion();
 if(!$config['habilitado']){
 	echo TwigView::getTwig()->render('mantenimiento.twig', array('configuracion'=>obtenerConfiguracion()));
@@ -48,6 +63,6 @@ else{
 		$_SESSION['recepcionista']=0;
 		$_SESSION['pediatra']=0;
 	}
-	echo TwigView::getTwig()->render('base.twig.html', array('sesion'=>$_SESSION,'configuracion'=>obtenerConfiguracion()));
+	echo TwigView::getTwig()->render('base.twig.html', array('usuarioActual' => usuarioActual(),'configuracion'=>obtenerConfiguracion()));
 	
 }

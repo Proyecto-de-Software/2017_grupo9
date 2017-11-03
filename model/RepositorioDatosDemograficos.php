@@ -48,6 +48,14 @@
         	return $query->execute() == 1;
   		}
 
+      function eliminarDatosDemograficos($datosDemograficos){
+        $conexion = $this->getConnection();
+        $query = $conexion->prepare("DELETE FROM datos_demograficos WHERE id = :id");
+        $query->bindParam(':id', $datosDemograficos->getId()); 
+
+        return $query->execute() == 1;        
+        }
+
       function buscarDatosDemograficosPorId($id){
         $conexion = $this->getConnection();
         $query = $conexion->prepare("SELECT * FROM datos_demograficos WHERE id = :id");
