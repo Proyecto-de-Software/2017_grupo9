@@ -262,7 +262,7 @@
 					$nombreUsuario = $_POST['buscar'];			
 					$filtrado['campoBuscar'] =$nombreUsuario;
 				}
-
+				var_dump($_POST);
 				listarUsuarios(RepositorioUsuario::getInstance()->devolverUsuarios($paginado['limit'],$paginado['cantidadPorPagina'],$filtrado),$filtrado,true);
 			
 				break;
