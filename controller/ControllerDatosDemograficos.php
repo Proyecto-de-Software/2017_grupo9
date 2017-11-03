@@ -81,17 +81,21 @@
 	    	case 'agregarDatosDemograficos':
 	    		if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'datosdemograficos_new')){
 	    			$datosDemograficos = crearDatosDemograficos();
-
+	    			
         			if(RepositorioDatosDemograficos::getInstance()->agregarDatosDemograficos($datosDemograficos)){
 		    			$tipoDeVivienda = RepositorioDatosDemograficos::getInstance()->devolverTipoDeViviendaPorId($datosDemograficos->getTipoVivienda());
 		    			$tipoDeCalefaccion = RepositorioDatosDemograficos::getInstance()->devolverTipoDeCalefaccionPorId($datosDemograficos->getTipoCalefaccion());
 		    			$tipoDeAgua = RepositorioDatosDemograficos::getInstance()->devolverTipoDeAguaPorId($datosDemograficos->getTipoAgua());
-		       			mostrarDatosDemograficos($datosDemograficos,$tipoDeVivienda,$tipoDeCalefaccion,$tipoDeAgua);
+		    			$nuevosDatosDemograficos = RepositorioDatosDemograficos::getInstance()->buscarDatosDemograficosPorIdPaciente($datosDemograficos->getPaciente());
+		    			$id = $nuevosDatosDemograficos->getId();
+		    			header("location: /../controller/ControllerDatosDemograficos.php/?action=mostrarDatosDemograficos&id=$id");
+		       			//mostrarDatosDemograficos($datosDemograficos,$tipoDeVivienda,$tipoDeCalefaccion,$tipoDeAgua);
 		       		}
 		       		else{
-						$obrasSociales = RepositorioPaciente::getInstance()->devolverObrasSociales();
-		    			$tiposDeDocumento = RepositorioPaciente::getInstance()->devolverTiposDeDocumento();
-		       			agregarPaciente($obrasSociales,$tiposDeDocumento);
+						$tiposDeVivienda = RepositorioDatosDemograficos::getInstance()->devolverTiposDeVivienda();
+		    			$tiposDeCalefaccion = RepositorioDatosDemograficos::getInstance()->devolverTiposDeCalefaccion();
+		    			$tiposDeAgua = RepositorioDatosDemograficos::getInstance()->devolverTiposDeAgua();
+		       			agregarDatosDemograficos($tiposDeVivienda,$tiposDeCalefaccion,$tiposDeAgua);
 		       		}
 		       	} else {
 	    			header("Location: /../");
@@ -100,7 +104,7 @@
 	    	case 'mostrarDatosDemograficos':
 	    		if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'datosdemograficos_show')){
 	    			
-	    			if($datosDemograficos = RepositorioDatosDemograficos::getInstance()->buscarDatosDemograficosPorIdPaciente($_GET['id'])){
+	    			if($datosDemograficos = RepositorioDatosDemograficos::getInstance()->buscarDatosDemograficosPorId($_GET['id'])){
 
 	    				$tipoDeVivienda = RepositorioDatosDemograficos::getInstance()->devolverTipoDeViviendaPorId($datosDemograficos->getTipoVivienda());
 	    				$tipoDeCalefaccion = RepositorioDatosDemograficos::getInstance()->devolverTipoDeCalefaccionPorId($datosDemograficos->getTipoCalefaccion());
@@ -140,7 +144,7 @@
 	    				mostrarDatosDemograficos($datosDemograficos,$tipoDeVivienda,$tipoDeCalefaccion,$tipoDeAgua);
 	    			}
 	    			else{
-	    				$datosDemograficos = RepositorioDatosDemograficos::getInstance()->buscarDatosDemograficosPorId($_GET['id']);
+	    				$datosDemograficos = RepositorioDatosDemograficos::getInstance()->buscarDatosDemograficosPorIdPaciente($_GET['id']);
 	    				$tiposDeVivienda = RepositorioDatosDemograficos::getInstance()->devolverTiposDeVivienda();
 		    			$tiposDeCalefaccion = RepositorioDatosDemograficos::getInstance()->devolverTiposDeCalefaccion();
 		    			$tiposDeAgua = RepositorioDatosDemograficos::getInstance()->devolverTiposDeAgua();
@@ -153,7 +157,7 @@
     		case 'eliminarDatosDemograficos':
     			if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'datosdemograficos_destroy')){
     				if($datosDemograficos = RepositorioDatosDemograficos::getInstance()->buscarDatosDemograficosPorIdPaciente($_GET['id'])){
-    					
+
     					RepositorioDatosDemograficos::getInstance()->eliminarDatosDemograficos($datosDemograficos);
 		        	}
 		        	header("location: /../controller/ControllerPaciente.php/?action=listarPacientes");

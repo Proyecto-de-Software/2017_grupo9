@@ -17,14 +17,19 @@
 		  	<div class="form-group ">
 			    <label for="electricidad">Electricidad</label>
 			    <select name="electricidad" class="form-control mt-3" required>
-			    	<option value="1">Si</option>
-			    	<option value="0">No</option>
+			    	{% if datosDemograficos.electricidad == 1 %}
+				    	<option value="1" selected>Si</option>
+				    	<option value="0">No</option>
+				    {% else %}
+				    	<option value="1">Si</option>
+				    	<option value="0" selected>No</option>
+			    	{% endif %}
 			    </select>
 		  	</div>
 		  	<div class="form-group ">
 			    <label for="mascota">Mascota</label>
 			    <select name="mascota" class="form-control mt-3" required>
-			    	{% if datosDemograficos.electricidad == 1 %}
+			    	{% if datosDemograficos.mascota == 1 %}
 				    	<option value="1" selected>Si</option>
 				    	<option value="0">No</option>
 				    {% else %}
@@ -76,7 +81,7 @@
 				<input type="hidden" name="token" value={{usuarioActual.token}}>
 			</div>
 
-		  	<button type="submit" class="btn btn-outline-success  btn-own-info">Modificar datos demográficos</button>
+		  	<button onclick="return confirm('Seguro?')" type="submit" class="btn btn-outline-success  btn-own-info">Modificar datos demográficos</button>
 		</form>
 	</div>
 </section>

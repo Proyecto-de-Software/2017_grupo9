@@ -41,7 +41,7 @@
     	else return false;
     }
 
-	
+
 	function crearPaciente(){
 		$paciente = new Paciente($_POST['apellido'], $_POST['nombre'], $_POST['domicilio'], $_POST['telefono'], $_POST['fechaNacimiento'], $_POST['genero'], $_POST['idObraSocial'], $_POST['idTipoDocumento'], $_POST['numeroDoc']);
 		return $paciente;
@@ -66,8 +66,9 @@
 	if(isset($_GET['action'])){
 		switch ($_GET['action']) {
 			case 'altaDePaciente':
+
 				//if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista()){
-				if((RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_new')) && (isset($_POST['token']) && $_POST['token'] == $_SESSION['token'])) {
+				if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_new')) {
 					$obrasSociales = RepositorioPaciente::getInstance()->devolverObrasSociales();
 		    		$tiposDeDocumento = RepositorioPaciente::getInstance()->devolverTiposDeDocumento();
 		       		agregarPaciente($obrasSociales,$tiposDeDocumento);
@@ -77,7 +78,6 @@
 		       	//	}
 		       	break;
 		    case 'agregarPaciente':
-		    	//if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista()){
 		    	if((RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_new')) && (isset($_POST['token']) && $_POST['token'] == $_SESSION['token'])) {
 		    		$paciente = crearPaciente();
 
@@ -94,7 +94,6 @@
 		       	} else {
 	    			header("Location: /../");
 	    		}
-		       //	}
 		        break;
 		    case 'modificacionDePaciente':
 		    	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_update')){
