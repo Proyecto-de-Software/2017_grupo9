@@ -233,7 +233,7 @@
         }
         $apellido = $usuario->getApellido() != null && trim($usuario->getApellido()) !='';
         if(!$apellido){
-          array_push($retorno, 'El nombre no debe estar vacio');
+          array_push($retorno, 'El apellido no debe estar vacio');
         }
         $nombreUsuario = $usuario->getNombreUsuario() != null && trim($usuario->getNombreUsuario()) !='';
        
@@ -273,7 +273,7 @@
         if(!$roles){
           array_push($retorno, 'Debe seleccionar al menos un rol');
         }
-        $retorno['ok'] = $nombre && $apellido && $usuario && $email && $coincidenPasswords && !$existeEmail && !$existeUsuario && $password && $password2 && $roles;
+        $retorno['ok'] = $nombre && $apellido && $nombreUsuario && $email && $coincidenPasswords && !$existeEmail && !$existeUsuario && $password && $password2 && $roles;
         return $retorno;
       }
 
