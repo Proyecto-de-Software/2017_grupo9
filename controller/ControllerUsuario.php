@@ -136,7 +136,7 @@
 			case 'agregarUsuario':
 				if((RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'usuario_new')) && (isset($_POST['token']) && $_POST['token'] == $_SESSION['token'])) {
 					$u = crearUsuario();
-					$validacion = RepositorioUsuario::getInstance()->usuarioValido();
+					$validacion = RepositorioUsuario::getInstance()->usuarioValido($u);
 					if($validacion['ok']){
 						RepositorioUsuario::getInstance()->agregarUsuario($u);
 						header("Location: /../controller/ControllerUsuario.php?action=listarUsuarios");
