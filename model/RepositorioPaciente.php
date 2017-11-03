@@ -51,20 +51,29 @@
       public function modificarPaciente($paciente){
         $conexion = $this->getConnection();
         if($paciente->getIdObraSocial() == 'NULL'){
-          echo 'holaaaa';
           $query = $conexion->prepare("UPDATE paciente SET obra_social_id=NULL WHERE id=:id");
           $query->bindParam(':id', $paciente->getId());
           $query->execute();
         }
-        $query = $conexion->prepare("UPDATE paciente SET apellido=:apellido, nombre=:nombre, domicilio=:domicilio, telefono=:telefono, fecha_nacimiento=:fechaNacimiento, genero=:genero, datos_demograficos_id=:idDatosDemograficos, obra_social_id=:idObraSocial, tipo_doc_id=:idTipoDocumento, numero_doc=:numeroDoc WHERE id=:id");
+        $query = $conexion->prepare("UPDATE paciente SET apellido=:apellido, nombre=:nombre, domicilio=:domicilio, telefono=:telefono, fecha_nacimiento=:fechaNacimiento, genero=:genero, obra_social_id=:idObraSocial, tipo_doc_id=:idTipoDocumento, numero_doc=:numeroDoc WHERE id=:id");
         $query->bindParam(':apellido', $paciente->getApellido());
         $query->bindParam(':nombre', $paciente->getNombre());
         $query->bindParam(':domicilio', $paciente->getDomicilio());
-        $query->bindParam(':telefono', $paciente->getTelefono());
+        $nulo = null;
+        if($paciente->getTelefono() == ''){
+          $query->bindParam(':telefono', $nulo);
+        }
+        else {
+          $query->bindParam(':telefono', $paciente->getTelefono());
+        }
+        if($paciente->getIdObraSocial() == 0){
+          $query->bindParam(':idObraSocial', $nulo);
+        }
+        else {
+          $query->bindParam(':idObraSocial', $paciente->getIdObraSocial());
+        }
         $query->bindParam(':fechaNacimiento', $paciente->getFechaNacimiento());
-        $query->bindParam(':genero', $paciente->getGenero());
-        $query->bindParam(':idDatosDemograficos', $paciente->getIdDatosDemograficos());        
-        $query->bindParam(':idObraSocial', $paciente->getIdObraSocial());
+        $query->bindParam(':genero', $paciente->getGenero());        
         $query->bindParam(':idTipoDocumento', $paciente->getIdTipoDocumento());
         $query->bindParam(':numeroDoc', $paciente->getNumeroDoc());
         $query->bindParam(':id', $paciente->getId());

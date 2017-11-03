@@ -68,14 +68,24 @@
 		echo TwigView::getTwig()->render('administracionModificarDatosDemograficos.twig', array('usuarioActual' => usuarioActual(), 'datosDemograficos' => $datosDemograficos, 'tiposDeVivienda' => $tiposDeVivienda, 'tiposDeCalefaccion' => $tiposDeCalefaccion, 'tiposDeAgua' => $tiposDeAgua, 'configuracion' => obtenerConfiguracion()));
 	}
 
+	function tiposDatosDemograficos(&$tiposDeVivienda,&$tiposDeCalefaccion,&$tiposDeAgua){
+		$tiposDeVivienda = RepositorioDatosDemograficos::getInstance()->devolverTiposDeVivienda();
+		$tiposDeCalefaccion = RepositorioDatosDemograficos::getInstance()->devolverTiposDeCalefaccion();
+		$tiposDeAgua = RepositorioDatosDemograficos::getInstance()->devolverTiposDeAgua();
+	}
+
+	function tiposDeUnDatoDemograficos($datosDemograficos,&$tipoDeVivienda,&$tipoDeCalefaccion,&$tipoDeAgua){
+		$tipoDeVivienda = RepositorioDatosDemograficos::getInstance()->devolverTipoDeViviendaPorId($datosDemograficos->getTipoVivienda());
+		$tipoDeCalefaccion = RepositorioDatosDemograficos::getInstance()->devolverTipoDeCalefaccionPorId($datosDemograficos->getTipoVivienda());
+		$tipoDeAgua = RepositorioDatosDemograficos::getInstance()->devolverTipoDeAguaPorId($datosDemograficos->getTipoVivienda());
+	}
+
 
 	if(isset($_GET['action'])){
 		switch ($_GET['action']) {
 			case 'altaDeDatosDemograficos':
 				$datosDemograficos = RepositorioDatosDemograficos::getInstance()->buscarDatosDemograficosPorIdPaciente($_GET['id']);
-    			$tiposDeVivienda = RepositorioDatosDemograficos::getInstance()->devolverTiposDeVivienda();
-    			$tiposDeCalefaccion = RepositorioDatosDemograficos::getInstance()->devolverTiposDeCalefaccion();
-    			$tiposDeAgua = RepositorioDatosDemograficos::getInstance()->devolverTiposDeAgua();
+    			tiposDatosDemograficos($tiposDeVivienda,$tiposDeCalefaccion,$tiposDeAgua);
 				agregarDatosDemograficos($tiposDeVivienda,$tiposDeCalefaccion,$tiposDeAgua);
 	       		break;
 	    	case 'agregarDatosDemograficos':
@@ -83,19 +93,12 @@
 	    			$datosDemograficos = crearDatosDemograficos();
 	    			
         			if(RepositorioDatosDemograficos::getInstance()->agregarDatosDemograficos($datosDemograficos)){
-		    			$tipoDeVivienda = RepositorioDatosDemograficos::getInstance()->devolverTipoDeViviendaPorId($datosDemograficos->getTipoVivienda());
-		    			$tipoDeCalefaccion = RepositorioDatosDemograficos::getInstance()->devolverTipoDeCalefaccionPorId($datosDemograficos->getTipoCalefaccion());
-		    			$tipoDeAgua = RepositorioDatosDemograficos::getInstance()->devolverTipoDeAguaPorId($datosDemograficos->getTipoAgua());
 		    			$nuevosDatosDemograficos = RepositorioDatosDemograficos::getInstance()->buscarDatosDemograficosPorIdPaciente($datosDemograficos->getPaciente());
 		    			$id = $nuevosDatosDemograficos->getId();
 		    			header("location: /../controller/ControllerDatosDemograficos.php/?action=mostrarDatosDemograficos&id=$id");
-		       			//mostrarDatosDemograficos($datosDemograficos,$tipoDeVivienda,$tipoDeCalefaccion,$tipoDeAgua);
 		       		}
 		       		else{
-						$tiposDeVivienda = RepositorioDatosDemograficos::getInstance()->devolverTiposDeVivienda();
-		    			$tiposDeCalefaccion = RepositorioDatosDemograficos::getInstance()->devolverTiposDeCalefaccion();
-		    			$tiposDeAgua = RepositorioDatosDemograficos::getInstance()->devolverTiposDeAgua();
-		       			agregarDatosDemograficos($tiposDeVivienda,$tiposDeCalefaccion,$tiposDeAgua);
+						header("location: /../controller/ControllerDatosDemograficos.php/?action=altaDeDatosDemograficos");
 		       		}
 		       	} else {
 	    			header("Location: /../");
@@ -105,10 +108,7 @@
 	    		if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'datosdemograficos_show')){
 	    			
 	    			if($datosDemograficos = RepositorioDatosDemograficos::getInstance()->buscarDatosDemograficosPorId($_GET['id'])){
-
-	    				$tipoDeVivienda = RepositorioDatosDemograficos::getInstance()->devolverTipoDeViviendaPorId($datosDemograficos->getTipoVivienda());
-	    				$tipoDeCalefaccion = RepositorioDatosDemograficos::getInstance()->devolverTipoDeCalefaccionPorId($datosDemograficos->getTipoCalefaccion());
-	    				$tipoDeAgua = RepositorioDatosDemograficos::getInstance()->devolverTipoDeAguaPorId($datosDemograficos->getTipoAgua());
+	    				tiposDeUnDatoDemograficos($datosDemograficos,$tipoDeVivienda,$tipoDeCalefaccion,$tipoDeAgua);
 	    				mostrarDatosDemograficos($datosDemograficos,$tipoDeVivienda,$tipoDeCalefaccion,$tipoDeAgua);
 	    			}
 	    			else{
@@ -123,9 +123,7 @@
 	    	case 'modificacionDatosDemograficos':
 	    		if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'datosdemograficos_update')){
 	    			if($datosDemograficos = RepositorioDatosDemograficos::getInstance()->buscarDatosDemograficosPorId($_GET['id'])){
-		    			$tiposDeVivienda = RepositorioDatosDemograficos::getInstance()->devolverTiposDeVivienda();
-		    			$tiposDeCalefaccion = RepositorioDatosDemograficos::getInstance()->devolverTiposDeCalefaccion();
-		    			$tiposDeAgua = RepositorioDatosDemograficos::getInstance()->devolverTiposDeAgua();
+		    			tiposDatosDemograficos($tiposDeVivienda,$tiposDeCalefaccion,$tiposDeAgua);
 		    			modificarDatosDemograficos($datosDemograficos,$tiposDeVivienda,$tiposDeCalefaccion,$tiposDeAgua);
 		    		}
 	    		} else{
@@ -138,16 +136,12 @@
 	    			$datosDemograficos = crearDatosDemograficos();
 	    			$datosDemograficos->setId($_GET['id']);
 	    			if($datosDemograficosModificados = RepositorioDatosDemograficos::getInstance()->modificarDatosDemograficos($datosDemograficos)){
-	    				$tipoDeVivienda = RepositorioDatosDemograficos::getInstance()->devolverTipoDeViviendaPorId($datosDemograficos->getTipoVivienda());
-	    				$tipoDeCalefaccion = RepositorioDatosDemograficos::getInstance()->devolverTipoDeCalefaccionPorId($datosDemograficos->getTipoCalefaccion());
-	    				$tipoDeAgua = RepositorioDatosDemograficos::getInstance()->devolverTipoDeAguaPorId($datosDemograficos->getTipoAgua());
+	    				tiposDatosDemograficos($tiposDeVivienda,$tiposDeCalefaccion,$tiposDeAgua);
 	    				mostrarDatosDemograficos($datosDemograficos,$tipoDeVivienda,$tipoDeCalefaccion,$tipoDeAgua);
 	    			}
 	    			else{
 	    				$datosDemograficos = RepositorioDatosDemograficos::getInstance()->buscarDatosDemograficosPorIdPaciente($_GET['id']);
-	    				$tiposDeVivienda = RepositorioDatosDemograficos::getInstance()->devolverTiposDeVivienda();
-		    			$tiposDeCalefaccion = RepositorioDatosDemograficos::getInstance()->devolverTiposDeCalefaccion();
-		    			$tiposDeAgua = RepositorioDatosDemograficos::getInstance()->devolverTiposDeAgua();
+	    				tiposDatosDemograficos($tiposDeVivienda,$tiposDeCalefaccion,$tiposDeAgua);
 		    			modificarDatosDemograficos($datosDemograficos,$tiposDeVivienda,$tiposDeCalefaccion,$tiposDeAgua);
 	    			}
 	    		} else{

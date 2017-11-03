@@ -60,14 +60,12 @@
     }
 
     function modificarPaciente($paciente, $obrasSociales, $tiposDeDocumento){
-	    echo TwigView::getTwig()->render('administracionAgregarPaciente.twig', array('usuarioActual' => usuarioActual(), 'paciente' => $paciente, 'tiposDeDocumento' => $tiposDeDocumento, 'obrasSociales' => $obrasSociales, 'configuracion'=>obtenerConfiguracion()));
+	    echo TwigView::getTwig()->render('administracionModificarPaciente.twig', array('usuarioActual' => usuarioActual(), 'paciente' => $paciente, 'tiposDeDocumento' => $tiposDeDocumento, 'obrasSociales' => $obrasSociales, 'configuracion'=>obtenerConfiguracion()));
     } 
 
 	if(isset($_GET['action'])){
 		switch ($_GET['action']) {
 			case 'altaDePaciente':
-
-				//if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista()){
 				if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_new')) {
 					$obrasSociales = RepositorioPaciente::getInstance()->devolverObrasSociales();
 		    		$tiposDeDocumento = RepositorioPaciente::getInstance()->devolverTiposDeDocumento();
@@ -75,21 +73,17 @@
 		       	} else {
 	    			header("Location: /../");
 	    		}
-		       	//	}
 		       	break;
 		    case 'agregarPaciente':
 		    	if((RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_new')) && (isset($_POST['token']) && $_POST['token'] == $_SESSION['token'])) {
 		    		$paciente = crearPaciente();
 
         			if(RepositorioPaciente::getInstance()->agregarPaciente($paciente)){
-		    			$obraSocial = RepositorioPaciente::getInstance()->devolverObraSocialPorId($paciente->getIdObraSocial());
-		    			$tipoDeDocumento = RepositorioPaciente::getInstance()->devolverTipoDeDocumentoPorId($paciente->getIdTipoDocumento());
-		       			mostrarPaciente($paciente,$obraSocial,$tipoDeDocumento);
+        				$id = $paciente->getId();
+		    			header("location: /../controller/ControllerPaciente.php/?action=mostrarPaciente&id=$id");
 		       		}
 		       		else{
-						$obrasSociales = RepositorioPaciente::getInstance()->devolverObrasSociales();
-		    			$tiposDeDocumento = RepositorioPaciente::getInstance()->devolverTiposDeDocumento();
-		       			agregarPaciente($obrasSociales,$tiposDeDocumento);
+		    			header("location: /../controller/ControllerPaciente.php/?action=altaDePaciente");
 		       		}
 		       	} else {
 	    			header("Location: /../");
@@ -106,28 +100,28 @@
 	    		}
 		    	break;
 		    case 'modificarPaciente':
-		    //	if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista()){
 		    	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_update')){
-		        	RepositorioPaciente::getInstance()->modificarPaciente(crearPaciente());
-		        	mostrarPaciente(RepositorioPaciente::getInstance()->buscarPacientePorId($_POST['id']));
+		    		$paciente = crearPaciente();
+		    		$paciente->setId($_GET['id']);
+		    		if(RepositorioPaciente::getInstance()->modificarPaciente($paciente)){
+			        	$id = $paciente->getId();
+		    			header("location: /../controller/ControllerPaciente.php/?action=mostrarPaciente&id=$id");
+	        		}
 		        } else {
 	        		header("Location: /../");
     			}
-		       // }
 		        break;
 		    case 'eliminarPaciente':
-		    	//if(($_SESSION['usuario'])->esAdministrador()){
 		   		if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_destroy')){
 		        	if(RepositorioPaciente::getInstance()->eliminarPaciente($_GET['id'])){
+		        		header("location: /../controller/ControllerPaciente.php/?action=listarPacientes");
 		        		listarPacientes(RepositorioPaciente::getInstance()->devolverPacientes());
 		        	}
 		        } else {
 	        		header("Location: /../");
     			}
-		       // }
 		        break;
 		    case 'mostrarPaciente':
-		    	//if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista()){
 		    	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_show')){
 		    		$paciente = RepositorioPaciente::getInstance()->buscarPacientePorId($_GET['id']);
 		    		$obraSocial = RepositorioPaciente::getInstance()->devolverObraSocialPorId($paciente->getIdObraSocial());
@@ -136,16 +130,13 @@
 		        } else {
 	        		header("Location: /../");
     			}
-		       // }
 		        break;
 		    case 'listarPacientes':
-		    	//if(($_SESSION['usuario'])->esPediatra() || ($_SESSION['usuario'])->esRecepcionista() || ($_SESSION['usuario'])->esAdministrador()){
 		    	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_index')){
 		        	listarPacientes(RepositorioPaciente::getInstance()->devolverPacientes());
 		        } else {
 	        		header("Location: /../");
     			}
-		       // }
 		        break;
 		}
 	}	
