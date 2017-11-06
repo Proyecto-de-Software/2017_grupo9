@@ -226,7 +226,7 @@
         return sizeof($resultado);
       }
 
-      public function usuarioValido($paciente,$edicion=false){
+      public function pacienteValido($paciente,$edicion=false){
         $retorno['ok'] = false;
         $nombre = $paciente->getNombre() != null && trim($paciente->getNombre()) !='';
         if(!$nombre){

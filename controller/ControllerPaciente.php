@@ -104,7 +104,7 @@
 		    	if((RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_new')) && (isset($_POST['token']) && $_POST['token'] == $_SESSION['token'])) {
 		    		$paciente = crearPaciente();
 		    		$validacion = RepositorioPaciente::getInstance()->pacienteValido($paciente);
-		    		if $validacion['ok']{
+		    		if ($validacion['ok']){
 						if(RepositorioPaciente::getInstance()->agregarPaciente($paciente)){
 	        				$id = $paciente->getId();
 			    			header("location: /../controller/ControllerPaciente.php/?action=mostrarPaciente&id=$id");
