@@ -55,12 +55,12 @@
 	    echo TwigView::getTwig()->render('administracionMostrarPaciente.twig', array('usuarioActual' => usuarioActual(), 'paciente' => $paciente, 'tipoDeDocumento' => $tipoDeDocumento, 'obraSocial' => $obraSocial, 'configuracion'=>obtenerConfiguracion()));
     }
 
-    function agregarPaciente($obrasSociales,$tiposDeDocumento){ //paranetro validacion = null
-	    echo TwigView::getTwig()->render('administracionAgregarPaciente.twig', array('usuarioActual' => usuarioActual(), 'tiposDeDocumento' => $tiposDeDocumento, 'obrasSociales' => $obrasSociales, 'configuracion'=>obtenerConfiguracion()));
+    function agregarPaciente($obrasSociales,$tiposDeDocumento,$validacion=[]){ //paranetro validacion = null
+	    echo TwigView::getTwig()->render('administracionAgregarPaciente.twig', array('usuarioActual' => usuarioActual(), 'validacion'=>$validacion, 'tiposDeDocumento' => $tiposDeDocumento, 'obrasSociales' => $obrasSociales, 'configuracion'=>obtenerConfiguracion()));
     }
 
     function modificarPaciente($paciente, $obrasSociales, $tiposDeDocumento){
-	    echo TwigView::getTwig()->render('administracionModificarPaciente.twig', array('usuarioActual' => usuarioActual(), 'paciente' => $paciente, 'tiposDeDocumento' => $tiposDeDocumento, 'obrasSociales' => $obrasSociales, 'configuracion'=>obtenerConfiguracion()));
+	    echo TwigView::getTwig()->render('administracionModificarPaciente.twig', array('usuarioActual' => usuarioActual(), 'paciente' => $paciente, 'validacion'=>$validacion, 'tiposDeDocumento' => $tiposDeDocumento, 'obrasSociales' => $obrasSociales, 'configuracion'=>obtenerConfiguracion()));
     } 
 
     function datosDePaginado(){
@@ -102,18 +102,18 @@
 		       	break;
 		    case 'agregarPaciente':
 		    	if((RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_new')) && (isset($_POST['token']) && $_POST['token'] == $_SESSION['token'])) {
-		    		//paciente = crearPaciente()
-		    		$validacion = //funcion que retorna si es valido o no desde el modelo pacienteValido(paciente)
-		    		//if validacion['ok']
 		    		$paciente = crearPaciente();
+		    		$validacion = RepositorioPaciente::getInstance()->pacienteValido($paciente);
+		    		if $validacion['ok']{
+						if(RepositorioPaciente::getInstance()->agregarPaciente($paciente)){
+	        				$id = $paciente->getId();
+			    			header("location: /../controller/ControllerPaciente.php/?action=mostrarPaciente&id=$id");
+			       		}
+			       		else{
+			    			header("location: /../controller/ControllerPaciente.php/?action=altaDePaciente");
+			       		}
 
-        			if(RepositorioPaciente::getInstance()->agregarPaciente($paciente)){
-        				$id = $paciente->getId();
-		    			header("location: /../controller/ControllerPaciente.php/?action=mostrarPaciente&id=$id");
-		       		}
-		       		else{
-		    			header("location: /../controller/ControllerPaciente.php/?action=altaDePaciente");
-		       		}
+		    		}
 		       	} else {
 	    			header("Location: /../");
 	    		}
@@ -132,10 +132,16 @@
 		    	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_update')){
 		    		$paciente = crearPaciente();
 		    		$paciente->setId($_GET['id']);
-		    		if(RepositorioPaciente::getInstance()->modificarPaciente($paciente)){
-			        	$id = $paciente->getId();
-		    			header("location: /../controller/ControllerPaciente.php/?action=mostrarPaciente&id=$id");
-	        		}
+		    		$validacion = $validacion = RepositorioPaciente::getInstance()->pacienteValido($paciente,true);
+					if($validacion['ok']){
+			    		if(RepositorioPaciente::getInstance()->modificarPaciente($paciente)){
+				        	$id = $paciente->getId();
+			    			header("location: /../controller/ControllerPaciente.php/?action=mostrarPaciente&id=$id");
+		        		}
+		        	}
+		        	else {
+		        		header("location: /../controller/ControllerPaciente.php/?action=modificarPaciente&id=$id");
+		        	}
 		        } else {
 	        		header("Location: /../");
     			}

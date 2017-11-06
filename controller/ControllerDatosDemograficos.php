@@ -76,8 +76,8 @@
 
 	function tiposDeUnDatoDemograficos($datosDemograficos,&$tipoDeVivienda,&$tipoDeCalefaccion,&$tipoDeAgua){
 		$tipoDeVivienda = RepositorioDatosDemograficos::getInstance()->devolverTipoDeViviendaPorId($datosDemograficos->getTipoVivienda());
-		$tipoDeCalefaccion = RepositorioDatosDemograficos::getInstance()->devolverTipoDeCalefaccionPorId($datosDemograficos->getTipoVivienda());
-		$tipoDeAgua = RepositorioDatosDemograficos::getInstance()->devolverTipoDeAguaPorId($datosDemograficos->getTipoVivienda());
+		$tipoDeCalefaccion = RepositorioDatosDemograficos::getInstance()->devolverTipoDeCalefaccionPorId($datosDemograficos->getTipoCalefaccion());
+		$tipoDeAgua = RepositorioDatosDemograficos::getInstance()->devolverTipoDeAguaPorId($datosDemograficos->getTipoAgua());
 	}
 
 
@@ -93,9 +93,9 @@
 	    			$datosDemograficos = crearDatosDemograficos();
 	    			
         			if(RepositorioDatosDemograficos::getInstance()->agregarDatosDemograficos($datosDemograficos)){
-		    			$nuevosDatosDemograficos = RepositorioDatosDemograficos::getInstance()->buscarDatosDemograficosPorIdPaciente($datosDemograficos->getPaciente());
-		    			$id = $nuevosDatosDemograficos->getId();
-		    			header("location: /../controller/ControllerDatosDemograficos.php/?action=mostrarDatosDemograficos&id=$id");
+		    			$idPaciente = $datosDemograficos->getPaciente();
+		    			$nuevosDatosDemograficos = RepositorioDatosDemograficos::getInstance()->buscarDatosDemograficosPorIdPaciente($idPaciente);
+		    			header("location: /../controller/ControllerDatosDemograficos.php/?action=mostrarDatosDemograficos&id=$idPaciente");
 		       		}
 		       		else{
 						header("location: /../controller/ControllerDatosDemograficos.php/?action=altaDeDatosDemograficos");
@@ -107,7 +107,7 @@
 	    	case 'mostrarDatosDemograficos':
 	    		if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'datosdemograficos_show')){
 	    			
-	    			if($datosDemograficos = RepositorioDatosDemograficos::getInstance()->buscarDatosDemograficosPorId($_GET['id'])){
+	    			if($datosDemograficos = RepositorioDatosDemograficos::getInstance()->buscarDatosDemograficosPorIdPaciente($_GET['id'])){
 	    				tiposDeUnDatoDemograficos($datosDemograficos,$tipoDeVivienda,$tipoDeCalefaccion,$tipoDeAgua);
 	    				mostrarDatosDemograficos($datosDemograficos,$tipoDeVivienda,$tipoDeCalefaccion,$tipoDeAgua);
 	    			}

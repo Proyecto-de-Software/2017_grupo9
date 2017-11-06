@@ -226,6 +226,41 @@
         return sizeof($resultado);
       }
 
+      public function usuarioValido($paciente,$edicion=false){
+        $retorno['ok'] = false;
+        $nombre = $paciente->getNombre() != null && trim($paciente->getNombre()) !='';
+        if(!$nombre){
+          array_push($retorno, 'El nombre no debe estar vacio');
+        }
+        $apellido = $paciente->getApellido() != null && trim($paciente->getApellido()) !='';
+        if(!$apellido){
+          array_push($retorno, 'El apellido no debe estar vacio');
+        }
+        $domicilio = $paciente->getDomicilio() != null && trim($paciente->getDomicilio()) !='';
+        if(!$domicilio){
+          array_push($retorno, 'El domicilio no debe estar vacio');
+        }
+        $fechaNacimiento = $paciente->getFechaNacimiento() != null && trim($paciente->getFechaNacimiento()) !='';
+        if(!$fechaNacimiento){
+          array_push($retorno, 'La fecha de nacimiento no debe estar vacia');
+        }
+        $genero = $paciente->getGenero() != null && trim($paciente->getGenero()) !='';
+        if(!$genero){
+          array_push($retorno, 'El genero no debe estar vacio');
+        }
+        $idTipoDocumento = $paciente->getIdTipoDocumento() != null && trim($paciente->getIdTipoDocumento()) !='';
+        if(!$idTipoDocumento){
+          array_push($retorno, 'El tipo de documento no debe estar vacio');
+        }
+        $numeroDoc = $paciente->getNumeroDoc() != null && trim($paciente->getNumeroDoc()) !='';
+        if(!$numeroDoc){
+          array_push($retorno, 'El numero de documento no debe estar vacio');
+        }
+      
+        $retorno['ok'] = $nombre && $apellido && $domicilio && $fechaNacimiento && $genero && $idTipoDocumento && $numeroDoc;
+        return $retorno;
+      }
+
   		//CRUD
   		//buscar paciente por ID
       //devolverPacientes
