@@ -59,7 +59,7 @@
 	    echo TwigView::getTwig()->render('administracionAgregarPaciente.twig', array('usuarioActual' => usuarioActual(), 'validacion'=>$validacion, 'tiposDeDocumento' => $tiposDeDocumento, 'obrasSociales' => $obrasSociales, 'configuracion'=>obtenerConfiguracion()));
     }
 
-    function modificarPaciente($paciente, $obrasSociales, $tiposDeDocumento){
+    function modificarPaciente($paciente, $obrasSociales, $tiposDeDocumento,$validacion=[]){
 	    echo TwigView::getTwig()->render('administracionModificarPaciente.twig', array('usuarioActual' => usuarioActual(), 'paciente' => $paciente, 'validacion'=>$validacion, 'tiposDeDocumento' => $tiposDeDocumento, 'obrasSociales' => $obrasSociales, 'configuracion'=>obtenerConfiguracion()));
     } 
 
@@ -105,15 +105,19 @@
 		    		$paciente = crearPaciente();
 		    		$validacion = RepositorioPaciente::getInstance()->pacienteValido($paciente);
 		    		if ($validacion['ok']){
-						if(RepositorioPaciente::getInstance()->agregarPaciente($paciente)){
+						if(RepositorioPaciente::getInstance()->agregarPaciente($obrasSociales,$tiposDeDocumento)){
 	        				$id = $paciente->getId();
 			    			header("location: /../controller/ControllerPaciente.php/?action=mostrarPaciente&id=$id");
 			       		}
 			       		else{
 			    			header("location: /../controller/ControllerPaciente.php/?action=altaDePaciente");
 			       		}
-
-		    		}
+			       	} else{
+			       		$obrasSociales = RepositorioPaciente::getInstance()->devolverObrasSociales();
+		    			$tiposDeDocumento = RepositorioPaciente::getInstance()->devolverTiposDeDocumento();
+						agregarPaciente($obrasSociales,$tiposDeDocumento,$validacion);
+					}
+			       	
 		       	} else {
 	    			header("Location: /../");
 	    		}
@@ -133,14 +137,17 @@
 		    		$paciente = crearPaciente();
 		    		$paciente->setId($_GET['id']);
 		    		$validacion = $validacion = RepositorioPaciente::getInstance()->pacienteValido($paciente,true);
+		    		$id = $paciente->getId();
 					if($validacion['ok']){
 			    		if(RepositorioPaciente::getInstance()->modificarPaciente($paciente)){
-				        	$id = $paciente->getId();
 			    			header("location: /../controller/ControllerPaciente.php/?action=mostrarPaciente&id=$id");
 		        		}
 		        	}
 		        	else {
-		        		header("location: /../controller/ControllerPaciente.php/?action=modificarPaciente&id=$id");
+		        		$paciente = RepositorioPaciente::getInstance()->buscarPacientePorId($_GET['id']);
+				    	$obrasSociales = RepositorioPaciente::getInstance()->devolverObrasSociales();
+				    	$tiposDeDocumento = RepositorioPaciente::getInstance()->devolverTiposDeDocumento();
+				    	modificarPaciente($paciente, $obrasSociales, $tiposDeDocumento,$validacion);
 		        	}
 		        } else {
 	        		header("Location: /../");
