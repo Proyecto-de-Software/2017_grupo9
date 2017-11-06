@@ -225,7 +225,7 @@
         return $result[0]['activo'];
 
       }
-      public function usuarioValido($paciente,$edicion=false){
+      public function usuarioValido($usuario,$edicion=false){
         $retorno['ok'] = false;
         $nombre = $usuario->getNombre() != null && trim($usuario->getNombre()) !='';
         if(!$nombre){

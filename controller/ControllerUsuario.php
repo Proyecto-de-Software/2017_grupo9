@@ -255,37 +255,10 @@
 				$listado = [];
 				$filtrado['activo'] = isset($_POST['activo']);
 				$filtrado['bloqueado'] = isset($_POST['bloqueado']);
-				$filtrado['campoBuscar'] = " ";
+				$filtrado['campoBuscar'] = "";
 				if(isset($_POST['buscar']) && trim($_POST['buscar']) !=''){
-					$nombreUsuario = $_POST['buscar'];			
-					$filtrado['campoBuscar'] =$nombreUsuario;
+					$filtrado['campoBuscar'] =$_POST['buscar'];	;
 				}
-
-				if(!isset($_COOKIE['activo'])){
-					if($filtrado['activo']){
-						setcookie('activo',$filtrado['activo'],time()+5);
-					}
-					else{
-						setcookie('activo',0);
-					}
-					if($filtrado['bloqueado']){
-						setcookie('bloqueado',$filtrado['bloqueado'],time()+5);
-					}
-					else{
-						setcookie('bloqueado',0);
-					}
-					setcookie('campoBuscar',$filtrado['campoBuscar'],time()+5);
-
-					
-					
-				}
-				else{
-					
-					$filtrado['activo'] = $_COOKIE['activo'];
-					$filtrado['bloqueado'] = $_COOKIE['bloqueado'];
-					$filtrado['campoBuscar'] = $_COOKIE['campoBuscar'];
-				}
-
 				listarUsuarios(RepositorioUsuario::getInstance()->devolverUsuarios($paginado['limit'],$paginado['cantidadPorPagina'],$filtrado),$filtrado,true);
 			
 				break;
@@ -302,5 +275,39 @@
 		}
 	}
 
+
+
+
+
+
+
+
+
+
+/*
+				if(isset($GLOBALS['filtrar']) && $GLOBALS['filtrar']){
+					if(isset($GLOBALS['activo'])){
+						$filtrado['activo'] = $GLOBALS['activo'];
+					}
+					if(isset($GLOBALS['bloqueado'])){
+						$filtrado['bloqueado'] = $GLOBALS['bloqueado'];
+					}
+					if(isset($GLOBALS['campoBuscar'])){
+						$filtrado['campoBuscar'] = $GLOBALS['campoBuscar'];
+					}
+				}
+				else{
+					$GLOBALS['filtrar'] = 1;
+					$GLOBALS['activo'] = $filtrado['activo'];
+					$GLOBALS['bloqueado'] = $filtrado['bloqueado'];
+					$GLOBALS['campoBuscar'] = $filtrado['campoBuscar'];
+	
+				}
+				var_dump($GLOBALS['filtrar']);
+				var_dump($GLOBALS['activo']);
+				var_dump($GLOBALS['bloqueado']);
+				var_dump($GLOBALS['campoBuscar']);
+
+*/
 
 ?>
