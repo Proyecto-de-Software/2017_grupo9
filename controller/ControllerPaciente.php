@@ -105,15 +105,15 @@
 		    		$paciente = crearPaciente();
 		    		$validacion = RepositorioPaciente::getInstance()->pacienteValido($paciente);
 		    		if ($validacion['ok']){
-						if(RepositorioPaciente::getInstance()->agregarPaciente($obrasSociales,$tiposDeDocumento)){
+						if(RepositorioPaciente::getInstance()->agregarPaciente($paciente)){
 	        				$id = $paciente->getId();
 			    			header("location: /../controller/ControllerPaciente.php/?action=mostrarPaciente&id=$id");
 			       		}
 			       		else{
 			    			header("location: /../controller/ControllerPaciente.php/?action=altaDePaciente");
 			       		}
-			       	} else{
-			       		$obrasSociales = RepositorioPaciente::getInstance()->devolverObrasSociales();
+			       	} else{		       		
+			    		$obrasSociales = RepositorioPaciente::getInstance()->devolverObrasSociales();
 		    			$tiposDeDocumento = RepositorioPaciente::getInstance()->devolverTiposDeDocumento();
 						agregarPaciente($obrasSociales,$tiposDeDocumento,$validacion);
 					}
