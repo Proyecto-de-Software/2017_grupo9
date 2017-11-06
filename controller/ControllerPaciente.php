@@ -180,7 +180,7 @@
 			case 'busquedaDocumento':
 		     	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_index')){
 					$paginado = datosDePaginado();
-		     		listarPacientes(RepositorioPaciente::getInstance()->devolverPacientes($paginado['limit'],$paginado['cantidadPorPagina'],$_POST['busquedaTipoDoc'],$_POST['busquedaNumeroDoc']));
+		     		listarPacientes(RepositorioPaciente::getInstance()->devolverPacientes($paginado['limit'],$paginado['cantidadPorPagina'],'','',$_POST['busquedaTipoDoc'],$_POST['busquedaNumeroDoc']));
 		     	} else {
 	        		header("Location: /../");
     			}

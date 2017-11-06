@@ -136,7 +136,7 @@
 	    			$datosDemograficos = crearDatosDemograficos();
 	    			$datosDemograficos->setId($_GET['id']);
 	    			if($datosDemograficosModificados = RepositorioDatosDemograficos::getInstance()->modificarDatosDemograficos($datosDemograficos)){
-	    				tiposDatosDemograficos($tiposDeVivienda,$tiposDeCalefaccion,$tiposDeAgua);
+	    				tiposDeUnDatoDemograficos($tipoDeVivienda,$tipoDeCalefaccion,$tipoDeAgua);
 	    				mostrarDatosDemograficos($datosDemograficos,$tipoDeVivienda,$tipoDeCalefaccion,$tipoDeAgua);
 	    			}
 	    			else{
