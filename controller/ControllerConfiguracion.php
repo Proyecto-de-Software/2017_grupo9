@@ -1,3 +1,4 @@
+
 <?php
 
 	#Nos ubicamos en el document_root para evitar problemas al usar twig, ya que twig usa paths relativos y si no estamos en la raiz no funciona.

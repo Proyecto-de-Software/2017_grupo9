@@ -3,7 +3,8 @@
 	<h2> Usuarios</h2><br>
 		<div class="mb-4 mt-4">
 			<h3 >Filtrado </h3> 
-			<form  id="form" class="form-inline my-2 my-lg-0 ml-auto mr-5 d-flex justify-content-start" action="/controller/ControllerUsuario.php?action=filtradoUsuario" method="POST">		
+			<form  id="form" class="form-inline my-2 my-lg-0 ml-auto mr-5 d-flex justify-content-start" action="/controller/ControllerUsuario.php?action=filtradoUsuario" method="POST">
+				<input type="hidden" name="filtrado">		
 				{% if filtrado != null %}
 	      			<input class="form-control mr-sm-2 " type="text" placeholder="Buscar" aria-label="Buscar" name="buscar" id="buscar" value="{{filtrado.campoBuscar}}">
 	      		{% else %}

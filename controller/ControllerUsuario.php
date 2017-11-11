@@ -250,15 +250,34 @@
 	        		header("Location: /../");
     			}
 				break;
-			case 'filtradoUsuario':
+			case 'filtradoUsuario': //TERMINAR
 				$paginado = datosDePaginado();
 				$listado = [];
 				$filtrado['activo'] = isset($_POST['activo']);
 				$filtrado['bloqueado'] = isset($_POST['bloqueado']);
 				$filtrado['campoBuscar'] = "";
 				if(isset($_POST['buscar']) && trim($_POST['buscar']) !=''){
-					$filtrado['campoBuscar'] =$_POST['buscar'];	;
+					$filtrado['campoBuscar'] = $_POST['buscar'];	;
 				}
+				if(isset($_POST['filtrado'])){
+					setcookie("filtrado['activo']",$filtrado['activo']);
+					setcookie("filtrado['bloqueado']",$filtrado['bloqueado']);
+					setcookie("filtrado['campoBuscar']",$filtrado['campoBuscar']);
+				}
+				else{
+					if(isset($_COOKIE['filtrado']['activo'])){
+						$filtrado['activo'] = $_COOKIE['filtrado']['activo'];
+					}
+					if(isset($_COOKIE['filtrado']['bloqueado'])){
+						$filtrado['bloqueado'] = $_COOKIE['bloqueado']['bloqueado'];
+					}
+					if(isset($_COOKIE['filtrado']['campoBuscar'])){
+						$filtrado['campoBuscar'] = $_COOKIE['filtrado']['campoBuscar'];
+					}
+				}
+				
+
+
 				listarUsuarios(RepositorioUsuario::getInstance()->devolverUsuarios($paginado['limit'],$paginado['cantidadPorPagina'],$filtrado),$filtrado,true);
 			
 				break;
