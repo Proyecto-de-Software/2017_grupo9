@@ -1,8 +1,8 @@
 <?php
-require_once('Controller.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/Controller/Controller.php');
 
 class ControllerConfiguracion extends Controller{
-
+	protected static $instance;
     public static function getInstance() {
     	if (!isset(self::$instance)) {
           self::$instance = new ControllerConfiguracion();
@@ -26,7 +26,7 @@ class ControllerConfiguracion extends Controller{
 	public function formularioConfiguracion($validacion=[]){
 		if (RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'configuracion_update')){
 			$template = 'administracionConfiguracion.twig';
-			$parametrosTemplate['configuracionActual'] = $this->obtenerDatosDeConfiguracion();
+			$parametrosTemplate['configuracionActual'] = RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion();
 			$parametrosTemplate['validacion'] = $validacion; //modificar template para que sepa que recibe el array
 			$this->render($template,$parametrosTemplate);
 		}
@@ -35,15 +35,18 @@ class ControllerConfiguracion extends Controller{
 		}
 	}
 	
-	public function modificarConfiguracion($edicion=false){
+	public function modificarConfiguracion($edicion = false){
 		if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'configuracion_update') && (isset($_POST['token'])) && $_POST['token'] == $_SESSION['token']){
+			$configuracion = $this->crearConfiguracion();
 			//$ validacion = validar en el modelo config devuelve un array 
 			//if campos validos (hacer en el repo config)
 				if($edicion){
 					RepositorioConfiguracion::getInstance()->modificarConfiguracionHospital($this->crearConfiguracion());
+					header("Location: /index.php/configuracion");
 				}
 				else{
 					RepositorioConfiguracion::getInstance()->crearConfiguracionHospital($this->crearConfiguracion());
+					header("Location: /index.php/configuracion");
 				}
 			//else
 				//$this->formularioConfiguracion($validacion)

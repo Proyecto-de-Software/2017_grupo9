@@ -1,7 +1,9 @@
 <?php
+require_once($_SERVER['DOCUMENT_ROOT'].'/Controller/Controller.php');
+
 
 class ControllerUsuario extends Controller{
-
+	protected static $instance;
 	public static function getInstance() {
       	if (!isset(self::$instance)) {
           self::$instance = new ControllerUsuario();
@@ -48,12 +50,12 @@ class ControllerUsuario extends Controller{
     	}
     }
 
-    public function formularioUsuario($idUsuario = null,$usuario = null, $validacion = null){
+    public function formularioUsuario($idUsuario = null,$validacion = null){
     	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'],'usuario_new') || RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'],'usuario_update')){
 			$template = 'administracionFormularioUsuario.twig'; // modificar template pra hacerlo generico
 			$parametrosTemplate['validacion'] = $validacion;
 			$parametrosTemplate['idUsuario'] = $idUsuario;
-			$parametrosTemplate['usuario'] = $usuario;
+			$parametrosTemplate['usuario'] = RepositorioUsuario::getInstance()->buscarUsuarioPorId($idUsuario);
 			$parametrosTemplate['roles'] = RepositorioRol::getInstance()->devolverRoles();
 			$this->render($template,$parametrosTemplate);
 		}
@@ -81,7 +83,7 @@ class ControllerUsuario extends Controller{
     	}
     }
 
-    public function eliminarUsuario($idUsuario){
+    public function eliminar($idUsuario){
     	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'usuario_destroy')){
     		RepositorioUsuario::getInstance()->eliminarUsuario($idUsuario);
     		header("Location: /usuarios");
@@ -150,15 +152,15 @@ class ControllerUsuario extends Controller{
     		if(RepositorioUsuario::getInstance()->usuarioActivo($email)){
     			$usuario = RepositorioUsuario::getInstance()->buscarUsuarioPorEmail($email);
     			if(!isset($_SESSION)) {
-					sec_session_start();
+					ControllerSeguridad::getInstance()->sec_session_start();
 				} 
 				else {
 					session_destroy();
-					sec_session_start();
+					ControllerSeguridad::getInstance()->sec_session_start();
 				}
 				$_SESSION['token'] = md5(uniqid(mt_rand(), true));
 		    	$_SESSION['idUsuario'] = $usuario->getId();
-		    	$this->render('base.twig.html');
+		    	header("Location: /../");
     		}
     		else{
 				$this->formularioLogin("El usuario con el que quiere ingresar esta bloqueado");
@@ -171,7 +173,7 @@ class ControllerUsuario extends Controller{
     }
 
     public function cerrarSesion(){
-    	sec_session_start();
+    	ControllerSeguridad::getInstance()->sec_session_start();
 		$_SESSION = array();
 		session_destroy();
 		header("Location: /../");

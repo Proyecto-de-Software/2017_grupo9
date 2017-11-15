@@ -25,14 +25,13 @@
 						ControllerUsuario::getInstance()->editar($idUsuario);
 						break;
 					case 'edicion':
-						$usuario = RepositorioUsuario::getInstance()->buscarUsuarioPorId($idUsuario);
-						ControllerUsuario::getInstance()->formularioUsuario($usuario);
+						ControllerUsuario::getInstance()->formularioUsuario($idUsuario);
 						break;
 					case 'eliminar':
-						ControllerPaciente::getInstance()->eliminar($idUsuario);
+						ControllerUsuario::getInstance()->eliminar($idUsuario);
 						break;
 					default:
-						header("Location: ./index.php/usuario/$idUsuario");
+						header("Location: /index.php/usuario/$idUsuario");
 						break;
 				}
 			}
@@ -40,7 +39,7 @@
 				ControllerUsuario::getInstance()->mostrarUsuario($idUsuario);
 			}
 		}
-		else header("Location: ./index.php");
+		else header("Location: /index.php");
 			break;
 		case 'usuarios':
 			if(isset($url[2])){
@@ -56,7 +55,7 @@
 						//ControllerPaciente::getInstance()->listarPacientes($filtrado);
 						break;
 					default:
-						header("Location: ./index.php/usuarios");
+						header("Location: /index.php/usuarios");
 						break;
 				}
 			}
@@ -103,7 +102,7 @@
 										ControllerDatosDemograficos::getInstance()->agregar($idPaciente);
 										break;
 									default:
-										header("Location: ./index.php/paciente/$idPaciente/datosDemograficos");
+										header("Location: /index.php/paciente/$idPaciente/datosDemograficos");
 										break;
 								}
 									
@@ -113,7 +112,7 @@
 							}
 							break;
 						default:
-							header("Location: ./index.php/paciente/$idPaciente");
+							header("Location: /index.php/paciente/$idPaciente");
 							break;
 					}
 				}
@@ -123,7 +122,7 @@
 
 			}
 			else{
-				header("Location: ./index.php/pacientes");
+				header("Location: /index.php/pacientes");
 			}
 		
 			break;
@@ -140,7 +139,7 @@
 						ControllerPaciente::getInstance()->busqueda($_POST['busquedaNombre'],$_POST['busquedaApellido']);
 						break;
 					default:
-						header("Location: ./index.php/pacientes");
+						header("Location: /index.php/pacientes");
 						break;
 				}
 			}
@@ -156,7 +155,17 @@
 			ControllerConfiguracion::getInstance()->formularioConfiguracion();
 			break;
 		case 'configurar':
-			ControllerConfiguracion::getInstance()->modificarConfiguracion();
+			if(isset($_POST['edit'])){
+				$edit = $_POST['edit'];
+				if($edit =='editar'){
+					$edit = true;
+				}
+				elseif($edit=='agregar'){
+					$edit = false;
+				}
+			}
+			if(isset($_POST['button']))
+				ControllerConfiguracion::getInstance()->modificarConfiguracion($edit);
 			break;
 		default:
 			//HOME

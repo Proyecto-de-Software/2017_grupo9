@@ -22,32 +22,6 @@
         	$this->roles = $roles;
            
     	}
-        public function esAdministrador(){
-            foreach($roles as $rol){
-                if($rol['nombre'] == 'administrador') 
-                    return true;
-                else
-                    return false;
-            }
-        }
-        public function esRecepcionista(){
-            foreach($roles as $rol){
-                if($rol['nombre'] == 'recepcionista') 
-                    return true;
-                else
-                    return false;
-            }
-        }
-        
-        public function esPediatra(){
-            foreach($roles as $rol){
-                if($rol['nombre'] == 'pediatra') 
-                    return true;
-                else
-                    return false;
-            }
-        }
-        
     	public function getId(){
             return $this->id;
         }

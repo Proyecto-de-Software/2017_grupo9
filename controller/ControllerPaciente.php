@@ -1,7 +1,7 @@
 <?php
-
+require_once($_SERVER['DOCUMENT_ROOT'].'/Controller/Controller.php');
 class ControllerPaciente extends Controller{
-	
+	protected static $instance;
       public static function getInstance() {
       	if (!isset(self::$instance)) {
                   self::$instance = new ControllerPaciente();

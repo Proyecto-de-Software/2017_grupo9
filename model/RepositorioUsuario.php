@@ -87,7 +87,7 @@
         	$queryRoles->execute();     
           $roles = $queryRoles->fetchAll();
 	        if(sizeof($usuario)>0){
-	          $user = new Usuario($usuario[0]['username'],$usuario[0]['email'],$usuario[0]['password'],$usuario[0]['activo'], $usuario[0]['created_at'], $usuario[0]['updated_at'], $usuario[0]['first_name'],$usuario[0]['last_name'],$roles);
+	          $user = new Usuario($usuario[0]['username'],$usuario[0]['email'],$usuario[0]['password'],$usuario[0]['activo'],$usuario[0]['first_name'],$usuario[0]['last_name'],$roles);
             $user->setId($usuario[0]['id']);
             
             return $user;

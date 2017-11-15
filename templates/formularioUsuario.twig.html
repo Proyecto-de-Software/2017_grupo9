@@ -13,7 +13,8 @@
 			{% set apellido = usuario.apellido %}
 			{% set nombreUsuario = usuario.nombreUsuario %}
 			{% set email = usuario.email %}
-			{% set rolesUsuario = usuario.rolesUsuario %}
+			{% set pass = usuario.password %}
+			{% set rolesUsuario = usuario.roles %}
 
 
 		{% else %}
@@ -25,6 +26,7 @@
 			{% set apellido = '' %}
 			{% set nombreUsuario = '' %}
 			{% set email = '' %}
+			{% set pass = '' %}
 			{% set rolesUsuario = [] %}
 		{% endif %}
 		
@@ -36,19 +38,19 @@
 		  	</div>
 		  	<div class="form-group ">
 			    <label for="apellido" hidden>Apellido</label>
-			    <input type="text" class="form-control mt-3" id="apellido" name="apellido" placeholder="Apellido" value={{apellido}} required>
+			    <input type="text" class="form-control mt-3" id="apellido" name="apellido" placeholder="Apellido" value="{{apellido}}" required>
 		  	</div>
 		  	<div class="form-group ">
 			    <label for="user" hidden>Usuario</label>
-			    <input type="text" class="form-control mt-3" id="usuario"  name="usuario" placeholder="Usuario" value={{nombreUsuario}}required >
+			    <input type="text" class="form-control mt-3" id="usuario"  name="usuario" placeholder="Usuario" value="{{nombreUsuario}}" required >
 		  	</div>
 		  	<div class="form-group">
 		    	<label for="email" hidden>Email</label>
-		   		<input type="text" class="form-control mt-3" id="email" name="email" placeholder="Email" value={{email}} required>
+		   		<input type="text" class="form-control mt-3" id="email" name="email" placeholder="Email" value="{{email}}" required>
 			</div>
 		 	<div class="form-group">
 		    	<label for="password" hidden>Contraseña</label>
-		   		<input type="password" class="form-control mt-3" id="password" name="password" placeholder="Contraseña" value={{password}} required>
+		   		<input type="password" class="form-control mt-3" id="password" name="password" placeholder="Contraseña" value="{{pass}}" required>
 			</div>
 			{% if usuario is defined %}
 			<div class="form-group">
@@ -62,10 +64,10 @@
 			<div class="form-check text-left" >
 				{% for rol in roles %}
 					{% if rol in rolesUsuario %}
-							<input type="checkbox" name="rol[]" id="rol[]" class="checkbox" value={{rol.nombre}} checked> 
+							<input type="checkbox" name="rol[]" id="rol[]" class="checkbox" value="{{rol.nombre}}" checked> 
 	    					<label for="rol">{{rol.nombre}}</label><br/>
 	    			{% else %}
-	    					<input type="checkbox" name="rol[]" id="rol[]" class="checkbox" value={{rol.nombre}}> 
+	    					<input type="checkbox" name="rol[]" id="rol[]" class="checkbox" value="{{rol.nombre}}"> 
 	    					<label for="rol">{{rol.nombre}}</label><br/>
 	    			{% endif %}
      			{% endfor %}

@@ -3,6 +3,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioUsuario.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPaciente.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioConfiguracion.php'); 
 require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioRol.php'); 
+require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPermiso.php'); 
 require_once($_SERVER['DOCUMENT_ROOT'].'/model/ClaseUsuario.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/model/ClasePaciente.php'); 
 require_once($_SERVER['DOCUMENT_ROOT'].'/model/ClaseConfiguracion.php');
