@@ -93,7 +93,6 @@ class ControllerDatosDemograficos extends Controller{
 		// si no hay permiso vuelve al home
 	}
 
-	public 	
 
 
 }

@@ -30,7 +30,7 @@
 				<p class="alert alert-danger">{{mensaje}}</p>
 			{% endfor %}
 		{% endif %}
-		<h3 class="card-header text-center myHeader">Modificar paciente </h3>
+		<h3 class="card-header text-center myHeader">{{ titulo }} </h3>
 		<form class="text-center" role="form" method="POST" action="{{ ruta }}">
 			<label for="name" hidden>Id</label>
 			<input name="id" value="{{paciente.id}}" hidden>
