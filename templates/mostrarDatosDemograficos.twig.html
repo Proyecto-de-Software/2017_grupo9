@@ -49,11 +49,11 @@
  			 </tbody>
 		</table>
 		<div class="text-center">
-			<a href="/controller/ControllerDatosDemograficos.php?action=modificacionDatosDemograficos&id={{ datosDemograficos.id }}" class="btn btn-outline-success btn-own-info">Editar</a>
+			<a href="/index.php/paciente/{{paciente.id }}/datosDemograficos/editar" class="btn btn-outline-success btn-own-info">Editar</a>
 		</div>
 		{% else %}
 			<div class="text-center">
-				<a href="/controller/ControllerDatosDemograficos.php?action=altaDeDatosDemograficos&id={{ idPaciente }}" class="btn btn-outline-success btn-own-info ml-auto mr-auto">Agregar datos demográficos</a>
+				<a href="/index.php/paciente/{{paciente.id }}/datosDemograficos/nuevo" class="btn btn-outline-success btn-own-info ml-auto mr-auto">Agregar datos demográficos</a>
 			</div>
 		{% endif %}
 

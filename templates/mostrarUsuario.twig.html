@@ -41,22 +41,10 @@
 	     			 	{% endfor %}
 	     			 </td>
 	     		</tr>
-	     		<tr>
-	     			 <th scope="row">Fecha de alta: </th>
-	     			 <td>
-	     			 	{{usuario.creadoEn|date('d-m-Y')}}
-	     			 </td>
-	     		</tr>
-	     		<tr>
-	     			 <th scope="row">Fecha de ultima actualización: </th>
-	     			 <td>
-	     			 	{{usuario.actualizadoEn|date('d-m-Y')}} 
-	     			 </td>
-			    </tr>
  			 </tbody>
 		</table>
 		<div class="text-center">
-			<a href="/controller/ControllerUsuario.php?action=modificacionDeUsuario&id={{ usuario.id }}" class="btn btn-outline-success btn-own-info">Editar</a>
+			<a href="/index.php/usuario/{{ usuario.id }}/editar" class="btn btn-outline-success btn-own-info">Editar</a>
 		</div>
 	</div>
 

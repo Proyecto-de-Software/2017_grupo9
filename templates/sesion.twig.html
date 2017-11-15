@@ -1,10 +1,10 @@
 <ul class="navbar-nav float-right">
 	{% if  usuarioActual.logueado %}
-		<a class="nav-link nav-bar-link-own" role="submit" href="/controller/ControllerUsuario.php?action=mostrarUsuario&id={{usuarioActual.idUsuario}}">{{usuarioActual.username}}</a>
+		<a class="nav-link nav-bar-link-own" role="submit" href="/index.php/usuario/{{usuarioActual.idUsuario}}">{{usuarioActual.username}}</a>
 	    <a class="nav-link nav-bar-link-own" role="submit" href="/controller/ControllerUsuario.php?action=cerrarSesion">Cerrar sesión</a>
 	{% else %} 
 	    <li class="nav-item active">
-	        <a class="nav-link  nav-bar-link-own" role="button" href="/controller/ControllerUsuario.php?action=loginUsuarioView">Iniciar sesión</a>
+	        <a class="nav-link  nav-bar-link-own" role="button" href="/index.php/login">Iniciar sesión</a>
 	    </li>
 	 {% endif %}
 

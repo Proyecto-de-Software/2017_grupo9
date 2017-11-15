@@ -3,7 +3,7 @@
 	<h2> Usuarios</h2><br>
 		<div class="mb-4 mt-4">
 			<h3 >Filtrado </h3> 
-			<form  id="form" class="form-inline my-2 my-lg-0 ml-auto mr-5 d-flex justify-content-start" action="/controller/ControllerUsuario.php?action=filtradoUsuario" method="POST">
+			<form  id="form" class="form-inline my-2 my-lg-0 ml-auto mr-5 d-flex justify-content-start" action="/index.php/usuarios/filtrado" method="POST">
 				<input type="hidden" name="filtrado">		
 				{% if filtrado != null %}
 	      			<input class="form-control mr-sm-2 " type="text" placeholder="Buscar" aria-label="Buscar" name="buscar" id="buscar" value="{{filtrado.campoBuscar}}">
@@ -41,27 +41,27 @@
 				    <tr>
 				    	<td>{{ elemento.nombreUsuario }}</td>
 				    	<td>
-				    		<a href="/controller/ControllerUsuario.php?action=modificacionDeUsuario&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info">Editar</a>
+				    		<a href="/index.php/usuario/{{ elemento.id }}/editar" class="btn btn-outline-success btn-own-info">Editar</a>
 				    	</td>
 				    	<td>
-				    		<a onclick="return confirm('Seguro?')"  href="/controller/ControllerUsuario.php?action=eliminarUsuario&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info">Eliminar </a>
+				    		<a onclick="return confirm('Seguro?')"  href="/index.php/usuario/{{ elemento.id }}/eliminar" class="btn btn-outline-success btn-own-info">Eliminar </a>
 				    	</td>
 			      		<td>
 				      		{% if elemento.activo %}
-				      			<a href="/controller/ControllerUsuario.php?action=desactivarUsuario&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info"> Bloquear </a>
+				      			<a href="/index.php/usuario/{{ elemento.id }}/bloquear" class="btn btn-outline-success btn-own-info"> Bloquear </a>
 				      		{% else %}
-				      			<a href="/controller/ControllerUsuario.php?action=activarUsuario&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info"> Activar </a>
+				      			<a href="/index.php/usuario/{{ elemento.id }}/activar" class="btn btn-outline-success btn-own-info"> Activar </a>
 			      			{% endif %}	
 				      	</td>
 				      	<td>
-				      		<a href="/controller/ControllerUsuario.php?action=mostrarUsuario&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info">Mas información</a>
+				      		<a href="/index.php/usuario/{{ elemento.id }}" class="btn btn-outline-success btn-own-info">Mas información</a>
 				      	</td>
 				    </tr>
 			     {% endfor %}
 			    
 			</tbody>
 		</table>
-		<a class="btn btn-success mt-3 mb-5 text-right" role="button" href="/../controller/ControllerUsuario.php?action=agregarUsuarioView">
+		<a class="btn btn-success mt-3 mb-5 text-right" role="button" href="/index.php/usuarios/nuevo">
 			Agregar nuevo usuario
 		</a>
 		

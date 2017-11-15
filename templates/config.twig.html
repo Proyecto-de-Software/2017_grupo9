@@ -1,7 +1,7 @@
 <section class="row mx-auto mt-5 ">
 	<div class="login col-md-6  mx-auto mt-4 mb-4 pb-5 pt-5 pr-5 pl-5 border rounded ">
 		<h3 class="card-header text-center myHeader mb-4">Configuración </h3>
-		<form class="text-left" role="form" method="POST" action="/controller/ControllerConfiguracion.php?action=modificarConfiguracion">
+		<form class="text-left" role="form" method="POST" action="/index.php/configurar
 			{% if mensaje is defined %}<p class="text-danger">{{mensaje}}</p>{% endif %}
 			<label for="id" hidden>Id</label>
 			<input name="id" value="{{configuracionActual.id}}" hidden>

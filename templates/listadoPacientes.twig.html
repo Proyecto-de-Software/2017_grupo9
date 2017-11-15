@@ -2,7 +2,7 @@
 	<h2> Pacientes </h2><br>
 	<div class="mb-4 mt-4">
 			<h3 >Búsqueda</h3> 
-			<form  id="form" class="form-inline my-2 my-lg-0 ml-auto mr-5 d-flex justify-content-start" action="/controller/ControllerPaciente.php?action=busquedaNomYAp" method="POST">
+			<form  id="form" class="form-inline my-2 my-lg-0 ml-auto mr-5 d-flex justify-content-start" action="/index.php/pacientes/busquedaNombre" method="POST">
 				<div class="form-group ">
 					<label for="busquedaNombre" hidden>Nombre</label>
 					<input class="form-control mt-3 mr-3" type="text" aria-label="busquedaNombre" name="busquedaNombre" id="busquedaNombre" placeholder="Nombre">
@@ -11,7 +11,7 @@
 				<button class="btn btn-success btn-search mt-3 mb-0 text-right" role="button" type="submit">Buscar</button>
 				</div>
 		    </form>
-		    <form  id="form" class="form-inline my-2 my-lg-0 ml-auto mr-5 d-flex justify-content-start" action="/controller/ControllerPaciente.php?action=busquedaDocumento" method="POST">
+		    <form  id="form" class="form-inline my-2 my-lg-0 ml-auto mr-5 d-flex justify-content-start" action="/index.php/pacientes/busquedaDocumento" method="POST">
 				<select class="form-control mt-3 mr-3" id="busquedaTipoDoc" name="busquedaTipoDoc" onchange="myFunction()">
 					<option value="2">DNI</option>
 					<option value="5">PASAPORTE</option>
@@ -56,23 +56,21 @@
 			    	</td>
 			    	{% if 'pediatra' in usuarioActual.roles or 'recepcionista' in usuarioActual.roles %}
 				    	<td>
-				    		<a href="/controller/ControllerPaciente.php?action=modificacionDePaciente&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info">Editar</a>
+				    		<a href="/index.php/paciente/{{ elemento.id }}/editar" class="btn btn-outline-success btn-own-info">Editar</a>
 				    	</td>
 				    	<td>
-				    		<a href="/controller/ControllerPaciente.php?action=mostrarPaciente&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info">Mas información</a>
+				    		<a href="/index.php/paciente/{{ elemento.id }}" class="btn btn-outline-success btn-own-info">Mas información</a>
 				    	</td>
 				    {% endif %}
 			    	{% if 'administrador' in usuarioActual.roles %}
 				    	<td>
-				    		<a onclick="return confirm('Seguro?')"  href="/controller/ControllerPaciente.php?action=eliminarPaciente&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info">Eliminar </a>
+				    		<a onclick="return confirm('Seguro?')"  href="/index.php/paciente/{{ elemento.id }}/eliminar" class="btn btn-outline-success btn-own-info">Eliminar </a>
 				    	</td>
-				    	<td>
-				    		<a onclick="return confirm('Seguro?')"  href="/controller/ControllerDatosDemograficos.php?action=eliminarDatosDemograficos&id={{ elemento.id }}" class="btn btn-outline-success btn-own-info">Eliminar datos demográficos</a>
-				    	</td>
+
 				    {% endif %}
 			    </tr>
 			    {% endfor %}
 			</tbody>
 		</table>
-		<a class="btn btn-success mt-3 mb-5 text-right" role="button" href="/../controller/ControllerPaciente.php?action=altaDePaciente">Agregar nuevo paciente</a>
+		<a class="btn btn-success mt-3 mb-5 text-right" role="button" href="/index.php/paciente/{{ elemento.id }}/nuevo">Agregar nuevo paciente</a>
 </section>

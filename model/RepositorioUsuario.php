@@ -22,8 +22,8 @@
   			$query->bindParam(':username', $usuario->getNombreUsuario());
   			$query->bindParam(':password', $usuario->getPassword());
   			$query->bindParam(':activo', $usuario->getActivo());
-  			$query->bindParam(':updated_at', $usuario->getFechaActualizacion());
-  			$query->bindParam(':created_at', $usuario->getFechaCreacion());
+  			$query->bindParam(':updated_at', date("Y-m-d"));
+  			$query->bindParam(':created_at', date("Y-m-d"));
   			$query->bindParam(':first_name', $usuario->getNombre());
   			$query->bindParam(':last_name', $usuario->getApellido());
 			  if($query->execute() == 1){
@@ -43,14 +43,13 @@
   		public function modificarUsuario($usuario,$idUsuario){
 
   			$conexion = $this->getConnection();
-  			$query = $conexion->prepare("UPDATE  usuario SET email=:email, username=:username, password=:password, activo=:activo, updated_at=:updated_at, created_at=:created_at, first_name=:first_name, last_name=:last_name WHERE id=:id");
-        $now = date('Y-m-d');
+  			$query = $conexion->prepare("UPDATE  usuario SET email=:email, username=:username, password=:password, activo=:activo, updated_at=:updated_at, first_name=:first_name, last_name=:last_name WHERE id=:id");
+
   			$query->bindParam(':email', $usuario->getEmail());
   			$query->bindParam(':username', $usuario->getNombreUsuario());
   			$query->bindParam(':password', $usuario->getPassword());
   			$query->bindParam(':activo', $usuario->getActivo());
-  			$query->bindParam(':updated_at', $now);
-  			$query->bindParam(':created_at', $usuario->getFechaCreacion());
+  			$query->bindParam(':updated_at', date("Y-m-d"));
   			$query->bindParam(':first_name', $usuario->getNombre());
   			$query->bindParam(':last_name', $usuario->getApellido());
         $query->bindParam(':id',$idUsuario);

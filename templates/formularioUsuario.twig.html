@@ -1,0 +1,79 @@
+<section class="row mx-auto mt-5 ">
+	<div class="login col-md-5  mx-auto mt-4 mb-4 pb-5 pt-5 pr-5 pl-5 border rounded ">
+		{% if not validacion.ok  %}
+			{% for mensaje in validacion[1:] %}
+				<p class="alert alert-danger">{{mensaje}}</p>
+			{% endfor %}
+		{% endif %}
+		{% if usuario is defined  %}
+			<h3 class="card-header text-center myHeader">Modificar usuario </h3>
+			{% set boton = 'Modificar' %}
+			{% set ruta = '/index.php/usuario/{{usuario.id}}/editar' %}
+			{% set nombre = usuario.nombre %}
+			{% set apellido = usuario.apellido %}
+			{% set nombreUsuario = usuario.nombreUsuario %}
+			{% set email = usuario.email %}
+			{% set rolesUsuario = usuario.rolesUsuario %}
+
+
+		{% else %}
+			<h3 class="card-header text-center myHeader">Agregar usuario </h3>
+			{% set ruta = '/index.php/usuario/{{usuario.id}}/agregar' %}
+			{% set boton = 'Agregar' %}
+			{% set ruta = '' %}
+			{% set nombre = '' %}
+			{% set apellido = '' %}
+			{% set nombreUsuario = '' %}
+			{% set email = '' %}
+			{% set rolesUsuario = [] %}
+		{% endif %}
+		
+		<form class="text-center" role="form" method="POST" onsubmit="return validarRoles()" action="{{ruta}}">
+
+			<div class="form-group ">
+			    <label for="name" hidden>Nombre</label>
+			    <input type="text" class="form-control mt-3" id="nombre" name="nombre" placeholder="Nombre" value="{{nombre}}" required>
+		  	</div>
+		  	<div class="form-group ">
+			    <label for="apellido" hidden>Apellido</label>
+			    <input type="text" class="form-control mt-3" id="apellido" name="apellido" placeholder="Apellido" value={{apellido}} required>
+		  	</div>
+		  	<div class="form-group ">
+			    <label for="user" hidden>Usuario</label>
+			    <input type="text" class="form-control mt-3" id="usuario"  name="usuario" placeholder="Usuario" value={{nombreUsuario}}required >
+		  	</div>
+		  	<div class="form-group">
+		    	<label for="email" hidden>Email</label>
+		   		<input type="text" class="form-control mt-3" id="email" name="email" placeholder="Email" value={{email}} required>
+			</div>
+		 	<div class="form-group">
+		    	<label for="password" hidden>Contraseña</label>
+		   		<input type="password" class="form-control mt-3" id="password" name="password" placeholder="Contraseña" value={{password}} required>
+			</div>
+			{% if usuario is defined %}
+			<div class="form-group">
+		    	<label for="password2" hidden>Repita contraseña</label>
+		   		<input type="password" class="form-control mt-3" id="password2" name="password2" placeholder="Repita contraseña" required>
+			</div>
+			{% endif %}
+
+			<p class="text-left">Roles:</p>
+			<p class="text-danger" name="mensajeRoles"> </p>
+			<div class="form-check text-left" >
+				{% for rol in roles %}
+					{% if rol in rolesUsuario %}
+							<input type="checkbox" name="rol[]" id="rol[]" class="checkbox" value={{rol.nombre}} checked> 
+	    					<label for="rol">{{rol.nombre}}</label><br/>
+	    			{% else %}
+	    					<input type="checkbox" name="rol[]" id="rol[]" class="checkbox" value={{rol.nombre}}> 
+	    					<label for="rol">{{rol.nombre}}</label><br/>
+	    			{% endif %}
+     			{% endfor %}
+  			</div>
+  			<div class="form-group">
+				<input type="hidden" name="token" value={{usuarioActual.token}}>
+			</div>
+			<button type="submit" class="btn btn-outline-success  btn-own-info">{{boton}}</button>
+		</form>
+	</div>
+</section>
