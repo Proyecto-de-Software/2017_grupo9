@@ -30,6 +30,7 @@ class ControllerUsuario extends Controller{
 		$usuario = $this->crearUsuarioNuevo();
 		$usuario->setId($idUsuario);
 		$usuario->setPassword2($_POST['password2']);
+		return $usuario;
 	}
 
     public function agregar(){
@@ -67,11 +68,11 @@ class ControllerUsuario extends Controller{
      public function editar($idUsuario){
      	if((RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'usuario_update')) && (isset($_POST['token']) && $_POST['token'] == $_SESSION['token'])){
     		$usuario = $this->crearUsuarioExistente($idUsuario);
-			$validacion = RepositorioUsuario::getInstance()->usuarioValido($usuario);
+			$validacion = RepositorioUsuario::getInstance()->usuarioValido($usuario,true);
 			if($validacion['ok']){
 				RepositorioUsuario::getInstance()->modificarUsuario($usuario,$idUsuario); 
 				//cambiar function modelo que reciba user y id
-				header("Location: ./index.php/usuario/$idUsuario");
+				header("Location: /index.php/usuario/$idUsuario");
 			}
 			else{
 				$this->formularioUsuario($usuario,$validacion);
@@ -79,14 +80,14 @@ class ControllerUsuario extends Controller{
 
     	}
     	else{
-    		header("Location: ./index.php");
+    		header("Location: /index.php");
     	}
     }
 
     public function eliminar($idUsuario){
     	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'usuario_destroy')){
     		RepositorioUsuario::getInstance()->eliminarUsuario($idUsuario);
-    		header("Location: /usuarios");
+    		header("Location: /index.php/usuarios");
     	}
     	else{
     		header("Location: ./index.php");
@@ -121,20 +122,20 @@ class ControllerUsuario extends Controller{
 		}
     }
 
-    public function activarUsuario($idUsuario){
+    public function activar($idUsuario){
     	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'usuario_update')){
 			RepositorioUsuario::getInstance()->activarUsuario($idUsuario);
-			header("Location: ./usuarios");
+			header("Location: /index.php/usuarios");
 		}
 		else{
-			header("Location: ./");
+			header("Location: /");
 		}
     }
 
-    public function desactivarUsuario($idUsuario){
+    public function bloquear($idUsuario){
     	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'usuario_update')){
 			RepositorioUsuario::getInstance()->bloquearUsuario($idUsuario);
-			header("Location: ./usuarios");
+			header("Location: /index.php/usuarios");
 		}
 		else{
 			header("Location: ./");

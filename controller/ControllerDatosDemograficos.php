@@ -16,7 +16,7 @@ class ControllerDatosDemograficos extends Controller{
     }
 
 	public function agregar(){
-		if RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'datosdemograficos_new'){
+		if (RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'datosdemograficos_new')){
 			$datosDemograficos = crear();
 			if(RepositorioDatosDemograficos::getInstance()->agregar($datosDemograficos)){
 	 	  		$idPaciente = $datosDemograficos->getPaciente();
@@ -30,7 +30,7 @@ class ControllerDatosDemograficos extends Controller{
 	}
 
     public function mostrar($idPaciente){
-    	if RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'datosdemograficos_show'){
+    	if (RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'datosdemograficos_show')){
 	    	$template = 'administracionMostrarDatosDemograficos.twig';
 			if(!($datosDemograficos = RepositorioDatosDemograficos::getInstance()->buscarPorIdPaciente($idPaciente))){
 				$datosDemograficos = null;

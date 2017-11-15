@@ -30,6 +30,12 @@
 					case 'eliminar':
 						ControllerUsuario::getInstance()->eliminar($idUsuario);
 						break;
+					case 'activar':
+						ControllerUsuario::getInstance()->activar($idUsuario);
+						break;
+					case 'bloquear':
+						ControllerUsuario::getInstance()->bloquear($idUsuario);
+						break;
 					default:
 						header("Location: /index.php/usuario/$idUsuario");
 						break;
