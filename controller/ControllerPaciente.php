@@ -15,14 +15,13 @@ class ControllerPaciente extends Controller{
 		return $paciente;
       }
 
-      public function formularioPaciente($paciente=null, $validacion=null){
+      public function formulario($idPaciente=null, $validacion=null){
             if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_new') && RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'],'paciente_update')){
 
-                  $template = 'administracionModificarPaciente.twig';
+                  $template = 'administracionFormularioPaciente.twig';
+                  $parametrosTemplate = $this->tiposDeDatos();
                   $parametrosTemplate['validacion'] = $validacion;
-                  $parametrosTemplate['paciente'] = $paciente;
-                  $parametrosTemplate['obrasSociales'] = RepositorioPaciente::getInstance()->devolverObrasSociales();
-                  $parametrosTemplate['$tiposDeDocumento'] = RepositorioPaciente::getInstance()->devolverTiposDeDocumento();
+                  $parametrosTemplate['paciente'] = RepositorioPaciente::getInstance()->buscarPacientePorId($idPaciente);
                   $this->render($template,$parametrosTemplate);
             } else {
                   header("Location: ./index.php");
@@ -72,11 +71,10 @@ class ControllerPaciente extends Controller{
 
       public function mostrar($id){
             if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_show')){
-                  $paciente = RepositorioPaciente::getInstance()->buscarPacientePorId($_GET['id']);
+                  $paciente = RepositorioPaciente::getInstance()->buscarPacientePorId($id);
                   $template = 'administracionMostrarPaciente.twig';
+                  $parametrosTemplate = $this->tiposDeDatosDeUnPaciente($paciente);
                   $parametrosTemplate['paciente'] = $paciente;
-                  $parametrosTemplate['obraSocial'] = RepositorioPaciente::getInstance()->devolverObraSocialPorId($paciente->getIdObraSocial());
-                  $parametrosTemplate['$tipoDeDocumento'] = RepositorioPaciente::getInstance()->devolverTipoDeDocumentoPorId($paciente->getIdTipoDocumento());
                   $this->render($template,$parametrosTemplate);
             } else {
                   header("Location: ./index.php");
@@ -111,6 +109,18 @@ class ControllerPaciente extends Controller{
             } else {
                   header("Location: ./index.php");
             }
+      }
+
+      public function tiposDeDatos(){
+            $datos['obrasSociales'] = RepositorioPaciente::getInstance()->devolverObrasSociales();
+            $datos['tiposDeDocumento'] = RepositorioPaciente::getInstance()->devolverTiposDeDocumento();
+            return $datos;
+      }
+
+      public function tiposDeDatosDatosDeUnPaciente($paciente){
+            $datos['obraSocial'] = RepositorioPaciente::getInstance()->devolverObraSocialPorId($paciente->getIdObraSocial());
+            $datos['$tipoDeDocumento'] = RepositorioPaciente::getInstance()->devolverTipoDeDocumentoPorId($paciente->getIdTipoDocumento());
+            return $datos;
       }
 }
 

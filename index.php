@@ -131,7 +131,10 @@
 			if(isset($url[2])){
 				switch ($url[2]) {
 					case 'nuevo':
-						ControllerPaciente::getInstance()->formularioPaciente();
+						ControllerPaciente::getInstance()->formulario();
+						break;
+					case 'agregar':
+						ControllerPaciente::getInstance()->agregar();
 						break;
 					case 'busquedaDocumento':
 						ControllerPaciente::getInstance()->busqueda($_POST['busquedaTipoDoc'],$_POST['busquedaNumeroDoc']);
