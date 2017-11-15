@@ -1,163 +1,100 @@
 <?php
+
+class ControllerDatosDemograficos extends Controller{
 	
-	#Nos ubicamos en el document_root para evitar problemas al usar twig, ya que twig usa paths relativos y si no estamos en la raiz no funciona.
-	chdir($_SERVER['DOCUMENT_ROOT']);
+    public static function getInstance() {
+      	if (!isset(self::$instance)) {
+          self::$instance = new ControllerDatosDemograficos();
+      	}
+      	return self::$instance;
+    }   
 
-
-	require_once($_SERVER['DOCUMENT_ROOT']."/model/RepositorioConfiguracion.php");
-
-	require_once($_SERVER['DOCUMENT_ROOT']."/model/ClasePaciente.php");
-	require_once($_SERVER['DOCUMENT_ROOT']."/model/RepositorioPaciente.php");
-	require_once($_SERVER['DOCUMENT_ROOT']."/model/RepositorioDatosDemograficos.php");
-	require_once($_SERVER['DOCUMENT_ROOT']."/model/RepositorioRol.php");
-	require_once($_SERVER['DOCUMENT_ROOT']."/model/RepositorioPermiso.php");
-	require_once($_SERVER['DOCUMENT_ROOT']."/view/TwigView.php");
-	require_once($_SERVER['DOCUMENT_ROOT']."/controller/ControllerSeguridad.php");
-
-	if(!isset($_SESSION)) {
-		sec_session_start();
-	} else {
-		session_regenerate_id();
-	}
-
-	 function obtenerConfiguracion(){
-      require_once($_SERVER['DOCUMENT_ROOT']."/view/Home.php");
-      $config = RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion();
-      $datosConfigurados =array(
-        'habilitado' => $config->getHabilitado(),
-        'titulo' => $config->getTitulo(),
-            'hospital' => $config->getDescripcionHospital(),
-            'guardia' => $config->getDescripcionGuardia(),
-            'especialidades' => $config->getDescripcionEspecialidades(),
-            'contacto' => $config->getContacto()
-        );
-        return $datosConfigurados;
-    }
-    $config = obtenerConfiguracion();
-    if(!$config['habilitado']){
-      header("Location: /../");
-    }
-
-    function usuarioActual(){
-    	if(isset($_SESSION['idUsuario'])){
-    		$usuario = RepositorioUsuario::getInstance()->buscarUsuarioPorId($_SESSION['idUsuario']);
-    		return array(	'logueado'=>true, 
-    						'username'=>$usuario->getNombreUsuario(),
-    						'roles'=>RepositorioRol::getInstance()->buscarRolesDeUsuario($_SESSION['idUsuario']),
-    						'idUsuario'=>$_SESSION['idUsuario'],
-    						'token'=>$_SESSION['token']
-    					);
-    	}
-    	else return false;
-    }
-
-	function crearDatosDemograficos(){
-		$datosDemograficos = new DatosDemograficos($_POST['heladera'], $_POST['electricidad'], $_POST['mascota'], $_POST['tipoVivienda'], $_POST['tipoCalefaccion'], $_POST['tipoAgua'], $_POST['idPaciente']);
+    public function crearDatosDemograficos(){
+    	//Instancia un objeto de la clase DatosDemograficos, con los datos recibidos por POST desde el formulario de alta o edicion de datos demograficos.
+    	$datosDemograficos = new DatosDemograficos($_POST['heladera'], $_POST['electricidad'], $_POST['mascota'], $_POST['tipoVivienda'], $_POST['tipoCalefaccion'], $_POST['tipoAgua'], $_POST['idPaciente']);
 		return $datosDemograficos;
-	}
+    }
 
-	function mostrarDatosDemograficos($datosDemograficos,$tipoDeVivienda=null,$tipoDeCalefaccion=null,$tipoDeAgua=null){
-		echo TwigView::getTwig()->render('administracionMostrarDatosDemograficos.twig', array('usuarioActual' => usuarioActual(), 'idPaciente' => $_GET['id'], 'datosDemograficos' => $datosDemograficos, 'tipoDeVivienda' => $tipoDeVivienda, 'tipoDeCalefaccion' => $tipoDeCalefaccion, 'tipoDeAgua' => $tipoDeAgua, 'configuracion'=>obtenerConfiguracion()));
-	}
+    public function mostrarDatosDemograficos($datosDemograficos,$tipoDeVivienda=null,$tipoDeCalefaccion=null,$tipoDeAgua=null){
+    	$template = 'administracionMostrarDatosDemograficos.twig';
+    	$parametrosTemplate['idPaciente'] = $_GET['id']; //ver si se manejara asi o no 
+		$parametrosTemplate['datosDemograficos'] = $datosDemograficos; // esto no se estaria repitiendo?
+		$parametrosTemplate['tipoDeVivienda'] = $tipoDeVivienda;
+		$parametrosTemplate['tipoDeCalefaccion'] = $tipoDeCalefaccion;
+		$parametrosTemplate['tipoDeAgua'] = $tipoDeAgua;
+		$this->render($template,$parametrosTemplate);
 
-	function agregarDatosDemograficos($tiposDeVivienda,$tiposDeCalefaccion,$tiposDeAgua){
-		echo TwigView::getTwig()->render('administracionAgregarDatosDemograficos.twig', array('usuarioActual' => usuarioActual(), 'idPaciente' => $_GET['id'], 'tiposDeVivienda' => $tiposDeVivienda, 'tiposDeCalefaccion' => $tiposDeCalefaccion, 'tiposDeAgua' => $tiposDeAgua, 'configuracion'=>obtenerConfiguracion()));
-	}
+    }	
 
-	function modificarDatosDemograficos($datosDemograficos,$tiposDeVivienda,$tiposDeCalefaccion,$tiposDeAgua){
-		echo TwigView::getTwig()->render('administracionModificarDatosDemograficos.twig', array('usuarioActual' => usuarioActual(), 'datosDemograficos' => $datosDemograficos, 'tiposDeVivienda' => $tiposDeVivienda, 'tiposDeCalefaccion' => $tiposDeCalefaccion, 'tiposDeAgua' => $tiposDeAgua, 'configuracion' => obtenerConfiguracion()));
-	}
+    public function agregarDatosDemograficos($tiposDeVivienda,$tiposDeCalefaccion,$tiposDeAgua){
+    	$template = 'administracionAgregarDatosDemograficos.twig';
+    	$parametrosTemplate['idPaciente'] = $_GET['id']; //ver si se manejara asi o no 
+		$parametrosTemplate['tipoDeVivienda'] = $tipoDeVivienda;
+		$parametrosTemplate['tipoDeCalefaccion'] = $tipoDeCalefaccion;
+		$parametrosTemplate['tipoDeAgua'] = $tipoDeAgua;
+		$this->render($template,$parametrosTemplate);
 
-	function tiposDatosDemograficos(&$tiposDeVivienda,&$tiposDeCalefaccion,&$tiposDeAgua){
+    }
+
+    public function modificarDatosDemograficos($datosDemograficos,$tiposDeVivienda,$tiposDeCalefaccion,$tiposDeAgua){
+    	$template = 'administracionModificarDatosDemograficos.twig';
+		$parametrosTemplate['tipoDeVivienda'] = $tipoDeVivienda;
+		$parametrosTemplate['tipoDeCalefaccion'] = $tipoDeCalefaccion;
+		$parametrosTemplate['tipoDeAgua'] = $tipoDeAgua;
+		$this->render($template,$parametrosTemplate);
+    }
+    //ver si no seria mejor devolver un arreglo y listo.
+    //ej: $tipos['agua'] = RepositorioDatosDemograficos::getInstance()->devolverTiposDeAgua();
+    //$tipos['calefaccion'] = RepositorioDatosDemograficos::getInstance()->devolverTiposDeCalefaccion();
+    //$tipos['vivienda'] = $tiposDeVivienda = RepositorioDatosDemograficos::getInstance()->devolverTiposDeVivienda();
+    //return $tipos
+ 	public function tiposDatosDemograficos(&$tiposDeVivienda,&$tiposDeCalefaccion,&$tiposDeAgua){
 		$tiposDeVivienda = RepositorioDatosDemograficos::getInstance()->devolverTiposDeVivienda();
 		$tiposDeCalefaccion = RepositorioDatosDemograficos::getInstance()->devolverTiposDeCalefaccion();
 		$tiposDeAgua = RepositorioDatosDemograficos::getInstance()->devolverTiposDeAgua();
 	}
-
-	function tiposDeUnDatoDemograficos($datosDemograficos,&$tipoDeVivienda,&$tipoDeCalefaccion,&$tipoDeAgua){
+	//Lo mismo que la funcion anterior, es mejor y mas comodo manejar el resultado de la funcion como un arrray, que como variables sueltas que primero tenes que instanciarlas para mandarselas y que te seteen el dato, (muy pascal) jaja
+	public function tiposDeUnDatoDemograficos($datosDemograficos,&$tipoDeVivienda,&$tipoDeCalefaccion,&$tipoDeAgua){
 		$tipoDeVivienda = RepositorioDatosDemograficos::getInstance()->devolverTipoDeViviendaPorId($datosDemograficos->getTipoVivienda());
 		$tipoDeCalefaccion = RepositorioDatosDemograficos::getInstance()->devolverTipoDeCalefaccionPorId($datosDemograficos->getTipoCalefaccion());
 		$tipoDeAgua = RepositorioDatosDemograficos::getInstance()->devolverTipoDeAguaPorId($datosDemograficos->getTipoAgua());
 	}
 
-
-	if(isset($_GET['action'])){
-		switch ($_GET['action']) {
-			case 'altaDeDatosDemograficos':
-				$datosDemograficos = RepositorioDatosDemograficos::getInstance()->buscarDatosDemograficosPorIdPaciente($_GET['id']);
-    			tiposDatosDemograficos($tiposDeVivienda,$tiposDeCalefaccion,$tiposDeAgua);
-				agregarDatosDemograficos($tiposDeVivienda,$tiposDeCalefaccion,$tiposDeAgua);
-	       		break;
-	    	case 'agregarDatosDemograficos':
-	    		if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'datosdemograficos_new')){
-	    			$datosDemograficos = crearDatosDemograficos();
-	    			
-        			if(RepositorioDatosDemograficos::getInstance()->agregarDatosDemograficos($datosDemograficos)){
-		    			$idPaciente = $datosDemograficos->getPaciente();
-		    			$nuevosDatosDemograficos = RepositorioDatosDemograficos::getInstance()->buscarDatosDemograficosPorIdPaciente($idPaciente);
-		    			header("location: /../controller/ControllerDatosDemograficos.php/?action=mostrarDatosDemograficos&id=$idPaciente");
-		       		}
-		       		else{
-						header("location: /../controller/ControllerDatosDemograficos.php/?action=altaDeDatosDemograficos");
-		       		}
-		       	} else {
-	    			header("Location: /../");
-	    		}
-	    		break;
-	    	case 'mostrarDatosDemograficos':
-	    		if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'datosdemograficos_show')){
-	    			
-	    			if($datosDemograficos = RepositorioDatosDemograficos::getInstance()->buscarDatosDemograficosPorIdPaciente($_GET['id'])){
-	    				tiposDeUnDatoDemograficos($datosDemograficos,$tipoDeVivienda,$tipoDeCalefaccion,$tipoDeAgua);
-	    				mostrarDatosDemograficos($datosDemograficos,$tipoDeVivienda,$tipoDeCalefaccion,$tipoDeAgua);
-	    			}
-	    			else{
-	    				mostrarDatosDemograficos($datosDemograficos);
-	    			}
-	    			
-
-	    		} else {
-	    			header("Location: /../");
-	    		}
-	    		break;
-	    	case 'modificacionDatosDemograficos':
-	    		if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'datosdemograficos_update')){
-	    			if($datosDemograficos = RepositorioDatosDemograficos::getInstance()->buscarDatosDemograficosPorId($_GET['id'])){
-		    			tiposDatosDemograficos($tiposDeVivienda,$tiposDeCalefaccion,$tiposDeAgua);
-		    			modificarDatosDemograficos($datosDemograficos,$tiposDeVivienda,$tiposDeCalefaccion,$tiposDeAgua);
-		    		}
-	    		} else{
-	    			header("Location: /../");
-	    		}		
-
-	    		break;
-	    	case 'modificarDatosDemograficos':
-	    		if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'datosdemograficos_update')){
-	    			$datosDemograficos = crearDatosDemograficos();
-	    			$datosDemograficos->setId($_GET['id']);
-	    			if($datosDemograficosModificados = RepositorioDatosDemograficos::getInstance()->modificarDatosDemograficos($datosDemograficos)){
-	    				tiposDeUnDatoDemograficos($datosDemograficos,$tipoDeVivienda,$tipoDeCalefaccion,$tipoDeAgua);
-	    				mostrarDatosDemograficos($datosDemograficos,$tipoDeVivienda,$tipoDeCalefaccion,$tipoDeAgua);
-	    			}
-	    			else{
-	    				$datosDemograficos = RepositorioDatosDemograficos::getInstance()->buscarDatosDemograficosPorIdPaciente($_GET['id']);
-	    				tiposDatosDemograficos($tiposDeVivienda,$tiposDeCalefaccion,$tiposDeAgua);
-		    			modificarDatosDemograficos($datosDemograficos,$tiposDeVivienda,$tiposDeCalefaccion,$tiposDeAgua);
-	    			}
-	    		} else{
-	    			header("Location: /../");
-	    		}
-	    		break;
-    		case 'eliminarDatosDemograficos':
-    			if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'datosdemograficos_destroy')){
-    				if($datosDemograficos = RepositorioDatosDemograficos::getInstance()->buscarDatosDemograficosPorIdPaciente($_GET['id'])){
-
-    					RepositorioDatosDemograficos::getInstance()->eliminarDatosDemograficos($datosDemograficos);
-		        	}
-		        	header("location: /../controller/ControllerPaciente.php/?action=listarPacientes");
-		        } else {
-	        		header("Location: /../");
-    			}
-    			break;
-	    	}
+	public function formularioDatosDemograficos($idPaciente){	
+		$datosDemograficos = RepositorioDatosDemograficos::getInstance()->buscarDatosDemograficosPorIdPaciente($idPaciente);
+    	$this->tiposDatosDemograficos($tiposDeVivienda,$tiposDeCalefaccion,$tiposDeAgua);
+		$this->agregarDatosDemograficos($tiposDeVivienda,$tiposDeCalefaccion,$tiposDeAgua);
+	}
+/*
+	public function agregarDatosDemograficos(){
+		//if RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'datosdemograficos_new')
+		$datosDemograficos = crearDatosDemograficos();
+		if(RepositorioDatosDemograficos::getInstance()->agregarDatosDemograficos($datosDemograficos)){
+		   $idPaciente = $datosDemograficos->getPaciente();
+		   //header a mostarDatos demograficos del paciente con $idPaciente
 		}
+		else{
+			//volver a alta de datos demograficos
+		}
+		//si no hay permiso vuelve al /
+	}
+*/
+	public function mostarDatosDemograficos($idPaciente){
+		//PEDIR A NACHO QUE ME EXPLIQUE QUE ONDA EL IF ELSE
+		//if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'datosdemograficos_show')){
+		$datosDemograficos = RepositorioDatosDemograficos::getInstance()->buscarDatosDemograficosPorIdPaciente($idPaciente);
+		if($datosDemograficos){
+			$this->tiposDeUnDatoDemograficos($datosDemograficos,$tipoDeVivienda,$tipoDeCalefaccion,$tipoDeAgua);
+		    $this->mostrarDatosDemograficos($datosDemograficos,$tipoDeVivienda,$tipoDeCalefaccion,$tipoDeAgua);
+		}
+		else{
+			 $this->mostrarDatosDemograficos($datosDemograficos);
+		}
+		// si no hay permiso vuelve al home
+	}
+
+
+
+}
+
+?>

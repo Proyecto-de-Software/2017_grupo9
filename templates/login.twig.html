@@ -3,7 +3,7 @@
 		{% if validacion.ok %}
 			{% for mensaje in validacion %}
 				<p class="alert alert-danger"> {{mensaje}} </p> 
-			{% endif %}
+			{% endfor %}
 		{% endif %}
 		<h3 class="card-header text-center myHeader">Iniciar sesión </h3>
 		<form class="text-center" role="form" method="POST" action="/index.php/entrar">

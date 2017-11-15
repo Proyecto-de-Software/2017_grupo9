@@ -1,7 +1,14 @@
 <?php
-//include_once 'psl-config.php';
- 
-function sec_session_start() {
+
+class ControllerSeguridad extends Controller{
+
+	public static function getInstance() {
+      	if (!isset(self::$instance)) {
+          self::$instance = new ControllerSeguridad();
+      	}
+      	return self::$instance;
+      }  
+    public function sec_session_start() {
     //$session_name = 'sec_session_id';   // Configura un nombre de sesión personalizado.
     $secure = false;
     // Esto detiene que JavaScript sea capaz de acceder a la identificación de la sesión.
@@ -22,6 +29,7 @@ function sec_session_start() {
     //session_name($session_name);
     session_start();            // Inicia la sesión PHP.
     session_regenerate_id();    // Regenera la sesión, borra la previa. 
+} 
 }
 
 ?>

@@ -1,68 +1,167 @@
 <?php
-#Mostrar errores:
-ini_set('display_startup_errors',1);
-ini_set('display_errors',1);
-#Notificar todos los errores de PHP:
-error_reporting(-1);
+	require_once($_SERVER['DOCUMENT_ROOT'].'/Controller/Controller.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/Controller/ControllerUsuario.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/Controller/ControllerPaciente.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/Controller/ControllerConfiguracion.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/Controller/ControllerDatosDemograficos.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/Controller/ControllerSeguridad.php');
 
-require_once($_SERVER['DOCUMENT_ROOT']."/controller/ControllerSeguridad.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/controller/ResourceController.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/model/PDORepository.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/model/ResourceRepository.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/model/Resource.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioUsuario.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioRol.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/model/ClaseUsuario.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioConfiguracion.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/model/ClaseConfiguracion.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/view/TwigView.php');
-
-function obtenerConfiguracion(){
-	$config = RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion();
-	$datosConfigurados =array(
-		'habilitado' => $config->getHabilitado(),
-        'hospital' => $config->getDescripcionHospital(),
-        'guardia' => $config->getDescripcionGuardia(),
-        'titulo' => $config->getTitulo(),
-        'especialidades' => $config->getDescripcionEspecialidades(),
-        'contacto' => $config->getContacto()
-    );
-    return $datosConfigurados;
-}
-
-function usuarioActual(){
-	if(isset($_SESSION['idUsuario'])){
-		$usuario = RepositorioUsuario::getInstance()->buscarUsuarioPorId($_SESSION['idUsuario']);
-		return array(	'logueado'=>true, 
-						'username'=>$usuario->getNombreUsuario(),
-						'roles'=>RepositorioRol::getInstance()->buscarRolesDeUsuario($_SESSION['idUsuario']),
-						'idUsuario'=>$_SESSION['idUsuario'],
-						'token'=>$_SESSION['token']
-					);
+	//echo '<pre>'; var_dump($_SERVER); echo '</pre>'; die();
+	if(isset($_SERVER['PATH_INFO'])){
+		$path = $_SERVER['PATH_INFO'];
 	}
-	else return false;
-}
-
-$config = obtenerConfiguracion();
-if(!$config['habilitado']){
-	echo TwigView::getTwig()->render('mantenimiento.twig', array('configuracion'=>obtenerConfiguracion()));
-}
-else{
-
-
-	if(!isset($_SESSION)) {
-		sec_session_start();
-	} else {
-		session_regenerate_id();
-	} 
-
-	if(!isset($_SESSION['usuario'])) {
-		$_SESSION['usuario'] = NULL;
-		$_SESSION['logueado'] = NULL;
-		$_SESSION['administrador']=0;
-		$_SESSION['recepcionista']=0;
-		$_SESSION['pediatra']=0;
+	else{
+		$path = '/';
 	}
-	echo TwigView::getTwig()->render('base.twig.html', array('usuarioActual' => usuarioActual(),'configuracion'=>obtenerConfiguracion()));
-	
-}
+	$url = explode('/',$path);
+	switch ($url[1]) {
+		#Inicio rutas de usuario
+		case 'usuario':
+		if (isset($url[2]) && is_numeric($url[2])) {
+			$idUsuario = $url[2];
+			if(isset($url[3])){
+				switch ($url[3]) {
+					case 'editar':
+						ControllerUsuario::getInstance()->editar($idUsuario);
+						break;
+					case 'edicion':
+						$usuario = RepositorioUsuario::getInstance()->buscarUsuarioPorId($idUsuario);
+						ControllerUsuario::getInstance()->formularioUsuario($usuario);
+						break;
+					case 'eliminar':
+						ControllerPaciente::getInstance()->eliminar($idUsuario);
+						break;
+					default:
+						header("Location: ./index.php/usuario/$idUsuario");
+						break;
+				}
+			}
+			else{
+				ControllerUsuario::getInstance()->mostrarUsuario($idUsuario);
+			}
+		}
+		else header("Location: ./index.php");
+			break;
+		case 'usuarios':
+			if(isset($url[2])){
+				switch ($url[2]) {
+					case 'agregar':
+						ControllerUsuario::getInstance()->agregar();
+						break;
+					case 'nuevo':
+						ControllerUsuario::getInstance()->formularioUsuario();
+						break;
+					case 'filtrado':
+						//recupero filtrado por post
+						//ControllerPaciente::getInstance()->listarPacientes($filtrado);
+						break;
+					default:
+						header("Location: ./index.php/usuarios");
+						break;
+				}
+			}
+			else{
+				ControllerUsuario::getInstance()->listarUsuarios();
+			}
+			break;
+		#Fin de rutas de usuario
+
+		#Inicio rutas login
+		case 'entrar':	
+			ControllerUsuario::getInstance()->loginUsuario($_POST['email'],$_POST['password']);
+			break;
+		case 'login':
+			ControllerUsuario::getInstance()->formularioLogin();
+			break;
+		case 'cerrarSesion':
+			ControllerUsuario::getInstance()->cerrarSesion();
+			break;
+		#Fin de rutas del login
+
+		#Inicio rutas de paciente
+		case 'paciente':
+			if (isset($url[2]) && is_numeric($url[2])) {
+				$idPaciente = $url[2];
+				if(isset($url[3])){
+					switch ($url[3]) {
+						case 'editar': //Editar paciente
+							ControllerPaciente::getInstance()->modificar($idPaciente);
+							break;
+						case 'eliminar':
+							ControllerPaciente::getInstance()->eliminar($idPaciente);
+							break;
+						case 'datosDemograficos':
+							if(isset($url[4])){
+								switch ($url[4]){
+									case 'editar': //Editar datos demograficos
+										ControllerDatosDemograficos::getInstance()->modificar($idPaciente);
+										break;
+									case 'eliminar':
+										ControllerDatosDemograficos::getInstance()->eliminar($idPaciente);
+										break;
+									case 'agregar':
+										ControllerDatosDemograficos::getInstance()->agregar($idPaciente);
+										break;
+									default:
+										header("Location: ./index.php/paciente/$idPaciente/datosDemograficos");
+										break;
+								}
+									
+							}
+							else{
+								ControllerDatosDemograficos::getInstance()->mostrar($idPaciente);
+							}
+							break;
+						default:
+							header("Location: ./index.php/paciente/$idPaciente");
+							break;
+					}
+				}
+				else {
+					ControllerPaciente::getInstance()->mostrar($idPaciente);
+				}
+
+			}
+			else{
+				header("Location: ./index.php/pacientes");
+			}
+		
+			break;
+		case 'pacientes':
+			if(isset($url[2])){
+				switch ($url[2]) {
+					case 'nuevo':
+						ControllerPaciente::getInstance()->formularioPaciente();
+						break;
+					case 'busquedaDocumento':
+						ControllerPaciente::getInstance()->busqueda($_POST['busquedaTipoDoc'],$_POST['busquedaNumeroDoc']);
+						break;
+					case 'busquedaNombre':
+						ControllerPaciente::getInstance()->busqueda($_POST['busquedaNombre'],$_POST['busquedaApellido']);
+						break;
+					default:
+						header("Location: ./index.php/pacientes");
+						break;
+				}
+			}
+			else{
+				ControllerPaciente::getInstance()->listarTodos();
+			}
+			break;
+
+		#Fin de rutas de paciente
+
+		#Inicio de rutas de configuracion
+		case 'configuracion':
+			ControllerConfiguracion::getInstance()->formularioConfiguracion();
+			break;
+		case 'configurar':
+			ControllerConfiguracion::getInstance()->modificarConfiguracion();
+			break;
+		default:
+			//HOME
+			Controller::getInstance()->render('base.twig.html');
+		#Fin de rutas de configuracion
+	}
+
+?>
