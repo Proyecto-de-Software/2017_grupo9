@@ -8,13 +8,13 @@
 		{% if usuario is defined  %}
 			<h3 class="card-header text-center myHeader">Modificar usuario </h3>
 			{% set boton = 'Modificar' %}
-			{% set accion = "editar" %}
 			{% set nombre = usuario.nombre %}
 			{% set apellido = usuario.apellido %}
 			{% set nombreUsuario = usuario.nombreUsuario %}
 			{% set email = usuario.email %}
 			{% set pass = usuario.password %}
 			{% set rolesUsuario = usuario.roles %}
+			<form class="text-center" role="form" method="POST" onsubmit="return validarRoles()" action="/index.php/usuario/{{usuario.id}}/editar">
 
 
 		{% else %}
@@ -27,11 +27,10 @@
 			{% set email = '' %}
 			{% set pass = '' %}
 			{% set rolesUsuario = [] %}
+			<form class="text-center" role="form" method="POST" onsubmit="return validarRoles()" action="/index.php/usuarios/agregar">
 		{% endif %}
-		{{ dump(usuario.id)}}
-		<form class="text-center" role="form" method="POST" onsubmit="return validarRoles()" action="/index.php/usuario/{{usuario.id}}/{{accion}}">
-
-			<div class="form-group ">
+	
+		<div class="form-group ">
 			    <label for="name" hidden>Nombre</label>
 			    <input type="text" class="form-control mt-3" id="nombre" name="nombre" placeholder="Nombre" value="{{nombre}}" required>
 		  	</div>
@@ -51,12 +50,12 @@
 		    	<label for="password" hidden>Contraseña</label>
 		   		<input type="password" class="form-control mt-3" id="password" name="password" placeholder="Contraseña" value="{{pass}}" required>
 			</div>
-			{% if usuario is defined %}
+			
 			<div class="form-group">
 		    	<label for="password2" hidden>Repita contraseña</label>
 		   		<input type="password" class="form-control mt-3" id="password2" name="password2" placeholder="Repita contraseña" required>
 			</div>
-			{% endif %}
+		
 
 			<p class="text-left">Roles:</p>
 			<p class="text-danger" name="mensajeRoles"> </p>
