@@ -94,7 +94,7 @@
 									
 							}
 							else{
-								ControllerDatosDemograficos::getInstance()mostrarDatosDemograficos($idPaciente);
+								ControllerDatosDemograficos::getInstance()mostrar($idPaciente);
 							}
 							break;
 						default:
@@ -103,7 +103,7 @@
 					}
 				}
 				else {
-					ControllerPaciente::getInstance()->mostrarPaciente($idPaciente);
+					ControllerPaciente::getInstance()->mostrar($idPaciente);
 				}
 
 			}
@@ -116,13 +116,13 @@
 			if(isset($url[1])){
 				switch ($url[1]) {
 					case 'nuevo':
-						//ControllerPaciente::getInstance()->agregar();
+						ControllerPaciente::getInstance()->formularioPaciente();
 						break;
 					case 'busquedaDocumento':
-						//ControllerPaciente::getInstance()->
+						ControllerPaciente::getInstance()->busqueda();
 						break;
 					case 'busquedaNombre':
-						//ControllerPaciente::getInstance()->
+						ControllerPaciente::getInstance()->busqueda();
 						break;
 					default:
 						header("Location: ./index.php/pacientes");
@@ -130,7 +130,7 @@
 				}
 			}
 			else{
-				ControllerPaciente::getInstance()->listarPacientes();
+				ControllerPaciente::getInstance()->listarTodos();
 			}
 			break;
 
