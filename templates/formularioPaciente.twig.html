@@ -1,0 +1,114 @@
+<section class="row mx-auto mt-5 ">
+	<div class="login col-md-5  mx-auto mt-4 mb-4 pb-5 pt-5 pr-5 pl-5 border rounded ">
+	{% if paciente is defined %}
+		{% set ruta = "./index.php/paciente/{{paciente.id}}/editar" %}
+		{% set nombre = {{paciente.nombre}} %}
+		{% set apellido = {{paciente.apellido}} %}
+		{% set fechaNacimiento = {{paciente.fechaNacimiento}} %}
+		{% set genero = {{paciente.genero}} %}
+		{% set idTipoDocumento = {{paciente.idTipoDocumento}} %}
+		{% set numeroDoc = {{paciente.numeroDoc}} %}
+		{% set domicilio = {{paciente.domicilio}} %}
+		{% set telefono = {{paciente.telefono}} %}
+		{% set idObraSocial = {{paciente.idObraSocial}} %}
+		{% set titulo = Modificar paciente %}
+	{% else %}
+		{% set ruta = ".index.php/paciente/agregar" %}
+		{% set nombre = '' %}
+		{% set apellido = '' %}
+		{% set fechaNacimiento = '' %}
+		{% set genero = '' %}
+		{% set idTipoDocumento = '' %}
+		{% set numeroDoc = '' %}
+		{% set domicilio = '' %}
+		{% set telefono = '' %}
+		{% set idObraSocial = '' %}
+		{% set titulo = Agregar paciente %}
+	{% endif %}
+		{% if not validacion.ok  %}
+			{% for mensaje in validacion[1:] %}
+				<p class="alert alert-danger">{{mensaje}}</p>
+			{% endfor %}
+		{% endif %}
+		<h3 class="card-header text-center myHeader">{{ titulo }} </h3>
+		<form class="text-center" role="form" method="POST" action="{{ ruta }}">
+			<label for="name" hidden>Id</label>
+			<input name="id" value="{{paciente.id}}" hidden>
+			<div class="form-group ">
+			    <label for="nombre" >Nombre</label>
+			    <input type="text" class="form-control mt-3" id="nombre" name="nombre" value="{{ nombre }}">
+		  	</div>
+		  	<div class="form-group ">
+			    <label for="apellido" >Apellido</label>
+			    <input type="text" class="form-control mt-3" id="apellido" name="apellido" value="{{ apellido }}">
+		  	</div>
+		  	<div class="form-group ">
+			    <label for="fechaNacimiento" >Fecha de nacimiento</label>
+			    <input type="date" min="2005-01-01" class="form-control mt-3" id="fechaNacimiento" name="fechaNacimiento" value="{{ fechaNacimiento }}">
+		  	</div>
+		  	<div class="form-group ">
+			    <label for="genero" >Género</label>
+			    <select name="genero" class="form-control mt-3">
+			    	{% if paciente.genero == 'masculino' %}
+			    		<option value="masculino" selected>Masculino</option>
+			    		<option value="femenino">Femenino</option>
+			    	{% else %}
+			    		<option value="masculino"  >Masculino</option>
+			    		<option value="femenino" selected>Femenino</option>
+			    	{% endif %}
+			    </select>
+		  	</div>
+		  	<div class="form-group ">
+			    <label for="tipoDoc" >Tipo de documento</label>
+			    <select name="idTipoDocumento" class="form-control mt-3">
+			    	{% for tipoDoc in tiposDeDocumento %}
+				    	{% if paciente.idTipoDocumento == tipoDoc.id %}
+				    		<option value="{{ tipoDoc.id }}" selected>{{ tipoDoc.nombre | upper }}</option>
+				    	{% else %}
+				    		<option value="{{ tipoDoc.id }}">{{ tipoDoc.nombre | upper }}</option>
+				    	{% endif %}
+				    {% endfor %}
+			    </select>
+		  	</div>
+		  	<div class="form-group ">
+			    <label for="numeroDoc" >Nro de documento</label>
+			    <input type="number" class="form-control mt-3" id="numeroDoc" name="numeroDoc" value="{{ numeroDoc }}">
+		  	</div>
+		  	<div class="form-group ">
+			    <label for="domicilio" >Domicilio</label>
+			    <input type="text" class="form-control mt-3" id="domicilio" name="domicilio" value="{{ domicilio }}">
+		  	</div>
+		  	<div class="form-group ">
+			    <label for="telefono" >Teléfono</label>
+			    {% if (paciente.telefono is null) or (paciente.telefono == '') %}
+			    	<input type="number" class="form-control mt-3" id="telefono" name="telefono" placeholder="Ingrese teléfono">
+			    {% else %}
+			    	<input type="number" class="form-control mt-3" id="telefono" name="telefono" value="{{ telefono }}">
+			    {% endif %}	
+		  	</div>
+		  	<div class="form-group ">
+			    <label for="obraSocial" >Obra social</label>
+			    <select name="idObraSocial" class="form-control mt-3">
+			    	{% if (paciente.idObraSocial is null) or (paciente.idObraSocial == '') %}
+			    		<option value="NULL" selected>Ingrese obra social</option>
+			    	{% else %}
+				    	<option value="NULL">Ingrese obra social</option>
+			    	{% endif %}
+			    	{% for obraSocial in obrasSociales %}
+				    	{% if paciente.idObraSocial == obraSocial.id %}
+				    		<option value="{{ obraSocial.id }}" selected>{{ obraSocial.nombre | upper }}</option>
+				    	{% else %}
+				    		<option value="{{ obraSocial.id }}">{{ obraSocial.nombre | upper }}</option>
+				    	{% endif %}
+			    	{% endfor %}
+			    </select>
+		  	</div>
+
+		  	<div class="form-group">
+				<input type="hidden" name="token" value={{usuarioActual.token}}>
+			</div>
+			
+			<button onclick="return confirm('Seguro?')" type="submit" class="btn btn-outline-success  btn-own-info">{{ titulo }}</button>
+		</form>
+	</div>
+</section>

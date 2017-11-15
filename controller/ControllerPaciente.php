@@ -15,19 +15,6 @@ class ControllerPaciente extends Controller{
 		return $paciente;
       }
 
-      public function formulario($idPaciente=null, $validacion=null){
-            if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_new') && RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'],'paciente_update')){
-
-                  $template = 'administracionFormularioPaciente.twig';
-                  $parametrosTemplate = $this->tiposDeDatos();
-                  $parametrosTemplate['validacion'] = $validacion;
-                  $parametrosTemplate['paciente'] = RepositorioPaciente::getInstance()->buscarPorId($idPaciente);
-                  $this->render($template,$parametrosTemplate);
-            } else {
-                  header("Location: ./index.php");
-            }
-      }
-
       public function agregar(){
             if((RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_new')) && (isset($_POST['token']) && $_POST['token'] == $_SESSION['token'])){
                   $paciente = $this->crear();
@@ -35,17 +22,17 @@ class ControllerPaciente extends Controller{
                   if ($validacion['ok']){
                         if(RepositorioPaciente::getInstance()->agregar($paciente)){
                               $id = $paciente->getId();
-                              header("location: ./index.php/paciente/$id");
+                              header("location: /index.php/paciente/$id");
                         }
                         else{
-                              header("location: ./index.php/pacientes/nuevo");
+                              header("location: /index.php/pacientes/nuevo");
                         }
                   } else{                             
                         $this->formulario($validacion);
                   }
                         
             } else {
-                  header("Location: ./index.php");
+                  header("Location: /index.php");
             }
       }
 
@@ -58,14 +45,14 @@ class ControllerPaciente extends Controller{
                   $id = $paciente->getId();
                   if($validacion['ok']){
                         if(RepositorioPaciente::getInstance()->modificar($paciente)){
-                              header("location: ./index.php/paciente/$id");
+                              header("location: /index.php/paciente/$id");
                         }
                   }
                   else {
                         $this->formulario($paciente,$validacion);
                   }
             } else {
-                  header("Location: ./index.php");
+                  header("Location: /index.php");
             }
       }
 
@@ -77,17 +64,17 @@ class ControllerPaciente extends Controller{
                   $parametrosTemplate['paciente'] = $paciente;
                   $this->render($template,$parametrosTemplate);
             } else {
-                  header("Location: ./index.php");
+                  header("Location: /index.php");
             }
       } 
 
       public function eliminar($id){
             if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_destroy')){
                   if(RepositorioPaciente::getInstance()->eliminar($id)){
-                        header("location: ./index.php/pacientes");
+                        header("location: /index.php/pacientes");
                   }
             } else {
-                  header("Location: ./index.php");
+                  header("Location: /index.php");
             }
       } 
 
@@ -99,7 +86,20 @@ class ControllerPaciente extends Controller{
                   $parametrosTemplate['paginado'] = $paginado;
                   $this->render($template,$parametrosTemplate);
             } else {
-                  header("Location: ./index.php");
+                  header("Location: /index.php");
+            }
+      }
+
+      public function formulario($idPaciente=null, $validacion=null){
+            if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_new') && RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'],'paciente_update')){
+
+                  $template = 'administracionFormularioPaciente.twig';
+                  $parametrosTemplate = $this->tiposDeDatos();
+                  $parametrosTemplate['validacion'] = $validacion;
+                  $parametrosTemplate['paciente'] = RepositorioPaciente::getInstance()->buscarPorId($idPaciente);
+                  $this->render($template,$parametrosTemplate);
+            } else {
+                  header("Location: /index.php");
             }
       }
 
@@ -107,7 +107,7 @@ class ControllerPaciente extends Controller{
             if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_index')){
                   $this->listarTodos($nombre,$apellido,$tipoDoc,$nroDoc);
             } else {
-                  header("Location: ./index.php");
+                  header("Location: /index.php");
             }
       }
 

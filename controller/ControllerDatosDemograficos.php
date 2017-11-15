@@ -20,12 +20,12 @@ class ControllerDatosDemograficos extends Controller{
 			$datosDemograficos = crear();
 			if(RepositorioDatosDemograficos::getInstance()->agregar($datosDemograficos)){
 	 	  		$idPaciente = $datosDemograficos->getPaciente();
-	 	  		header("Location: ./index.php/paciente/$idPaciente/datosDemograficos");
+	 	  		header("Location: /index.php/paciente/$idPaciente/datosDemograficos");
 			} else{
-				header("Location: ./index.php/paciente/$idPaciente/datosDemograficos/nuevo");
+				header("Location: /index.php/paciente/$idPaciente/datosDemograficos/nuevo");
 			}
 		} else{
-			header("Location: ./index.php");
+			header("Location: /index.php");
 		}
 	}
 
@@ -41,7 +41,7 @@ class ControllerDatosDemograficos extends Controller{
 			$parametrosTemplate['datosDemograficos'] = $datosDemograficos;
 			$this->render($template,$parametrosTemplate);
 		} else {
-			header("Location: ./index.php");
+			header("Location: /index.php");
 		}
 
     }	
@@ -51,12 +51,12 @@ class ControllerDatosDemograficos extends Controller{
 			$datosDemograficos = crear();
 			$datosDemograficos->setId($id);
 			if($datosDemograficosModificados = RepositorioDatosDemograficos::getInstance()->modificar($datosDemograficos)){
-				header("Location: ./index.php/paciente/$idPaciente/datosDemograficos");
+				header("Location: /index.php/paciente/$idPaciente/datosDemograficos");
 			} else{
-				header("Location: ./index.php/paciente/$idPaciente/datosDemograficos/editar");
+				header("Location: /index.php/paciente/$idPaciente/datosDemograficos/editar");
 			}
 		} else{
-			header("Location: ./index.php");
+			header("Location: /index.php");
 		}
     }
 
@@ -65,9 +65,9 @@ class ControllerDatosDemograficos extends Controller{
 			if($datosDemograficos = RepositorioDatosDemograficos::getInstance()->buscarPorIdPaciente($idPaciente)){
 				RepositorioDatosDemograficos::getInstance()->eliminar($datosDemograficos);
         	}
-        	header("Location: ./index.php/paciente/$idPaciente");
+        	header("Location: /index.php/paciente/$idPaciente");
         } else {
-    		header("Location: ./index.php");
+    		header("Location: /index.php");
 		}
     }
 
@@ -82,7 +82,7 @@ class ControllerDatosDemograficos extends Controller{
 			$parametrosTemplate['datosDemograficos'] = $datosDemograficos;
 			$this->render($template,$parametrosTemplate);
 		} else {
-			header("Location: ./index.php");
+			header("Location: /index.php");
 		}
     }
     
