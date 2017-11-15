@@ -9,7 +9,7 @@
 				ControllerUsuario::getInstance()->mostrarUsuario($idUsuario);
 			}
 			else{
-				header("Location:/usuarios");
+				header("Location: ./usuarios");
 			}
 			break;
 		case 'usuarios':
@@ -23,6 +23,9 @@
 			else{
 				header("Location:/usuarios");
 			}
+			break;
+		case 'pacientes':
+			ControllerPaciente::getInstance()->listarPacientes();
 			break;
 
 
