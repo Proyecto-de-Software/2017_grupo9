@@ -16,17 +16,75 @@
 			ControllerUsuario::getInstance()->listarUsuarios();
 			break;
 		case 'paciente':
-			$idPaciente = $url[1];
-			if(is_numeric($idPaciente)){
-				ControllerPaciente::getInstance()->mostrarPaciente($idPaciente);
+			if (isset($url[1]) && is_numeric($url[1])) {
+				$idPaciente = $url[1];
+				if(isset($url[2])){
+					switch ($url[2])) {
+						case 'editar': //Editar paciente
+							//ControllerPaciente::getInstance()->
+							break;
+						case 'eliminar':
+							//ControllerPaciente::getInstance()
+							break;
+						case 'datosDemograficos':
+							if(isset($url[3])){
+								switch ($url[3])){
+									case 'editar': //Editar datos demograficos
+										//ControllerDatosDemograficos::getInstance()->
+										break;
+									case 'eliminar':
+										//ControllerDatosDemograficos::getInstance()
+										break;
+									case 'agregar':
+										//ControllerDatosDemograficos::getInstance()
+										break;
+									default:
+										header("Location: ./index.php/paciente/$idPaciente/datosDemograficos");
+										break;
+								}
+									
+							}
+							else{
+								ControllerDatosDemograficos::getInstance()mostrarDatosDemograficos($idPaciente);
+							}
+							break;
+						default:
+							header("Location: ./index.php/paciente/$idPaciente");
+							break;
+					}
+				}
+				else {
+					ControllerPaciente::getInstance()->mostrarPaciente($idPaciente);
+				}
+
 			}
 			else{
-				header("Location:/usuarios");
+				header("Location: ./index.php/pacientes");
 			}
+		
 			break;
 		case 'pacientes':
-			ControllerPaciente::getInstance()->listarPacientes();
+			if(isset($url[1])){
+				switch ($url[1]) {
+					case 'nuevo':
+						//ControllerPaciente::getInstance()->agregar();
+						break;
+					case 'busquedaDocumento':
+						//ControllerPaciente::getInstance()->
+						break;
+					case 'busquedaNombre':
+						//ControllerPaciente::getInstance()->
+						break;
+					default:
+						header("Location: ./index.php/pacientes");
+						break;
+				}
+			}
+			else{
+				ControllerPaciente::getInstance()->listarPacientes();
+			}
 			break;
+
 
 
 ?>

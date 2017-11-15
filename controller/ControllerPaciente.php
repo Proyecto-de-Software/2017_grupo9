@@ -122,7 +122,7 @@
 	    			header("Location: /../");
 	    		}
 		        break;
-		    case 'modificacionDePaciente':
+		    case 'modificacionDePaciente': //Ok
 		    	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_update')){
 			    	$paciente = RepositorioPaciente::getInstance()->buscarPacientePorId($_GET['id']);
 			    	$obrasSociales = RepositorioPaciente::getInstance()->devolverObrasSociales();
@@ -164,7 +164,7 @@
 	        		header("Location: /../");
     			}
 		        break;
-		    case 'mostrarPaciente':
+		    case 'mostrarPaciente': //Ok
 		    	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_show')){
 		    		$paciente = RepositorioPaciente::getInstance()->buscarPacientePorId($_GET['id']);
 		    		$obraSocial = RepositorioPaciente::getInstance()->devolverObraSocialPorId($paciente->getIdObraSocial());
@@ -174,7 +174,7 @@
 	        		header("Location: /../");
     			}
 		        break;
-		    case 'listarPacientes':
+		    case 'listarPacientes': //Ok
 		    	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_index')){
 					$paginado = datosDePaginado();
 		        	listarPacientes(RepositorioPaciente::getInstance()->devolverPacientes($paginado['limit'],$paginado['cantidadPorPagina']));
