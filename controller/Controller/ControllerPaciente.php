@@ -16,8 +16,9 @@ class ControllerPaciente extends Controller{
       }
 
       public function formularioPaciente($paciente=null, $validacion=null){
-            if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_new')) {
-                  $template = 'administracionAgregarPaciente.twig';
+            if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_new') && RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'],'paciente_update')){
+
+                  $template = 'administracionModificarPaciente.twig';
                   $parametrosTemplate['validacion'] = $validacion;
                   $parametrosTemplate['paciente'] = $paciente;
                   $parametrosTemplate['obrasSociales'] = RepositorioPaciente::getInstance()->devolverObrasSociales();
