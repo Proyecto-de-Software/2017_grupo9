@@ -86,6 +86,9 @@
 						case 'editar': //Editar paciente
 							ControllerPaciente::getInstance()->modificar($idPaciente);
 							break;
+						case 'edicion':
+							ControllerPaciente::getInstance()->formulario($idPaciente);
+							break;
 						case 'eliminar':
 							ControllerPaciente::getInstance()->eliminar($idPaciente);
 							break;
@@ -94,6 +97,10 @@
 								switch ($url[4]){
 									case 'editar': //Editar datos demograficos
 										ControllerDatosDemograficos::getInstance()->modificar($idPaciente);
+										break;
+									case 'edicion':
+									case 'nuevo':
+										ControllerDatosDemograficos::getInstance()->formulario($idPaciente);
 										break;
 									case 'eliminar':
 										ControllerDatosDemograficos::getInstance()->eliminar($idPaciente);
@@ -130,7 +137,10 @@
 			if(isset($url[2])){
 				switch ($url[2]) {
 					case 'nuevo':
-						ControllerPaciente::getInstance()->formularioPaciente();
+						ControllerPaciente::getInstance()->formulario();
+						break;
+					case 'agregar':
+						ControllerPaciente::getInstance()->agregar();
 						break;
 					case 'busquedaDocumento':
 						ControllerPaciente::getInstance()->busqueda($_POST['busquedaTipoDoc'],$_POST['busquedaNumeroDoc']);
