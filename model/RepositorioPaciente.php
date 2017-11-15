@@ -18,7 +18,7 @@
       }   
 
 
-  		public function agregarPaciente($paciente){
+  		public function agregar($paciente){
   			$conexion = $this->getConnection();
   			$query = $conexion->prepare("INSERT INTO paciente(id, apellido, nombre, domicilio, telefono, fecha_nacimiento, genero, obra_social_id, tipo_doc_id, numero_doc) VALUES(null, :apellido, :nombre, :domicilio, :telefono, :fechaNacimiento, :genero, :idObraSocial, :idTipoDocumento, :numeroDoc)");
   			$query->bindParam(':apellido', $paciente->getApellido());
@@ -49,7 +49,7 @@
         return false;
       }
 
-      public function modificarPaciente($paciente){
+      public function modificar($paciente){
         $conexion = $this->getConnection();
         if($paciente->getIdObraSocial() == 'NULL'){
           $query = $conexion->prepare("UPDATE paciente SET obra_social_id=NULL WHERE id=:id");
@@ -82,7 +82,7 @@
         return $query->execute() == 1;
       }
 
-      public function eliminarPaciente($id){
+      public function eliminar($id){
         $conexion = $this->getConnection();
         $query = $conexion->prepare("DELETE FROM paciente WHERE id=:id");
         $query->bindParam(':id', $id);

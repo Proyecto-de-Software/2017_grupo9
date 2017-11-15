@@ -91,7 +91,7 @@
 
 	if(isset($_GET['action'])){
 		switch ($_GET['action']) {
-			case 'altaDePaciente':
+			case 'altaDePaciente': //Copiado
 				if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_new')) {
 					$obrasSociales = RepositorioPaciente::getInstance()->devolverObrasSociales();
 		    		$tiposDeDocumento = RepositorioPaciente::getInstance()->devolverTiposDeDocumento();
@@ -100,7 +100,7 @@
 	    			header("Location: /../");
 	    		}
 		       	break;
-		    case 'agregarPaciente':
+		    case 'agregarPaciente': //Copiado
 		    	if((RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_new')) && (isset($_POST['token']) && $_POST['token'] == $_SESSION['token'])) {
 		    		$paciente = crearPaciente();
 		    		$validacion = RepositorioPaciente::getInstance()->pacienteValido($paciente);
@@ -122,7 +122,7 @@
 	    			header("Location: /../");
 	    		}
 		        break;
-		    case 'modificacionDePaciente': //Ok
+		    case 'modificacionDePaciente': //Copiado
 		    	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_update')){
 			    	$paciente = RepositorioPaciente::getInstance()->buscarPacientePorId($_GET['id']);
 			    	$obrasSociales = RepositorioPaciente::getInstance()->devolverObrasSociales();
@@ -132,7 +132,7 @@
 	    			header("Location: /../");
 	    		}
 		    	break;
-		    case 'modificarPaciente':
+		    case 'modificarPaciente': //Copiado
 		    	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_update')){
 		    		$paciente = crearPaciente();
 		    		$paciente->setId($_GET['id']);
@@ -153,7 +153,7 @@
 	        		header("Location: /../");
     			}
 		        break;
-		    case 'eliminarPaciente':
+		    case 'eliminarPaciente': //Copiado
 		   		if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_destroy')){
 		        	if(RepositorioPaciente::getInstance()->eliminarPaciente($_GET['id'])){
 		        		header("location: /../controller/ControllerPaciente.php/?action=listarPacientes");
@@ -164,7 +164,7 @@
 	        		header("Location: /../");
     			}
 		        break;
-		    case 'mostrarPaciente': //Ok
+		    case 'mostrarPaciente': //Copiado
 		    	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_show')){
 		    		$paciente = RepositorioPaciente::getInstance()->buscarPacientePorId($_GET['id']);
 		    		$obraSocial = RepositorioPaciente::getInstance()->devolverObraSocialPorId($paciente->getIdObraSocial());
@@ -174,7 +174,7 @@
 	        		header("Location: /../");
     			}
 		        break;
-		    case 'listarPacientes': //Ok
+		    case 'listarPacientes': //Copiado
 		    	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_index')){
 					$paginado = datosDePaginado();
 		        	listarPacientes(RepositorioPaciente::getInstance()->devolverPacientes($paginado['limit'],$paginado['cantidadPorPagina']));
@@ -182,7 +182,7 @@
 	        		header("Location: /../");
     			}
 		        break;
-		     case 'busquedaNomYAp':
+		     case 'busquedaNomYAp': //Copiado
 		     	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_index')){
 					$paginado = datosDePaginado();
 		     		listarPacientes(RepositorioPaciente::getInstance()->devolverPacientes($paginado['limit'],$paginado['cantidadPorPagina'],$_POST['busquedaNombre'],$_POST['busquedaApellido']));
@@ -190,7 +190,7 @@
 	        		header("Location: /../");
     			}
     			break;
-			case 'busquedaDocumento':
+			case 'busquedaDocumento': //Copiado
 		     	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_index')){
 					$paginado = datosDePaginado();
 		     		listarPacientes(RepositorioPaciente::getInstance()->devolverPacientes($paginado['limit'],$paginado['cantidadPorPagina'],'','',$_POST['busquedaTipoDoc'],$_POST['busquedaNumeroDoc']));
