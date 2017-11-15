@@ -260,20 +260,14 @@
 					$filtrado['campoBuscar'] = $_POST['buscar'];	;
 				}
 				if(isset($_POST['filtrado'])){
-					setcookie("filtrado['activo']",$filtrado['activo']);
-					setcookie("filtrado['bloqueado']",$filtrado['bloqueado']);
-					setcookie("filtrado['campoBuscar']",$filtrado['campoBuscar']);
+					$_SESSION['filtrado']['activo'] = $filtrado['activo'];
+					$_SESSION['filtrado']['bloqueado'] = $filtrado['bloqueado'];
+					$_SESSION['filtrado']['campoBuscar'] = $filtrado['campoBuscar'];
 				}
 				else{
-					if(isset($_COOKIE['filtrado']['activo'])){
-						$filtrado['activo'] = $_COOKIE['filtrado']['activo'];
-					}
-					if(isset($_COOKIE['filtrado']['bloqueado'])){
-						$filtrado['bloqueado'] = $_COOKIE['bloqueado']['bloqueado'];
-					}
-					if(isset($_COOKIE['filtrado']['campoBuscar'])){
-						$filtrado['campoBuscar'] = $_COOKIE['filtrado']['campoBuscar'];
-					}
+					$filtrado['activo'] = $_SESSION['filtrado']['activo'];
+					$filtrado['bloqueado'] = $_SESSION['filtrado']['bloqueado'];
+					$filtrado['campoBuscar'] = $_SESSION['filtrado']['campoBuscar'];
 				}
 				
 
