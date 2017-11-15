@@ -23,23 +23,35 @@ class ControllerConfiguracion extends Controller{
 		return $configuracion;	
 	}
 
-	public function formularioConfiguracion($mensaje=null){
-		//if RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'configuracion_update')
-		$template = 'administracionConfiguracion.twig';
-		$parametrosTemplate['configuracionActual'] = $this->obtenerDatosDeConfiguracion();
-		$parametrosTemplate['mensaje'] = $mensaje;
-		$this->render($template,$parametrosTemplate);
-	}
-
-	public function modificarConfiguracion($edicion=false){
-		//RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'configuracion_update')) && (isset($_POST['token']) && $_POST['token'] == $_SESSION['token']))
-		//if campos validos (hacer en el repo config)
-		if($edicion){
-			RepositorioConfiguracion::getInstance()->modificarConfiguracionHospital(crearConfiguracion());
+	public function formularioConfiguracion($validacion=[]){
+		if (RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'configuracion_update')){
+			$template = 'administracionConfiguracion.twig';
+			$parametrosTemplate['configuracionActual'] = $this->obtenerDatosDeConfiguracion();
+			$parametrosTemplate['validacion'] = $validacion; //modificar template para que sepa que recibe el array
+			$this->render($template,$parametrosTemplate);
 		}
 		else{
-			RepositorioConfiguracion::getInstance()->crearConfiguracionHospital(crearConfiguracion());
+			header("Location: ./index.php");
 		}
+	}
+	
+	public function modificarConfiguracion($edicion=false){
+		if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'configuracion_update')) && (isset($_POST['token']) && $_POST['token'] == $_SESSION['token'])){
+			//$ validacion = validar en el modelo config devuelve un array 
+			//if campos validos (hacer en el repo config)
+				if($edicion){
+					RepositorioConfiguracion::getInstance()->modificarConfiguracionHospital($this->crearConfiguracion());
+				}
+				else{
+					RepositorioConfiguracion::getInstance()->crearConfiguracionHospital($this->crearConfiguracion());
+				}
+			//else
+				//$this->formularioConfiguracion($validacion)
+		}
+		else{
+			header("Location: ./index.php");
+		}
+
 		//header a modificacion de configuracion
 		//si campos invalidos volver a modificacion con mensaje
 		//si no tiene permiso volver a index

@@ -40,7 +40,7 @@
 
   		}
 
-  		public function modificarUsuario($usuario){
+  		public function modificarUsuario($usuario,$idUsuario){
 
   			$conexion = $this->getConnection();
   			$query = $conexion->prepare("UPDATE  usuario SET email=:email, username=:username, password=:password, activo=:activo, updated_at=:updated_at, created_at=:created_at, first_name=:first_name, last_name=:last_name WHERE id=:id");
@@ -53,15 +53,15 @@
   			$query->bindParam(':created_at', $usuario->getFechaCreacion());
   			$query->bindParam(':first_name', $usuario->getNombre());
   			$query->bindParam(':last_name', $usuario->getApellido());
-        $query->bindParam(':id',$usuario->getId());
+        $query->bindParam(':id',$idUsuario);
         $rolesQuery = $conexion->prepare("DELETE FROM usuario_tiene_rol WHERE usuario_id=:idUsuario");
-        $rolesQuery->bindParam(':idUsuario',$usuario->getId());
+        $rolesQuery->bindParam(':idUsuario',$idUsuario);
         $rolesQuery->execute(); //Elimino los roles anteriores que tenga, y le pongo los actuales.
         $ok = $query->execute();
         if($ok){
           $nuevosRoles = $conexion->prepare("INSERT INTO usuario_tiene_rol(usuario_id,rol_id) VALUES(:idUsuario, :idRol) ");
           foreach($usuario->getRoles() as $rol){          
-            $nuevosRoles->bindParam(':idUsuario',$usuario->getId());
+            $nuevosRoles->bindParam(':idUsuario',$idUsuario);
             $nuevosRoles->bindParam(':idRol', $rol['id']);
             $ok = $ok && $nuevosRoles->execute();
           }

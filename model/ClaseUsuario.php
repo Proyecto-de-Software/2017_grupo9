@@ -12,17 +12,15 @@
 		private $roles; // se guarda un array con id y nombre de rol. Ej: $roles[0] tiene ['id']['nombre']
         private $password2;
 
-		public function __construct($nombreUsuario,$email,$password,$activo, $creadoEn, $actualizadoEn, $nombre,$apellido, $roles) {
+		public function __construct($nombreUsuario,$email,$password,$activo, $nombre,$apellido, $roles) {
         	$this->nombreUsuario = $nombreUsuario;
         	$this->email = $email; 
         	$this->password = $password;
         	$this->nombre = $nombre;
         	$this->apellido = $apellido;
         	$this->activo = $activo;
-        	$this->creadoEn = $creadoEn;
-        	$this->actualizadoEn = $actualizadoEn;
         	$this->roles = $roles;
-
+           
     	}
         public function esAdministrador(){
             foreach($roles as $rol){
