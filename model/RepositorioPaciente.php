@@ -90,7 +90,7 @@
       }
 
 
-      public function buscarPacientePorId($id){
+      public function buscarPorId($id){
         $conexion = $this->getConnection();
         $query = $conexion->prepare("SELECT * FROM paciente WHERE id=:id");
         $query->bindParam(':id', $id);
@@ -106,7 +106,7 @@
         return false;
       }
 
-      public function devolverPacientes($index,$cantidad,$nombre='',$apellido='',$idTipoDoc='',$numeroDoc=''){
+      public function devolverTodos($index,$cantidad,$nombre='',$apellido='',$idTipoDoc='',$numeroDoc=''){
         $conexion = $this->getConnection();
         $queryString = "SELECT * FROM paciente WHERE 1";
         if(trim($nombre) != ''){
@@ -226,7 +226,7 @@
         return sizeof($resultado);
       }
 
-      public function pacienteValido($paciente,$edicion=false){
+      public function esValido($paciente,$edicion=false){
         $retorno['ok'] = false;
         $nombre = $paciente->getNombre() != null && trim($paciente->getNombre()) !='';
         if(!$nombre){

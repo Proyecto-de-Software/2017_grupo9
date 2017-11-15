@@ -21,7 +21,7 @@ class ControllerPaciente extends Controller{
                   $template = 'administracionFormularioPaciente.twig';
                   $parametrosTemplate = $this->tiposDeDatos();
                   $parametrosTemplate['validacion'] = $validacion;
-                  $parametrosTemplate['paciente'] = RepositorioPaciente::getInstance()->buscarPacientePorId($idPaciente);
+                  $parametrosTemplate['paciente'] = RepositorioPaciente::getInstance()->buscarPorId($idPaciente);
                   $this->render($template,$parametrosTemplate);
             } else {
                   header("Location: ./index.php");
@@ -31,7 +31,7 @@ class ControllerPaciente extends Controller{
       public function agregar(){
             if((RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_new')) && (isset($_POST['token']) && $_POST['token'] == $_SESSION['token'])){
                   $paciente = $this->crear();
-                  $validacion = RepositorioPaciente::getInstance()->pacienteValido($paciente);
+                  $validacion = RepositorioPaciente::getInstance()->esValido($paciente);
                   if ($validacion['ok']){
                         if(RepositorioPaciente::getInstance()->agregar($paciente)){
                               $id = $paciente->getId();
@@ -41,7 +41,7 @@ class ControllerPaciente extends Controller{
                               header("location: ./index.php/pacientes/nuevo");
                         }
                   } else{                             
-                        $this->formularioPaciente($validacion);
+                        $this->formulario($validacion);
                   }
                         
             } else {
@@ -54,7 +54,7 @@ class ControllerPaciente extends Controller{
             if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_update')){
                   $paciente = crear();
                   $paciente->setId($id);
-                  $validacion = RepositorioPaciente::getInstance()->pacienteValido($paciente,true);
+                  $validacion = RepositorioPaciente::getInstance()->esValido($paciente,true);
                   $id = $paciente->getId();
                   if($validacion['ok']){
                         if(RepositorioPaciente::getInstance()->modificar($paciente)){
@@ -62,7 +62,7 @@ class ControllerPaciente extends Controller{
                         }
                   }
                   else {
-                        $this->formularioPaciente($paciente,$validacion);
+                        $this->formulario($paciente,$validacion);
                   }
             } else {
                   header("Location: ./index.php");
@@ -71,7 +71,7 @@ class ControllerPaciente extends Controller{
 
       public function mostrar($id){
             if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_show')){
-                  $paciente = RepositorioPaciente::getInstance()->buscarPacientePorId($id);
+                  $paciente = RepositorioPaciente::getInstance()->buscarPorId($id);
                   $template = 'administracionMostrarPaciente.twig';
                   $parametrosTemplate = $this->tiposDeDatosDeUnPaciente($paciente);
                   $parametrosTemplate['paciente'] = $paciente;
@@ -95,7 +95,7 @@ class ControllerPaciente extends Controller{
             if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_index')){
                   $paginado = datosDePaginado();
                   $template = 'administracionPacientes.twig';
-                  $parametrosTemplate['lista'] = RepositorioPaciente::getInstance()->devolverPacientes($paginado['limit'],$paginado['cantidadPorPagina'],$busquedaNombre,$busquedaApellido,$busquedaTipoDoc);
+                  $parametrosTemplate['lista'] = RepositorioPaciente::getInstance()->devolverTodos($paginado['limit'],$paginado['cantidadPorPagina'],$busquedaNombre,$busquedaApellido,$busquedaTipoDoc);
                   $parametrosTemplate['paginado'] = $paginado;
                   $this->render($template,$parametrosTemplate);
             } else {

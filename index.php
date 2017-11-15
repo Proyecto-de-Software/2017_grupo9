@@ -87,6 +87,9 @@
 						case 'editar': //Editar paciente
 							ControllerPaciente::getInstance()->modificar($idPaciente);
 							break;
+						case 'edicion':
+							ControllerPaciente::getInstance()->formulario($idPaciente);
+							break;
 						case 'eliminar':
 							ControllerPaciente::getInstance()->eliminar($idPaciente);
 							break;
@@ -95,6 +98,10 @@
 								switch ($url[4]){
 									case 'editar': //Editar datos demograficos
 										ControllerDatosDemograficos::getInstance()->modificar($idPaciente);
+										break;
+									case 'edicion':
+									case 'nuevo':
+										ControllerDatosDemograficos::getInstance()->formulario($idPaciente);
 										break;
 									case 'eliminar':
 										ControllerDatosDemograficos::getInstance()->eliminar($idPaciente);

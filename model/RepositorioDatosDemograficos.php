@@ -18,7 +18,7 @@
             return self::$instance;
         }
 
-		function agregarDatosDemograficos($datosDemograficos){
+		function agregar($datosDemograficos){
   			$conexion = $this->getConnection();
 
   			$query = $conexion->prepare("INSERT INTO datos_demograficos(id, heladera, electricidad, mascota, tipo_vivienda_id, tipo_calefaccion_id, tipo_agua_id, paciente_id) VALUES(null, :heladera, :electricidad, :mascota, :tipoVivienda, :tipoCalefaccion, :tipoAgua, :idPaciente)");
@@ -33,7 +33,7 @@
         return $query->execute();
   		}
 
-  		function modificarDatosDemograficos($datosDemograficos){
+  		function modificar($datosDemograficos){
         	$conexion = $this->getConnection();
         	$query = $conexion->prepare("UPDATE datos_demograficos SET heladera=:heladera, electricidad=:electricidad, mascota=:mascota, tipo_vivienda_id=:tipoVivienda, tipo_calefaccion_id=:tipoCalefaccion, tipo_agua_id=:tipoAgua, paciente_id=:paciente WHERE id=:id");
         	$query->bindParam(':heladera', $datosDemograficos->getHeladera());
@@ -48,7 +48,7 @@
         	return $query->execute() == 1;
   		}
 
-      function eliminarDatosDemograficos($datosDemograficos){
+      function eliminar($datosDemograficos){
         $conexion = $this->getConnection();
         $query = $conexion->prepare("DELETE FROM datos_demograficos WHERE id = :id");
         $query->bindParam(':id', $datosDemograficos->getId()); 
@@ -56,7 +56,7 @@
         return $query->execute() == 1;        
         }
 
-      function buscarDatosDemograficosPorId($id){
+      function buscarPorId($id){
         $conexion = $this->getConnection();
         $query = $conexion->prepare("SELECT * FROM datos_demograficos WHERE id = :id");
         $query->bindParam(':id', $id);
@@ -71,7 +71,7 @@
         }
       }
 
-      function buscarDatosDemograficosPorIdPaciente($id){
+      function buscarPorIdPaciente($id){
         $conexion = $this->getConnection();
         $query = $conexion->prepare("SELECT * FROM datos_demograficos WHERE paciente_id = :id");
         $query->bindParam(':id', $id);
