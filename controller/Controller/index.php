@@ -70,22 +70,22 @@
 				if(isset($url[2])){
 					switch ($url[2])) {
 						case 'editar': //Editar paciente
-							//ControllerPaciente::getInstance()->
+							ControllerPaciente::getInstance()->modificar($idPaciente);
 							break;
 						case 'eliminar':
-							//ControllerPaciente::getInstance()
+							ControllerPaciente::getInstance()->eliminar($idPaciente);
 							break;
 						case 'datosDemograficos':
 							if(isset($url[3])){
 								switch ($url[3])){
 									case 'editar': //Editar datos demograficos
-										//ControllerDatosDemograficos::getInstance()->
+										ControllerDatosDemograficos::getInstance()->modificar($idPaciente);
 										break;
 									case 'eliminar':
-										//ControllerDatosDemograficos::getInstance()
+										ControllerDatosDemograficos::getInstance()->eliminar($idPaciente);
 										break;
 									case 'agregar':
-										//ControllerDatosDemograficos::getInstance()
+										ControllerDatosDemograficos::getInstance()->agregar($idPaciente);
 										break;
 									default:
 										header("Location: ./index.php/paciente/$idPaciente/datosDemograficos");
@@ -119,10 +119,10 @@
 						ControllerPaciente::getInstance()->formularioPaciente();
 						break;
 					case 'busquedaDocumento':
-						ControllerPaciente::getInstance()->busqueda();
+						ControllerPaciente::getInstance()->busqueda($_POST['busquedaTipoDoc'],$_POST['busquedaNumeroDoc']);
 						break;
 					case 'busquedaNombre':
-						ControllerPaciente::getInstance()->busqueda();
+						ControllerPaciente::getInstance()->busqueda($_POST['busquedaNombre'],$_POST['busquedaApellido']);
 						break;
 					default:
 						header("Location: ./index.php/pacientes");
