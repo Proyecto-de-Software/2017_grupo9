@@ -112,15 +112,15 @@
 
         if($busqueda != null){
           if (isset($busqueda['nombre']) && trim($busqueda['nombre'] != '')) {
-            $queryString .= " AND nombre LIKE %:nombre%";
+            $queryString .= " AND nombre LIKE :nombre";
           }
 
           if(isset($busqueda['apellido']) && trim($busqueda['apellido'] != '')){
-            $queryString .= " AND apellido LIKE %:apellido%";
+            $queryString .= " AND apellido LIKE :apellido";
           }
 
           if(isset($busqueda['nroDoc']) && trim($busqueda['nroDoc'] != '')){
-            $queryString .= " AND tipo_doc_id=:tipoDoc AND numero_doc LIKE %:nroDoc%";
+            $queryString .= " AND tipo_doc_id=:tipoDoc AND numero_doc LIKE :nroDoc";
           }
 
         }
@@ -133,16 +133,20 @@
 
         if($busqueda != null){
           if (isset($busqueda['nombre']) && trim($busqueda['nombre'] != '')) {
-            $query->bindParam(':nombre', $busqueda['nombre']);
+            $nombre = $busqueda['nombre'].'%';
+            $query->bindParam(':nombre', $nombre);
+
           }
 
           if(isset($busqueda['apellido']) && trim($busqueda['apellido'] != '')){
-            $query->bindParam(':apellido', $busqueda['apellido']);
+            $apellido = $busqueda['apellido'].'%';
+            $query->bindParam(':apellido', $apellido);
           }
 
           if(isset($busqueda['nroDoc']) && trim($busqueda['nroDoc'] != '')){
             $query->bindParam(':tipoDoc', $busqueda['tipoDoc']);
-            $query->bindParam(':nroDoc', $busqueda['nroDoc']);
+            $nroDoc = $busqueda['nroDoc'].'%';
+            $query->bindParam(':nroDoc', $nroDoc);
           }
 
         }
