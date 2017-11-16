@@ -172,7 +172,7 @@
 							else{
 								$page = 1;
 							}
-							ControllerPaciente::getInstance()->listarPacientes($busqueda,$page,'/busquedaDocumento');
+							ControllerPaciente::getInstance()->listarTodos($busqueda,$page,'/busquedaDocumento');
 							break;
 						case 'busquedaNombre':
 							$busqueda = ControllerPaciente::getInstance()->obtenerDatosBusquedaNombre();
@@ -182,7 +182,7 @@
 							else{
 								$page = 1;
 							}
-							ControllerPaciente::getInstance()->listarPacientes($busqueda,$page,'/busquedaNombre');
+							ControllerPaciente::getInstance()->listarTodos($busqueda,$page,'/busquedaNombre');
 							break;
 						default:
 							header("Location: /index.php/pacientes");

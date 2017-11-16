@@ -78,7 +78,7 @@ class ControllerPaciente extends Controller{
             }
       } 
 
-      public function listarTodos($busqueda,$pagina = 1,$accion=''){
+      public function listarTodos($busqueda = null,$pagina = 1,$accion=''){
             if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_index')){
                   $listado = RepositorioPaciente::getInstance()->devolverTodos($busqueda);
                   $paginado = $this->paginar($listado,$pagina);
@@ -120,6 +120,7 @@ class ControllerPaciente extends Controller{
       }
 
       public function obtenerDatosBusquedaNombre(){
+            $busqueda = null;
             if(isset($_POST['busquedaNombre']) && trim($_POST['busquedaNombre']) !=''){
                   $busqueda['nombre'] = $_POST['busquedaNombre'];
             }
@@ -130,6 +131,7 @@ class ControllerPaciente extends Controller{
       }
 
       public function obtenerDatosBusquedaDocumento(){
+            $busqueda = null;
             if(isset($_POST['busquedaNombre']) && trim($_POST['busquedaNombre']) !=''){
                   $busqueda['tipoDoc'] = $_POST['busquedaTipoDoc'];
                   $busqueda['nroDoc'] = $_POST['busquedaNumeroDoc'];

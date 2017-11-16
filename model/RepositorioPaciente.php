@@ -112,20 +112,23 @@
 
         if($busqueda != null){
           if (isset($busqueda['nombre']) && trim($busqueda['nombre'] != '')) {
-            $queryString .= " AND nombre LIKE %nombre%";
+            $queryString .= " AND nombre LIKE %:nombre%";
           }
 
-          if(isset($busqueda['apellido'] && trim($busqueda['apellido'] != '')){
-            $queryString .= " AND apellido LIKE %apellido%";
+          if(isset($busqueda['apellido']) && trim($busqueda['apellido'] != '')){
+            $queryString .= " AND apellido LIKE %:apellido%";
           }
 
           if(isset($busqueda['nroDoc']) && trim($busqueda['nroDoc'] != '')){
-            $queryString .= " AND tipo_doc_id=:tipoDoc AND numero_doc LIKE %nroDoc%";
+            $queryString .= " AND tipo_doc_id=:tipoDoc AND numero_doc LIKE %:nroDoc%";
           }
 
         }
 
-        $queryString .=  " LIMIT :limit OFFSET :offset";
+        if( $index != -1 && $cantidad!= -1){
+            $queryString.=" LIMIT :limit OFFSET :offset ";
+        }
+
         $query = $conexion->prepare($queryString);
 
         if($busqueda != null){
@@ -133,7 +136,7 @@
             $query->bindParam(':nombre', $busqueda['nombre']);
           }
 
-          if(isset($busqueda['apellido'] && trim($busqueda['apellido'] != '')){
+          if(isset($busqueda['apellido']) && trim($busqueda['apellido'] != '')){
             $query->bindParam(':apellido', $busqueda['apellido']);
           }
 
@@ -144,8 +147,11 @@
 
         }
 
-        $query->bindParam(':limit', $cantidad,PDO::PARAM_INT);
-        $query->bindParam(':offset', $index,PDO::PARAM_INT);
+        if( $index != -1 && $cantidad!= -1){
+          $query->bindParam(':limit', $cantidad,PDO::PARAM_INT);
+          $query->bindParam(':offset', $index,PDO::PARAM_INT);
+        }
+
         $query->execute();
         $resultado = $query->fetchAll();
         $pacientes = [];
