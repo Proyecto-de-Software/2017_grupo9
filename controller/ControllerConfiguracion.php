@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/Controller/Controller.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/controller/Controller.php');
 
 class ControllerConfiguracion extends Controller{
 	protected static $instance;
