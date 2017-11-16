@@ -1,10 +1,10 @@
 <?php
-	require_once($_SERVER['DOCUMENT_ROOT'].'/Controller/Controller.php');
-	require_once($_SERVER['DOCUMENT_ROOT'].'/Controller/ControllerUsuario.php');
-	require_once($_SERVER['DOCUMENT_ROOT'].'/Controller/ControllerPaciente.php');
-	require_once($_SERVER['DOCUMENT_ROOT'].'/Controller/ControllerConfiguracion.php');
-	require_once($_SERVER['DOCUMENT_ROOT'].'/Controller/ControllerDatosDemograficos.php');
-	require_once($_SERVER['DOCUMENT_ROOT'].'/Controller/ControllerSeguridad.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/controller/Controller.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/controller/ControllerUsuario.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/controller/ControllerPaciente.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/controller/ControllerConfiguracion.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/controller/ControllerDatosDemograficos.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/controller/ControllerSeguridad.php');
 	$config = RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion();
 	if(!$config->getHabilitado()){
 		Controller::getInstance()->render('mantenimiento.twig');
