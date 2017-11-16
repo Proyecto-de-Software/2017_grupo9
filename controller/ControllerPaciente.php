@@ -78,11 +78,14 @@ class ControllerPaciente extends Controller{
             }
       } 
 
-      public function listarTodos($busquedaNombre=null,$busquedaApellido=null,$busquedaTipoDoc=null,$busquedaNroDoc=null){
+      public function listarTodos($busqueda,$pagina = 1,$accion=''){
             if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_index')){
-                  $paginado = $this->datosDePaginado();
+                  $listado = RepositorioPaciente::getInstance()->devolverTodos($busqueda);
+                  $paginado = $this->paginar($listado,$pagina);
                   $template = 'administracionPacientes.twig';
-                  $parametrosTemplate['lista'] = RepositorioPaciente::getInstance()->devolverTodos($paginado['limit'],$paginado['cantidadPorPagina'],$busquedaNombre,$busquedaApellido,$busquedaTipoDoc);
+                  $parametrosTemplate['lista'] = RepositorioPaciente::getInstance()->devolverTodos($busqueda,$paginado['offset'],$paginado['cantidadPorPagina']);
+                  $parametrosTemplate['action'] = $accion;
+                  $parametrosTemplate['tipo'] = 'pacientes';
                   $parametrosTemplate['paginado'] = $paginado;
                   $this->render($template,$parametrosTemplate);
             } else {
@@ -116,12 +119,22 @@ class ControllerPaciente extends Controller{
             }
       }
 
-      public function busqueda($nombre=null,$apellido=null,$tipoDoc=null,$nroDoc=null){
-            if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_index')){
-                  $this->listarTodos($nombre,$apellido,$tipoDoc,$nroDoc);
-            } else {
-                  header("Location: /index.php");
+      public function obtenerDatosBusquedaNombre(){
+            if(isset($_POST['busquedaNombre']) && trim($_POST['busquedaNombre']) !=''){
+                  $busqueda['nombre'] = $_POST['busquedaNombre'];
             }
+            if(isset($_POST['busquedaApellido']) && trim($_POST['busquedaApellido']) !=''){
+                  $busqueda['apellido'] = $_POST['busquedaApellido'];
+            }
+            return $busqueda;
+      }
+
+      public function obtenerDatosBusquedaDocumento(){
+            if(isset($_POST['busquedaNombre']) && trim($_POST['busquedaNombre']) !=''){
+                  $busqueda['tipoDoc'] = $_POST['busquedaTipoDoc'];
+                  $busqueda['nroDoc'] = $_POST['busquedaNumeroDoc'];
+            }
+            return $busqueda;
       }
 
       public function tiposDeDatos(){

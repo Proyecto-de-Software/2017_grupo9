@@ -165,10 +165,24 @@
 							ControllerPaciente::getInstance()->agregar();
 							break;
 						case 'busquedaDocumento':
-							ControllerPaciente::getInstance()->busqueda($_POST['busquedaTipoDoc'],$_POST['busquedaNumeroDoc']);
+							$busqueda = ControllerPaciente::getInstance()->obtenerDatosBusquedaDocumento();
+							if(isset($_GET['page'])){
+								$page = $_GET['page'];
+							}
+							else{
+								$page = 1;
+							}
+							ControllerPaciente::getInstance()->listarPacientes($busqueda,$page,'/busquedaDocumento');
 							break;
 						case 'busquedaNombre':
-							ControllerPaciente::getInstance()->busqueda($_POST['busquedaNombre'],$_POST['busquedaApellido']);
+							$busqueda = ControllerPaciente::getInstance()->obtenerDatosBusquedaNombre();
+							if(isset($_GET['page'])){
+								$page = $_GET['page'];
+							}
+							else{
+								$page = 1;
+							}
+							ControllerPaciente::getInstance()->listarPacientes($busqueda,$page,'/busquedaNombre');
 							break;
 						default:
 							header("Location: /index.php/pacientes");

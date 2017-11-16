@@ -106,30 +106,44 @@
         return false;
       }
 
-      public function devolverTodos($index,$cantidad,$nombre='',$apellido='',$idTipoDoc='',$numeroDoc=''){
+      public function devolverTodos($busqueda=null,$index=-1,$cantidad=-1){
         $conexion = $this->getConnection();
         $queryString = "SELECT * FROM paciente WHERE 1";
-        if(trim($nombre) != ''){
-          $queryString .= " AND nombre=:nombre";
+
+        if($busqueda != null){
+          if (isset($busqueda['nombre']) && trim($busqueda['nombre'] != '')) {
+            $queryString .= "AND nombre=:nombre";
+          }
+
+          if(isset($busqueda['apellido'] && trim($busqueda['apellido'] != '')){
+            $queryString .= " AND apellido=:apellido";
+          }
+
+          if(isset($busqueda['nroDoc']) && trim($busqueda['nroDoc'] != '')){
+            $queryString .= " AND tipo_doc_id=:tipoDoc AND numero_doc=:nroDoc";
+          }
+
         }
-        if(trim($apellido) != ''){
-          $queryString .= " AND apellido=:apellido";
-        }
-        if(trim($idTipoDoc) != '' and trim($numeroDoc) != ''){
-          $queryString .= " AND tipo_doc_id=:idTipoDoc AND numero_doc=:numeroDoc";
-        }
+
         $queryString .=  " LIMIT :limit OFFSET :offset";
         $query = $conexion->prepare($queryString);
-        if(trim($nombre) != ''){
-          $query->bindParam(':nombre', $nombre);
+
+        if($busqueda != null){
+          if (isset($busqueda['nombre']) && trim($busqueda['nombre'] != '')) {
+            $query->bindParam(':nombre', $busqueda['nombre']);
+          }
+
+          if(isset($busqueda['apellido'] && trim($busqueda['apellido'] != '')){
+            $query->bindParam(':apellido', $busqueda['apellido']);
+          }
+
+          if(isset($busqueda['nroDoc']) && trim($busqueda['nroDoc'] != '')){
+            $query->bindParam(':tipoDoc', $busqueda['tipoDoc']);
+            $query->bindParam(':nroDoc', $busqueda['nroDoc']);
+          }
+
         }
-        if(trim($apellido) != ''){
-          $query->bindParam(':apellido', $apellido);
-        }
-        if(trim($idTipoDoc) != '' and trim($numeroDoc) != ''){
-          $query->bindParam(':idTipoDoc', $idTipoDoc);
-          $query->bindParam(':numeroDoc', $numeroDoc);
-        }
+
         $query->bindParam(':limit', $cantidad,PDO::PARAM_INT);
         $query->bindParam(':offset', $index,PDO::PARAM_INT);
         $query->execute();
@@ -138,40 +152,6 @@
         if(sizeof($resultado) > 0){
           foreach($resultado as $paciente){
             array_push($pacientes, $this->buscarPorId($paciente['id']));
-          }
-          return $pacientes;
-        }
-        return false;
-      }
-
-      function busquedaNomYAp($nombre,$apellido){
-        $conexion = $this->getConnection();
-        $query = $conexion->prepare("SELECT * FROM paciente WHERE nombre=:nombre and apellido=:apellido");
-        $query->bindParam(':nombre', $nombre);
-        $query->bindParam(':apellido', $apellido);
-        $query->execute();
-        $resultado = $query->fetchAll();
-        $pacientes = [];
-        if(sizeof($resultado) > 0){
-          foreach($resultado as $paciente){
-            array_push($pacientes, $this->buscarPacientePorId($paciente['id']));
-          }
-          return $pacientes;
-        }
-        return false;
-      }
-
-      function busquedaDocumento($idTipoDoc,$numeroDoc){
-        $conexion = $this->getConnection();
-        $query = $conexion->prepare("SELECT * FROM paciente WHERE tipo_doc_id=:idTipoDoc and numero_doc=:numeroDoc");
-        $query->bindParam(':idTipoDoc', $idTipoDoc);
-        $query->bindParam(':numeroDoc', $numeroDoc);
-        $query->execute();
-        $resultado = $query->fetchAll();
-        $pacientes = [];
-        if(sizeof($resultado) > 0){
-          foreach($resultado as $paciente){
-            array_push($pacientes, $this->buscarPacientePorId($paciente['id']));
           }
           return $pacientes;
         }
