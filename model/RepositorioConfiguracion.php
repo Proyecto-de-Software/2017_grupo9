@@ -67,4 +67,38 @@
 				$query->bindParam(':habilitado', $configuracion->getHabilitado());
 				return $query->execute() == 1;
 		}
+		public function configuracionValida($configuracion){
+			$validacion['ok'] = true;
+			$titulo = $configuracion->getTitulo() != null && trim($configuracion->getTitulo()) !='';
+        	if(!$titulo){
+          		array_push($validacion, 'El titulo no debe estar vacio');
+          		$validacion['ok'] = false;
+        	}
+			$dHospital = $configuracion->getDescripcionHospital() != null && trim($configuracion->getDescripcionHospital()) !='';
+        	if(!$dHospital){
+          		array_push($validacion, 'La descripcion del hospital no debe estar vacia');
+          		$validacion['ok'] = false;
+        	}
+			$dEspecialidades = $configuracion->getDescripcionEspecialidades() != null && trim($configuracion->getDescripcionEspecialidades()) !='';
+        	if(!$dEspecialidades){
+          		array_push($validacion, 'La descripcion de especialidades no debe estar vacia');
+          		$validacion['ok'] = false;
+        	}
+			$dGuardia = $configuracion->getDescripcionGuardia() != null && trim($configuracion->getDescripcionGuardia()) !='';
+        	if(!$dGuardia){
+          		array_push($validacion, 'La descripcion de la guardia no debe estar vacia');
+          		$validacion['ok'] = false;
+        	}
+        	$cantElem = $configuracion->getCantElem() != null  && trim($configuracion->getCantElem()) !='';
+        	if(!$cantElem){
+        		array_push($validacion, 'Debe indicar una cantidad de elementos por pagina');
+          		$validacion['ok'] = false;
+        	}
+        	$emailContacto = $configuracion->getContacto() != null && filter_var($configuracion->getContacto(),FILTER_VALIDATE_EMAIL);
+        	if(!$emailContacto){
+        		array_push($validacion, 'El mail no debe ser vacion y debe ser un email con formato valido');
+          		$validacion['ok'] = false;
+        	}
+        	return $validacion;
+        }
 	}

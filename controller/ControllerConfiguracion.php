@@ -23,36 +23,39 @@ class ControllerConfiguracion extends Controller{
 		return $configuracion;	
 	}
 
-	public function formularioConfiguracion($validacion=[]){
+	public function formularioConfiguracion($validacion=[],$configuracionInvalida=null){
 		if (RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'configuracion_update')){
 			$template = 'administracionConfiguracion.twig';
 			$parametrosTemplate['configuracionActual'] = RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion();
 			$parametrosTemplate['validacion'] = $validacion; //modificar template para que sepa que recibe el array
+			$parametrosTemplate['configuracionInvalida'] = $configuracionInvalida; 
 			$this->render($template,$parametrosTemplate);
 		}
 		else{
-			header("Location: ./index.php");
+			header("Location: /index.php");
 		}
 	}
 	
 	public function modificarConfiguracion($edicion = false){
 		if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'configuracion_update') && (isset($_POST['token'])) && $_POST['token'] == $_SESSION['token']){
 			$configuracion = $this->crearConfiguracion();
-			//$ validacion = validar en el modelo config devuelve un array 
-			//if campos validos (hacer en el repo config)
+			$validacion = RepositorioConfiguracion::getInstance()->configuracionValida($configuracion);
+			if($validacion['ok']){
 				if($edicion){
-					RepositorioConfiguracion::getInstance()->modificarConfiguracionHospital($this->crearConfiguracion());
+					RepositorioConfiguracion::getInstance()->modificarConfiguracionHospital($configuracion);
 					header("Location: /index.php/configuracion");
 				}
 				else{
-					RepositorioConfiguracion::getInstance()->crearConfiguracionHospital($this->crearConfiguracion());
+					RepositorioConfiguracion::getInstance()->crearConfiguracionHospital($configuracion);
 					header("Location: /index.php/configuracion");
 				}
-			//else
-				//$this->formularioConfiguracion($validacion)
+			}
+			else{
+				$this->formularioConfiguracion($validacion,$configuracion);
+			}
 		}
 		else{
-			header("Location: ./index.php");
+			header("Location: /index.php");
 		}
 
 		//header a modificacion de configuracion

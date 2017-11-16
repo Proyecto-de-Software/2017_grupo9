@@ -102,7 +102,7 @@
         
         if ($filtrado != null){
           if(trim($filtrado['campoBuscar'])!=''){
-            $queryString.=" WHERE username=:username";
+            $queryString.=" WHERE username LIKE :username";
           }
           else{
             $queryString.=" WHERE 1";
@@ -129,7 +129,7 @@
              $query->bindParam(':activo', $activo);
           }
           if(trim($filtrado['campoBuscar'])!=''){
-            $username = $filtrado['campoBuscar'];
+            $username = $filtrado['campoBuscar'].'%';
             $query->bindParam(':username', $username);
           }
         }
