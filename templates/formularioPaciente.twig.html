@@ -1,37 +1,39 @@
 <section class="row mx-auto mt-5 ">
 	<div class="login col-md-5  mx-auto mt-4 mb-4 pb-5 pt-5 pr-5 pl-5 border rounded ">
-	{% if paciente is defined %}
-		{% set ruta = "./index.php/paciente/{{paciente.id}}/editar" %}
-		{% set nombre = {{paciente.nombre}} %}
-		{% set apellido = {{paciente.apellido}} %}
-		{% set fechaNacimiento = {{paciente.fechaNacimiento}} %}
-		{% set genero = {{paciente.genero}} %}
-		{% set idTipoDocumento = {{paciente.idTipoDocumento}} %}
-		{% set numeroDoc = {{paciente.numeroDoc}} %}
-		{% set domicilio = {{paciente.domicilio}} %}
-		{% set telefono = {{paciente.telefono}} %}
-		{% set idObraSocial = {{paciente.idObraSocial}} %}
-		{% set titulo = Modificar paciente %}
-	{% else %}
-		{% set ruta = ".index.php/paciente/agregar" %}
-		{% set nombre = '' %}
-		{% set apellido = '' %}
-		{% set fechaNacimiento = '' %}
-		{% set genero = '' %}
-		{% set idTipoDocumento = '' %}
-		{% set numeroDoc = '' %}
-		{% set domicilio = '' %}
-		{% set telefono = '' %}
-		{% set idObraSocial = '' %}
-		{% set titulo = Agregar paciente %}
-	{% endif %}
+		{% if paciente is defined %} 
+			{% set nombre = paciente.nombre %}
+			{% set apellido = paciente.apellido %}
+			{% set fechaNacimiento = paciente.fechaNacimiento %}
+			{% set genero = paciente.genero %}
+			{% set idTipoDocumento = paciente.idTipoDocumento %}
+			{% set numeroDoc = paciente.numeroDoc %}
+			{% set domicilio = paciente.domicilio %}
+			{% set telefono = paciente.telefono %}
+			{% set idObraSocial = paciente.idObraSocial %}
+			{% set titulo = 'Modificar paciente' %}
+		{% else %}
+			{% set nombre = '' %}
+			{% set apellido = '' %}
+			{% set fechaNacimiento = '' %}
+			{% set genero = '' %}
+			{% set idTipoDocumento = '' %}
+			{% set numeroDoc = '' %}
+			{% set domicilio = '' %}
+			{% set telefono = '' %}
+			{% set idObraSocial = '' %}
+			{% set titulo = 'Agregar paciente' %}
+		{% endif %}
+		<h3 class="card-header text-center myHeader">{{ titulo }} </h3>
 		{% if not validacion.ok  %}
 			{% for mensaje in validacion[1:] %}
 				<p class="alert alert-danger">{{mensaje}}</p>
 			{% endfor %}
 		{% endif %}
-		<h3 class="card-header text-center myHeader">{{ titulo }} </h3>
-		<form class="text-center" role="form" method="POST" action="{{ ruta }}">
+		{% if paciente is defined %}
+			<form class="text-center" role="form" method="POST" action="/index.php/paciente/{{paciente.id}}/editar">
+		{% else %}
+			<form class="text-center" role="form" method="POST" action="/index.php/pacientes/agregar">
+		{% endif %}
 			<label for="name" hidden>Id</label>
 			<input name="id" value="{{paciente.id}}" hidden>
 			<div class="form-group ">

@@ -137,7 +137,7 @@
         $pacientes = [];
         if(sizeof($resultado) > 0){
           foreach($resultado as $paciente){
-            array_push($pacientes, $this->buscarPacientePorId($paciente['id']));
+            array_push($pacientes, $this->buscarPorId($paciente['id']));
           }
           return $pacientes;
         }

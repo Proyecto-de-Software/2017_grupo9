@@ -39,7 +39,7 @@ class ControllerPaciente extends Controller{
 
       public function modificar($id){
             if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_update')){
-                  $paciente = crear();
+                  $paciente = $this->crear();
                   $paciente->setId($id);
                   $validacion = RepositorioPaciente::getInstance()->esValido($paciente,true);
                   $id = $paciente->getId();
@@ -60,7 +60,7 @@ class ControllerPaciente extends Controller{
             if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_show')){
                   $paciente = RepositorioPaciente::getInstance()->buscarPorId($id);
                   $template = 'administracionMostrarPaciente.twig';
-                  $parametrosTemplate = $this->tiposDeDatosDeUnPaciente($paciente);
+                  $parametrosTemplate = $this->tiposDeDatosDatosDeUnPaciente($paciente);
                   $parametrosTemplate['paciente'] = $paciente;
                   $this->render($template,$parametrosTemplate);
             } else {
@@ -80,7 +80,7 @@ class ControllerPaciente extends Controller{
 
       public function listarTodos($busquedaNombre=null,$busquedaApellido=null,$busquedaTipoDoc=null,$busquedaNroDoc=null){
             if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_index')){
-                  $paginado = datosDePaginado();
+                  $paginado = $this->datosDePaginado();
                   $template = 'administracionPacientes.twig';
                   $parametrosTemplate['lista'] = RepositorioPaciente::getInstance()->devolverTodos($paginado['limit'],$paginado['cantidadPorPagina'],$busquedaNombre,$busquedaApellido,$busquedaTipoDoc);
                   $parametrosTemplate['paginado'] = $paginado;
@@ -96,7 +96,9 @@ class ControllerPaciente extends Controller{
                   $template = 'administracionFormularioPaciente.twig';
                   $parametrosTemplate = $this->tiposDeDatos();
                   $parametrosTemplate['validacion'] = $validacion;
-                  $parametrosTemplate['paciente'] = RepositorioPaciente::getInstance()->buscarPorId($idPaciente);
+                  if($idPaciente != null){
+                        $parametrosTemplate['paciente'] = RepositorioPaciente::getInstance()->buscarPorId($idPaciente);
+                  }
                   $this->render($template,$parametrosTemplate);
             } else {
                   header("Location: /index.php");
@@ -119,7 +121,7 @@ class ControllerPaciente extends Controller{
 
       public function tiposDeDatosDatosDeUnPaciente($paciente){
             $datos['obraSocial'] = RepositorioPaciente::getInstance()->devolverObraSocialPorId($paciente->getIdObraSocial());
-            $datos['$tipoDeDocumento'] = RepositorioPaciente::getInstance()->devolverTipoDeDocumentoPorId($paciente->getIdTipoDocumento());
+            $datos['tipoDeDocumento'] = RepositorioPaciente::getInstance()->devolverTipoDeDocumentoPorId($paciente->getIdTipoDocumento());
             return $datos;
       }
 }

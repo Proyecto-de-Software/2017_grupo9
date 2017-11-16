@@ -1,6 +1,7 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioUsuario.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPaciente.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioDatosDemograficos.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioConfiguracion.php'); 
 require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioRol.php'); 
 require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPermiso.php'); 

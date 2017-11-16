@@ -56,7 +56,7 @@
 			    	</td>
 			    	{% if 'pediatra' in usuarioActual.roles or 'recepcionista' in usuarioActual.roles %}
 				    	<td>
-				    		<a href="/index.php/paciente/{{ elemento.id }}/editar" class="btn btn-outline-success btn-own-info">Editar</a>
+				    		<a href="/index.php/paciente/{{ elemento.id }}/edicion" class="btn btn-outline-success btn-own-info">Editar</a>
 				    	</td>
 				    	<td>
 				    		<a href="/index.php/paciente/{{ elemento.id }}" class="btn btn-outline-success btn-own-info">Mas información</a>
@@ -72,5 +72,5 @@
 			    {% endfor %}
 			</tbody>
 		</table>
-		<a class="btn btn-success mt-3 mb-5 text-right" role="button" href="/index.php/paciente/{{ elemento.id }}/nuevo">Agregar nuevo paciente</a>
+		<a class="btn btn-success mt-3 mb-5 text-right" role="button" href="/index.php/pacientes/nuevo">Agregar nuevo paciente</a>
 </section>

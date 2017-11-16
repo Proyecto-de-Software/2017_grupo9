@@ -17,7 +17,7 @@ class ControllerDatosDemograficos extends Controller{
 
 	public function agregar(){
 		if (RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'datosdemograficos_new')){
-			$datosDemograficos = crear();
+			$datosDemograficos = $this->crear();
 			if(RepositorioDatosDemograficos::getInstance()->agregar($datosDemograficos)){
 	 	  		$idPaciente = $datosDemograficos->getPaciente();
 	 	  		header("Location: /index.php/paciente/$idPaciente/datosDemograficos");
@@ -35,7 +35,7 @@ class ControllerDatosDemograficos extends Controller{
 			if(!($datosDemograficos = RepositorioDatosDemograficos::getInstance()->buscarPorIdPaciente($idPaciente))){
 				$datosDemograficos = null;
 			} else{
-				$parametrosTemplate = $this->tiposDeUnDatoDemografico();
+				$parametrosTemplate = $this->tiposDeUnDatoDemografico($datosDemograficos);
 			}
 	    	$parametrosTemplate['idPaciente'] = $idPaciente; 
 			$parametrosTemplate['datosDemograficos'] = $datosDemograficos;
@@ -46,15 +46,18 @@ class ControllerDatosDemograficos extends Controller{
 
     }	
 
-    public function modificar($idPaciente,$id){
+    public function modificar($idPaciente){
     	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'datosdemograficos_update')){
-			$datosDemograficos = crear();
-			$datosDemograficos->setId($id);
-			if($datosDemograficosModificados = RepositorioDatosDemograficos::getInstance()->modificar($datosDemograficos)){
-				header("Location: /index.php/paciente/$idPaciente/datosDemograficos");
-			} else{
-				header("Location: /index.php/paciente/$idPaciente/datosDemograficos/editar");
-			}
+			if($datosDemograficos = RepositorioDatosDemograficos::getInstance()->buscarPorIdPaciente($idPaciente)){
+					var_dump("12");
+				if(RepositorioDatosDemograficos::getInstance()->modificar($datosDemograficos)){
+					header("Location: /index.php/paciente/$idPaciente/datosDemograficos");
+				} else{
+					header("Location: /index.php/paciente/$idPaciente/datosDemograficos/editar");
+				}
+        	} else {
+        		header("Location: /index.php/paciente/$idPaciente");
+        	}
 		} else{
 			header("Location: /index.php");
 		}
@@ -74,12 +77,12 @@ class ControllerDatosDemograficos extends Controller{
     public function formulario($idPaciente){
     	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'datosdemograficos_update')){
 	    	$template = 'administracionFormularioDatosDemograficos.twig';
-	    	if(!($datosDemograficos = RepositorioDatosDemograficos::getInstance()->buscarPorIdPaciente($idPaciente))){
-				$datosDemograficos = null;
-			}
 			$parametrosTemplate = $this->tiposDeDatos();
 	    	$parametrosTemplate['idPaciente'] = $idPaciente;
-			$parametrosTemplate['datosDemograficos'] = $datosDemograficos;
+	    	if($datosDemograficos = RepositorioDatosDemograficos::getInstance()->buscarPorIdPaciente($idPaciente)){
+				$parametrosTemplate['datosDemograficos'] = $datosDemograficos;
+				//var_dump($parametrosTemplate['datosDemograficos']);die();
+			}
 			$this->render($template,$parametrosTemplate);
 		} else {
 			header("Location: /index.php");
