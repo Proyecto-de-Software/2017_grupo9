@@ -35,11 +35,12 @@ class ControllerUsuario extends Controller{
 
     public function agregar(){
     	if((RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'usuario_new')) && (isset($_POST['token']) && $_POST['token'] == $_SESSION['token'])){
-    		$usuario = $this->crearUsuario();
+    		$usuario = $this->crearUsuarioNuevo();
 			$validacion = RepositorioUsuario::getInstance()->usuarioValido($usuario);
+			
 			if($validacion['ok']){
 				RepositorioUsuario::getInstance()->agregarUsuario($usuario);
-				header("Location: ./index.php/usuarios");
+				header("Location: /index.php/usuarios");
 			}
 			else{
 				$this->formularioUsuario($usuario,$validacion);
@@ -47,16 +48,18 @@ class ControllerUsuario extends Controller{
 
     	}
     	else{
-    		header("Location: ./index.php");
+    		header("Location: /index.php");
     	}
     }
 
     public function formularioUsuario($idUsuario = null,$validacion = null){
     	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'],'usuario_new') || RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'],'usuario_update')){
-			$template = 'administracionFormularioUsuario.twig'; // modificar template pra hacerlo generico
+			$template = 'administracionFormularioUsuario.twig';
 			$parametrosTemplate['validacion'] = $validacion;
 			$parametrosTemplate['idUsuario'] = $idUsuario;
-			$parametrosTemplate['usuario'] = RepositorioUsuario::getInstance()->buscarUsuarioPorId($idUsuario);
+			if($idUsuario != null){
+				$parametrosTemplate['usuario'] = RepositorioUsuario::getInstance()->buscarUsuarioPorId($idUsuario);
+			}
 			$parametrosTemplate['roles'] = RepositorioRol::getInstance()->devolverRoles();
 			$this->render($template,$parametrosTemplate);
 		}
