@@ -8,7 +8,12 @@
 	padding-left:0 !important;
 }
 
-
+.btn-own{
+	background-color:#3CB371 !important;
+}
+.btn-own:hover{
+	background-color:#3CB371 !important;
+}
 .btn-own-info{
 	border-color: #3CB371 !important;
 }
@@ -22,7 +27,6 @@
 .btn-search{
 	border-color: white !important;
 	color:white !important;
-
 }
 .nav-bar-link-own{
 	color:white !important;

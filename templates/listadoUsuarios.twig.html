@@ -24,16 +24,14 @@
 					<input type="checkbox" name="bloqueado" id="bloqueado" class="checkbox mr-2 ml-2" value="bloqueado">
 				{% endif %}
     			<label for="rol">Bloqueado</label><br/>
-	      		<button class="btn btn-success btn-search  my-2 my-sm-0 mr-2 ml-2" type="submit">Filtrar</button>
+	      		<button class="btn btn-success btn-search btn-own  my-2 my-sm-0 mr-2 ml-2" type="submit">Filtrar</button>
 		    </form>
 		</div>
 		<table class="table table-hover">
 		  	<thead>
 			    <tr>
 			    	<th>Nombre de usuario</th>
-			      	<th></th>
-			      	<th></th>
-			      	<th></th>
+
 			    </tr>
 		  	</thead>
 		  	<tbody>
@@ -61,7 +59,7 @@
 			    
 			</tbody>
 		</table>
-		<a class="btn btn-success mt-3 mb-5 text-right" role="button" href="/index.php/usuarios/nuevo">
+		<a class="btn btn-success btn-own mt-3 mb-5 text-right" role="button" href="/index.php/usuarios/nuevo">
 			Agregar nuevo usuario
 		</a>
 		
