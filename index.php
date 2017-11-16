@@ -57,8 +57,14 @@
 						ControllerUsuario::getInstance()->formularioUsuario();
 						break;
 					case 'filtrado':
-						//recupero filtrado por post
-						//ControllerPaciente::getInstance()->listarPacientes($filtrado);
+						$filtrado = ControllerUsuario::getInstance()->obtenerDatosFiltrado();
+						if(isset($_GET['page'])){
+							$page = $_GET['page'];
+						}
+						else{
+							$page = 1;
+						}
+						ControllerUsuario::getInstance()->listarusuarios($filtrado,true,$page);
 						break;
 					default:
 						header("Location: /index.php/usuarios");
@@ -66,7 +72,13 @@
 				}
 			}
 			else{
-				ControllerUsuario::getInstance()->listarUsuarios();
+				if(isset($_GET['page'])){
+					$page = $_GET['page'];
+				}
+				else{
+					$page = 1;
+				}
+				ControllerUsuario::getInstance()->listarUsuarios(null,false,$page);
 			}
 			break;
 		#Fin de rutas de usuario

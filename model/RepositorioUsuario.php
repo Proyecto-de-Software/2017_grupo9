@@ -95,7 +95,7 @@
 	        else
 	        	return false;
       }
-      public function devolverUsuarios($index,$cantidad,$filtrado = null){
+      public function devolverUsuarios($filtrado = null, $index=-1, $cantidad=-1){
         $conexion = $this->getConnection();
         $queryString = "SELECT id FROM usuario";
         
@@ -115,10 +115,15 @@
             $queryString.=" AND activo=:activo";
             $activo = '0';
           }
-          $queryString.=" LIMIT :limit OFFSET :offset ";
+          if( $index != -1 && $cantidad!= -1){
+            $queryString.=" LIMIT :limit OFFSET :offset ";
+          }
           $query = $conexion->prepare($queryString);
-          $query->bindParam(':limit', $cantidad,PDO::PARAM_INT);
-          $query->bindParam(':offset', $index,PDO::PARAM_INT);
+
+          if($index != -1 && $cantidad!= -1){
+            $query->bindParam(':limit', $cantidad,PDO::PARAM_INT);
+            $query->bindParam(':offset', $index,PDO::PARAM_INT);
+          }
           if(isset($activo)){
              $query->bindParam(':activo', $activo);
           }
@@ -128,15 +133,21 @@
           }
         }
         else{
-          $queryString.=" LIMIT :limit OFFSET :offset ";  
-          $query = $conexion->prepare($queryString);
-          $query->bindValue(':limit', $cantidad,PDO::PARAM_INT);
-          $query->bindValue(':offset', $index,PDO::PARAM_INT);
-        }
 
+          if($index != -1 && $cantidad!= -1){
+
+            $queryString.=" LIMIT :limit OFFSET :offset ";  
+          }
+          $query = $conexion->prepare($queryString);
+          if($index != -1 && $cantidad!= -1){
+            
+            $query->bindValue(':limit', $cantidad,PDO::PARAM_INT);
+            $query->bindValue(':offset', $index,PDO::PARAM_INT);
+          }
+        }
+               
         $query->execute();
         $resultado = $query->fetchAll();
-   
        
         $usuarios = [];
         if(sizeof($resultado) > 0){

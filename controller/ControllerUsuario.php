@@ -97,15 +97,19 @@ class ControllerUsuario extends Controller{
     	}
     }
 
-    public function listarusuarios($filtrado = null, $filtradoPaginado = false){
+    public function listarusuarios($filtrado = null, $filtradoPaginado = false,$pagina = 1){
     	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'usuario_index')){
-    		$paginado = $this->datosDepaginado();
-    		$listado = RepositorioUsuario::getInstance()->devolverUsuarios($paginado['limit'],$paginado['cantidadPorPagina'],$filtrado);
-    		$paginadoFinal = $this->paginar($listado);
+    		
+    		$listado = RepositorioUsuario::getInstance()->devolverUsuarios($filtrado);
+    		$paginado = $this->paginar($listado,$pagina);
+    		$listadoFinal = RepositorioUsuario::getInstance()->devolverUsuarios($filtrado,$paginado['offset'],$paginado['cantidadPorPagina']);
+
     		$template = 'administracionUsuarios.twig';
-			$parametrosTemplate['lista'] = $listado;
+			$parametrosTemplate['lista'] = $listadoFinal;
 			$parametrosTemplate['filtrado'] = $filtrado;
 			$parametrosTemplate['filtradoPaginado'] = $filtradoPaginado;
+			$parametrosTemplate['tipoFiltrado'] = 'usuario';
+			$parametrosTemplate['paginado'] = $paginado;
     		$this->render($template,$parametrosTemplate);
 		}
 		else{
@@ -181,6 +185,25 @@ class ControllerUsuario extends Controller{
 		$_SESSION = array();
 		session_destroy();
 		header("Location: /../");
+    }
+    public function obtenerDatosFiltrado(){
+    	$filtrado['activo'] = isset($_POST['activo']);
+		$filtrado['bloqueado'] = isset($_POST['bloqueado']);
+		$filtrado['campoBuscar'] = "";
+		if(isset($_POST['buscar']) && trim($_POST['buscar']) !=''){
+			$filtrado['campoBuscar'] = $_POST['buscar'];	;
+		}
+		if(isset($_POST['filtrado'])){
+			$_SESSION['filtrado']['activo'] = $filtrado['activo'];
+			$_SESSION['filtrado']['bloqueado'] = $filtrado['bloqueado'];
+			$_SESSION['filtrado']['campoBuscar'] = $filtrado['campoBuscar'];
+		}
+		else{
+			$filtrado['activo'] = $_SESSION['filtrado']['activo'];
+			$filtrado['bloqueado'] = $_SESSION['filtrado']['bloqueado'];
+			$filtrado['campoBuscar'] = $_SESSION['filtrado']['campoBuscar'];
+		}
+		return $filtrado;
     }
 
 

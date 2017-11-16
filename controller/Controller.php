@@ -45,26 +45,17 @@ class Controller{
 	public function obtenerConfiguracion(){
 		return RepositorioConfiguracion::getInstance()->datosParaLaVista();
 	}
-	
-	public function datosDepaginado(){
-		$paginado['cantidadPorPagina'] = (int)RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion()->getCantElem();
-		$paginado['actual'] = 1;
-		if(isset($_GET['page'])){
-    		$paginado['actual'] = $_GET['page'];
-    	}
 
-    	if($paginado['actual'] <= 1){
-    		$paginado['limit'] =  0;
+
+	public function paginar($listado,$pagina){
+		$paginado['cantidadPorPagina'] = (int)RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion()->getCantElem();
+		$paginado['actual'] = $pagina;
+		if($paginado['actual'] <= 1){
+    		$paginado['offset'] =  0;
     	}
     	else{
-    		$paginado['limit'] = $paginado['cantidadPorPagina'] * ($paginado['actual'] - 1);
+    		$paginado['offset'] = $paginado['cantidadPorPagina'] * ($paginado['actual'] - 1);
     	}
-    	return $paginado;
-
-	}
-
-	public function paginar($listado){
-		$paginado = $this->datosDepaginado();
 		$paginado['cantidadElementos'] = sizeof($listado);
 		$paginado['cantidadPaginas'] = ceil($paginado['cantidadElementos']/$paginado['cantidadPorPagina']);
 		return $paginado;
