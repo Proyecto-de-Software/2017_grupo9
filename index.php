@@ -64,7 +64,7 @@
 						else{
 							$page = 1;
 						}
-						ControllerUsuario::getInstance()->listarusuarios($filtrado,true,$page);
+						ControllerUsuario::getInstance()->listarusuarios($filtrado,$page,'/filtrado');
 						break;
 					default:
 						header("Location: /index.php/usuarios");
@@ -78,7 +78,7 @@
 				else{
 					$page = 1;
 				}
-				ControllerUsuario::getInstance()->listarUsuarios(null,false,$page);
+				ControllerUsuario::getInstance()->listarUsuarios(null,$page);
 			}
 			break;
 		#Fin de rutas de usuario

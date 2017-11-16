@@ -97,7 +97,7 @@ class ControllerUsuario extends Controller{
     	}
     }
 
-    public function listarusuarios($filtrado = null, $filtradoPaginado = false,$pagina = 1){
+    public function listarusuarios($filtrado = null,$pagina = 1,$accion = ''){
     	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'usuario_index')){
     		
     		$listado = RepositorioUsuario::getInstance()->devolverUsuarios($filtrado);
@@ -107,8 +107,8 @@ class ControllerUsuario extends Controller{
     		$template = 'administracionUsuarios.twig';
 			$parametrosTemplate['lista'] = $listadoFinal;
 			$parametrosTemplate['filtrado'] = $filtrado;
-			$parametrosTemplate['filtradoPaginado'] = $filtradoPaginado;
-			$parametrosTemplate['tipoFiltrado'] = 'usuario';
+			$parametrosTemplate['action'] = $accion;
+			$parametrosTemplate['tipo'] = 'usuarios';
 			$parametrosTemplate['paginado'] = $paginado;
     		$this->render($template,$parametrosTemplate);
 		}

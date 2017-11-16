@@ -89,7 +89,18 @@ class ControllerPaciente extends Controller{
                   header("Location: /index.php");
             }
       }
+      /*
+      Forma de usar la funcion Controller::getInstance()->paginar($listado,$pagina);
+            1) se obtiene un listado de la base de datos sin limitar cantidaddes ni paginas. Si filtrando si es necesario depende la busqueda.
+            2)Una vez que esta el listado. Se usa la funcion paginar($listado,$pagina); Esta funcion va a devolver un arreglo $paginado, donde estaran todos los datos necesarios para el template de paginacion. El parametro $pagina, se debe verificar en el index, en las acciones /pacientes o /busqueda depende como lo tengas (mira usuarios). Se pregunta si esta seteado GET page, y si esta seteado se usa ese valor, sino se manda 1. Esta funcion listar todos debe recibir un parametro $pagina.
+            3)Despues de haber usado la funcion paginar (y guardado en una variable) ej: $paginado = paginar($listado,$pagina), ya se tienen los datos para mandar al template, entonces lo unico que haria falta es mandar dos parametros mas al template.
+                  a) parametro que dice el tipo de paginado ('usuarios' o 'pacientes'); Este parametro se debe llamar tipo
+                  b) la accion que va despues de pacientes/, en este caso /busquedaDocumento o la otra. Este parametro se debe llamar accion. Este parametro se debe mandar con la /. Y se debe setear por defecto en '', para que cuando se llame sin busqueda, entre a /pacientes y liste. Y cuando se llame con busqueda entre a /pacientes{{accion}}, en este caso accion tendria /busquedaNOmbre o algo asi. 
+            Con esto creo que no vas a tener drama, sino mira bien las funciones de usuario. 
+            En el repositorio paciente, en la funcion que tengas para devolver pacientes, hay que hacerla mas generica todavia, dando la posibilidad de que offset y cantidad no se manden. Entonces asi se puede usar la paginacion bien, primero pedis los datos sin offset y cantidad, se los mandas al paginar para hacer los calculos, y despues haces la consulta con el offset y cantidad.
 
+
+      */
       public function formulario($idPaciente=null, $validacion=null){
             if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_new') && RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'],'paciente_update')){
 

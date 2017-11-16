@@ -1,23 +1,11 @@
-{% if filtradoPaginado %}
-	{% if tipoFiltrado == 'usuario' %}
-		{% set action = 'usuarios/filtrado' %}
-	{% elseif tipoFiltrado == 'paciente' %}
-		{% set action = 'pacientes/filtrado' %}
-	{% endif %}
-{% else %}
-	{% if tipoFiltrado == 'usuario' %}
-		{% set action = 'usuarios' %}
-	{% elseif tipoFiltrado == 'paciente' %}
-		{% set action = 'pacientes' %}
-	{% endif %}
-{% endif %}
+<!-- este template recibe parametros: tipo (usuarios o pacientes) y action (accion url, ej /filtrado, o /busquedaNombre) -->
 <div class="d-flex justify-content-center">
 	<nav aria-label="...">
 	  <ul class="pagination ">
 	  	{% if paginado.actual > 1 %}
 	  		{% set anterior = paginado.actual-1 %}
 		    <li class="page-item ">
-		      <a class="page-link page-link-own" href="/index.php/{{action}}?page={{anterior}}" >Anterior</a>
+		      <a class="page-link page-link-own" href="/index.php/{{tipo}}{{action}}?page={{anterior}}" >Anterior</a>
 		    </li>
 		{% else %}
 			<li class="page-item disabled">
@@ -28,18 +16,18 @@
 		{% for pagina in 1..paginado.cantidadPaginas %}
 			{% if paginado.actual == pagina %}
 		    	<li class="page-item active">
-		    		<a class="page-link page-link-own-active " href="/index.php/{{action}}?page={{pagina}}">{{pagina}}</a>
+		    		<a class="page-link page-link-own-active " href="/index.php/{{tipo}}{{action}}?page={{pagina}}">{{pagina}}</a>
 		    	</li>
 		    {% else %}
 		    	<li class="page-item">
-		    		<a class="page-link page-link-own " href="/index.php/{{action}}?page={{pagina}}">{{pagina}}</a>
+		    		<a class="page-link page-link-own " href="/index.php/{{tipo}}{{action}}?page={{pagina}}">{{pagina}}</a>
 		    	</li>
 		    {% endif %}
 		{% endfor %}
 		{% if paginado.actual < paginado.cantidadPaginas %}
 			{% set siguiente = paginado.actual +1 %}
 		    <li class="page-item">
-		      <a class="page-link page-link-own" href="/index.php/{{action}}?page={{siguiente}}">Siguiente</a>
+		      <a class="page-link page-link-own" href="/index.php/{{tipo}}{{action}}?page={{siguiente}}">Siguiente</a>
 		    </li>
 		{% else %}
 			<li class="page-item disabled">
