@@ -24,6 +24,7 @@ class ControllerUsuario extends Controller{
 		}
 
 		$user =  new Usuario($_POST['usuario'], $_POST['email'], $_POST['password'], true,$_POST['nombre'], $_POST['apellido'], $rolesCompletos);
+		$user->setPassword2($_POST['password2']);
 		return $user;
 	}
 	public function crearUsuarioExistente($idUsuario){
@@ -43,7 +44,7 @@ class ControllerUsuario extends Controller{
 				header("Location: /index.php/usuarios");
 			}
 			else{
-				$this->formularioUsuario($usuario,$validacion);
+				$this->formularioUsuario(null,$validacion,$usuario);
 			}
 
     	}
@@ -52,13 +53,16 @@ class ControllerUsuario extends Controller{
     	}
     }
 
-    public function formularioUsuario($idUsuario = null,$validacion = null){
+    public function formularioUsuario($idUsuario = null,$validacion = null,$usuarioInvalido=null){
     	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'],'usuario_new') || RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'],'usuario_update')){
 			$template = 'administracionFormularioUsuario.twig';
 			$parametrosTemplate['validacion'] = $validacion;
 			$parametrosTemplate['idUsuario'] = $idUsuario;
 			if($idUsuario != null){
 				$parametrosTemplate['usuario'] = RepositorioUsuario::getInstance()->buscarUsuarioPorId($idUsuario);
+			}
+			if($usuarioInvalido != null){
+				$parametrosTemplate['usuarioInvalido'] = $usuarioInvalido;
 			}
 			$parametrosTemplate['roles'] = RepositorioRol::getInstance()->devolverRoles();
 			$this->render($template,$parametrosTemplate);
@@ -78,7 +82,7 @@ class ControllerUsuario extends Controller{
 				header("Location: /index.php/usuario/$idUsuario");
 			}
 			else{
-				$this->formularioUsuario($usuario,$validacion);
+				$this->formularioUsuario($idUsuario,$validacion,$usuario);
 			}
 
     	}

@@ -77,6 +77,7 @@
   		}
   		//buscar usuario por ID
   		public function buscarUsuarioPorId($idUsuario){
+
 	       	$conexion = $this->getConnection();
         	$query = $conexion->prepare("SELECT * FROM usuario WHERE id=:idUsuario");
         	$query->bindParam(':idUsuario', $idUsuario);
@@ -236,6 +237,7 @@
 
       }
       public function usuarioValido($usuario,$edicion=false){
+
         $retorno['ok'] = false;
         $nombre = $usuario->getNombre() != null && trim($usuario->getNombre()) !='';
         if(!$nombre){
