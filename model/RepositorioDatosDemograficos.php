@@ -36,6 +36,7 @@
   		function modificar($datosDemograficos){
         	$conexion = $this->getConnection();
         	$query = $conexion->prepare("UPDATE datos_demograficos SET heladera=:heladera, electricidad=:electricidad, mascota=:mascota, tipo_vivienda_id=:tipoVivienda, tipo_calefaccion_id=:tipoCalefaccion, tipo_agua_id=:tipoAgua, paciente_id=:paciente WHERE id=:id");
+          //echo '<pre>'; var_dump($datosDemograficos);die();echo '</pre>';
         	$query->bindParam(':heladera', $datosDemograficos->getHeladera());
     			$query->bindParam(':electricidad', $datosDemograficos->getElectricidad());
     			$query->bindParam(':mascota', $datosDemograficos->getMascota());

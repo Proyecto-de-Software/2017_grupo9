@@ -50,6 +50,9 @@
 		</table>
 		<div class="text-center">
 			<a href="/index.php/paciente/{{idPaciente}}/datosDemograficos/edicion" class="btn btn-outline-success btn-own-info">Editar</a>
+			{% if 'administrador' in usuarioActual.roles %}
+				<a href="/index.php/paciente/{{idPaciente}}/datosDemograficos/eliminar" class="btn btn-outline-success btn-own-info">Eliminar</a>
+			{% endif %}
 		</div>
 		{% else %}
 			<div class="text-center">

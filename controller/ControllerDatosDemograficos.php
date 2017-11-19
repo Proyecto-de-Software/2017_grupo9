@@ -48,16 +48,14 @@ class ControllerDatosDemograficos extends Controller{
 
     public function modificar($idPaciente){
     	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'datosdemograficos_update')){
-			if($datosDemograficos = RepositorioDatosDemograficos::getInstance()->buscarPorIdPaciente($idPaciente)){
-					var_dump("12");
-				if(RepositorioDatosDemograficos::getInstance()->modificar($datosDemograficos)){
-					header("Location: /index.php/paciente/$idPaciente/datosDemograficos");
-				} else{
-					header("Location: /index.php/paciente/$idPaciente/datosDemograficos/editar");
-				}
-        	} else {
-        		header("Location: /index.php/paciente/$idPaciente");
-        	}
+    		$id = RepositorioDatosDemograficos::getInstance()->buscarPorIdPaciente($idPaciente)->getId();
+    		$datosDemograficos = $this->crear();
+          	$datosDemograficos->setId($id);
+			if(RepositorioDatosDemograficos::getInstance()->modificar($datosDemograficos)){
+				header("Location: /index.php/paciente/$idPaciente/datosDemograficos");
+			} else{
+				header("Location: /index.php/paciente/$idPaciente/datosDemograficos/editar");
+			}
 		} else{
 			header("Location: /index.php");
 		}

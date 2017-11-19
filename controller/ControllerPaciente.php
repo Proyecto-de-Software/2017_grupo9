@@ -84,6 +84,7 @@ class ControllerPaciente extends Controller{
                   $paginado = $this->paginar($listado,$pagina);
                   $template = 'administracionPacientes.twig';
                   $parametrosTemplate['lista'] = RepositorioPaciente::getInstance()->devolverTodos($busqueda,$paginado['offset'],$paginado['cantidadPorPagina']);
+                  $parametrosTemplate['busqueda'] = $busqueda;
                   $parametrosTemplate['action'] = $accion;
                   $parametrosTemplate['tipo'] = 'pacientes';
                   $parametrosTemplate['paginado'] = $paginado;
@@ -132,7 +133,7 @@ class ControllerPaciente extends Controller{
 
       public function obtenerDatosBusquedaDocumento(){
             $busqueda = null;
-            if(isset($_POST['busquedaNombre']) && trim($_POST['busquedaNombre']) !=''){
+            if(isset($_POST['busquedaNumeroDoc']) && trim($_POST['busquedaNumeroDoc']) !=''){
                   $busqueda['tipoDoc'] = $_POST['busquedaTipoDoc'];
                   $busqueda['nroDoc'] = $_POST['busquedaNumeroDoc'];
             }

@@ -120,7 +120,8 @@
           }
 
           if(isset($busqueda['nroDoc']) && trim($busqueda['nroDoc'] != '')){
-            $queryString .= " AND tipo_doc_id=:tipoDoc AND numero_doc LIKE :nroDoc";
+            $queryString .= " AND tipo_doc_id=:tipoDoc";
+            $queryString .= "  AND numero_doc LIKE :nroDoc";
           }
 
         }
@@ -155,6 +156,8 @@
           $query->bindParam(':limit', $cantidad,PDO::PARAM_INT);
           $query->bindParam(':offset', $index,PDO::PARAM_INT);
         }
+
+
 
         $query->execute();
         $resultado = $query->fetchAll();
