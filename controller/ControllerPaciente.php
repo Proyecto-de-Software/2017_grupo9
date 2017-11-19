@@ -36,6 +36,20 @@ class ControllerPaciente extends Controller{
             }
       }
 
+      public function formulario($idPaciente=null, $validacion=null, $pacienteInvalido = null){
+            if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_new') && RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'],'paciente_update')){
+
+                  $template = 'administracionFormularioPaciente.twig';
+                  $parametrosTemplate = $this->tiposDeDatos();
+                  $parametrosTemplate['validacion'] = $validacion;
+                  if($idPaciente != null){
+                        $parametrosTemplate['paciente'] = RepositorioPaciente::getInstance()->buscarPorId($idPaciente);
+                  }
+                  $this->render($template,$parametrosTemplate);
+            } else {
+                  header("Location: /index.php");
+            }
+      }
 
       public function modificar($id){
             if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_update')){
@@ -49,7 +63,7 @@ class ControllerPaciente extends Controller{
                         }
                   }
                   else {
-                        $this->formulario($paciente,$id,$validacion);
+                        $this->formulario($id,$validacion,$paciente);
                   }
             } else {
                   header("Location: /index.php");
@@ -105,20 +119,6 @@ class ControllerPaciente extends Controller{
 
 
       */
-      public function formulario($idPaciente=null, $validacion=null, $pacienteInvalido = null){
-            if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_new') && RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'],'paciente_update')){
-
-                  $template = 'administracionFormularioPaciente.twig';
-                  $parametrosTemplate = $this->tiposDeDatos();
-                  $parametrosTemplate['validacion'] = $validacion;
-                  if($idPaciente != null){
-                        $parametrosTemplate['paciente'] = RepositorioPaciente::getInstance()->buscarPorId($idPaciente);
-                  }
-                  $this->render($template,$parametrosTemplate);
-            } else {
-                  header("Location: /index.php");
-            }
-      }
 
       public function obtenerDatosBusquedaNombre(){
             $busqueda = null;
