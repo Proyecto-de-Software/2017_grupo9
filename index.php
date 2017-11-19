@@ -26,9 +26,16 @@
 				if(isset($url[3])){
 					switch ($url[3]) {
 						case 'editar':
-							ControllerUsuario::getInstance()->editar($idUsuario);
+							if($_SESSION['usuarioAModificar'] == $idUsuario){
+								ControllerUsuario::getInstance()->editar($idUsuario);
+							}
+							else{
+								$idUsuario = $_SESSION['usuarioAModificar'];
+								header("Location: /index.php/usuario/$idUsuario/edicion");
+							}
 							break;
 						case 'edicion':
+							$_SESSION['usuarioAModificar'] = $idUsuario;
 							ControllerUsuario::getInstance()->formularioUsuario($idUsuario);
 							break;
 						case 'eliminar':
@@ -106,9 +113,16 @@
 					if(isset($url[3])){
 						switch ($url[3]) {
 							case 'editar': //Editar paciente
-								ControllerPaciente::getInstance()->modificar($idPaciente);
+								if($_SESSION['pacienteAModificar'] == $idPaciente){
+									ControllerPaciente::getInstance()->modificar($idPaciente);
+								}
+								else{
+									$idPaciente = $_SESSION['pacienteAModificar'];
+									header("Location: /index.php/paciente/$idPaciente/edicion");
+								}
 								break;
 							case 'edicion':
+								$_SESSION['pacienteAModificar'] = $idPaciente;
 								ControllerPaciente::getInstance()->formulario($idPaciente);
 								break;
 							case 'eliminar':
