@@ -49,7 +49,7 @@ class ControllerPaciente extends Controller{
                         }
                   }
                   else {
-                        $this->formulario($paciente,$validacion);
+                        $this->formulario($paciente,$id,$validacion);
                   }
             } else {
                   header("Location: /index.php");
@@ -105,7 +105,7 @@ class ControllerPaciente extends Controller{
 
 
       */
-      public function formulario($idPaciente=null, $validacion=null){
+      public function formulario($idPaciente=null, $validacion=null, $pacienteInvalido = null){
             if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'paciente_new') && RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'],'paciente_update')){
 
                   $template = 'administracionFormularioPaciente.twig';
