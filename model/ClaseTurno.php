@@ -30,8 +30,9 @@
         public function getHora(){
             return $this->hora;
         }
+
         public function setHora($hora){
-            $this->hora = $hora
+            $this->hora = $hora;
         }
     
         public function getId(){
