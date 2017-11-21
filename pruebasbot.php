@@ -47,12 +47,12 @@ case '/help':
 	break;
 case '/reservar':
 	$msg['text'] = 'Te confirmamos el turno para:' . PHP_EOL;
-	$msg['text'] .= '10:30' . PHP_EOL;
+	$msg['text'] .= '10:30'; #. PHP_EOL;
+	$msg['text'] .= 'Parametros: '.$cmd_params;
 	$msg['reply_to_message_id'] = null;
 	break;
 case '/turnos':
 	$msg['text'] = 'Los turnos disponibles son: 10:30 | 11:45 | 15:15';
-	$msg['text'] .= 'Parametros: '.$cmd_params;
 	break;
 default:
 	$msg['text'] = 'Lo siento, no es un comando válido.' . PHP_EOL;
