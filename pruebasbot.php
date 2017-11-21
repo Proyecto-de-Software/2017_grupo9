@@ -57,6 +57,9 @@ case '/turnos':
 	$msg['text'] = 'Los turnos disponibles son: ';
 	$msg['text'] .= file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php/turnos/'.$cmd_params);
 	break;
+case '/gabbesputo':
+	$msg['text'] = 'Me imaginaba...';
+	break;
 default:
 	$msg['text'] = 'Lo siento, no es un comando válido.' . PHP_EOL;
 	$msg['text'] .= 'Prueba /help para ver la lista de comandos disponibles';
