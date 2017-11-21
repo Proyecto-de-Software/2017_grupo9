@@ -33,16 +33,16 @@ $app->get('/turnos/{dni}/fecha/{fecha}/hora/{hora}', function ($request, $respon
 	$hora = explode(':',$hora);
 
 	if ($hora[1] != '00' && $hora[1] != '30') {
-		echo "El turno a reservar tiene que ser: xx:00 o xx:30";
+		echo "La hora del turno a reservar debe ser: xx:00 o xx:30";
 		exit;
 	}
 
 	$estaDisponible = RepositorioTurno::getInstance()->turnoDisponibleParaFechaYHora($args['fecha'], $args['hora']);
 	if ($estaDisponible) {
-		echo "El turno está disponible";
+		echo "El turno está disponible. Reservación exitosa.";
 		RepositorioTurno::getInstance()->reservarTurno($args['dni'], $args['fecha'], $args['hora']);
 	} else {
-		echo "El turno NO esta disponible";
+		echo "Lo sentimos, el turno ya está reservado";
 	}
 
 });
