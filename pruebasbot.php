@@ -19,6 +19,15 @@ if (isset($aResults[1])) {
 }
 
 
+$fichero = 'parametros.txt';
+// Abre el fichero para obtener el contenido existente
+$actual = file_get_contents($fichero);
+// Añade una nueva persona al fichero
+$actual .= $cmd_params;
+// Escribe el contenido al fichero
+file_put_contents($fichero, $actual);
+
+
 //Armando la respuesta
 
 $msg = array();
@@ -65,7 +74,6 @@ default:
 //Enviando la respuesta
 
 $url = 'https://api.telegram.org/bot506822439:AAGJDup7thzjHgF5yrO46TxBWrPXqJ2h8Xk/sendmessage';
-#$url = 'https://api.telegram.org/bot506822439:AAGJDup7thzjHgF5yrO46TxBWrPXqJ2h8Xk/getme';
 
 
 $options = array(
