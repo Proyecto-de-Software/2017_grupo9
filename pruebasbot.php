@@ -63,14 +63,16 @@ default:
 
 
 
-$url = 'https://api.telegram.org/bot123456780:hakfHFT35kvdkfhkffdgdkgh878sfsfskghs/sendMessage';
+$url = 'https://api.telegram.org/bot506822439:AAGJDup7thzjHgF5yrO46TxBWrPXqJ2h8Xk/sendMessage';
 $options = array(
-'http' => array(
-'header' => "Content-type: application/x-www-form-urlencoded\r\n",
-'method' => 'POST',
-'content' => http_build_query($msg)
-)
+	'http' => array(
+	'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+	'method' => 'POST',
+	'content' => http_build_query($msg)
+	)
 );
+
 $context = stream_context_create($options);
 $result = file_get_contents($url, false, $context);
+
 exit(0);
