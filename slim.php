@@ -39,7 +39,7 @@ $app->get('/turnos/{dni}/fecha/{fecha}/hora/{hora}', function ($request, $respon
 
 	$estaDisponible = RepositorioTurno::getInstance()->turnoDisponibleParaFechaYHora($args['fecha'], $args['hora']);
 	if ($estaDisponible) {
-		echo "El turno esta disponible";
+		echo "El turno está disponible";
 		RepositorioTurno::getInstance()->reservarTurno($args['dni'], $args['fecha'], $args['hora']);
 	} else {
 		echo "El turno NO esta disponible";

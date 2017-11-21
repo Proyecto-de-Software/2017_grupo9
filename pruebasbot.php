@@ -46,13 +46,15 @@ case '/help':
 	$msg['reply_to_message_id'] = null;
 	break;
 case '/reservar':
-	$msg['text'] = 'Te confirmamos el turno para:' . PHP_EOL;
-	$msg['text'] .= '10:30'; #. PHP_EOL;
-	$msg['text'] .= 'Parametros: '.$cmd_params;
+	//$msg['text'] = 'Te confirmamos el turno para:' . PHP_EOL;
+	//$msg['text'] .= '10:30'; #. PHP_EOL;
+	//$msg['text'] .= 'Parametros: '.$cmd_params;
+	$params = explode(' ', $cmd_params);
+	$msg['text'] .= file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php/turnos/39234234/fecha/'.$params[0].'/hora/'.$params[1]);
 	$msg['reply_to_message_id'] = null;
 	break;
 case '/turnos':
-	$msg['text'] = 'Los turnos disponibles son: 10:30 | 11:45 | 15:15';
+	$msg['text'] = 'Los turnos disponibles son: ';
 	$msg['text'] .= file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php/turnos/'.$cmd_params);
 	break;
 default:
