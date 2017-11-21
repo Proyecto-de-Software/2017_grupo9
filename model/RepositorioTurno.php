@@ -24,9 +24,14 @@
           $resultado = $query->fetchAll();
 
           //if(sizeof($resultado) > 0){
+          $turnos = [];
           foreach($resultado as $turno){
-            echo $turno['hora'];
+            $turno_aux = explode(':',$turno['hora']);
+            $turno_aux = $turno_aux[0].':'.$turno_aux[1];
+            array_push($turnos, $turno_aux);
           }
+
+          return $turnos;
         }
 
         public function turnoDisponibleParaFechaYHora($fecha, $hora) {
@@ -61,4 +66,7 @@
   #RepositorioTurno::getInstance()->turnoDisponibleParaFechaYHora('2017-11-15', '10:00');   #el turno no esta disponible
   #RepositorioTurno::getInstance()->turnoDisponibleParaFechaYHora('2017-11-15', '12:00');    #el turno esta disponible
   #RepositorioTurno::getInstance()->turnosReservadosParaFecha('2017-11-15');    #09:30:00.00000010:00:00.000000
-  #RepositorioTurno::getInstance()->turnosReservadosParaFecha('15-11-2017');    #09:30:00.00000010:00:00.000000
+  $turnos = RepositorioTurno::getInstance()->turnosReservadosParaFecha('15-11-2017');    #09:30:00.00000010:00:00.000000
+  foreach($turnos as $turno){
+    echo $turno.'<br>';
+  }
