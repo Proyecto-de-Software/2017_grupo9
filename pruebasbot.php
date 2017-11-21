@@ -18,16 +18,6 @@ if (isset($aResults[1])) {
 	$cmd_params = '';
 }
 
-
-$fichero = 'parametros.txt';
-// Abre el fichero para obtener el contenido existente
-$actual = file_get_contents($fichero);
-// Añade una nueva persona al fichero
-$actual .= $cmd_params;
-// Escribe el contenido al fichero
-file_put_contents($fichero, $actual);
-
-
 //Armando la respuesta
 
 $msg = array();
@@ -62,6 +52,7 @@ case '/reservar':
 	break;
 case '/turnos':
 	$msg['text'] = 'Los turnos disponibles son: 10:30 | 11:45 | 15:15';
+	$msg['text'] .= 'Parametros: '.$cmd_params;
 	break;
 default:
 	$msg['text'] = 'Lo siento, no es un comando válido.' . PHP_EOL;
