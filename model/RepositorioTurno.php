@@ -43,7 +43,7 @@
           $existe_turno = $query->fetchColumn();
           if($existe_turno){
             return false;
-            #echo "El turno no esta disponible";
+            #echo "El turno NO esta disponible";
           } else {
             return true;
             #echo "El turno esta disponible";
@@ -51,6 +51,8 @@
         }
 
         public function reservarTurno($dni, $fecha, $hora) {
+          $fecha = explode('-',$fecha);
+          $fecha = $fecha[2].'-'.$fecha[1].'-'.$fecha[0];
           $conexion = $this->getConnection();
           $query = $conexion->prepare("INSERT INTO turno(dni, fecha, hora) VALUES(:dni, :fecha, :hora)");
           $query->bindParam(':dni', $dni);
@@ -62,11 +64,13 @@
 	}
 
 
-  #RepositorioTurno::getInstance()->reservarTurno(34623543, '2017-11-15', '10:00');   #agrega el turno
-  #RepositorioTurno::getInstance()->turnoDisponibleParaFechaYHora('2017-11-15', '10:00');   #el turno no esta disponible
-  #RepositorioTurno::getInstance()->turnoDisponibleParaFechaYHora('2017-11-15', '12:00');    #el turno esta disponible
+  #RepositorioTurno::getInstance()->reservarTurno(34623543, '15-11-2017', '10:30');   #agrega el turno
+  #RepositorioTurno::getInstance()->turnoDisponibleParaFechaYHora('15-11-2017', '10:00');   #el turno no esta disponible
+  #RepositorioTurno::getInstance()->turnoDisponibleParaFechaYHora('15-11-2017', '12:00');    #el turno esta disponible
   #RepositorioTurno::getInstance()->turnosReservadosParaFecha('2017-11-15');    #09:30:00.00000010:00:00.000000
+  /*
   $turnos = RepositorioTurno::getInstance()->turnosReservadosParaFecha('15-11-2017');    #09:30:00.00000010:00:00.000000
   foreach($turnos as $turno){
     echo $turno.'<br>';
   }
+  */
