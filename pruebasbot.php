@@ -53,7 +53,7 @@ case '/reservar':
 	break;
 case '/turnos':
 	$msg['text'] = 'Los turnos disponibles son: 10:30 | 11:45 | 15:15';
-	$msg['text'] .= file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar//slim.php/turnos/15-11-2017');
+	$msg['text'] .= file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php/turnos/'.$cmd_params);
 	break;
 default:
 	$msg['text'] = 'Lo siento, no es un comando válido.' . PHP_EOL;
