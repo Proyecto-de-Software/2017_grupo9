@@ -64,11 +64,10 @@ default:
 
 //Enviando la respuesta
 
-$url = 'https://api.telegram.org/bot506822439:AAGJDup7thzjHgF5yrO46TxBWrPXqJ2h8Xk/sendmessage?chat_id=-302271806&text='.http_build_query($msg);
-file_get_contents($url);
+$url = 'https://api.telegram.org/bot506822439:AAGJDup7thzjHgF5yrO46TxBWrPXqJ2h8Xk/sendmessage';
 #$url = 'https://api.telegram.org/bot506822439:AAGJDup7thzjHgF5yrO46TxBWrPXqJ2h8Xk/getme';
 
-/*
+
 $options = array(
 	'http' => array(
 	'header' => "Content-type: application/x-www-form-urlencoded\r\n",
@@ -79,6 +78,6 @@ $options = array(
 
 $context = stream_context_create($options);
 $result = file_get_contents($url, false, $context);
-*/
+
 
 exit(0);
