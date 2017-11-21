@@ -1,7 +1,16 @@
 <?php
 
 $returnArray = true;
-$rawData = file_get_contents('php://input');
+//$rawData = file_get_contents('php://input');
+/*
+file_get_contents('https://api.telegram.org/bot506822439:AAGJDup7thzjHgF5yrO46TxBWrPXqJ2h8Xk/sendmessage?chat_id=-302271806&text='.$rawData);
+*/
+
+$rawData = '{"update_id":513084341,_"message":{"message_id":41,"from":{"id":198706247,"is_bot":false,"first_name":"Juan","language_code":"es"},"chat":{"id":-302271806,"title":"Proyecto de Software","type":"group","all_members_are_administrators":true},"date":1511248783,"text":"/trolo","entities":[{"offset":0,"length":6,"type":"bot_command"}]}}';
+/*
+file_get_contents('https://api.telegram.org/bot506822439:AAGJDup7thzjHgF5yrO46TxBWrPXqJ2h8Xk/sendmessage?chat_id=-302271806&text='.$rawData);
+*/
+
 $response = json_decode($rawData, $returnArray);
 $id_del_chat = $response['message']['chat']['id'];
 
@@ -64,10 +73,8 @@ default:
 
 //Enviando la respuesta
 
-$url = 'https://api.telegram.org/bot506822439:AAGJDup7thzjHgF5yrO46TxBWrPXqJ2h8Xk/sendmessage?chat_id=-302271806&text='.http_build_query($msg);
+$url = 'https://api.telegram.org/bot506822439:AAGJDup7thzjHgF5yrO46TxBWrPXqJ2h8Xk/sendmessage';
 #$url = 'https://api.telegram.org/bot506822439:AAGJDup7thzjHgF5yrO46TxBWrPXqJ2h8Xk/getme';
-
-/*
 $options = array(
 	'http' => array(
 	'header' => "Content-type: application/x-www-form-urlencoded\r\n",
@@ -76,8 +83,9 @@ $options = array(
 	)
 );
 
-$context = stream_context_create($options);
-$result = file_get_contents($url, false, $context);
-*/
+echo(http_build_query($msg));
+
+#$context = stream_context_create($options);
+#$result = file_get_contents($url, false, $context);
 
 exit(0);
