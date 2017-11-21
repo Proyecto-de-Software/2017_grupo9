@@ -2,7 +2,7 @@
 
 $returnArray = true;
 $rawData = file_get_contents('php://input');
-file_get_contents('https://api.telegram.org/bot506822439:AAGJDup7thzjHgF5yrO46TxBWrPXqJ2h8Xk/sendmessage'.$rawData);
+file_get_contents('https://api.telegram.org/bot506822439:AAGJDup7thzjHgF5yrO46TxBWrPXqJ2h8Xk/sendmessage?chat_id=-302271806&text='.$rawData);
 
 /*
 
