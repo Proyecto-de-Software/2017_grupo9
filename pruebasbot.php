@@ -2,6 +2,11 @@
 
 $returnArray = true;
 $rawData = file_get_contents('php://input');
+file_get_contents('https://api.telegram.org/bot506822439:AAGJDup7thzjHgF5yrO46TxBWrPXqJ2h8Xk/sendmessage'.$rawData);
+
+/*
+
+
 $response = json_decode($rawData, $returnArray);
 $id_del_chat = $response['message']['chat']['id'];
 
@@ -62,9 +67,10 @@ default:
 
 
 
+//Enviando la respuesta
 
-#$url = 'https://api.telegram.org/bot506822439:AAGJDup7thzjHgF5yrO46TxBWrPXqJ2h8Xk/sendMessage';
-$url = 'https://api.telegram.org/bot506822439:AAGJDup7thzjHgF5yrO46TxBWrPXqJ2h8Xk/getme';
+$url = 'https://api.telegram.org/bot506822439:AAGJDup7thzjHgF5yrO46TxBWrPXqJ2h8Xk/sendmessage';
+#$url = 'https://api.telegram.org/bot506822439:AAGJDup7thzjHgF5yrO46TxBWrPXqJ2h8Xk/getme';
 $options = array(
 	'http' => array(
 	'header' => "Content-type: application/x-www-form-urlencoded\r\n",
