@@ -63,7 +63,8 @@ default:
 
 
 
-$url = 'https://api.telegram.org/bot506822439:AAGJDup7thzjHgF5yrO46TxBWrPXqJ2h8Xk/sendMessage';
+#$url = 'https://api.telegram.org/bot506822439:AAGJDup7thzjHgF5yrO46TxBWrPXqJ2h8Xk/sendMessage';
+$url = 'https://api.telegram.org/bot506822439:AAGJDup7thzjHgF5yrO46TxBWrPXqJ2h8Xk/getme';
 $options = array(
 	'http' => array(
 	'header' => "Content-type: application/x-www-form-urlencoded\r\n",
