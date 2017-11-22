@@ -50,7 +50,7 @@ case '/reservar':
 	//$msg['text'] .= '10:30'; #. PHP_EOL;
 	//$msg['text'] .= 'Parametros: '.$cmd_params;
 	$params = explode(' ', $cmd_params);
-	$msg['text'] .= file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php/turnos/39234234/fecha/'.$params[0].'/hora/'.$params[1]);
+	$msg['text'] .= file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php/turnos/'.$params[0].'/fecha/'.$params[1].'/hora/'.$params[2]);
 	$msg['reply_to_message_id'] = null;
 	break;
 case '/turnos':
