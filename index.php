@@ -239,5 +239,22 @@
 			#Fin de rutas de configuracion
 		}
 	}
+/*
+<?php
 
+class Person {
+	function hola() {
+		echo "hola";
+	}
+}
+
+$person = "Person";
+
+$p = new $person;
+$m = "hola";
+
+call_user_func(array($p, $m));
+
+/usuarios/1/edit
+*/
 ?>
