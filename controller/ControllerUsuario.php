@@ -103,8 +103,10 @@ class ControllerUsuario extends Controller{
 
     public function listarusuarios($filtrado = null,$pagina = 1,$accion = ''){
     	if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'usuario_index')){
-    		
-    		$listado = RepositorioUsuario::getInstance()->devolverUsuarios($filtrado);
+    		#hacer anterior ysiguiente sin paginas. 
+    		#cambiar metodo paginar
+    		#NO HACER DOS CONSULTAS
+    		$listado = RepositorioUsuario::getInstance()->devolverUsuarios($filtrado); # aca mandar pagina.
     		$paginado = $this->paginar($listado,$pagina);
     		$listadoFinal = RepositorioUsuario::getInstance()->devolverUsuarios($filtrado,$paginado['offset'],$paginado['cantidadPorPagina']);
 
