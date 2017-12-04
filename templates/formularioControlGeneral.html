@@ -1,0 +1,96 @@
+<section class="row mx-auto mt-5 ">
+	<div class="login col-md-5  mx-auto mt-4 mb-4 pb-5 pt-5 pr-5 pl-5 border rounded ">
+		<!--
+		{% if not validacion.ok  %}
+			{% for mensaje in validacion[1:] %}
+				<p class="alert alert-danger">{{mensaje}}</p>
+			{% endfor %}
+		{% endif %}
+		-->
+		<h3 class="card-header text-center myHeader">Control general </h3>
+
+		<form class="text-center" role="form" method="POST"  action="#">
+			<div class="form-group ">
+			    <label for="fecha" >Fecha</label>
+			    <p name="fecha"> {{date("d-m-Y")}}</p>
+		 	</div>
+			<div class="form-group ">
+			    <label for="edad" >Edad</label>
+			    <p name="edad"> {{}} </p>
+			</div>
+			<div class="form-group ">
+			    <label for="peso" hidden>Peso</label>
+			    <input type="number" class="form-control mt-3" id="peso" name="peso" placeholder="Peso" required>
+			</div>
+			<div class="form-group ">
+			   <label for="vcompletas" >Vacunas completas</label>
+			    <select name="vcompletas">
+  					<option value="1">Si</option>
+					<option value="0">No</option>
+				</select>
+			</div>
+
+			<div class="form-group ">
+			<label for="observacionVacunas" >Observaciones vacunas </label>
+				<textarea class="form-control" rows ="4" id="observacionVacunas" name="observacionVacunas" placeholder="Observaciones de vacunas" required>
+				</textarea>
+			</div>
+
+			<div class="form-group ">
+			   <label for="maduracionAcorde" >Maduracion acorde</label>
+			    <select name="maduracionAcorde">
+  					<option value="1">Si</option>
+					<option value="0">No</option>
+				</select>
+			</div>
+			<div class="form-group ">
+			<label for="observacionesMaduracion" > Observaciones maduracion</label>
+				<textarea class="form-control" rows ="4" id="observacionesMaduracion" name="observacionesMaduracion" placeholder="Observaciones de maduracion" required>
+				</textarea>
+			</div>
+
+
+			<div class="form-group ">
+			   <label for="examenFisico" > Examen fisico normal</label>
+			    <select name="examenFisico">
+  					<option value="1">Si</option>
+					<option value="0">No</option>
+				</select>
+			</div>
+
+			<div class="form-group ">
+			<label for="observacionesExamenFisico" > Observaciones examen fisico</label>
+				<textarea class="form-control" rows ="4" id="observacionesExamenFisico" name="observacionesExamenFisico" placeholder="Observaciones de examen fiscio" required>
+				</textarea>
+			</div>
+
+			<div class="form-group ">
+				<label for="pc" > Percentilo cefálico</label>
+				<input type="number" name="pc">
+			</div>
+
+			<div class="form-group ">
+				<label for="ppc" > Percentilo perimetro cefálico</label>
+				<input type="number" name="ppc">
+			</div>
+
+			<div class="form-group ">
+				<label for="talla" > Talla</label>
+				<input type="number" name="talla">
+			</div>
+
+			<div class="form-group ">
+			<label for="descripcionAlimentacion" > Descripcion de alimentacion</label>
+				<textarea class="form-control" rows ="4" id="descripcionAlimentacion" name="descripcionAlimentacion" placeholder="Descripcion de alimentacion" required>
+				</textarea>
+			</div>
+			<div class="form-group ">
+			<label for="observacionesGenerales" > Observaciones generales</label>
+				<textarea class="form-control" rows ="4" id="observacionesGenerales" name="observacionesGenerales" placeholder="Observaciones generales" required>
+				</textarea>
+			</div>
+			
+
+		</form>
+	</div>
+</section>
