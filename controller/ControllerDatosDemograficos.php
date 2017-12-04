@@ -88,16 +88,16 @@ class ControllerDatosDemograficos extends Controller{
     }
     
  	public function tiposDeDatos(){
-		$datos['tiposDeVivienda'] = RepositorioDatosDemograficos::getInstance()->devolverTiposDeVivienda();
-		$datos['tiposDeCalefaccion'] = RepositorioDatosDemograficos::getInstance()->devolverTiposDeCalefaccion();
-		$datos['tiposDeAgua'] = RepositorioDatosDemograficos::getInstance()->devolverTiposDeAgua();
+		$datos['tiposDeVivienda'] = $this->datosAPI("tipo-vivienda");
+		$datos['tiposDeCalefaccion'] = $this->datosAPI("tipo-calefaccion");
+		$datos['tiposDeAgua'] = $this->datosAPI("tipo-agua");
 		return $datos;
 	}
 	
 	public function tiposDeUnDatoDemografico($datosDemograficos){
-		$datos['tipoDeVivienda'] = RepositorioDatosDemograficos::getInstance()->devolverTipoDeViviendaPorId($datosDemograficos->getTipoVivienda());
-		$datos['tipoDeCalefaccion'] = RepositorioDatosDemograficos::getInstance()->devolverTipoDeCalefaccionPorId($datosDemograficos->getTipoCalefaccion());
-		$datos['tipoDeAgua'] = RepositorioDatosDemograficos::getInstance()->devolverTipoDeAguaPorId($datosDemograficos->getTipoAgua());
+		$datos['tipoDeVivienda'] = $this->datosAPI("tipo-vivienda", "/".$datosDemograficos->getTipoVivienda());
+		$datos['tipoDeCalefaccion'] = $this->datosAPI("tipo-calefaccion", "/".$datosDemograficos->getTipoCalefaccion());
+		$datos['tipoDeAgua'] = $this->datosAPI("tipo-agua", "/".$datosDemograficos->getTipoAgua());
 		return $datos;
 	}
 

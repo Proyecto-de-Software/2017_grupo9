@@ -87,7 +87,7 @@
         }
       }
 
-      function devolverTiposDeVivienda(){
+      /*function devolverTiposDeVivienda(){
         $conexion = $this->getConnection();
         $query = $conexion->prepare("SELECT * FROM tipo_vivienda");
         $query->execute();
@@ -145,5 +145,5 @@
           return new TipoAgua($tipoAgua[0]['id'],$tipoAgua[0]['nombre']);
         }
         return false;
-      }
+      }*/
     }

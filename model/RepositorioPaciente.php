@@ -171,7 +171,7 @@
         return false;
       }
 
-      public function devolverObrasSociales(){
+      /*public function devolverObrasSociales(){
         $conexion = $this->getConnection();
         $query = $conexion->prepare("SELECT * FROM obra_social");
         $query->execute();
@@ -209,7 +209,7 @@
           return new TipoDocumento($tipoDeDocumento[0]['id'],$tipoDeDocumento[0]['nombre']);
         }
         return false;
-      }
+      }*/
 
       function cantidadDePacientes(){
         $conexion = $this->getConnection();

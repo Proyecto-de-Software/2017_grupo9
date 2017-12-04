@@ -20,7 +20,7 @@ class ControllerPaciente extends Controller{
                   $paciente = $this->crear();
                   $validacion = RepositorioPaciente::getInstance()->esValido($paciente);
                   if ($validacion['ok']){
-                        if(RepositorioPaciente::getInstance()->agregar($paciente)){
+                        if(RepositorioPaciente::getInstance()->agregar($paciente)){ 
                               $id = $paciente->getId();
                               header("location: /index.php/paciente/$id");
                         }
@@ -141,14 +141,14 @@ class ControllerPaciente extends Controller{
       }
 
       public function tiposDeDatos(){
-            $datos['obrasSociales'] = RepositorioPaciente::getInstance()->devolverObrasSociales();
-            $datos['tiposDeDocumento'] = RepositorioPaciente::getInstance()->devolverTiposDeDocumento();
+            $datos['obrasSociales'] = $this->datosAPI("obra-social");
+            $datos['tiposDeDocumento'] = $this->datosAPI("tipo-documento");
             return $datos;
       }
 
       public function tiposDeDatosDatosDeUnPaciente($paciente){
-            $datos['obraSocial'] = RepositorioPaciente::getInstance()->devolverObraSocialPorId($paciente->getIdObraSocial());
-            $datos['tipoDeDocumento'] = RepositorioPaciente::getInstance()->devolverTipoDeDocumentoPorId($paciente->getIdTipoDocumento());
+            $datos['obraSocial'] = $this->datosAPI("obra-social", "/".$paciente->getIdObraSocial());
+            $datos['tipoDeDocumento'] = $this->datosAPI("tipo-documento", "/".$paciente->getIdTipoDocumento());
             return $datos;
       }
 }
