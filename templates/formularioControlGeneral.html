@@ -9,30 +9,30 @@
 		-->
 		<h3 class="card-header text-center myHeader">Control general </h3>
 
-		<form class="text-center" role="form" method="POST"  action="#">
-			<div class="form-group ">
-			    <label for="fecha" >Fecha</label>
-			    <p name="fecha"> {{date("d-m-Y")}}</p>
+		<form class="text-center " role="form" method="POST"  action="#">
+			<div class="form-group row mt-3">
+			    <label for="fecha" class="col-sm-3 col-form-label">Fecha</label>
+			    <input type="text" readonly class="form-control col-sm-5" id="fecha" name="fecha" value='{{"now" | date("d/m/Y") }}'>
 		 	</div>
-			<div class="form-group ">
-			    <label for="edad" >Edad</label>
-			    <p name="edad"> {{}} </p>
+			<div class="form-group row">
+			    <label for="fecha" class="col-sm-3 col-form-label">Edad</label>
+			    <input type="text" readonly class="form-control col-sm-5" id="fecha" name="fecha" value='{{edad}}'>
 			</div>
-			<div class="form-group ">
-			    <label for="peso" hidden>Peso</label>
-			    <input type="number" class="form-control mt-3" id="peso" name="peso" placeholder="Peso" required>
+			<div class="form-group row ">
+			     <label for="fecha" class="col-sm-3 col-form-label">Peso</label>
+			    <input type="number" class="form-control col-sm-5 mt-3" id="peso" name="peso" placeholder="Peso" required>
 			</div>
-			<div class="form-group ">
-			   <label for="vcompletas" >Vacunas completas</label>
-			    <select name="vcompletas">
+			<div class="form-group row ">
+			   <label for="fecha" class="col-sm-5 col-form-label">Vacunas completas</label>
+			   <select class="form-control col-sm-5 mt-3" name="vcompletas">
   					<option value="1">Si</option>
 					<option value="0">No</option>
 				</select>
 			</div>
 
-			<div class="form-group ">
-			<label for="observacionVacunas" >Observaciones vacunas </label>
-				<textarea class="form-control" rows ="4" id="observacionVacunas" name="observacionVacunas" placeholder="Observaciones de vacunas" required>
+			<div class="form-group row ">
+			<label for="observacionVacunas" class="col-sm-12 col-form-label">Observaciones vacunas </label>
+				<textarea class="form-control col-sm-12" rows ="4" id="observacionVacunas" name="observacionVacunas" placeholder="Observaciones de vacunas" required>
 				</textarea>
 			</div>
 
@@ -89,7 +89,7 @@
 				<textarea class="form-control" rows ="4" id="observacionesGenerales" name="observacionesGenerales" placeholder="Observaciones generales" required>
 				</textarea>
 			</div>
-			
+			<button type="submit" class="btn btn-outline-success  btn-own-info">Agregar</button>
 
 		</form>
 	</div>

@@ -78,6 +78,21 @@ class Controller{
 
 		return json_decode($response);
 	}
+
+	public function calcularEdad($fecha){
+		$actualDay = date('d');
+		$actualMonth = date('m');
+		$actualYear = date('Y');
+		$fecha = explode('-', $fecha);
+		$day = $fecha[2];
+		$month = $fecha[1];
+		$year = $fecha[0];
+
+		if( (($actualMonth == $month)&&($day > $actualDay)) || $month > $actualMonth){
+			$year = $year - 1;
+		}
+		return $actualYear - $year;
+	}
 }
 
 ?>

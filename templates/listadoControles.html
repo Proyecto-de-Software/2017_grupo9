@@ -11,13 +11,14 @@
 		  	</thead>
 		  	<tbody>
 			  	{% for elemento in lista %}
+
 				    <tr>
-				    	<td>{{ elemento.fecha }}</td>
+				    	<td>{{ elemento.fecha}}</td>
 				    	<td>
 				    		{{ elemento.medico }}
 				    	</td>
 				    	<td>
-				    		<a href="/index.php/paciente/{{ elemento.id }}/control" class="btn btn-outline-success btn-own-info"> Ver control </a>
+				    		<a href="/index.php/paciente/{{ idPaciente }}/control/{{elemento.id}}" class="btn btn-outline-success btn-own-info"> Ver control </a>
 				    	</td>
 				    </tr>
 			     {% endfor %}

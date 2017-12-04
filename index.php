@@ -5,6 +5,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'].'/controller/ControllerConfiguracion.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/controller/ControllerDatosDemograficos.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/controller/ControllerSeguridad.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/controller/ControllerHistoriaClinica.php');
 	$config = RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion();
 	if(!$config->getHabilitado()){
 		Controller::getInstance()->render('mantenimiento.twig');
@@ -154,6 +155,31 @@
 									ControllerDatosDemograficos::getInstance()->mostrar($idPaciente);
 								}
 								break;
+							case 'historiaClinica':
+								ControllerHistoriaClinica::getInstance()->listarControles($idPaciente);
+								break;
+							case 'control':
+								if(isset($url[4]) && !is_numeric($url[4])){
+									switch ($url[4]){
+										case 'nuevo':
+											ControllerHistoriaClinica::getInstance()->formulario($idPaciente);
+											break;
+										case 'agregar':
+
+											ControllerHistoriaClinica::getInstance()->agregar($idPaciente);
+											break;
+										case 'eliminar':
+											# code...
+											break;
+									}
+								}
+								else{
+									if(is_numeric($url[4]))
+										ControllerHistoriaClinica::getInstance()->mostrarControl($url[4]);
+									else
+										header("Location: /index.php/paciente/$idPaciente/historiaClinica");
+								}
+								break;
 							default:
 								header("Location: /index.php/paciente/$idPaciente");
 								break;
@@ -257,4 +283,5 @@ call_user_func(array($p, $m));
 
 /usuarios/1/edit
 */
+
 ?>
