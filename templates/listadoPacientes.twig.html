@@ -21,31 +21,13 @@
 		    </form>
 		    <form  id="form" class="form-inline my-2 my-lg-0 ml-auto mr-5 d-flex justify-content-start" action="/index.php/pacientes/busquedaDocumento" method="POST">
 				<select class="form-control mt-3 mr-3" id="busquedaTipoDoc" name="busquedaTipoDoc" onchange="myFunction()">
-		   			{% if busqueda.nroDoc != '' and busqueda.tipoDoc == 2 %}
-						<option value="2" selected>DNI</option>
-					{% else %}
-						<option value="2">DNI</option>
-					{% endif %}
-					{% if busqueda.nroDoc != '' and busqueda.tipoDoc == 4 %}
-						<option value="4" selected>PASAPORTE</option>
-					{% else %}
-						<option value="4">PASAPORTE</option>
-					{% endif %}
-					{% if busqueda.nroDoc != '' and busqueda.tipoDoc == 5 %}
-						<option value="5" selected>PARTIDA DE NACIMIENTO</option>
-					{% else %}
-						<option value="5">PARTIDA DE NACIMIENTO</option>
-					{% endif %}
-					{% if busqueda.nroDoc != '' and busqueda.tipoDoc == 6 %}
-						<option value="6" selected>RUC</option>
-					{% else %}
-						<option value="6">RUC</option>
-					{% endif %}
-					{% if busqueda.nroDoc != '' and busqueda.tipoDoc == 7 %}
-						<option value="7" selected>CARNET EXTRANJERO</option>
-					{% else %}
-						<option value="7">CARNET EXTRANJERO</option>
-					{% endif %}
+					{% for tipoDoc in tiposDeDocumento %}
+						{% if busqueda.nroDoc != '' and busqueda.tipoDoc == tipoDoc.id %}
+							<option value="{{tipoDoc.id}}" selected>{{tipoDoc.nombre}}</option>
+						{% else %}
+							<option value="{{tipoDoc.id}}">{{tipoDoc.nombre}}</option>
+						{% endif %}
+					{% endfor %}
 				</select>
 				<div id="demo"></div>
 				<label for="busquedaNumeroDoc" hidden> Número de documento</label>

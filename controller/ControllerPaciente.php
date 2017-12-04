@@ -97,6 +97,7 @@ class ControllerPaciente extends Controller{
                   $listado = RepositorioPaciente::getInstance()->devolverTodos($busqueda);
                   $paginado = $this->paginar($listado,$pagina);
                   $template = 'administracionPacientes.twig';
+                  $parametrosTemplate['tiposDeDocumento'] = $this->datosAPI("tipo-documento");
                   $parametrosTemplate['lista'] = RepositorioPaciente::getInstance()->devolverTodos($busqueda,$paginado['offset'],$paginado['cantidadPorPagina']);
                   $parametrosTemplate['busqueda'] = $busqueda;
                   $parametrosTemplate['action'] = $accion;
