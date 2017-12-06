@@ -1,7 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="js/canvasjs.min.js"></script>
+</head>
+<body>
+<div id="chartContainerPeso" style="height: 370px; width: 50%;"></div>
+<div id="chartContainerTalla" style="height: 370px; width: 50%;"></div>
+<div id="chartContainerPerCefalico" style="height: 370px; width: 50%;"></div>
+<div id="chartContainer" style="height: 370px; width: 50%;"></div>
 <script>
 window.onload = function () {
 
-	var chart = new CanvasJS.Chart("chartContainer", {
+	var chartPeso = new CanvasJS.Chart("chartContainerPeso", {
 		title: {
 			text: "Curva de crecimiento"
 		},
@@ -12,7 +23,7 @@ window.onload = function () {
 			],
 
 		axisY2: {
-			title: "Median List Price",
+			title: "Peso (kg)",
 		},
 		toolTip: {
 			shared: true
@@ -127,7 +138,7 @@ window.onload = function () {
 			]
 		}]
 	});
-	chart.render();
+	chartPeso.render();
 
 	function toogleDataSeries(e){
 		if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
@@ -138,5 +149,282 @@ window.onload = function () {
 		chart.render();
 	}
 
+	var chartTalla = new CanvasJS.Chart("chartContainerTalla", {
+		title: {
+			text: "Curva de talla"
+		},
+		subtitles:[
+			{
+				text: "Curvas de edad (percentiles)"
+			}
+			],
+
+		axisY2: {
+			title: "Longitud (cm)",
+		},
+		toolTip: {
+			shared: true
+		},
+		legend: {
+			cursor: "pointer",
+			verticalAlign: "top",
+			horizontalAlign: "center",
+			dockInsidePlotArea: true,
+			itemclick: toogleDataSeries
+		},
+		data: [{
+			type:"line",
+			axisYType: "secondary",
+			name: "97",
+			showInLegend: true,
+			markerSize: 0,
+			dataPoints: [		
+				{ x: 0, y: 43 },
+				{ x: 2, y: 49 },
+				{ x: 4, y: 56 },
+				{ x: 6, y: 63 },
+				{ x: 8, y: 68 },
+				{ x: 10, y: 73 },
+				{ x: 12, y: 77 },
+				{ x: 13, y: 79 }
+			]
+		},
+		{
+			type: "line",
+			axisYType: "secondary",
+			name: "85",
+			showInLegend: true,
+			markerSize: 0,
+			dataPoints: [
+				{ x: 0, y: 39 },
+				{ x: 2, y: 43 },
+				{ x: 4, y: 50 },
+				{ x: 6, y: 56 },
+				{ x: 8, y: 62 },
+				{ x: 10, y: 66 },
+				{ x: 12, y: 70 },
+				{ x: 13, y: 72 }
+			]
+		},
+		{
+			type: "line",
+			axisYType: "secondary",
+			name: "50",
+			showInLegend: true,
+			markerSize: 0,
+			dataPoints: [
+				{ x: 0, y: 33 },
+				{ x: 2, y: 38 },
+				{ x: 4, y: 44 },
+				{ x: 6, y: 49 },
+				{ x: 8, y: 54 },
+				{ x: 10, y: 58 },
+				{ x: 12, y: 62 },
+				{ x: 13, y: 64 }
+			]
+		},
+		{
+			type: "line",
+			axisYType: "secondary",
+			name: "15",
+			showInLegend: true,
+			markerSize: 0,
+			dataPoints: [
+				{ x: 0, y: 29 },
+				{ x: 2, y: 32 },
+				{ x: 4, y: 38 },
+				{ x: 6, y: 43 },
+				{ x: 8, y: 47 },
+				{ x: 10, y: 51 },
+				{ x: 12, y: 55 },
+				{ x: 13, y: 56 }
+			]
+		},
+		{
+			type: "line",
+			axisYType: "secondary",
+			name: "3",
+			showInLegend: true,
+			markerSize: 0,
+			dataPoints: [
+				{ x: 0, y: 10 },
+				{ x: 2, y: 10 },
+				{ x: 4, y: 10 },
+				{ x: 6, y: 10 },
+				{ x: 8, y: 10 },
+				{ x: 10, y: 10 },
+				{ x: 12, y: 10 },
+				{ x: 13, y: 10 }
+			]
+		},
+		{
+			type: "line",
+			axisYType: "secondary",
+			name: "Paciente",
+			showInLegend: true,
+			markerSize: 0,
+			dataPoints: [
+				{ x: 0, y: 25 },
+				{ x: 2, y: 28 },
+				{ x: 4, y: 34 },
+				{ x: 6, y: 38 },
+				{ x: 8, y: 43 },
+				{ x: 10, y: 46 },
+				{ x: 12, y: 49 },
+				{ x: 13, y: 51 }		
+			]
+		}]
+	});
+	chartTalla.render();
+
+	function toogleDataSeries(e){
+		if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+			e.dataSeries.visible = false;
+		} else{
+			e.dataSeries.visible = true;
+		}
+		chartTalla.render();
+	}
+
+
+	var chartPerCefalico = new CanvasJS.Chart("chartContainerPerCefalico", {
+		title: {
+			text: "Curvas de percentil perímetro cefálico"
+		},
+		subtitles:[
+			{
+				text: "Perímetro cefálico"
+			}
+			],
+
+		axisY2: {
+			title: "Longitud (cm)",
+		},
+		toolTip: {
+			shared: true
+		},
+		legend: {
+			cursor: "pointer",
+			verticalAlign: "top",
+			horizontalAlign: "center",
+			dockInsidePlotArea: true,
+			itemclick: toogleDataSeries
+		},
+		data: [{
+			type:"line",
+			axisYType: "secondary",
+			name: "97",
+			showInLegend: true,
+			markerSize: 0,
+			dataPoints: [		
+				{ x: 0, y: 43 },
+				{ x: 2, y: 49 },
+				{ x: 4, y: 56 },
+				{ x: 6, y: 63 },
+				{ x: 8, y: 68 },
+				{ x: 10, y: 73 },
+				{ x: 12, y: 77 },
+				{ x: 13, y: 79 }
+			]
+		},
+		{
+			type: "line",
+			axisYType: "secondary",
+			name: "85",
+			showInLegend: true,
+			markerSize: 0,
+			dataPoints: [
+				{ x: 0, y: 39 },
+				{ x: 2, y: 43 },
+				{ x: 4, y: 50 },
+				{ x: 6, y: 56 },
+				{ x: 8, y: 62 },
+				{ x: 10, y: 66 },
+				{ x: 12, y: 70 },
+				{ x: 13, y: 72 }
+			]
+		},
+		{
+			type: "line",
+			axisYType: "secondary",
+			name: "50",
+			showInLegend: true,
+			markerSize: 0,
+			dataPoints: [
+				{ x: 0, y: 33 },
+				{ x: 2, y: 38 },
+				{ x: 4, y: 44 },
+				{ x: 6, y: 49 },
+				{ x: 8, y: 54 },
+				{ x: 10, y: 58 },
+				{ x: 12, y: 62 },
+				{ x: 13, y: 64 }
+			]
+		},
+		{
+			type: "line",
+			axisYType: "secondary",
+			name: "15",
+			showInLegend: true,
+			markerSize: 0,
+			dataPoints: [
+				{ x: 0, y: 29 },
+				{ x: 2, y: 32 },
+				{ x: 4, y: 38 },
+				{ x: 6, y: 43 },
+				{ x: 8, y: 47 },
+				{ x: 10, y: 51 },
+				{ x: 12, y: 55 },
+				{ x: 13, y: 56 }
+			]
+		},
+		{
+			type: "line",
+			axisYType: "secondary",
+			name: "3",
+			showInLegend: true,
+			markerSize: 0,
+			dataPoints: [
+				{ x: 0, y: 10 },
+				{ x: 2, y: 10 },
+				{ x: 4, y: 10 },
+				{ x: 6, y: 10 },
+				{ x: 8, y: 10 },
+				{ x: 10, y: 10 },
+				{ x: 12, y: 10 },
+				{ x: 13, y: 10 }
+			]
+		},
+		{
+			type: "line",
+			axisYType: "secondary",
+			name: "Paciente",
+			showInLegend: true,
+			markerSize: 0,
+			dataPoints: [
+				{ x: 0, y: 25 },
+				{ x: 2, y: 28 },
+				{ x: 4, y: 34 },
+				{ x: 6, y: 38 },
+				{ x: 8, y: 43 },
+				{ x: 10, y: 46 },
+				{ x: 12, y: 49 },
+				{ x: 13, y: 51 }		
+			]
+		}]
+	});
+	chartPerCefalico.render();
+
+	function toogleDataSeries(e){
+		if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+			e.dataSeries.visible = false;
+		} else{
+			e.dataSeries.visible = true;
+		}
+		chartPerCefalico.render();
+	}
+
 }
 </script>
+</body>
+</html>
