@@ -165,11 +165,23 @@
 											ControllerHistoriaClinica::getInstance()->formulario($idPaciente);
 											break;
 										case 'agregar':
-
-											ControllerHistoriaClinica::getInstance()->agregar($idPaciente);
+											ControllerHistoriaClinica::getInstance()->agregar();
+											break;
+										case 'editar':
+											ControllerHistoriaClinica::getInstance()->editar();
 											break;
 										case 'eliminar':
 											# code...
+											break;
+										case 'edicion':
+											if( is_numeric($url[5]) ){
+												$idControl = $url[5];
+												ControllerHistoriaClinica::getInstance()->formulario($idPaciente,[],$idControl);
+											}
+											else{
+												header("Location: /index.php/paciente/$idPaciente/historiaClinica");
+											}
+											
 											break;
 									}
 								}

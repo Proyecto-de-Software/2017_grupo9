@@ -1,6 +1,11 @@
 {% extends "base.twig.html" %}
+{% if edicion is defined %}
+	{% set titulo = 'Edicion de control' %}
+{% else %}
+	{% set titulo = 'Nuevo control' %}
+{% endif %}
 {% block titulo %} 
-	Agregar control
+	{{titulo}}
 {% endblock %}
 {% block container %}
 	{% include 'formularioControlGeneral.html' %}

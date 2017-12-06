@@ -18,7 +18,12 @@
 			    </tr>
 			    <tr>
 	     			 <th scope="row">Vacunas completas</th>
-	     			 <td>{{control.vacunasCompeltas}}</td>
+	     			 {% if control.vacunasCompletas %}
+	     			 	<td>Si</td>
+	     			 {% else %}
+	     			 	<td>No</td>
+	     			 {% endif %}
+	     			 
 			    </tr>
 			    <tr>
 	     			 <th scope="row">Observaciones vacunas</th>
@@ -26,7 +31,11 @@
 			    </tr>
 			    <tr>
 	     			 <th scope="row">Maduracion acorde</th>
-	     			 <td>{{control.maduracionAcorde}}</td>
+	     			 {% if control.maduracionAcorde %}
+	     			  	<td>Si</td>
+	     			 {% else %}
+	     			 	<td>No</td>
+	     			 {% endif %}
 			    </tr>
 			    <tr>
 	     			 <th scope="row">Observaciones maduracion</th>
@@ -34,16 +43,22 @@
 			    </tr>
 			    <tr>
 	     			 <th scope="row">Examen fisico normal</th>
-	     			 <td>{{control.examenFisico}}</td>
+	     			 {% if control.examenFisicoNormal %}
+	     			  	<td>Si</td>
+	     			 {% else %}
+	     			 	<td>No</td>
+	     			 {% endif %}
 			    </tr>
 			    <tr>
 	     			 <th scope="row">Observaciones examen fisico</th>
-	     			 <td>{{control.observacionesExamenFisico}}</td>
+	     			 <td>{{control.observacionesExamen}}</td>
 			    </tr>
  			 </tbody>
 		</table>
+		{% set idPaciente = control.idPaciente %}
+		{% set idControl = control.id %}
 		<div class="text-center">
-			<a href="/index.php/usuario/{{usuario.id}}/edicion" class="btn btn-outline-success btn-own-info">Editar</a>
+			<a href="/index.php/paciente/{{idPaciente}}/control/edicion/{{idControl}}" class="btn btn-outline-success btn-own-info">Editar</a>
 		</div>
 	</div>
 

@@ -2,26 +2,31 @@
 	<h2> Historia Clinica</h2><br>
 		<div class="mb-4 mt-4">
 			<h3 >Controles </h3> 
+			<a class="btn btn-success btn-own mt-3 mb-5 text-right" role="button" href="/index.php/paciente/{{ idPaciente }}/control/nuevo">
+			Agregar control </a>
 			<table class="table table-hover">
-		  	<thead>
-			    <tr>
-			    	<th> Fecha</th>
-			    	<th> Medico</th>
-			    </tr>
-		  	</thead>
-		  	<tbody>
-			  	{% for elemento in lista %}
-
+			  	<thead>
 				    <tr>
-				    	<td>{{ elemento.fecha}}</td>
-				    	<td>
-				    		{{ elemento.medico }}
-				    	</td>
-				    	<td>
-				    		<a href="/index.php/paciente/{{ idPaciente }}/control/{{elemento.id}}" class="btn btn-outline-success btn-own-info"> Ver control </a>
-				    	</td>
+				    	<th> Fecha</th>
+				    	<th> Medico</th>
 				    </tr>
-			     {% endfor %}
-			    
-			</tbody>
-		</table>
+			  	</thead>
+			  	<tbody>
+				  	{% for elemento in lista %}
+
+					    <tr>
+					    	<td>{{ elemento.fecha}}</td>
+					    	<td>
+					    		{{ elemento.medico }}
+					    	</td>
+					    	<td>
+					    		<a href="/index.php/paciente/{{ idPaciente }}/control/{{elemento.id}}" class="btn btn-outline-success btn-own-info"> Ver control </a>
+					    	</td>
+					    </tr>
+				     {% endfor %}
+				    
+				</tbody>
+			</table>
+		</div>
+
+</section>

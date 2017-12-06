@@ -76,6 +76,7 @@ class ControllerPaciente extends Controller{
                   $template = 'administracionMostrarPaciente.twig';
                   $parametrosTemplate = $this->tiposDeDatosDatosDeUnPaciente($paciente);
                   $parametrosTemplate['paciente'] = $paciente;
+                  $parametrosTemplate['permiso'] = $this->hayPermiso('control_index'); 
                   $this->render($template,$parametrosTemplate);
             } else {
                   header("Location: /index.php");

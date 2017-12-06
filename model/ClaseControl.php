@@ -18,13 +18,13 @@
 		private $idMedico;
 		private $idPaciente;
 
-		public function esValido(){
-			//$fecha = $this->fecha !=
-			//$peso = 
-		}
+
 		public function __construct($args){
+
 			if(isset($args['fecha']))
 				$this->setFecha($args['fecha']);
+			if(isset($args['edad']))
+				$this->setEdad($args['edad']);
 			if(isset($args['id']))
 				$this->setId($args['id']);
 			if(isset($args['peso']))
@@ -55,6 +55,7 @@
 				$this->setIdMedico($args['user_id']);
 			if(isset($args['paciente_id']))	
 				$this->setIdPaciente($args['paciente_id']);
+			
 		}
 
 		public function getFecha(){
@@ -163,11 +164,44 @@
 			$this->idPaciente = $idPaciente;
 		}
 		public function getEdad(){
-
+			return $this->edad;
 		}
+		public function setEdad($edad){
+			$this->edad = $edad;
+		}
+		public function esValido(){
+			$validacion['ok'] = true;
+			$validacion['ok'] = $validacion['ok'] && isset($this->peso) && is_numeric($this->peso);
+			if(!$validacion['ok']){
+				array_push($validacion, "Debe indicar un peso");
+			}
+			$validacion['ok'] = $validacion['ok'] && isset($this->vacunasCompletas);
+			if(!$validacion['ok']){
+				array_push($validacion, "Debe indicar si las vacunas estan completas");
+			}
 
+			$validacion['ok'] = $validacion['ok'] && isset($this->observacionesVacunas) && trim($this->observacionesVacunas) != '';
+			if(!$validacion['ok']){
+				array_push($validacion, "Debe ingresar una observacion sobre las vacunas");
+			}
+			$validacion['ok'] = $validacion['ok'] && isset($this->maduracionAcorde);
+			if(!$validacion['ok']){
+				array_push($validacion, "Debe indicar si el paciente tiene una maduracion acorde o no");
+			}
+			$validacion['ok'] = $validacion['ok'] && isset($this->observacionesMaduracion) && trim($this->observacionesMaduracion) != '';
+			if(!$validacion['ok']){
+				array_push($validacion, "Debe ingresar una observacion de la maduracion");
+			}
+			$validacion['ok'] = $validacion['ok'] && isset($this->examenFisicoNormal);
+			if(!$validacion['ok']){
+				array_push($validacion, "Debe indicar si el examen fisico es normal");
+			}
+			$validacion['ok'] = $validacion['ok'] && isset($this->observacionesExamen) && trim($this->observacionesExamen) != '';
+			if(!$validacion['ok']){
+				array_push($validacion, "Debe ingresar una observacion del examen fisico");
+			}
+			return $validacion;
+		}
 	}
-
-
 
 ?>

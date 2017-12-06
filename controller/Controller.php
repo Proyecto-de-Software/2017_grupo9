@@ -20,7 +20,15 @@ class Controller{
   		}
   		return self::$instance;
     }   
-
+    protected function hayPermiso($permiso){
+      	return RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], $permiso);
+    }
+    protected function tokenValido($token){
+    	return $token == $_SESSION['token'];
+    }
+    protected function redireccion($url){
+    	header("Location: $url");
+    }
 	public function usuarioActual(){
 		if(isset($_SESSION['idUsuario'])){
 			$usuario = RepositorioUsuario::getInstance()->buscarUsuarioPorId($_SESSION['idUsuario']);
