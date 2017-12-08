@@ -16,7 +16,7 @@
 					{% else %}
 						<input class="form-control mt-3 mr-3" type="text" aria-label="busquedaApellido" name="busquedaApellido" id="busquedaApellido" placeholder="Apellido">
 					{% endif %}
-				<button class="btn btn-success btn-search mt-3 mb-0 text-right" role="button" type="submit">Buscar</button>
+				<button class="btn btn-own btn-success btn-search mt-3 mb-0 text-right" role="button" type="submit">Buscar</button>
 				</div>
 		    </form>
 		    <form  id="form" class="form-inline my-2 my-lg-0 ml-auto mr-5 d-flex justify-content-start" action="/index.php/pacientes/busquedaDocumento" method="POST">
@@ -36,7 +36,7 @@
 				{% else %}
 				<input class="form-control mt-3 mr-3" type="number" placeholder="Número de documento" aria-label="busquedaNumeroDoc" name="busquedaNumeroDoc" id="busquedaNumeroDoc">
 				{% endif %}
-				<button class="btn btn-success btn-search mt-3 mb-0 text-right" role="button" type="submit">Buscar</button>
+				<button class="btn btn-own btn-success btn-search mt-3 mb-0 text-right" role="button" type="submit">Buscar</button>
 			</form>
 		 </div>
 		 <div id="demo"></div>
@@ -86,5 +86,5 @@
 			    {% endfor %}
 			</tbody>
 		</table>
-		<a class="btn btn-success mt-3 mb-5 text-right" role="button" href="/index.php/pacientes/nuevo">Agregar nuevo paciente</a>
+		<a class="btn-own btn btn-success mt-3 mb-5 text-right" role="button" href="/index.php/pacientes/nuevo">Agregar nuevo paciente</a>
 </section>
