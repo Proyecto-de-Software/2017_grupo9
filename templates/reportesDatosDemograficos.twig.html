@@ -1,89 +1,84 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-<script>
-window.onload = function() {
+<section>
+	<div id="chartDatosDemograficos" style="height: 370px; width: 40%;"></div>
+	<div id="chartTipoVivienda" style="height: 370px; width: 40%;"></div>
+	<div id="chartTipoCalefaccion" style="height: 370px; width: 40%;"></div>
+	<div id="chartTipoAgua" style="height: 370px; width: 40%;"></div>
+	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+	<script>
+	window.onload = function() {
 
-	
+		
+	/*
+		var chartTipoVivienda = new CanvasJS.Chart("chartTipoVivienda", {
+			theme: "light2", // "light1", "light2", "dark1", "dark2"
+			exportEnabled: true,
+			animationEnabled: true,
+			title: {
+				text: "Tipos de vivienda"
+			},
+			data: [{
+				type: "pie",
+				startAngle: 25,
+				toolTipContent: "<b>{label}</b>: {y}%",
+				showInLegend: "true",
+				legendText: "{label}",
+				indexLabelFontSize: 16,
+				indexLabel: "{label} - {y}%",
+				dataPoints: [
+					{ y: {{ datosVivienda[0] }}, label: "Material" },
+					{ y: {{ datosVivienda[1] }}, label: "Chapa" },
+					{ y: {{ datosVivienda[2] }}, label: "Madera" }
+				]
+			}]
+		});
+		chartTipoVivienda.render();
+	/*
+		var chartTipoCalefaccion = new CanvasJS.Chart("chartTipoCalefaccion", {
+			theme: "light2", // "light1", "light2", "dark1", "dark2"
+			exportEnabled: true,
+			animationEnabled: true,
+			title: {
+				text: "Tipos de calefaccion"
+			},
+			data: [{
+				type: "pie",
+				startAngle: 25,
+				toolTipContent: "<b>{label}</b>: {y}%",
+				showInLegend: "true",
+				legendText: "{label}",
+				indexLabelFontSize: 16,
+				indexLabel: "{label} - {y}%",
+				dataPoints: [
+					{ y: {{ datosCalefaccion[0] }}, label: "Gas" },
+					{ y: {{ datosCalefaccion[1] }}, label: "Electrica" }
+				]
+			}]
+		});
+		chartTipoCalefaccion.render(); 
 
-	var chartTipoVivienda = new CanvasJS.Chart("chartTipoVivienda", {
-		theme: "light2", // "light1", "light2", "dark1", "dark2"
-		exportEnabled: true,
-		animationEnabled: true,
-		title: {
-			text: "Tipos de vivienda"
-		},
-		data: [{
-			type: "pie",
-			startAngle: 25,
-			toolTipContent: "<b>{label}</b>: {y}%",
-			showInLegend: "true",
-			legendText: "{label}",
-			indexLabelFontSize: 16,
-			indexLabel: "{label} - {y}%",
-			dataPoints: [
-				{ y: {{ datosVivienda[0] }}, label: "Material" },
-				{ y: {{ datosVivienda[1] }}, label: "Chapa" },
-				{ y: {{ datosVivienda[2] }}, label: "Madera" }
-			]
-		}]
-	});
-	chartTipoVivienda.render();
+		var chartTipoAgua = new CanvasJS.Chart("chartTipoAgua", {
+			theme: "light2", // "light1", "light2", "dark1", "dark2"
+			exportEnabled: true,
+			animationEnabled: true,
+			title: {
+				text: "Tipos de agua"
+			},
+			data: [{
+				type: "pie",
+				startAngle: 25,
+				toolTipContent: "<b>{label}</b>: {y}%",
+				showInLegend: "true",
+				legendText: "{label}",
+				indexLabelFontSize: 16,
+				indexLabel: "{label} - {y}%",
+				dataPoints: [
+					{ y: {{ datosAgua[0] }}, label: "Corriente" },
+					{ y: {{ datosAgua[1] }}, label: "De pozo" }
+				]
+			}]
+		});
+		chartTipoAgua.render();*/
 
-	var chartTipoCalefaccion = new CanvasJS.Chart("chartTipoCalefaccion", {
-		theme: "light2", // "light1", "light2", "dark1", "dark2"
-		exportEnabled: true,
-		animationEnabled: true,
-		title: {
-			text: "Tipos de calefaccion"
-		},
-		data: [{
-			type: "pie",
-			startAngle: 25,
-			toolTipContent: "<b>{label}</b>: {y}%",
-			showInLegend: "true",
-			legendText: "{label}",
-			indexLabelFontSize: 16,
-			indexLabel: "{label} - {y}%",
-			dataPoints: [
-				{ y: {{ datosCalefaccion[0] }}, label: "Gas" },
-				{ y: {{ datosCalefaccion[1] }}, label: "Electrica" }
-			]
-		}]
-	});
-	chartTipoCalefaccion.render();
-
-	var chartTipoAgua = new CanvasJS.Chart("chartTipoAgua", {
-		theme: "light2", // "light1", "light2", "dark1", "dark2"
-		exportEnabled: true,
-		animationEnabled: true,
-		title: {
-			text: "Tipos de agua"
-		},
-		data: [{
-			type: "pie",
-			startAngle: 25,
-			toolTipContent: "<b>{label}</b>: {y}%",
-			showInLegend: "true",
-			legendText: "{label}",
-			indexLabelFontSize: 16,
-			indexLabel: "{label} - {y}%",
-			dataPoints: [
-				{ y: {{ datosAgua[0] }}, label: "Corriente" },
-				{ y: {{ datosAgua[1] }}, label: "De pozo" }
-			]
-		}]
-	});
-	chartTipoAgua.render();
-
-}
-</script>
-</head>
-<body>
-<div id="chartDatosDemograficos" style="height: 370px; width: 40%;"></div>
-<div id="chartTipoVivienda" style="height: 370px; width: 40%;"></div>
-<div id="chartTipoCalefaccion" style="height: 370px; width: 40%;"></div>
-<div id="chartTipoAgua" style="height: 370px; width: 40%;"></div>
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-</body>
-</html>
+	}
+	</script>
+</section>
