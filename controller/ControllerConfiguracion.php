@@ -63,6 +63,9 @@ class ControllerConfiguracion extends Controller{
 		//si no tiene permiso volver a index
 	}
 
+	public function obtenerDatosDeConfiguracion(){
+		return RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion();
+	}
 }
 
 

@@ -7,20 +7,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'].'/controller/ControllerSeguridad.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/controller/ControllerSesion.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/controller/ControllerHistoriaClinica.php');
-/*
-	$controllers['base'] = Controller::getInstance();
-	$controllers['usuario'] = ControllerUsuario::getInstance();
-	$controllers['paciente'] = ControllerPaciente::getInstance();
-	$controllers['configuracion'] = ControllerConfiguracion::getInstance();
-	$controllers['datosDemograficos'] = ControllerDatosDemograficos::getInstance();
-	$controllers['seguridad'] = ControllerSeguridad::getInstance();
-	$controllers['sesion'] = ControllerSesion::getInstance();
-	$controllers['historiaClinica'] = ControllerHistoriaClinica::getInstance();
-*/
-
-
-
-
+	
 
 	$config = RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion();
 	if(!$config->getHabilitado()){
