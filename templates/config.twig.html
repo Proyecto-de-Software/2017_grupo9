@@ -31,7 +31,7 @@
 		  	</div>
 
 		 	<div class="form-group">
-		    	<label for="descripcion" ><b>Descripcion del hospital</b></label>
+		    	<label for="descripcionHospital" ><b>Descripcion del hospital</b></label>
 
 		    	<textarea class="form-control"  rows="4" id="descripcionHospital" name="descripcionHospital" placeholder="Descripcion del hospital" required>
 		    		{% if configuracionActual != null %}
@@ -43,7 +43,7 @@
 			</div>
 
 		 	<div class="form-group">
-		    	<label for="descripcion" ><b>Descripcion de la guardia</b></label>
+		    	<label for="descripcionGuardia" ><b>Descripcion de la guardia</b></label>
 		    	<textarea class="form-control " rows ="4" id="descripcionGuardia" name="descripcionGuardia" placeholder="Descripcion de la guardia" required>
 		    		{% if configuracionActual != null %}
 		    			{{configuracionActual.descripcionGuardia}}
@@ -54,7 +54,7 @@
 			</div>
 
 		 	<div class="form-group">
-		    	<label for="descripcion" ><b>Descripcion de especialidades</b></label>
+		    	<label for="descripcionEspecialidades" ><b>Descripcion de especialidades</b></label>
 		    	<textarea class="form-control" rows ="4" id="descripcionEspecialidades" name="descripcionEspecialidades" placeholder="Descripcion de especialidades" required>
 		    		{% if configuracionActual != null %}
 		    			{{configuracionActual.descripcionEspecialidades}}

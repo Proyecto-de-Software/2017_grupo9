@@ -1,5 +1,5 @@
 <section class="row mx-auto mt-5 ">
-	<div class="login col-md-5  mx-auto mt-4 mb-4 pb-5 pt-5 pr-5 pl-5 border rounded ">
+	<div class="login col-md-7  mx-auto mt-4 mb-4 pb-5 pt-5 pr-5 pl-5 border rounded ">
 		{% if paciente is defined %}
 			{% set nombre = paciente.nombre %}
 			{% set apellido = paciente.apellido %}
@@ -23,7 +23,7 @@
 			{% set idObraSocial = '' %}
 			{% set titulo = 'Agregar paciente' %}
 		{% endif %}
-		<h3 class="card-header text-center myHeader">{{ titulo }} </h3>
+		<h3 class="card-header text-center myHeader ">{{ titulo }} </h3>
 		{% if not validacion.ok  %}
 			{% for mensaje in validacion[1:] %}
 				<p class="alert alert-danger">{{mensaje}}</p>
@@ -34,21 +34,21 @@
 		{% else %}
 			<form class="text-center" role="form" method="POST" action="/index.php/pacientes/agregar">
 		{% endif %}
-			<div class="form-group ">
-			    <label for="nombre" >Nombre</label>
-			    <input type="text" class="form-control mt-3" id="nombre" name="nombre" placeholder="Nombre" value="{{ nombre }}" required>
+			<div class="form-group row ">
+			    <label for="nombre" class="col-sm-3 mt-3 col-form-label" >Nombre</label>
+			    <input type="text" class="form-control mt-3 col-sm-8" id="nombre" name="nombre" placeholder="Nombre" value="{{ nombre }}" required>
 		  	</div>
-		  	<div class="form-group ">
-			    <label for="apellido" >Apellido</label>
-			    <input type="text" class="form-control mt-3" id="apellido" name="apellido" placeholder="Apellido" value="{{ apellido }}" required>
+		  	<div class="form-group row ">
+			    <label for="apellido" class="col-sm-3 mt-3 col-form-label" >Apellido</label>
+			    <input type="text" class="form-control mt-3 col-sm-8" id="apellido" name="apellido" placeholder="Apellido" value="{{ apellido }}" required>
 		  	</div>
-		  	<div class="form-group ">
-			    <label for="fechaNacimiento" >Fecha de nacimiento</label>
-			    <input type="date" min="2005-01-01" class="form-control mt-3" id="fechaNacimiento" name="fechaNacimiento" value="{{ fechaNacimiento }}" required>
+		  	<div class="form-group row">
+			    <label for="fechaNacimiento" class="col-sm-3 mt-3 col-form-label" >Fecha de nacimiento</label>
+			    <input type="date" min="2005-01-01" class="form-control mt-3 col-sm-8" id="fechaNacimiento" name="fechaNacimiento" value="{{ fechaNacimiento }}" required>
 		  	</div>
-		  	<div class="form-group ">
-			    <label for="genero" >Género</label>
-			    <select name="genero" class="form-control mt-3">
+		  	<div class="form-group row">
+			    <label for="genero" class="col-sm-3 mt-3 col-form-label">Género</label>
+			    <select name="genero" class="form-control mt-3 col-sm-8">
 			    	{% if paciente.genero == 'masculino' %}
 			    		<option value="masculino" selected>Masculino</option>
 			    		<option value="femenino">Femenino</option>
@@ -58,9 +58,9 @@
 			    	{% endif %}
 			    </select>
 		  	</div>
-		  	<div class="form-group ">
-			    <label for="tipoDoc" >Tipo de documento</label>
-			    <select name="idTipoDocumento" class="form-control mt-3">
+		  	<div class="form-group row ">
+			    <label for="tipoDoc" class="col-sm-3 mt-3 col-form-label" >Tipo de documento</label>
+			    <select name="idTipoDocumento" class="form-control mt-3 col-sm-8">
 			    	{% for tipoDoc in tiposDeDocumento %}
 				    	{% if paciente.idTipoDocumento == tipoDoc.id %}
 				    		<option value="{{ tipoDoc.id }}" selected>{{ tipoDoc.nombre | upper }}</option>
@@ -70,25 +70,25 @@
 				    {% endfor %}
 			    </select>
 		  	</div>
-		  	<div class="form-group ">
-			    <label for="numeroDoc" >Nro de documento</label>
-			    <input type="number" class="form-control mt-3" id="numeroDoc" name="numeroDoc" placeholder="Nro documento" value="{{ numeroDoc }}" required>
+		  	<div class="form-group row ">
+			    <label for="numeroDoc" class="col-sm-3 mt-3 col-form-label" >Nro. de documento</label>
+			    <input type="number" class="form-control mt-3 col-sm-8" id="numeroDoc" name="numeroDoc" placeholder="Nro documento" value="{{ numeroDoc }}" required>
 		  	</div>
-		  	<div class="form-group ">
-			    <label for="domicilio" >Domicilio</label>
-			    <input type="text" class="form-control mt-3" id="domicilio" name="domicilio" placeholder="Domicilio" value="{{ domicilio }}" required>
+		  	<div class="form-group row ">
+			    <label for="domicilio" class="col-sm-3 mt-3 col-form-label" >Domicilio</label>
+			    <input type="text" class="form-control mt-3 col-sm-8" id="domicilio" name="domicilio" placeholder="Domicilio" value="{{ domicilio }}" required>
 		  	</div>
-		  	<div class="form-group ">
-			    <label for="telefono" >Teléfono</label>
+		  	<div class="form-group row">
+			    <label for="telefono" class="col-sm-3 mt-3 col-form-label" >Teléfono</label>
 			    {% if (paciente.telefono is null) or (paciente.telefono == '') %}
-			    	<input type="number" class="form-control mt-3" id="telefono" name="telefono" placeholder="Teléfono">
+			    	<input type="number" class="form-control mt-3 col-sm-8" id="telefono" name="telefono" placeholder="Teléfono">
 			    {% else %}
-			    	<input type="number" class="form-control mt-3" id="telefono" name="telefono" value="{{ telefono }}">
+			    	<input type="number" class="form-control mt-3 col-sm-8" id="telefono" name="telefono" value="{{ telefono }}">
 			    {% endif %}	
 		  	</div>
-		  	<div class="form-group ">
-			    <label for="obraSocial" >Obra social</label>
-			    <select name="idObraSocial" class="form-control mt-3">
+		  	<div class="form-group row">
+			    <label for="obraSocial" class="col-sm-3 mt-3 col-form-label" >Obra social</label>
+			    <select name="idObraSocial" class="form-control mt-3 col-sm-8">
 			    	{% if (paciente.idObraSocial is null) or (paciente.idObraSocial == '') %}
 			    		<option value="NULL" selected>Ingrese obra social</option>
 			    	{% else %}

@@ -23,8 +23,8 @@ class ControllerConfiguracion extends Controller{
 		return $configuracion;	
 	}
 
-	public function formularioConfiguracion($validacion=[],$configuracionInvalida=null){
-		if (RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'configuracion_update')){
+	public function formulario($validacion=[],$configuracionInvalida=null){
+		if ($this->hayPermiso('configuracion_update')){
 			$template = 'administracionConfiguracion.twig';
 			$parametrosTemplate['configuracionActual'] = RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion();
 			$parametrosTemplate['validacion'] = $validacion; //modificar template para que sepa que recibe el array
@@ -32,22 +32,22 @@ class ControllerConfiguracion extends Controller{
 			$this->render($template,$parametrosTemplate);
 		}
 		else{
-			header("Location: /index.php");
+			$this->redireccion("/index.php");
 		}
 	}
 	
-	public function modificarConfiguracion($edicion = false){
-		if(RepositorioPermiso::getInstance()->usuarioTienePermiso($_SESSION['idUsuario'], 'configuracion_update') && (isset($_POST['token'])) && $_POST['token'] == $_SESSION['token']){
+	public function editar($edicion = false){
+		if($this->hayPermiso('configuracion_update') && $this->tokenValido($_POST['token'])){
 			$configuracion = $this->crearConfiguracion();
 			$validacion = RepositorioConfiguracion::getInstance()->configuracionValida($configuracion);
 			if($validacion['ok']){
 				if($edicion){
 					RepositorioConfiguracion::getInstance()->modificarConfiguracionHospital($configuracion);
-					header("Location: /index.php/configuracion");
+					$this->redireccion("/index.php/configuracion");
 				}
 				else{
 					RepositorioConfiguracion::getInstance()->crearConfiguracionHospital($configuracion);
-					header("Location: /index.php/configuracion");
+					$this->redireccion("/index.php/configuracion");
 				}
 			}
 			else{
@@ -55,7 +55,7 @@ class ControllerConfiguracion extends Controller{
 			}
 		}
 		else{
-			header("Location: /index.php");
+			$this->redireccion("/index.php");
 		}
 
 		//header a modificacion de configuracion
