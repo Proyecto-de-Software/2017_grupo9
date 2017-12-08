@@ -18,11 +18,11 @@ window.onload = function() {
 			showInLegend: "true",
 			legendText: "{label}",
 			indexLabelFontSize: 16,
-			indexLabel: "{label} - {y}%",
+			indexLabel: "{y}%",
 			dataPoints: [
-				{ y: 51.08, label: "Heladera" },
-				{ y: 27.34, label: "Electricidad" },
-				{ y: 10.62, label: "Mascota" }
+				{ y: {{ heladera }}, label: "Heladera" },
+				{ y: {{ electricidad }}, label: "Electricidad" },
+				{ y: {{ mascota }}, label: "Mascota" }
 			]
 		}]
 	});
@@ -44,9 +44,9 @@ window.onload = function() {
 			indexLabelFontSize: 16,
 			indexLabel: "{label} - {y}%",
 			dataPoints: [
-				{ y: 51.08, label: "Material" },
-				{ y: 27.34, label: "Chapa" },
-				{ y: 10.62, label: "Madera" }
+				{ y: {{ tipoVivienda.material }}, label: "Material" },
+				{ y: {{ tipoVivienda.chapa }}, label: "Chapa" },
+				{ y: {{ tipoVivienda.madera }}, label: "Madera" }
 			]
 		}]
 	});
@@ -68,8 +68,8 @@ window.onload = function() {
 			indexLabelFontSize: 16,
 			indexLabel: "{label} - {y}%",
 			dataPoints: [
-				{ y: 51.08, label: "Gas" },
-				{ y: 27.34, label: "Electrica" }
+				{ y: {{ tipoCalefaccion.gas }}, label: "Gas" },
+				{ y: {{ tipoCalefaccion.electrica }}, label: "Electrica" }
 			]
 		}]
 	});
@@ -91,8 +91,8 @@ window.onload = function() {
 			indexLabelFontSize: 16,
 			indexLabel: "{label} - {y}%",
 			dataPoints: [
-				{ y: 51.08, label: "Corriente" },
-				{ y: 27.34, label: "De pozo" }
+				{ y: {{ tipoCalefaccion.corriente }}, label: "Corriente" },
+				{ y: {{ tipoCalefaccion.dePozo }}, label: "De pozo" }
 			]
 		}]
 	});
