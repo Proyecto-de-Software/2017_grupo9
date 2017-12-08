@@ -12,7 +12,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPermiso.php');
       		return self::$instance;
       	}
 
-		public function listarControles($idPaciente){
+		public function listado($idPaciente){ //index
 			
 			if($this->hayPermiso('control_index')){
 				$listado = RepositorioHistoriaClinica::getInstance()->obtenerControles($idPaciente);
@@ -29,7 +29,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPermiso.php');
 			}
 		}
 
-		public function formulario($idPaciente,$argsTmp = [], $idControl = null){
+		public function formulario($idPaciente,$argsTmp = [], $idControl = null){ //new
 			if($this->hayPermiso('control_new') || $this->hayPermiso('control_update')){
 				$edad = $this->calcularEdad(RepositorioPaciente::getInstance()->buscarPorId($idPaciente)->getFechaNacimiento());
 				$parametrosTemplate = $argsTmp;
@@ -47,7 +47,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPermiso.php');
 			}
 		}
 
-		public function mostrarControl($idControl){
+		public function mostrarControl($idControl){ //show
 			if($this->hayPermiso('control_show')){
 				$parametrosTemplate['control'] = RepositorioHistoriaClinica::getInstance()->buscarControlPorId($idControl);	
 				$this->render('administracionMostrarControl.twig',$parametrosTemplate);
@@ -57,7 +57,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPermiso.php');
 			}
 
 		}
-		public function agregar(){
+		public function agregar(){ //create
 			if($this->hayPermiso('control_new') && $this->tokenValido($_POST['token'])){
 				$control = new Control($_POST);
 				$validacion = $control->esValido();
@@ -77,7 +77,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPermiso.php');
 				$this->redireccion("/index.php/pacientes");
 			}
 		}
-		public function editar($idControl){
+		public function editar($idControl){ //edit
 
 			if($this->hayPermiso('control_update') && $this->tokenValido($_POST['token'])){
 				$control = new Control($_POST);
@@ -98,13 +98,13 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPermiso.php');
 			}
 		}
 
-		public function eliminar($idPaciente,$idControl){
+		public function eliminar($idPaciente,$idControl){ //delete
 			RepositorioHistoriaClinica::getInstance()->eliminar($idControl);
 			$this->redireccion("/index.php/paciente/$idPaciente/historiaClinica");
 		}
 
 		public function mostrarGraficos($idPaciente){
-			
+
 		}
 	}
 

@@ -5,7 +5,23 @@
 	require_once($_SERVER['DOCUMENT_ROOT'].'/controller/ControllerConfiguracion.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/controller/ControllerDatosDemograficos.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/controller/ControllerSeguridad.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/controller/ControllerSesion.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/controller/ControllerHistoriaClinica.php');
+/*
+	$controllers['base'] = Controller::getInstance();
+	$controllers['usuario'] = ControllerUsuario::getInstance();
+	$controllers['paciente'] = ControllerPaciente::getInstance();
+	$controllers['configuracion'] = ControllerConfiguracion::getInstance();
+	$controllers['datosDemograficos'] = ControllerDatosDemograficos::getInstance();
+	$controllers['seguridad'] = ControllerSeguridad::getInstance();
+	$controllers['sesion'] = ControllerSesion::getInstance();
+	$controllers['historiaClinica'] = ControllerHistoriaClinica::getInstance();
+*/
+
+
+
+
+
 	$config = RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion();
 	if(!$config->getHabilitado()){
 		Controller::getInstance()->render('mantenimiento.twig');
@@ -37,7 +53,7 @@
 							break;
 						case 'edicion':
 							$_SESSION['usuarioAModificar'] = $idUsuario;
-							ControllerUsuario::getInstance()->formularioUsuario($idUsuario);
+							ControllerUsuario::getInstance()->formulario($idUsuario);
 							break;
 						case 'eliminar':
 							ControllerUsuario::getInstance()->eliminar($idUsuario);
@@ -54,7 +70,7 @@
 					}
 				}
 				else{
-					ControllerUsuario::getInstance()->mostrarUsuario($idUsuario);
+					ControllerUsuario::getInstance()->mostrar($idUsuario);
 				}
 			}
 			else header("Location: /index.php");
@@ -66,7 +82,7 @@
 							ControllerUsuario::getInstance()->agregar();
 							break;
 						case 'nuevo':
-							ControllerUsuario::getInstance()->formularioUsuario();
+							ControllerUsuario::getInstance()->formulario();
 							break;
 						case 'filtrado':
 							$filtrado = ControllerUsuario::getInstance()->obtenerDatosFiltrado();
@@ -76,7 +92,7 @@
 							else{
 								$page = 1;
 							}
-							ControllerUsuario::getInstance()->listarusuarios($filtrado,$page,'/filtrado');
+							ControllerUsuario::getInstance()->listar($filtrado,$page,'/filtrado');
 							break;
 						default:
 							header("Location: /index.php/usuarios");
@@ -90,20 +106,20 @@
 					else{
 						$page = 1;
 					}
-					ControllerUsuario::getInstance()->listarUsuarios(null,$page);
+					ControllerUsuario::getInstance()->listar(null,$page);
 				}
 				break;
 			#Fin de rutas de usuario
 
 			#Inicio rutas login
 			case 'entrar':	
-				ControllerUsuario::getInstance()->loginUsuario($_POST['email'],$_POST['password']);
+				ControllerSesion::getInstance()->login($_POST['email'],$_POST['password']);
 				break;
 			case 'login':
-				ControllerUsuario::getInstance()->formularioLogin();
+				ControllerSesion::getInstance()->formulario();
 				break;
 			case 'cerrarSesion':
-				ControllerUsuario::getInstance()->cerrarSesion();
+				ControllerSesion::getInstance()->logout();
 				break;
 			#Fin de rutas del login
 
@@ -156,7 +172,7 @@
 								}
 								break;
 							case 'historiaClinica':
-								ControllerHistoriaClinica::getInstance()->listarControles($idPaciente);
+								ControllerHistoriaClinica::getInstance()->listado($idPaciente);
 								break;
 							case 'graficos':
 								ControllerHistoriaClinica::getInstance()->mostrarGraficos($idPaciente);

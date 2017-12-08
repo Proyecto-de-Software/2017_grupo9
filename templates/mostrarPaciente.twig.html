@@ -44,7 +44,7 @@
 		<div class="text-center">
 			<a href="/index.php/paciente/{{paciente.id }}/edicion" class="btn btn-outline-success btn-own-info">Editar</a>
 			<a href="/index.php/paciente/{{paciente.id }}/datosDemograficos" class="btn btn-outline-success btn-own-info">Ver datos demográficos</a>
-			{% if permiso %}
+			{% if 'administrador' in usuarioActual.roles or 'pediatra' in usuarioActual.roles %}
 				<a href="/index.php/paciente/{{paciente.id }}/historiaClinica" class="btn btn-outline-success btn-own-info">Historia clínica</a>
 			{% endif %}
 		</div>
