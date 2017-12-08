@@ -7,21 +7,70 @@
 	require_once($_SERVER['DOCUMENT_ROOT'].'/controller/ControllerSeguridad.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/controller/ControllerSesion.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/controller/ControllerHistoriaClinica.php');
-	
 
-	$config = RepositorioConfiguracion::getInstance()->obtenerDatosDeConfiguracion();
+	$controllers['base'] = Controller::getInstance();
+	$controllers['usuario'] = ControllerUsuario::getInstance();
+	$controllers['paciente'] = ControllerPaciente::getInstance();
+	$controllers['configuracion'] = ControllerConfiguracion::getInstance();
+	$controllers['datosDemograficos'] = ControllerDatosDemograficos::getInstance();
+	$controllers['seguridad'] = ControllerSeguridad::getInstance();
+	$controllers['sesion'] = ControllerSesion::getInstance();
+	$controllers['historiaClinica'] = ControllerHistoriaClinica::getInstance();
+
+	$config = $controllers['configuracion']->obtenerDatosDeConfiguracion();
 	if(!$config->getHabilitado()){
 		Controller::getInstance()->render('mantenimiento.twig');
 	}
 	else{
-		//echo '<pre>'; var_dump($_SERVER); echo '</pre>'; die();
+		#Se setea el path por defecto en '/' si no hay ningun path ingresado
 		if(isset($_SERVER['PATH_INFO'])){
 			$path = $_SERVER['PATH_INFO'];
 		}
 		else{
 			$path = '/';
 		}
-		$url = explode('/',$path);
+
+		#Se separa la ruta por '/'' y se guarda en un arreglo
+		$url = explode('/',$path);  /*
+		#En la posicion 1 del array esta el nombre del recurso. (En la 0 no hay nada.) 
+		#En la posicion 0 esta lo que hay a la izquierda de '/', que es ''
+		#Si el path es '/usuario/2/edicion' el arreglo queda  ['','usuario',2,'edicion']
+		#Elijo el controller que se va a usar, de acuerdo al recurso (que se inidca en $url[1])
+		$controllerActual = $controllers[$url[1]];
+		if(!isset($url[2])){
+			#INDEX recurso
+			$controllerActual->listar();
+		}
+		else{
+			$idRecurso = $url[2];
+			if(!isset($url[3])){
+				#SHOW recurso
+				$controllerActual->mostrar();
+			}
+			else{
+
+			}
+		}
+
+
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		switch ($url[1]) {
 			#Inicio rutas de usuario
 			case 'usuario':
