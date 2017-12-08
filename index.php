@@ -278,6 +278,10 @@
 			#Fin de rutas de paciente
 
 			#Inicio de rutas de configuracion
+			case 'datosDemograficos':
+				ControllerDatosDemograficos::getInstance()->reportesDatosDemograficos();
+				break;
+
 			case 'configuracion':
 				ControllerConfiguracion::getInstance()->formulario();
 				break;

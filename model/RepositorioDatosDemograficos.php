@@ -99,7 +99,7 @@
 
       
     }
-
+/*
     public function avgTipoVivienda($id, $tiposVivienda){
       $resultado = array();
       $total = $this->totalDatosDemograficos();
@@ -144,7 +144,7 @@
 
       return $resultado; 
 
-    }
+    }*/
 
     public function avgTipos($tipo, $tipos){
       $resultado = array();
@@ -166,14 +166,17 @@
 
       foreach ($tipos as $value) {
         $query = $conexion->prepare($sql);
-        $query = bindParam(':id', $value);
+        $query->bindParam(':id', $value->id);
         $query->execute();
+
         $resultado[$i] = $query->fetchAll();
         $i++;
       }
 
+      $resultadoFinal = [];
       foreach ($resultado as &$value) {
-        $value = ($value * 100) / $total;
+       // echo '<pre>'; var_dump($value[0][0]); echo '</pre>'; die();
+        $value[0][0] = ($value[0][0] * 100) / $total;
       }
 
       return $resultado; 

@@ -4,29 +4,7 @@
 <script>
 window.onload = function() {
 
-	var chartDatosDemograficos = new CanvasJS.Chart("chartDatosDemograficos", {
-		theme: "light2", // "light1", "light2", "dark1", "dark2"
-		exportEnabled: true,
-		animationEnabled: true,
-		title: {
-			text: "Datos demograficos"
-		},
-		data: [{
-			type: "pie",
-			startAngle: 25,
-			toolTipContent: "<b>{label}</b>: {y}%",
-			showInLegend: "true",
-			legendText: "{label}",
-			indexLabelFontSize: 16,
-			indexLabel: "{y}%",
-			dataPoints: [
-				{ y: {{ heladera }}, label: "Heladera" },
-				{ y: {{ electricidad }}, label: "Electricidad" },
-				{ y: {{ mascota }}, label: "Mascota" }
-			]
-		}]
-	});
-	chartDatosDemograficos.render();
+	
 
 	var chartTipoVivienda = new CanvasJS.Chart("chartTipoVivienda", {
 		theme: "light2", // "light1", "light2", "dark1", "dark2"
@@ -44,9 +22,9 @@ window.onload = function() {
 			indexLabelFontSize: 16,
 			indexLabel: "{label} - {y}%",
 			dataPoints: [
-				{ y: {{ tipoVivienda.material }}, label: "Material" },
-				{ y: {{ tipoVivienda.chapa }}, label: "Chapa" },
-				{ y: {{ tipoVivienda.madera }}, label: "Madera" }
+				{ y: {{ datosVivienda[0] }}, label: "Material" },
+				{ y: {{ datosVivienda[1] }}, label: "Chapa" },
+				{ y: {{ datosVivienda[2] }}, label: "Madera" }
 			]
 		}]
 	});
@@ -68,8 +46,8 @@ window.onload = function() {
 			indexLabelFontSize: 16,
 			indexLabel: "{label} - {y}%",
 			dataPoints: [
-				{ y: {{ tipoCalefaccion.gas }}, label: "Gas" },
-				{ y: {{ tipoCalefaccion.electrica }}, label: "Electrica" }
+				{ y: {{ datosCalefaccion[0] }}, label: "Gas" },
+				{ y: {{ datosCalefaccion[1] }}, label: "Electrica" }
 			]
 		}]
 	});
@@ -91,8 +69,8 @@ window.onload = function() {
 			indexLabelFontSize: 16,
 			indexLabel: "{label} - {y}%",
 			dataPoints: [
-				{ y: {{ tipoCalefaccion.corriente }}, label: "Corriente" },
-				{ y: {{ tipoCalefaccion.dePozo }}, label: "De pozo" }
+				{ y: {{ datosAgua[0] }}, label: "Corriente" },
+				{ y: {{ datosAgua[1] }}, label: "De pozo" }
 			]
 		}]
 	});

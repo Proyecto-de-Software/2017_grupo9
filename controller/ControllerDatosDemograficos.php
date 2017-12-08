@@ -102,11 +102,12 @@ class ControllerDatosDemograficos extends Controller{
 	}
 
 	public function reportesDatosDemograficos(){
+		$template = 'administracionReportesDatosDemograficos';
 		$tipos = $this->tiposDeDatos();
-		
-		RepositorioDatosDemograficos::getInstance()->avgTipos('vivienda', $tipos['tiposDeVivienda']->id());
-		RepositorioDatosDemograficos::getInstance()->avgTipos('calefaccion', $tipos['tiposDeCalefaccion']->id());
-		RepositorioDatosDemograficos::getInstance()->avgTipos('agua', $tipos['tiposDeAgua']->id());
+		$parametrosTemplate['datosVivienda'] = RepositorioDatosDemograficos::getInstance()->avgTipos('vivienda', $tipos['tiposDeVivienda']);
+		$parametrosTemplate['datosCalefaccion'] = RepositorioDatosDemograficos::getInstance()->avgTipos('calefaccion', $tipos['tiposDeCalefaccion']);
+		$parametrosTemplate['datosAgua'] = RepositorioDatosDemograficos::getInstance()->avgTipos('agua', $tipos['tiposDeAgua']);
+		$this->render($template, $parametrosTemplate);
 	}
 }
 
