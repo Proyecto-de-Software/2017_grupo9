@@ -1,0 +1,10 @@
+USUARIOS	
+	Rol				Mail				Pass
+	Pediatra: 		pedi@pedi.com 		pedi
+	Administrador: 	admin@admin.com 	admin
+	Recepcionista:	recep@recep.com		recep
+
+
+
+PACIENTES
+	
