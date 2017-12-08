@@ -101,6 +101,13 @@ class ControllerDatosDemograficos extends Controller{
 		return $datos;
 	}
 
+	public function reportesDatosDemograficos(){
+		$tipos = $this->tiposDeDatos();
+		
+		RepositorioDatosDemograficos::getInstance()->avgTipos('vivienda', $tipos['tiposDeVivienda']->id());
+		RepositorioDatosDemograficos::getInstance()->avgTipos('calefaccion', $tipos['tiposDeCalefaccion']->id());
+		RepositorioDatosDemograficos::getInstance()->avgTipos('agua', $tipos['tiposDeAgua']->id());
+	}
 }
 
 ?>

@@ -146,7 +146,7 @@
 
     }
 
-    public function avgTipos($id, $tipo, $tipos){
+    public function avgTipos($tipo, $tipos){
       $resultado = array();
       $total = $this->totalDatosDemograficos();
       $conexion = $this->getConnection();
