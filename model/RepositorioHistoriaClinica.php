@@ -53,7 +53,7 @@
             $query->bindParam(':maduracion_acorde',$control->getMaduracionAcorde());
             $query->bindParam(':maduracion_acorde_observaciones',$control->getObservacionesMaduracion());
             $query->bindParam(':ex_fisico_normal',$control->getExamenFisicoNormal());
-            $query->bindParam(':ex_fisico_normal_observaciones',$control->getObservacionesExamen());
+            $query->bindParam(':ex_fisico_observaciones',$control->getObservacionesExamen());
             $query->bindParam(':pc',$control->getPc());
             $query->bindParam(':ppc',$control->getPpc());
             $query->bindParam(':talla',$control->getTalla());
@@ -100,6 +100,13 @@
             else{
                 return false;
             }
+        }
+
+        public function eliminar($idControl){
+            $conexion = $this->getConnection();
+            $query = $conexion->prepare("DELETE FROM control_salud WHERE id=:id");
+            $query->bindParam(':id',$idControl);
+            return $query->execute()==1;
         }
 	}
 

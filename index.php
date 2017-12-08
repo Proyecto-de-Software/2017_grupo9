@@ -158,6 +158,9 @@
 							case 'historiaClinica':
 								ControllerHistoriaClinica::getInstance()->listarControles($idPaciente);
 								break;
+							case 'graficos':
+								ControllerHistoriaClinica::getInstance()->mostrarGraficos($idPaciente);
+								break;
 							case 'control':
 								if(isset($url[4]) && !is_numeric($url[4])){
 									switch ($url[4]){
@@ -168,10 +171,22 @@
 											ControllerHistoriaClinica::getInstance()->agregar();
 											break;
 										case 'editar':
-											ControllerHistoriaClinica::getInstance()->editar();
+											if( is_numeric($url[5]) ){
+												$idControl = $url[5];
+												ControllerHistoriaClinica::getInstance()->editar($idControl);
+											}
+											else{
+												header("Location: /index.php/paciente/$idPaciente/historiaClinica");
+											}
 											break;
 										case 'eliminar':
-											# code...
+											if( is_numeric($url[5]) ){
+												$idControl = $url[5];
+												ControllerHistoriaClinica::getInstance()->eliminar($idPaciente,$idControl);
+											}
+											else{
+												header("Location: /index.php/paciente/$idPaciente/historiaClinica");
+											}
 											break;
 										case 'edicion':
 											if( is_numeric($url[5]) ){

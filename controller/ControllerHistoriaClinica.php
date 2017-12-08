@@ -48,7 +48,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPermiso.php');
 		}
 
 		public function mostrarControl($idControl){
-			if($this->hayPermiso('control_show')	){
+			if($this->hayPermiso('control_show')){
 				$parametrosTemplate['control'] = RepositorioHistoriaClinica::getInstance()->buscarControlPorId($idControl);	
 				$this->render('administracionMostrarControl.twig',$parametrosTemplate);
 			}
@@ -63,6 +63,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPermiso.php');
 				$validacion = $control->esValido();
 				if($validacion['ok']){
 					RepositorioHistoriaClinica::getInstance()->agregarControl($control);
+					$idPaciente = $control->getIdPaciente();
 					$idControl = $control->getId();
 					$this->redireccion("/index.php/paciente/$idPaciente/control/$idControl");
 				}
@@ -76,14 +77,14 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPermiso.php');
 				$this->redireccion("/index.php/pacientes");
 			}
 		}
-		public function editar(){
+		public function editar($idControl){
+
 			if($this->hayPermiso('control_update') && $this->tokenValido($_POST['token'])){
 				$control = new Control($_POST);
 				$validacion = $control->esValido();
-				if($validacion['ok']){
-					
+				if($validacion['ok']){					
 					RepositorioHistoriaClinica::getInstance()->editarControl($control);
-					$idControl = $control->getId();
+					$idPaciente = $control->getIdPaciente();
 					$this->redireccion("/index.php/paciente/$idPaciente/control/$idControl");
 				}
 				else{
@@ -95,6 +96,15 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPermiso.php');
 			else{
 				$this->redireccion("/index.php/pacientes");
 			}
+		}
+
+		public function eliminar($idPaciente,$idControl){
+			RepositorioHistoriaClinica::getInstance()->eliminar($idControl);
+			$this->redireccion("/index.php/paciente/$idPaciente/historiaClinica");
+		}
+
+		public function mostrarGraficos($idPaciente){
+			
 		}
 	}
 

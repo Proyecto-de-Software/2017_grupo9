@@ -27,6 +27,7 @@ class Controller{
     	return $token == $_SESSION['token'];
     }
     protected function redireccion($url){
+    	
     	header("Location: $url");
     }
 	public function usuarioActual(){

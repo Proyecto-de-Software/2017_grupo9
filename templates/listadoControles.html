@@ -4,6 +4,8 @@
 			<h3 >Controles </h3> 
 			<a class="btn btn-success btn-own mt-3 mb-5 text-right" role="button" href="/index.php/paciente/{{ idPaciente }}/control/nuevo">
 			Agregar control </a>
+			<a class="btn btn-success btn-own mt-3 mb-5 text-right" role="button" href="/index.php/paciente/{{ idPaciente }}/graficos">
+			Estadisticas gráficas </a>
 			<table class="table table-hover">
 			  	<thead>
 				    <tr>
@@ -22,6 +24,11 @@
 					    	<td>
 					    		<a href="/index.php/paciente/{{ idPaciente }}/control/{{elemento.id}}" class="btn btn-outline-success btn-own-info"> Ver control </a>
 					    	</td>
+					    	{% if 'administrador' in usuarioActual.roles %}
+					    	<td>
+					    		<a onclick="return confirm('Seguro?')" href="/index.php/paciente/{{ idPaciente }}/control/eliminar/{{elemento.id}}" class="btn btn-outline-success btn-own-info">Eliminar </a>
+					    	</td>
+					    	{% endif %}
 					    </tr>
 				     {% endfor %}
 				    

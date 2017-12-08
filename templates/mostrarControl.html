@@ -57,8 +57,16 @@
 		</table>
 		{% set idPaciente = control.idPaciente %}
 		{% set idControl = control.id %}
-		<div class="text-center">
-			<a href="/index.php/paciente/{{idPaciente}}/control/edicion/{{idControl}}" class="btn btn-outline-success btn-own-info">Editar</a>
+		<div class="row">
+			<div class="text-center col-md-4">
+				<a href="/index.php/paciente/{{idPaciente}}" class="btn btn-outline-success btn-own-info">Volver al paciente</a>
+			</div>
+			<div class="text-center  col-md-4">
+				<a href="/index.php/paciente/{{idPaciente}}/historiaClinica" class="btn btn-outline-success btn-own-info">Volver a historia clinica</a>
+			</div>
+			<div class="text-center  col-md-4 ">
+				<a href="/index.php/paciente/{{idPaciente}}/control/edicion/{{idControl}}" class="btn btn-outline-success btn-own-info">Editar</a>
+			</div>
 		</div>
 	</div>
 
