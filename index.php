@@ -167,7 +167,7 @@
 								ControllerHistoriaClinica::getInstance()->listado($idPaciente);
 								break;
 							case 'graficos':
-								ControllerHistoriaClinica::getInstance()->mostrarGraficos($idPaciente);
+								ControllerHistoriaClinica::getInstance()->mostrarReportes($idPaciente);
 								break;
 							case 'control':
 								if(isset($url[4]) && !is_numeric($url[4])){

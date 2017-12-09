@@ -153,6 +153,8 @@ class ControllerPaciente extends Controller{
             $datos['tipoDeDocumento'] = $this->datosAPI("tipo-documento", "/".$paciente->getIdTipoDocumento());
             return $datos;
       }
+
+      
 }
 
 ?>

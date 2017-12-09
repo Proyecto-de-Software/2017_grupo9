@@ -108,6 +108,15 @@
             $query->bindParam(':id',$idControl);
             return $query->execute()==1;
         }
+
+        public function devolverControles($id){
+            $conexion = $this->getConnection();
+            $query = $conexion->prepare("SELECT * FROM control_salud WHERE paciente_id=:id");
+            $query->bindParam(':id', $id);
+            $query->execute();
+            $resultado = $query->fetchAll();
+            $resultado['fecha_nacimiento'];
+      }
 	}
 
 ?>

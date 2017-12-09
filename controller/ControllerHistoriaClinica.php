@@ -103,9 +103,13 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPermiso.php');
 			$this->redireccion("/index.php/paciente/$idPaciente/historiaClinica");
 		}
 
-		public function mostrarGraficos($idPaciente){
+		public function mostrarReportes($id){
+            RepositorioHistoriaClinica::getInstance()->devolverControles($id);
+      	}
 
-		}
+      	public function calcularSemanas($control, $fechaNacimiento){
+
+      	}
 	}
 
 ?>

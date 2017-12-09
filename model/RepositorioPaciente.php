@@ -214,6 +214,13 @@
         return $retorno;
       }
 
-  		
+      public function devolverFechas($id){
+        $conexion = $this->getConnection();
+        $query = $conexion->prepare("SELECT fecha FROM paciente WHERE id=:id");
+        $query->bindParam(':id', $id);
+        $query->execute();
+        $resultado = $query->fetchAll();
+        return sizeof($resultado);
+      }   	
 
 	}
