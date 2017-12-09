@@ -111,11 +111,10 @@
 
         public function devolverControles($id){
             $conexion = $this->getConnection();
-            $query = $conexion->prepare("SELECT * FROM control_salud WHERE paciente_id=:id");
+            $query = $conexion->prepare("SELECT * FROM control_salud WHERE paciente_id=:id ORDER BY fecha ASC");
             $query->bindParam(':id', $id);
             $query->execute();
-            $resultado = $query->fetchAll();
-            $resultado['fecha_nacimiento'];
+            return $query->fetchAll();
       }
 	}
 

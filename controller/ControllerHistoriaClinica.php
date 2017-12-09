@@ -104,10 +104,33 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPermiso.php');
 		}
 
 		public function mostrarReportes($id){
-            RepositorioHistoriaClinica::getInstance()->devolverControles($id);
+			$template = 'administracionReportesHistoriaClinica.twig';
+			$paciente = RepositorioPaciente::getInstance()->buscarPorId($id);
+            $controles = RepositorioHistoriaClinica::getInstance()->devolverControles($id);
+            $semanas = [];
+            $datos = [];
+            foreach ($controles as $control) {
+            	$semanas= $this->calcularSemanas(new DateTime($control['fecha']), new DateTime ($paciente->getFechaNacimiento()), 13);
+            	if($semanas == 0){
+            		break;
+            	}
+        		$peso[$semanas] = $control['peso'];
+        		$talla[$semanas] = $control['talla'];
+        		$ppc[$semanas] = $control['ppc'];
+            }
+            $parametrosTemplate['pesos'] = $peso;
+            $parametrosTemplate['tallas'] = $talla;
+            $parametrosTemplate['ppc'] = $ppc;
+            $parametrosTemplate['genero'] = $paciente->getGenero();
       	}
 
-      	public function calcularSemanas($control, $fechaNacimiento){
+      	public function calcularSemanas($fechaControl, $fechaNacimiento, $semanasAControlar){
+			$interval = $fechaNacimiento->diff($fechaControl);
+			$semanas = floor($interval->format('%a') / 7);
+			if($semanas <= $semanasAControlar){
+				return $semanas;
+			}
+			return 0;
 
       	}
 	}

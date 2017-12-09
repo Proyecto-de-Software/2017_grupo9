@@ -1,6 +1,6 @@
 <section>
 	<div class="">
-		<div class="d-inline-block " id="chartDatosDemograficos" style="height: 370px; margin-right: 50px; width: 45%;" ></div>
+		<div class="d-inline-block " id="chartDatosDemograficos" style="height: 370px; width: 45%;"></div>
 		<div class="d-inline-block " id="chartTipoVivienda" style="height: 370px; margin-left: 50px; width: 45%;"></div>
 		<div class="d-inline-block " id="chartTipoCalefaccion" style="height: 370px; margin-right: 50px; width: 45%;"></div>
 		<div class="d-inline-block " id="chartTipoAgua" style="height: 370px; margin-left: 50px; width: 45%;"></div>
@@ -9,30 +9,29 @@
 	<script>
 	window.onload = function() {
 
+
 		var chartDatosDemograficos = new CanvasJS.Chart("chartDatosDemograficos", {
-			theme: "light2", // "light1", "light2", "dark1", "dark2"
-			exportEnabled: true,
 			animationEnabled: true,
-			title: {
-				text: "Tipos de vivienda"
+			theme: "light2", // "light1", "light2", "dark1", "dark2"
+			title:{
+				text: "Pacientes con servicios"
 			},
-			data: [{
-				type: "pie",
-				startAngle: 25,
-				toolTipContent: "<b>{label}</b>: {y}%",
-				showInLegend: "true",
-				legendText: "{label}",
-				indexLabelFontSize: 16,
-				indexLabel: "{label} - {y}%",
+			axisY: {
+				title: ""
+			},
+			data: [{        
+				type: "column",  
+				showInLegend: true, 
+				legendMarkerColor: "grey",
+				legendText: "",
 				dataPoints: [
-					{ y: [{{datosDemograficos['heladera'] | number_format(2, '.', '') }}], label: "Heladera" },
-					{ y: [{{datosDemograficos['electricidad'] | number_format(2, '.', '') }}], label: "Electricidad" },
-					{ y: [{{datosDemograficos['mascota'] | number_format(2, '.', '') }}], label: "Mascota" }
+					{ y: {{datosDemograficos['electricidad'] | number_format(2, '.', '') }}, label: "Heladera" },
+					{ y: {{datosDemograficos['electricidad'] | number_format(2, '.', '') }}, label: "Electricidad" },
+					{ y: {{datosDemograficos['mascota'] | number_format(2, '.', '') }}, label: "Mascota" }
 				]
 			}]
 		});
 		chartDatosDemograficos.render();
-		
 	
 		var chartTipoVivienda = new CanvasJS.Chart("chartTipoVivienda", {
 			theme: "light2", // "light1", "light2", "dark1", "dark2"
