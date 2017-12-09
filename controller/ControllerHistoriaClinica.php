@@ -113,7 +113,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPermiso.php');
             foreach ($controles as $control) {
             	$semanas= $this->calcularSemanas(new DateTime($control['fecha']), new DateTime ($paciente->getFechaNacimiento()), 13);
             	if($semanas == 0){
-            		break;
+            		$this->redireccion("/index.php/paciente/$id/historiaClinica");
             	}
         		$peso[$semanas] = $control['peso'];
         		$talla[$semanas] = $control['talla'];
