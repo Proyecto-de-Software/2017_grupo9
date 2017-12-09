@@ -54,8 +54,12 @@ case '/reservar':
 	$msg['reply_to_message_id'] = null;
 	break;
 case '/turnos':
+	$raw = file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php/turnos/'.$cmd_params);
+	$res = json_decode($raw, true);
 	$msg['text'] = 'Los turnos disponibles son: ';
-	$msg['text'] .= file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php/turnos/'.$cmd_params);
+	foreach($res as $re){
+		$msg['text'] .= $re;
+	}
 	break;
 case '/gabbesputo':
 	$msg['text'] = 'Me imaginaba...';
