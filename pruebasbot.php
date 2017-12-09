@@ -58,7 +58,7 @@ case '/turnos':
 	$res = json_decode($raw, true);
 	$msg['text'] = 'Los turnos disponibles son: ';
 	foreach($res as $re){
-		$msg['text'] .= $re;
+		$msg['text'] .= $re.' ';
 	}
 	break;
 case '/gabbesputo':
