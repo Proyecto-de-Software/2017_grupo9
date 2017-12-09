@@ -1,9 +1,6 @@
 <?php
-
-	$array = array(1, 2, 3, 4);
-	foreach ($array as &$value) {
-        $value =$value * 100;
-      }
-
-      var_dump($array);
+$datetime1 = new DateTime('2011-10-01');
+$datetime2 = new DateTime('2011-12-01');
+$interval = $datetime1->diff($datetime2);
+echo floor(($interval->format('%a') / 7)) . ' semanas';
 ?>

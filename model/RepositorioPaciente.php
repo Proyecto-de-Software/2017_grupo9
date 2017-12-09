@@ -171,47 +171,7 @@
         return false;
       }
 
-      /*public function devolverObrasSociales(){
-        $conexion = $this->getConnection();
-        $query = $conexion->prepare("SELECT * FROM obra_social");
-        $query->execute();
-        $obrasSociales = $query->fetchAll();
-        return $obrasSociales;
-      }
-
-      public function devolverObraSocialPorId($id){
-        $conexion = $this->getConnection();
-        $query = $conexion->prepare("SELECT * FROM obra_social WHERE id=:id");
-        $query->bindParam(':id', $id);
-        $query->execute();
-        $obraSocial = $query->fetchAll();
-        if (sizeof($obraSocial) > 0){
-          return new ObraSocial($obraSocial[0]['id'],$obraSocial[0]['nombre']);
-        }
-        return false;
-      }
-
-      public function devolverTiposDeDocumento(){
-        $conexion = $this->getConnection();
-        $query = $conexion->prepare("SELECT * FROM tipo_documento");
-        $query->execute();
-        $tiposDeDocumento = $query->fetchAll();
-        return $tiposDeDocumento;
-      }
-
-      public function devolverTipoDeDocumentoPorId($id){
-        $conexion = $this->getConnection();
-        $query = $conexion->prepare("SELECT * FROM tipo_documento WHERE id=:id");
-        $query->bindParam(':id', $id);
-        $query->execute();
-        $tipoDeDocumento = $query->fetchAll();
-        if (sizeof($tipoDeDocumento) > 0){
-          return new TipoDocumento($tipoDeDocumento[0]['id'],$tipoDeDocumento[0]['nombre']);
-        }
-        return false;
-      }*/
-
-      function cantidadDePacientes(){
+      public function cantidadDePacientes(){
         $conexion = $this->getConnection();
         $query = $conexion->prepare("SELECT id FROM paciente");
         $query->execute();
@@ -254,8 +214,6 @@
         return $retorno;
       }
 
-  		//CRUD
-  		//buscar paciente por ID
-      //devolverPacientes
+  		
 
 	}
