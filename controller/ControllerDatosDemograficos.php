@@ -102,11 +102,13 @@ class ControllerDatosDemograficos extends Controller{
 	}
 
 	public function reportesDatosDemograficos(){
-		$template = 'administracionReportesDatosDemograficos';
+		$template = 'administracionReportesDatosDemograficos.twig';
 		$tipos = $this->tiposDeDatos();
+		$parametrosTemplate['datosDemograficos'] = RepositorioDatosDemograficos::getInstance()->avgDatosDemograficos();
 		$parametrosTemplate['datosVivienda'] = RepositorioDatosDemograficos::getInstance()->avgTipos('vivienda', $tipos['tiposDeVivienda']);
 		$parametrosTemplate['datosCalefaccion'] = RepositorioDatosDemograficos::getInstance()->avgTipos('calefaccion', $tipos['tiposDeCalefaccion']);
 		$parametrosTemplate['datosAgua'] = RepositorioDatosDemograficos::getInstance()->avgTipos('agua', $tipos['tiposDeAgua']);
+		//echo '<pre>'; var_dump($parametrosTemplate['datosAgua']); echo '</pre>'; die();
 		$this->render($template, $parametrosTemplate);
 	}
 }

@@ -18,7 +18,7 @@
         return self::$instance;
     }
 
-	function agregar($datosDemograficos){
+	 public function agregar($datosDemograficos){
 			$conexion = $this->getConnection();
 
 			$query = $conexion->prepare("INSERT INTO datos_demograficos(id, heladera, electricidad, mascota, tipo_vivienda_id, tipo_calefaccion_id, tipo_agua_id, paciente_id) VALUES(null, :heladera, :electricidad, :mascota, :tipoVivienda, :tipoCalefaccion, :tipoAgua, :idPaciente)");
@@ -33,7 +33,7 @@
       return $query->execute();
 		}
 
-		function modificar($datosDemograficos){
+		public function modificar($datosDemograficos){
       	$conexion = $this->getConnection();
       	$query = $conexion->prepare("UPDATE datos_demograficos SET heladera=:heladera, electricidad=:electricidad, mascota=:mascota, tipo_vivienda_id=:tipoVivienda, tipo_calefaccion_id=:tipoCalefaccion, tipo_agua_id=:tipoAgua, paciente_id=:paciente WHERE id=:id");
         //echo '<pre>'; var_dump($datosDemograficos);die();echo '</pre>';
@@ -49,7 +49,7 @@
       	return $query->execute() == 1;
 		}
 
-    function eliminar($datosDemograficos){
+    public function eliminar($datosDemograficos){
       $conexion = $this->getConnection();
       $query = $conexion->prepare("DELETE FROM datos_demograficos WHERE id = :id");
       $query->bindParam(':id', $datosDemograficos->getId()); 
@@ -57,7 +57,7 @@
       return $query->execute() == 1;        
       }
 
-    function buscarPorId($id){
+    public function buscarPorId($id){
       $conexion = $this->getConnection();
       $query = $conexion->prepare("SELECT * FROM datos_demograficos WHERE id = :id");
       $query->bindParam(':id', $id);
@@ -72,7 +72,7 @@
       }
     }
 
-    function buscarPorIdPaciente($id){
+    public function buscarPorIdPaciente($id){
       $conexion = $this->getConnection();
       $query = $conexion->prepare("SELECT * FROM datos_demograficos WHERE paciente_id = :id");
       $query->bindParam(':id', $id);
@@ -95,56 +95,28 @@
       return $resultado[0]['total'];
     }
 
-    public function avgDatosDemograficos($id){
-
-      
-    }
-/*
-    public function avgTipoVivienda($id, $tiposVivienda){
+    public function avgDatosDemograficos(){
       $resultado = array();
       $total = $this->totalDatosDemograficos();
       $conexion = $this->getConnection();
-        
-      $query = $conexion->prepare("SELECT COUNT(tipo_vivienda_id) FROM datos_demograficos WHERE tipo_vivienda_id = :idTipoVivienda");
-      $i = 0;
+      $query = $conexion->prepare("SELECT id FROM datos_demograficos WHERE heladera = 1");
+      $query->execute();
+      $resultado['heladera'] = count($query->fetchAll());
 
-      foreach ($tiposVivienda as $value) {
-        $query = bindParam(':idTipoVivienda', $value);
-        $query->execute();
-        $resultado[$i] = $query->fetchAll();
-        $i++;
-      }
+      $query = $conexion->prepare("SELECT id FROM datos_demograficos WHERE electricidad = 1");
+      $query->execute();
+      $resultado['electricidad'] = count($query->fetchAll());
+
+      $query = $conexion->prepare("SELECT id FROM datos_demograficos WHERE mascota = 1");
+      $query->execute();
+      $resultado['mascota'] = count($query->fetchAll());
 
       foreach ($resultado as &$value) {
         $value = ($value * 100) / $total;
       }
 
-      return $resultado; 
-
+      return $resultado;
     }
-
-    public function avgTipoCalefaccion($id, $tiposCalefaccion){   
-      $resultado = array();
-      $total = $this->totalDatosDemograficos();
-      $conexion = $this->getConnection();
-        
-      $query = $conexion->prepare("SELECT COUNT(tipo_calefaccion_id) FROM datos_demograficos WHERE tipo_calefaccion_id = :idTipoCalefaccion");
-      $i = 0;
-
-      foreach ($tiposCalefaccion as $value) {
-        $query = bindParam(':idTipoCalefaccion', $value);
-        $query->execute();
-        $resultado[$i] = $query->fetchAll();
-        $i++;
-      }
-
-      foreach ($resultado as &$value) {
-        $value = ($value * 100) / $total;
-      }
-
-      return $resultado; 
-
-    }*/
 
     public function avgTipos($tipo, $tipos){
       $resultado = array();
@@ -152,13 +124,13 @@
       $conexion = $this->getConnection();
       switch ($tipo) {
         case 'vivienda':
-          $sql = "SELECT COUNT(tipo_vivienda_id) FROM datos_demograficos WHERE tipo_vivienda_id = :id";
+          $sql = "SELECT id FROM datos_demograficos WHERE tipo_vivienda_id = :id";
           break;
         case 'calefaccion':
-          $sql = "SELECT COUNT(tipo_calefaccion_id) FROM datos_demograficos WHERE tipo_calefaccion_id = :id";
+          $sql = "SELECT id FROM datos_demograficos WHERE tipo_calefaccion_id = :id";
           break;
         case 'agua':
-          $sql = "SELECT COUNT(tipo_agua_id) FROM datos_demograficos WHERE tipo_agua_id = :id";
+          $sql = "SELECT id FROM datos_demograficos WHERE tipo_agua_id = :id";
         break;
       }
         
@@ -168,18 +140,15 @@
         $query = $conexion->prepare($sql);
         $query->bindParam(':id', $value->id);
         $query->execute();
-
-        $resultado[$i] = $query->fetchAll();
+        $resultado[$i] = count($query->fetchAll());
         $i++;
       }
+      //echo '<pre>'; var_dump($resultado); echo '</pre>'; die();
 
-      $resultadoFinal = [];
       foreach ($resultado as &$value) {
-       // echo '<pre>'; var_dump($value[0][0]); echo '</pre>'; die();
-        $value[0][0] = ($value[0][0] * 100) / $total;
+          $value = ($value * 100) / $total;
       }
-
       return $resultado; 
     }
 
-  }
+}

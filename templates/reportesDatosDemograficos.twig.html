@@ -1,14 +1,39 @@
 <section>
-	<div id="chartDatosDemograficos" style="height: 370px; width: 40%;"></div>
-	<div id="chartTipoVivienda" style="height: 370px; width: 40%;"></div>
-	<div id="chartTipoCalefaccion" style="height: 370px; width: 40%;"></div>
-	<div id="chartTipoAgua" style="height: 370px; width: 40%;"></div>
+	<div class="">
+		<div class="d-inline-block " id="chartDatosDemograficos" style="height: 370px; margin-right: 50px; width: 45%;" ></div>
+		<div class="d-inline-block " id="chartTipoVivienda" style="height: 370px; margin-left: 50px; width: 45%;"></div>
+		<div class="d-inline-block " id="chartTipoCalefaccion" style="height: 370px; margin-right: 50px; width: 45%;"></div>
+		<div class="d-inline-block " id="chartTipoAgua" style="height: 370px; margin-left: 50px; width: 45%;"></div>
+	</div>
 	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 	<script>
 	window.onload = function() {
 
+		var chartDatosDemograficos = new CanvasJS.Chart("chartDatosDemograficos", {
+			theme: "light2", // "light1", "light2", "dark1", "dark2"
+			exportEnabled: true,
+			animationEnabled: true,
+			title: {
+				text: "Tipos de vivienda"
+			},
+			data: [{
+				type: "pie",
+				startAngle: 25,
+				toolTipContent: "<b>{label}</b>: {y}%",
+				showInLegend: "true",
+				legendText: "{label}",
+				indexLabelFontSize: 16,
+				indexLabel: "{label} - {y}%",
+				dataPoints: [
+					{ y: [{{datosDemograficos['heladera']}}], label: "Heladera" },
+					{ y: [{{datosDemograficos['electricidad']}}], label: "Electricidad" },
+					{ y: [{{datosDemograficos['mascota']}}], label: "Mascota" }
+				]
+			}]
+		});
+		chartDatosDemograficos.render();
 		
-	/*
+	
 		var chartTipoVivienda = new CanvasJS.Chart("chartTipoVivienda", {
 			theme: "light2", // "light1", "light2", "dark1", "dark2"
 			exportEnabled: true,
@@ -25,14 +50,14 @@
 				indexLabelFontSize: 16,
 				indexLabel: "{label} - {y}%",
 				dataPoints: [
-					{ y: {{ datosVivienda[0] }}, label: "Material" },
-					{ y: {{ datosVivienda[1] }}, label: "Chapa" },
-					{ y: {{ datosVivienda[2] }}, label: "Madera" }
+					{ y: [{{datosVivienda[0]}}], label: "Material" },
+					{ y: [{{datosVivienda[1]}}], label: "Chapa" },
+					{ y: [{{datosVivienda[2]}}], label: "Madera" }
 				]
 			}]
 		});
 		chartTipoVivienda.render();
-	/*
+	
 		var chartTipoCalefaccion = new CanvasJS.Chart("chartTipoCalefaccion", {
 			theme: "light2", // "light1", "light2", "dark1", "dark2"
 			exportEnabled: true,
@@ -77,7 +102,7 @@
 				]
 			}]
 		});
-		chartTipoAgua.render();*/
+		chartTipoAgua.render();
 
 	}
 	</script>
