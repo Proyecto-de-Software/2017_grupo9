@@ -25,9 +25,9 @@
 				indexLabelFontSize: 16,
 				indexLabel: "{label} - {y}%",
 				dataPoints: [
-					{ y: [{{datosDemograficos['heladera']}}], label: "Heladera" },
-					{ y: [{{datosDemograficos['electricidad']}}], label: "Electricidad" },
-					{ y: [{{datosDemograficos['mascota']}}], label: "Mascota" }
+					{ y: [{{datosDemograficos['heladera'] | number_format(2, '.', '') }}], label: "Heladera" },
+					{ y: [{{datosDemograficos['electricidad'] | number_format(2, '.', '') }}], label: "Electricidad" },
+					{ y: [{{datosDemograficos['mascota'] | number_format(2, '.', '') }}], label: "Mascota" }
 				]
 			}]
 		});
@@ -50,9 +50,9 @@
 				indexLabelFontSize: 16,
 				indexLabel: "{label} - {y}%",
 				dataPoints: [
-					{ y: [{{datosVivienda[0]}}], label: "Material" },
-					{ y: [{{datosVivienda[1]}}], label: "Chapa" },
-					{ y: [{{datosVivienda[2]}}], label: "Madera" }
+					{ y: [{{datosVivienda[0] | number_format(2, '.', '') }}], label: "Material" },
+					{ y: [{{datosVivienda[1] | number_format(2, '.', '') }}], label: "Chapa" },
+					{ y: [{{datosVivienda[2] | number_format(2, '.', '') }}], label: "Madera" }
 				]
 			}]
 		});
@@ -74,8 +74,8 @@
 				indexLabelFontSize: 16,
 				indexLabel: "{label} - {y}%",
 				dataPoints: [
-					{ y: {{ datosCalefaccion[0] }}, label: "Gas" },
-					{ y: {{ datosCalefaccion[1] }}, label: "Electrica" }
+					{ y: {{ datosCalefaccion[0] | number_format(2, '.', '') }}, label: "Gas" },
+					{ y: {{ datosCalefaccion[1] | number_format(2, '.', '') }}, label: "Electrica" }
 				]
 			}]
 		});
@@ -97,8 +97,8 @@
 				indexLabelFontSize: 16,
 				indexLabel: "{label} - {y}%",
 				dataPoints: [
-					{ y: {{ datosAgua[0] }}, label: "Corriente" },
-					{ y: {{ datosAgua[1] }}, label: "De pozo" }
+					{ y: {{ datosAgua[0] | number_format(2, '.', '') }}, label: "Corriente" },
+					{ y: {{ datosAgua[1] | number_format(2, '.', '') }}, label: "De pozo" }
 				]
 			}]
 		});
