@@ -20,10 +20,18 @@ $app->get('/turnos/{fecha}', function ($request, $response, $args) {
 	$turnosReservados = RepositorioTurno::getInstance()->turnosReservadosParaFecha($args['fecha']);
     $turnosDisponibles = array_diff($todosLosTurnos, $turnosReservados);
     //return $turnosDisponibles;
-    
+    echo json_encode($turnosDisponibles);
+    /*
+	for ($i = 1; $i <= sizeof($turnosDisponibles); $i++) {
+		$arr = array($i => 1, 'b' => 2, 'c' => 3, 'd' => 4, 'e' => 5);
+	    echo $i;
+	}
+
+    /*
     foreach($turnosDisponibles as $turno) {
     	echo $turno.', ';
     }
+    */
     
 });
 
