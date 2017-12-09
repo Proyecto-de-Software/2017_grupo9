@@ -112,7 +112,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPermiso.php');
             $peso = 0; $talla = 0; $ppc = 0;
             foreach ($controles as $control) {
             	$semanas= $this->calcularSemanas(new DateTime($control['fecha']), new DateTime ($paciente->getFechaNacimiento()), 13);
-            	if($semanas == 0){
+            	if($semanas == -1){
             		$this->redireccion("/index.php/paciente/$id/historiaClinica");
             	}
         		$peso[$semanas] = $control['peso'];
@@ -132,7 +132,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPermiso.php');
 			if($semanas <= $semanasAControlar){
 				return $semanas;
 			}
-			return 0;
+			return -1;
 
       	}
 	}
