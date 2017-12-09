@@ -39,7 +39,7 @@ class ControllerConfiguracion extends Controller{
 	public function editar($edicion = false){
 		if($this->hayPermiso('configuracion_update') && $this->tokenValido($_POST['token'])){
 			$configuracion = $this->crearConfiguracion();
-			$validacion = RepositorioConfiguracion::getInstance()->configuracionValida($configuracion);
+			$validacion = $configuracion->esValida();
 			if($validacion['ok']){
 				if($edicion){
 					RepositorioConfiguracion::getInstance()->modificarConfiguracionHospital($configuracion);
@@ -51,7 +51,7 @@ class ControllerConfiguracion extends Controller{
 				}
 			}
 			else{
-				$this->formularioConfiguracion($validacion,$configuracion);
+				$this->formulario($validacion,$configuracion);
 			}
 		}
 		else{

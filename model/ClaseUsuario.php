@@ -88,5 +88,61 @@
         public function setApellido($apellido){
             $this->apellido = $apellido;
         }
+        public function esValido($edicion=false){
+            $retorno['ok'] = true;
+            if( !($this->getNombre() != null && trim($this->getNombre()) !='') ){
+                array_push($retorno, 'El nombre no debe estar vacio');
+                $retorno['ok'] = false;
+            }
+            if(!($this->getApellido() != null && trim($this->getApellido()) !='')){
+                array_push($retorno, 'El apellido no debe estar vacio');
+                 $retorno['ok'] = false;
+            }
+
+           
+            $existeUsuario = RepositorioUsuario::getInstance()->existeNombreUsuario($this->getNombreUsuario());
+            if($edicion && $existeUsuario){
+              $usuarioEnModificacion = RepositorioUsuario::getInstance()->buscarUsuarioPorId($this->getId());
+              $existeUsuario = $usuarioEnModificacion->getNombreUsuario() != $this->getNombreUsuario();
+            }
+            if(!($this->getNombreUsuario() != null && trim($this->getNombreUsuario()) !='') ){
+                array_push($retorno, 'El nombre de usuario no debe estar vacio');
+                $retorno['ok'] = false;
+            }
+            elseif($existeUsuario){
+              array_push($retorno, 'El nombre de usuario ya existe');
+              $retorno['ok'] = false;
+            }
+
+            $email = $this->getEmail() != null && filter_var($this->getEmail(),FILTER_VALIDATE_EMAIL);
+            $existeEmail = $email && RepositorioUsuario::getInstance()->existeEmail($this->getEmail());
+            if($edicion && $existeEmail){
+              $usuarioEnModificacion = RepositorioUsuario::getInstance()->buscarUsuarioPorId($this->getId());
+              $existeEmail = $usuarioEnModificacion->getEmail() != $this->getEmail();
+            }
+            if(!$email){
+              array_push($retorno, 'El email no debe estar vacio y debe cumplir con el formato');
+              $retorno['ok'] = false;
+            }
+            elseif($existeEmail){
+              array_push($retorno, 'El email  ya existe');
+              $retorno['ok'] = false;
+            }
+
+            $password = $this->getPassword() != null && trim($this->getPassword()) !='';
+            $password2 = $this->getPassword2() != null && trim($this->getPassword2()) !='';
+            $coincidenPasswords = $this->getPassword() == $this->getPassword2();
+
+            if( !$coincidenPasswords){
+              array_push($retorno, 'Las contraseñas deben coincidir');
+              $retorno['ok'] = false;
+            }
+            $roles = $this->getRoles()!=null;
+            if(!$roles){
+              array_push($retorno, 'Debe seleccionar al menos un rol');
+              $retorno['ok'] = false;
+            }
+            return $retorno;
+            }
 	}
 ?>

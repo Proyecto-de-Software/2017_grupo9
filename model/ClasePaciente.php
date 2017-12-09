@@ -102,4 +102,43 @@
     	public function setNumeroDoc($numeroDoc){
     		$this->numeroDoc = $numeroDoc;
     	}
+        public function esValido($edicion=false){
+            $retorno['ok'] = false;
+            $nombre = $this->getNombre() != null && trim($this->getNombre()) !='';
+            if(!$nombre){
+              array_push($retorno, 'El nombre no debe estar vacio');
+              $retorno['ok'] = false;
+            }
+            $apellido = $this->getApellido() != null && trim($this->getApellido()) !='';
+            if(!$apellido){
+              array_push($retorno, 'El apellido no debe estar vacio');
+              $retorno['ok'] = false;
+            }
+            $domicilio = $this->getDomicilio() != null && trim($this->getDomicilio()) !='';
+            if(!$domicilio){
+              array_push($retorno, 'El domicilio no debe estar vacio');
+              $retorno['ok'] = false;
+            }
+            $fechaNacimiento = $this->getFechaNacimiento() != null && trim($this->getFechaNacimiento()) !='';
+            if(!$fechaNacimiento){
+              array_push($retorno, 'La fecha de nacimiento no debe estar vacia');
+              $retorno['ok'] = false;
+            }
+            $genero = $this->getGenero() != null && trim($this->getGenero()) !='';
+            if(!$genero){
+              array_push($retorno, 'El genero no debe estar vacio');
+              $retorno['ok'] = false;
+            }
+            $idTipoDocumento = $this->getIdTipoDocumento() != null && trim($this->getIdTipoDocumento()) !='';
+            if(!$idTipoDocumento){
+              array_push($retorno, 'El tipo de documento no debe estar vacio');
+              $retorno['ok'] = false;
+            }
+            $numeroDoc = $this->getNumeroDoc() != null && trim($this->getNumeroDoc()) !='';
+            if(!$numeroDoc){
+              array_push($retorno, 'El numero de documento no debe estar vacio');
+              $retorno['ok'] = false;
+            }
+            return $retorno;
+        }   
 	}

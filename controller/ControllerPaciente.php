@@ -19,7 +19,7 @@ class ControllerPaciente extends Controller{
 
             if($this->hayPermiso('paciente_new') && $this->tokenValido($_POST['token'])){
                   $paciente = $this->crear();
-                  $validacion = RepositorioPaciente::getInstance()->esValido($paciente);
+                  $validacion = $paciente->esValido();
                   if ($validacion['ok']){
                         if(RepositorioPaciente::getInstance()->agregar($paciente)){ 
                               $id = $paciente->getId();
@@ -55,7 +55,7 @@ class ControllerPaciente extends Controller{
             if($this->hayPermiso('paciente_update') && $this->tokenValido($_POST['token'])){
                   $paciente = $this->crear();
                   $paciente->setId($id);
-                  $validacion = RepositorioPaciente::getInstance()->esValido($paciente,true);
+                  $validacion = $paciente->esValido(true);
                   $id = $paciente->getId();
                   if($validacion['ok']){
                         if(RepositorioPaciente::getInstance()->modificar($paciente)){

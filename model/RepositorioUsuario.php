@@ -236,59 +236,6 @@
         return $result[0]['activo'];
 
       }
-      public function usuarioValido($usuario,$edicion=false){
-
-        $retorno['ok'] = false;
-        $nombre = $usuario->getNombre() != null && trim($usuario->getNombre()) !='';
-        if(!$nombre){
-          array_push($retorno, 'El nombre no debe estar vacio');
-        }
-        $apellido = $usuario->getApellido() != null && trim($usuario->getApellido()) !='';
-        if(!$apellido){
-          array_push($retorno, 'El apellido no debe estar vacio');
-        }
-        $nombreUsuario = $usuario->getNombreUsuario() != null && trim($usuario->getNombreUsuario()) !='';
-       
-        $existeUsuario = $this->existeNombreUsuario($usuario->getNombreUsuario());
-        if($edicion && $existeUsuario){
-          $usuarioEnModificacion = $this->buscarUsuarioPorId($usuario->getId());
-          $existeUsuario = $usuarioEnModificacion->getNombreUsuario() != $usuario->getNombreUsuario();
-        }
-
-        if(!$nombreUsuario){
-          array_push($retorno, 'El nombre de usuario no debe estar vacio');
-        }
-        elseif($existeUsuario){
-          array_push($retorno, 'El nombre de usuario ya existe');
-        }
-        $email = $usuario->getEmail() != null && filter_var($usuario->getEmail(),FILTER_VALIDATE_EMAIL);
-        $existeEmail = $email && $this->existeEmail($usuario->getEmail());
-        if($edicion && $existeEmail){
-          $usuarioEnModificacion = $this->buscarUsuarioPorId($usuario->getId());
-          $existeEmail = $usuarioEnModificacion->getEmail() != $usuario->getEmail();
-        }
-        if(!$email){
-          array_push($retorno, 'El email no debe estar vacio y debe cumplir con el formato');
-        }
-        elseif($existeEmail){
-          array_push($retorno, 'El email  ya existe');
-        }
-
-        $password = $usuario->getPassword() != null && trim($usuario->getPassword()) !='';
-        $password2 = $usuario->getPassword2() != null && trim($usuario->getPassword2()) !='';
-        $coincidenPasswords = $usuario->getPassword() == $usuario->getPassword2();
-
-        if( !$coincidenPasswords){
-          array_push($retorno, 'Las contraseñas deben coincidir');
-        }
-        $roles = $usuario->getRoles()!=null;
-        if(!$roles){
-          array_push($retorno, 'Debe seleccionar al menos un rol');
-        }
-        $retorno['ok'] = $nombre && $apellido && $nombreUsuario && $email && $coincidenPasswords && !$existeEmail && !$existeUsuario && $password && $password2 && $roles;
-        return $retorno;
-      }
-
       public function cantidadDeUsuarios(){
         $conexion = $this->getConnection();
         $query = $conexion->prepare("SELECT id FROM usuario"); 

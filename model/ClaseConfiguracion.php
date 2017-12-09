@@ -77,4 +77,38 @@
         public function getId(){
             return $this->id;
         }
+        public function esValida(){
+            $validacion['ok'] = true;
+            $titulo = $this->getTitulo() != null && trim($this->getTitulo()) !='';
+            if(!$titulo){
+                array_push($validacion, 'El titulo no debe estar vacio');
+                $validacion['ok'] = false;
+            }
+            $dHospital = $this->getDescripcionHospital() != null && trim($this->getDescripcionHospital()) !='';
+            if(!$dHospital){
+                array_push($validacion, 'La descripcion del hospital no debe estar vacia');
+                $validacion['ok'] = false;
+            }
+            $dEspecialidades = $this->getDescripcionEspecialidades() != null && trim($this->getDescripcionEspecialidades()) !='';
+            if(!$dEspecialidades){
+                array_push($validacion, 'La descripcion de especialidades no debe estar vacia');
+                $validacion['ok'] = false;
+            }
+            $dGuardia = $this->getDescripcionGuardia() != null && trim($this->getDescripcionGuardia()) !='';
+            if(!$dGuardia){
+                array_push($validacion, 'La descripcion de la guardia no debe estar vacia');
+                $validacion['ok'] = false;
+            }
+            $cantElem = $this->getCantElem() != null  && trim($this->getCantElem()) !='';
+            if(!$cantElem){
+                array_push($validacion, 'Debe indicar una cantidad de elementos por pagina');
+                $validacion['ok'] = false;
+            }
+            $emailContacto = $this->getContacto() != null && filter_var($this->getContacto(),FILTER_VALIDATE_EMAIL);
+            if(!$emailContacto){
+                array_push($validacion, 'El mail no debe ser vacion y debe ser un email con formato valido');
+                $validacion['ok'] = false;
+            }
+            return $validacion;
+        }
     }

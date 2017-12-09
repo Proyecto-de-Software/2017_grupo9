@@ -39,7 +39,7 @@ class ControllerUsuario extends Controller{
     public function agregar(){
     	if($this->hayPermiso('usuario_new') && $this->tokenValido($_POST['token'])){
     		$usuario = $this->crearUsuarioNuevo();
-			$validacion = RepositorioUsuario::getInstance()->usuarioValido($usuario);
+			$validacion = $usuario->esValido();
 			
 			if($validacion['ok']){
 				RepositorioUsuario::getInstance()->agregarUsuario($usuario);
@@ -77,13 +77,13 @@ class ControllerUsuario extends Controller{
      public function editar($idUsuario){
      	if($this->hayPermiso('usuario_update') && $this->tokenValido($_POST['token'])){
     		$usuario = $this->crearUsuarioExistente($idUsuario);
-			$validacion = RepositorioUsuario::getInstance()->usuarioValido($usuario,true);
+			$validacion = $validacion = $usuario->esValido(true);
 			if($validacion['ok']){
 				RepositorioUsuario::getInstance()->modificarUsuario($usuario,$idUsuario); 
 				header("Location: /index.php/usuario/$idUsuario");
 			}
 			else{
-				$this->formularioUsuario($idUsuario,$validacion,$usuario);
+				$this->formulario($idUsuario,$validacion,$usuario);
 			}
 
     	}
