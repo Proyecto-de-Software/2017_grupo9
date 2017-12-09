@@ -109,6 +109,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPermiso.php');
             $controles = RepositorioHistoriaClinica::getInstance()->devolverControles($id);
             $semanas = [];
             $datos = [];
+            $peso = 0; $talla = 0; $ppc = 0;
             foreach ($controles as $control) {
             	$semanas= $this->calcularSemanas(new DateTime($control['fecha']), new DateTime ($paciente->getFechaNacimiento()), 13);
             	if($semanas == 0){
@@ -122,6 +123,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPermiso.php');
             $parametrosTemplate['tallas'] = $talla;
             $parametrosTemplate['ppc'] = $ppc;
             $parametrosTemplate['genero'] = $paciente->getGenero();
+            $this->render($template,$parametrosTemplate);
       	}
 
       	public function calcularSemanas($fechaControl, $fechaNacimiento, $semanasAControlar){
