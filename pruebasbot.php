@@ -28,6 +28,7 @@ $msg['reply_to_message_id'] = $response['message']['message_id'];
 $msg['reply_markup'] = null;
 
 
+//Necesario para mostrar el cuerpo de la respuesta al hacer file_get_content() cuando el status es distinto de 200
 $context0 = stream_context_create(array('http' => array('ignore_errors' => true),));
 
 
@@ -66,7 +67,7 @@ case '/turnos':
 			$msg['text'] .= $turno.' ';
 		}
 	} else {
-		$msg['text'] = $res['code'];
+		$msg['text'] = $res['mensaje'];
 	}
 	break;
 case '/gabbesputo':
