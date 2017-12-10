@@ -66,7 +66,7 @@ case '/reservar':
 
 		$context0  = stream_context_create($opts);
 
-		$raw = file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php', false, $context0);
+		$raw = file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php/turnos', false, $context0);
 		$res = json_decode($raw, true);
 
 		$msg['text'] = $res['mensaje'];
