@@ -53,14 +53,18 @@ case '/reservar':
 	//$msg['text'] .= 'Parametros: '.$cmd_params;
 	$params = explode(' ', $cmd_params);
 
-	$msg['text'] .= file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php/turnos/'.$params[0].'/fecha/'.$params[1].'/hora/'.$params[2], false, $context0);
+	//$msg['text'] .= file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php/turnos/'.$params[0].'/fecha/'.$params[1].'/hora/'.$params[2], false, $context0);
+	$raw = file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php/turnos/'.$params[0].'/fecha/'.$params[1].'/hora/'.$params[2], false, $context0);
+	$res = json_decode($raw, true);
+
+	$msg['text'] = $msg['mensaje'];
+
 	$msg['reply_to_message_id'] = null;
 	break;
 case '/turnos':
 	$raw = file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php/turnos/'.$cmd_params, false, $context0);
 	$res = json_decode($raw, true);
 
-	$msg['text'] = var_dump($res);
 	if($res['code'] == 200) {
 		$msg['text'] = 'Los turnos disponibles son: ';
 		foreach($res['turnos'] as $turno) {

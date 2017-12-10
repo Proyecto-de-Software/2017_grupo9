@@ -41,21 +41,23 @@ $app->get('/turnos/{dni}/fecha/{fecha}/hora/{hora}', function ($request, $respon
 	$fecha = $args['fecha'];
 	$fecha = explode('-',$fecha);
 	if(!preg_match('/^([0-2][0-9]|3[0-1])-(0[1-9]|1[012])-[0-9]{4}$/', $args['fecha']) && checkdate($fecha[1], $fecha[0], $fecha[2])) {
-		echo "La fecha ingresada no es válida";
-		exit;
+		$res = json_encode(array("code" => 400, "mensaje" => "La fecha ingresada no es válida"), JSON_UNESCAPED_UNICODE);
+		return $response->withStatus(400)->write($res);
 	}
 
 	if (!preg_match('/^([01]?[0-9]|2[0-3]):(00|30)$/', $args['hora'])) {
-		echo "La hora del turno a reservar debe ser: xx:00 o xx:30";
-		exit;
+		$res = json_encode(array("code" => 400, "mensaje" => "La hora del turno a reservar debe ser: xx:00 o xx:30"), JSON_UNESCAPED_UNICODE);
+		return $response->withStatus(400)->write($res);
 	}
 
 	$estaDisponible = RepositorioTurno::getInstance()->turnoDisponibleParaFechaYHora($args['fecha'], $args['hora']);
 	if ($estaDisponible) {
-		echo "El turno está disponible. Reservación exitosa.";
+		$res = json_encode(array("code" => 200, "mensaje" => "El turno está disponible. Reservación exitosa."), JSON_UNESCAPED_UNICODE);
+		return $response->withStatus(200)->write($res);
 		RepositorioTurno::getInstance()->reservarTurno($args['dni'], $args['fecha'], $args['hora']);
 	} else {
-		echo "Lo sentimos, el turno ya está reservado";
+		$res = json_encode(array("code" => 200, "mensaje" => "Lo sentimos, el turno ya está reservado"), JSON_UNESCAPED_UNICODE);
+		return $response->withStatus(200)->write($res);
 	}
 
 });
