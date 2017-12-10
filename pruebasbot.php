@@ -58,7 +58,6 @@ case '/turnos':
 	$res = json_decode($raw, true);
 
 	$msg['text'] = var_dump($res);
-	/*
 	if($res['code'] == 200) {
 		$msg['text'] = 'Los turnos disponibles son: ';
 		foreach($res['turnos'] as $turno) {
@@ -67,7 +66,6 @@ case '/turnos':
 	} else {
 		$msg['text'] = $res['code'];
 	}
-	*/
 	break;
 case '/gabbesputo':
 	$msg['text'] = 'Me imaginaba...';

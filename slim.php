@@ -27,7 +27,7 @@ $app->get('/turnos/{fecha}', function ($request, $response, $args) {
 	    return $response->withStatus(200)->write($res);
 	} else {
 		$res = json_encode(array("code" => 400, "mensaje" => "La fecha ingresada no es válida"), JSON_UNESCAPED_UNICODE);
-		return $response->withStatus(400)->write($res);
+		return $response->withStatus(200)->write($res);
 	}
 });
 
