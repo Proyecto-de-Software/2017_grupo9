@@ -53,25 +53,38 @@ case '/reservar':
 	//$msg['text'] .= 'Parametros: '.$cmd_params;
 	$params = explode(' ', $cmd_params);
 
-	//$msg['text'] .= file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php/turnos/'.$params[0].'/fecha/'.$params[1].'/hora/'.$params[2], false, $context0);
-	$raw = file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php/turnos/'.$params[0].'/fecha/'.$params[1].'/hora/'.$params[2], false, $context0);
-	$res = json_decode($raw, true);
+	if(strlen($params) == 3) {
+		//$msg['text'] .= file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php/turnos/'.$params[0].'/fecha/'.$params[1].'/hora/'.$params[2], false, $context0);
+		$raw = file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php/turnos/'.$params[0].'/fecha/'.$params[1].'/hora/'.$params[2], false, $context0);
+		$res = json_decode($raw, true);
 
-	$msg['text'] = $res['mensaje'];
+		$msg['text'] = $res['mensaje'];
 
-	$msg['reply_to_message_id'] = null;
+		$msg['reply_to_message_id'] = null;
+	} else {
+		$msg['text'] = 'Cantidad incorrecta de parámetros.'. PHP_EOL;
+		$msg['text'] .= '/reservar dni dd-mm-aaaa hh:mm Realiza la reserva del turno';
+	}
 	break;
 case '/turnos':
-	$raw = file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php/turnos/'.$cmd_params, false, $context0);
-	$res = json_decode($raw, true);
+	$params = explode(' ', $cmd_params);
 
-	if($res['code'] == 200) {
-		$msg['text'] = 'Los turnos disponibles son: ';
-		foreach($res['turnos'] as $turno) {
-			$msg['text'] .= $turno.' ';
+	if(strlen($params) == 1) {
+
+		$raw = file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php/turnos/'.$cmd_params, false, $context0);
+		$res = json_decode($raw, true);
+
+		if($res['code'] == 200) {
+			$msg['text'] = 'Los turnos disponibles son: ';
+			foreach($res['turnos'] as $turno) {
+				$msg['text'] .= $turno.' ';
+			}
+		} else {
+			$msg['text'] = $res['mensaje'];
 		}
 	} else {
-		$msg['text'] = $res['mensaje'];
+		$msg['text'] = 'Cantidad incorrecta de parámetros.'. PHP_EOL;
+		$msg['text'] .= '/turnos dd-mm-aaaa Muestra los turnos disponibles del día';		
 	}
 	break;
 default:
