@@ -50,7 +50,7 @@ $app->get('/turnos/{dni}/fecha/{fecha}/hora/{hora}', function ($request, $respon
 		return $response->withStatus(400)->write($res);
 	}
 
-	$today = new DateTime(date("d-m-Y H:i");
+	$today = new DateTime(date("d-m-Y H:i"));
 	$date = $args['fecha'].' '.$args['hora'];
 	$date = new DateTime($date);
 	if ($date < $today) {
