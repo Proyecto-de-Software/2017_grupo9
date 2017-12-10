@@ -49,7 +49,7 @@ $app->get('/turnos/{dni}/fecha/{fecha}/hora/{hora}', function ($request, $respon
 	$hora = $args['hora'];
 	$hora = explode(':',$hora);
 
-	if ($hora[1] != '00' && $hora[1] != '30') {
+	if (!preg_match('/^([01]?[0-9]|2[0-3])$/', $hora[0], $hora[1] != '00' && $hora[1] != '30') {
 		echo "La hora del turno a reservar debe ser: xx:00 o xx:30";
 		exit;
 	}
