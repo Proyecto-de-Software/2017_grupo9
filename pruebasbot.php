@@ -44,7 +44,7 @@ case '/help':
 	$msg['text'] .= '/start Inicializa el bot' . PHP_EOL;
 	$msg['text'] .= '/turnos dd-mm-aaaa Muestra los turnos disponibles del día' . PHP_EOL;
 	$msg['text'] .= '/reservar dd-mm-aaaa hh:mm Realiza la reserva del turno' . PHP_EOL;
-	$msg['text'] .= '/help Muestra esta ayuda flaca';
+	$msg['text'] .= '/help Muestra los comandos disponibles';
 	$msg['reply_to_message_id'] = null;
 	break;
 case '/reservar':
@@ -69,9 +69,6 @@ case '/turnos':
 	} else {
 		$msg['text'] = $res['mensaje'];
 	}
-	break;
-case '/gabbesputo':
-	$msg['text'] = 'Me imaginaba...';
 	break;
 default:
 	$msg['text'] = 'Lo siento, no es un comando válido.' . PHP_EOL;
