@@ -28,10 +28,6 @@ $msg['reply_to_message_id'] = $response['message']['message_id'];
 $msg['reply_markup'] = null;
 
 
-//Necesario para mostrar el cuerpo de la respuesta al hacer file_get_content() cuando el status es distinto de 200
-$context0 = stream_context_create(array('http' => array('ignore_errors' => true),));
-
-
 switch ($cmd) {
 case '/start':
 	$msg['text'] = 'Hola ' . $response['message']['from']['first_name'] .
@@ -48,14 +44,29 @@ case '/help':
 	$msg['reply_to_message_id'] = null;
 	break;
 case '/reservar':
-	//$msg['text'] = 'Te confirmamos el turno para:' . PHP_EOL;
-	//$msg['text'] .= '10:30'; #. PHP_EOL;
-	//$msg['text'] .= 'Parametros: '.$cmd_params;
 	$params = explode(' ', $cmd_params);
 
 	if(sizeof($params) == 3) {
-		//$msg['text'] .= file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php/turnos/'.$params[0].'/fecha/'.$params[1].'/hora/'.$params[2], false, $context0);
-		$raw = file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php/turnos/'.$params[0].'/fecha/'.$params[1].'/hora/'.$params[2], false, $context0);
+
+		$postdata = http_build_query(
+		    array(
+		        'turnos' => $params[0],
+		        'fecha' => $params[1],
+		        'hora' => $params[2]
+		    )
+		);
+
+		$opts = array('http' =>
+		    array(
+		        'method'  => 'POST',
+		        'header'  => 'Content-type: application/x-www-form-urlencoded',
+		        'content' => $postdata
+		    )
+		);
+
+		$context0  = stream_context_create($opts);
+
+		$raw = file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php', false, $context0);
 		$res = json_decode($raw, true);
 
 		$msg['text'] = $res['mensaje'];
@@ -69,6 +80,9 @@ case '/reservar':
 	break;
 case '/turnos':
 	if (!preg_match("/\\s/", $cmd_params)) {
+
+		//Necesario para mostrar el cuerpo de la respuesta al hacer file_get_content() cuando el status es distinto de 200
+		$context0 = stream_context_create(array('http' => array('ignore_errors' => true),));
 
 		$raw = file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php/turnos/'.$cmd_params, false, $context0);
 		$res = json_decode($raw, true);
