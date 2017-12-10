@@ -58,9 +58,11 @@ case '/turnos':
 	$res = json_decode($raw, true);
 	if($res->code == 200) {
 		$msg['text'] = 'Los turnos disponibles son: ';
-		foreach($res->turnos as $turno){
+		foreach($res->turnos as $turno) {
 			$msg['text'] .= $turno.' ';
 		}
+	} else {
+		$msg['text'] = 'No entra al if';
 	}
 	break;
 case '/gabbesputo':
