@@ -26,7 +26,7 @@ $app->get('/turnos/{fecha}', function ($request, $response, $args) {
 	    $res = json_encode(array("code" => 200, "turnos" => $turnosDisponibles), JSON_UNESCAPED_UNICODE);
 	    return $response->withStatus(200)->write($res);
 	} else {
-		$res = json_encode(array("code" => 400, "mensaje" => "La fecha ingresada no es válida"), JSON_UNESCAPED_UNICODE);
+		$res = json_encode(array("code" => 400, "mensaje" => "Bad request: La fecha ingresada no es válida"), JSON_UNESCAPED_UNICODE);
 		return $response->withStatus(400)->write($res);
 	}
 });
@@ -34,19 +34,26 @@ $app->get('/turnos/{fecha}', function ($request, $response, $args) {
 #http://localhost/slim.php/turnos/39234234/fecha/15-11-2017/hora/10:00
 $app->get('/turnos/{dni}/fecha/{fecha}/hora/{hora}', function ($request, $response, $args) {
 	if (!preg_match('/^\d{1,8}$/', $args['dni'])) {
-		$res = json_encode(array("code" => 400, "mensaje" => "El dni ingresado no es válido"), JSON_UNESCAPED_UNICODE);
+		$res = json_encode(array("code" => 400, "mensaje" => "Bad request: El dni ingresado no es válido"), JSON_UNESCAPED_UNICODE);
 		return $response->withStatus(400)->write($res);
 	}
 
 	$fecha = $args['fecha'];
 	$fecha = explode('-',$fecha);
 	if(!preg_match('/^([0-2][0-9]|3[0-1])-(0[1-9]|1[012])-[0-9]{4}$/', $args['fecha']) && checkdate($fecha[1], $fecha[0], $fecha[2])) {
-		$res = json_encode(array("code" => 400, "mensaje" => "La fecha ingresada no es válida"), JSON_UNESCAPED_UNICODE);
+		$res = json_encode(array("code" => 400, "mensaje" => "Bad request: La fecha ingresada no es válida"), JSON_UNESCAPED_UNICODE);
 		return $response->withStatus(400)->write($res);
 	}
 
 	if (!preg_match('/^([01]?[0-9]|2[0-3]):(00|30)$/', $args['hora'])) {
-		$res = json_encode(array("code" => 400, "mensaje" => "La hora del turno a reservar debe ser: xx:00 o xx:30"), JSON_UNESCAPED_UNICODE);
+		$res = json_encode(array("code" => 400, "mensaje" => "Bad request: La hora del turno a reservar debe ser: xx:00 o xx:30"), JSON_UNESCAPED_UNICODE);
+		return $response->withStatus(400)->write($res);
+	}
+
+	$today = date("d-m-Y H:i");
+	$date = $args['fecha'].' '.$args['hora'];
+	if ($date < $today) {
+		$res = json_encode(array("code" => 400, "mensaje" => "Bad request: La fecha del turno solicitado ya pasó"), JSON_UNESCAPED_UNICODE);
 		return $response->withStatus(400)->write($res);
 	}
 
