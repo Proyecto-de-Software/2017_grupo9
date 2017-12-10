@@ -56,6 +56,10 @@ case '/reservar':
 case '/turnos':
 	$raw = file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php/turnos/'.$cmd_params);
 	$res = json_decode($raw, true);
+	if($res['code'] == 400) {
+		$msg['text'] = 400;
+	}
+	/*
 	if($res['code'] == 200) {
 		$msg['text'] = 'Los turnos disponibles son: ';
 		foreach($res['turnos'] as $turno) {
@@ -64,6 +68,7 @@ case '/turnos':
 	} else {
 		$msg['text'] = $res['code'];
 	}
+	*/
 	break;
 case '/gabbesputo':
 	$msg['text'] = 'Me imaginaba...';
