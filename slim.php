@@ -34,8 +34,17 @@ $app->get('/turnos/{fecha}', function ($request, $response, $args) {
 #http://localhost/slim.php/turnos/39234234/fecha/15-11-2017/hora/10:00
 $app->get('/turnos/{dni}/fecha/{fecha}/hora/{hora}', function ($request, $response, $args) {
 	if (!preg_match('/^\d{1,8}$/', $args['dni'])) {
-		echo "El dni ingresado es inválido";
+		echo "El dni ingresado no es válido";
+		exit;
 	}
+
+	$fecha = $args['fecha'];
+	$fecha = explode('-',$fecha);
+	if(!preg_match('/^([0-2][0-9]|3[0-1])-(0[1-9]|1[012])-[0-9]{4}$/', $args['fecha']) && checkdate($fecha[1], $fecha[0], $fecha[2])) {
+		echo "La fecha ingresada no es válida";
+		exit;
+	}
+
 
 	$hora = $args['hora'];
 	$hora = explode(':',$hora);
