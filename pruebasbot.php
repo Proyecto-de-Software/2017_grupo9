@@ -60,6 +60,7 @@ case '/reservar':
 		    array(
 		        'method'  => 'POST',
 		        'header'  => 'Content-type: application/x-www-form-urlencoded',
+		        'ignore_errors' => true,
 		        'content' => $postdata
 		    )
 		);
