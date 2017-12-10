@@ -61,9 +61,8 @@ case '/turnos':
 		foreach($res['turnos'] as $turno) {
 			$msg['text'] .= $turno.' ';
 		}
-		$msg['text'] = $res['code'];
 	} else {
-		$msg['text'] = $res['code'];
+		$msg['text'] = $res->code;
 	}
 	break;
 case '/gabbesputo':
