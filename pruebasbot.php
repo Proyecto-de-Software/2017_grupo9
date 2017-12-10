@@ -55,7 +55,7 @@ case '/reservar':
 	break;
 case '/turnos':
 	$raw = file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php/turnos/'.$cmd_params);
-	$res = json_decode($raw/*, true*/);
+	$res = json_decode($raw, true);
 
 	$msg['text'] = var_dump($res);
 	/*
