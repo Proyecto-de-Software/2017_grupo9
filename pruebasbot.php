@@ -62,7 +62,7 @@ case '/turnos':
 			$msg['text'] .= $turno.' ';
 		}
 	} else {
-		$msg['text'] = $res;
+		$msg['text'] = ''.$res['code'];
 	}
 	break;
 case '/gabbesputo':
