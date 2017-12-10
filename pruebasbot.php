@@ -50,7 +50,7 @@ case '/reservar':
 
 		$postdata = http_build_query(
 		    array(
-		        'turnos' => $params[0],
+		        'dni' => $params[0],
 		        'fecha' => $params[1],
 		        'hora' => $params[2]
 		    )
