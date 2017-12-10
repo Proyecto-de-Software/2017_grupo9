@@ -69,7 +69,7 @@ case '/reservar':
 case '/turnos':
 	$params = explode(' ', $cmd_params);
 
-	if(strlen($params) == 1) {
+	if(strlen($params) == 2) {
 
 		$raw = file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php/turnos/'.$cmd_params, false, $context0);
 		$res = json_decode($raw, true);
