@@ -52,8 +52,6 @@ $app->get('/turnos/{dni}/fecha/{fecha}/hora/{hora}', function ($request, $respon
 
 	$today = date("d-m-Y H:i");
 	$date = $args['fecha'].' '.$args['hora'];
-	echo "Hora actual: ".$today;
-	echo "Hora solici: ".$date;
 	if ($date < $today) {
 		$res = json_encode(array("code" => 400, "mensaje" => "Bad request: La fecha del turno solicitado ya pasó"), JSON_UNESCAPED_UNICODE);
 		return $response->withStatus(400)->write($res);
