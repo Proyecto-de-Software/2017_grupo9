@@ -52,7 +52,8 @@ case '/reservar':
 	//$msg['text'] .= '10:30'; #. PHP_EOL;
 	//$msg['text'] .= 'Parametros: '.$cmd_params;
 	$params = explode(' ', $cmd_params);
-
+	$msg['text'] = strlen($params);
+	/*
 	if(strlen($params) == 3) {
 		//$msg['text'] .= file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php/turnos/'.$params[0].'/fecha/'.$params[1].'/hora/'.$params[2], false, $context0);
 		$raw = file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php/turnos/'.$params[0].'/fecha/'.$params[1].'/hora/'.$params[2], false, $context0);
@@ -65,6 +66,7 @@ case '/reservar':
 		$msg['text'] = 'Cantidad incorrecta de parámetros.'. PHP_EOL;
 		$msg['text'] .= '/reservar dni dd-mm-aaaa hh:mm Realiza la reserva del turno';
 	}
+	*/
 	break;
 case '/turnos':
 	if (!preg_match("/\\s/", $cmd_params)) {
