@@ -50,8 +50,9 @@ $app->get('/turnos/{dni}/fecha/{fecha}/hora/{hora}', function ($request, $respon
 		return $response->withStatus(400)->write($res);
 	}
 
-	$today = date("d-m-Y H:i");
+	$today = new DateTime(date("d-m-Y H:i");
 	$date = $args['fecha'].' '.$args['hora'];
+	$date = new DateTime($date);
 	if ($date < $today) {
 		$res = json_encode(array("code" => 400, "mensaje" => "Bad request: La fecha del turno solicitado ya pasó"), JSON_UNESCAPED_UNICODE);
 		return $response->withStatus(400)->write($res);
@@ -60,8 +61,8 @@ $app->get('/turnos/{dni}/fecha/{fecha}/hora/{hora}', function ($request, $respon
 	$estaDisponible = RepositorioTurno::getInstance()->turnoDisponibleParaFechaYHora($args['fecha'], $args['hora']);
 	if ($estaDisponible) {
 		$res = json_encode(array("code" => 200, "mensaje" => "El turno está disponible. Reservación exitosa."), JSON_UNESCAPED_UNICODE);
-		return $response->withStatus(200)->write($res);
 		RepositorioTurno::getInstance()->reservarTurno($args['dni'], $args['fecha'], $args['hora']);
+		return $response->withStatus(200)->write($res);
 	} else {
 		$res = json_encode(array("code" => 200, "mensaje" => "Lo sentimos, el turno ya está reservado"), JSON_UNESCAPED_UNICODE);
 		return $response->withStatus(200)->write($res);
