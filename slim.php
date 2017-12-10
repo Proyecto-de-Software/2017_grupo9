@@ -50,7 +50,7 @@ $app->post('/turnos', function ($request, $response, $args) {
 
 	$fecha = $_POST['fecha'];
 	$fecha = explode('-',$fecha);
-	if(!preg_match('/^([0-2][0-9]|3[0-1])-(0[1-9]|1[012])-[0-9]{4}$/', $_POST['fecha']) && checkdate($fecha[1], $fecha[0], $fecha[2])) {
+	if(!(preg_match('/^([0-2][0-9]|3[0-1])-(0[1-9]|1[012])-[0-9]{4}$/', $_POST['fecha']) && checkdate($fecha[1], $fecha[0], $fecha[2]))) {
 		$res = json_encode(array("code" => 400, "mensaje" => "Bad request: La fecha ingresada no es válida"), JSON_UNESCAPED_UNICODE);
 		return $response->withStatus(400)->write($res);
 	}
