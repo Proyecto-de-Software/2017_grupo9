@@ -28,6 +28,7 @@ $msg['reply_to_message_id'] = $response['message']['message_id'];
 $msg['reply_markup'] = null;
 
 
+$context0 = stream_context_create(array('http' => array('ignore_errors' => true),));
 
 
 switch ($cmd) {
@@ -50,11 +51,12 @@ case '/reservar':
 	//$msg['text'] .= '10:30'; #. PHP_EOL;
 	//$msg['text'] .= 'Parametros: '.$cmd_params;
 	$params = explode(' ', $cmd_params);
-	$msg['text'] .= file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php/turnos/'.$params[0].'/fecha/'.$params[1].'/hora/'.$params[2]);
+
+	$msg['text'] .= file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php/turnos/'.$params[0].'/fecha/'.$params[1].'/hora/'.$params[2], false, $context0);
 	$msg['reply_to_message_id'] = null;
 	break;
 case '/turnos':
-	$raw = file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php/turnos/'.$cmd_params);
+	$raw = file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php/turnos/'.$cmd_params, false, $context0);
 	$res = json_decode($raw, true);
 
 	$msg['text'] = var_dump($res);
