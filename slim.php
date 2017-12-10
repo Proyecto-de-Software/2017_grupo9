@@ -34,8 +34,8 @@ $app->get('/turnos/{fecha}', function ($request, $response, $args) {
 #http://localhost/slim.php/turnos/39234234/fecha/15-11-2017/hora/10:00
 $app->get('/turnos/{dni}/fecha/{fecha}/hora/{hora}', function ($request, $response, $args) {
 	if (!preg_match('/^\d{1,8}$/', $args['dni'])) {
-		echo "El dni ingresado no es válido";
-		exit;
+		$res = json_encode(array("code" => 400, "mensaje" => "El dni ingresado no es válido"), JSON_UNESCAPED_UNICODE);
+		return $response->withStatus(400)->write($res);
 	}
 
 	$fecha = $args['fecha'];
