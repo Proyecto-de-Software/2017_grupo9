@@ -68,7 +68,8 @@ case '/reservar':
 	break;
 case '/turnos':
 	$params = explode(' ', $cmd_params);
-
+	$msg['text'] = strlen($params);
+	/*
 	if(strlen($params) == 2) {
 
 		$raw = file_get_contents('https://grupo9.proyecto2017.linti.unlp.edu.ar/slim.php/turnos/'.$cmd_params, false, $context0);
@@ -86,6 +87,7 @@ case '/turnos':
 		$msg['text'] = 'Cantidad incorrecta de parámetros.'. PHP_EOL;
 		$msg['text'] .= '/turnos dd-mm-aaaa Muestra los turnos disponibles del día';		
 	}
+	*/
 	break;
 default:
 	$msg['text'] = 'Lo siento, no es un comando válido.' . PHP_EOL;
