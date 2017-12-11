@@ -31,14 +31,13 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPermiso.php');
 
 		public function formulario($idPaciente,$argsTmp = [], $idControl = null){ //new
 			if($this->hayPermiso('control_new') || $this->hayPermiso('control_update')){
-				$_SESSION['controlAModificar'] = $idControl;
-				$_SESSION['pacienteControlAModificar'] = $idPaciente;
-				var_dump($idPaciente);die();
 				$edad = $this->calcularEdad(RepositorioPaciente::getInstance()->buscarPorId($idPaciente)->getFechaNacimiento());
 				$parametrosTemplate = $argsTmp;
 				$parametrosTemplate['edad'] = $edad;
 				$parametrosTemplate['idPaciente'] = $idPaciente;
 				if(isset($idControl)){
+					$_SESSION['controlAModificar'] = $idControl;
+					$_SESSION['pacienteControlAModificar'] = $idPaciente;
 					$control = RepositorioHistoriaClinica::getInstance()->buscarControlPorId($idControl);
 					$parametrosTemplate['control'] = $control;
 					$parametrosTemplate['edicion'] = true;
