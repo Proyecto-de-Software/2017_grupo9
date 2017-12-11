@@ -61,6 +61,7 @@ class ControllerUsuario extends Controller{
 			$parametrosTemplate['validacion'] = $validacion;
 			$parametrosTemplate['idUsuario'] = $idUsuario;
 			if($idUsuario != null){
+				$_SESSION['usuarioAModificar'] = $idUsuario;
 				$parametrosTemplate['usuario'] = RepositorioUsuario::getInstance()->buscarUsuarioPorId($idUsuario);
 			}
 			if($usuarioInvalido != null){
@@ -76,16 +77,21 @@ class ControllerUsuario extends Controller{
 
      public function editar($idUsuario){
      	if($this->hayPermiso('usuario_update') && $this->tokenValido($_POST['token'])){
-    		$usuario = $this->crearUsuarioExistente($idUsuario);
-			$validacion = $validacion = $usuario->esValido(true);
-			if($validacion['ok']){
-				RepositorioUsuario::getInstance()->modificarUsuario($usuario,$idUsuario); 
-				header("Location: /index.php/usuario/$idUsuario");
+			if($_SESSION['usuarioAModificar'] == $idUsuario){
+	    		$usuario = $this->crearUsuarioExistente($idUsuario);
+				$validacion = $validacion = $usuario->esValido(true);
+				if($validacion['ok']){
+					RepositorioUsuario::getInstance()->modificarUsuario($usuario,$idUsuario); 
+					$this->redireccion("/index.php/usuario/$idUsuario");
+				}
+				else{
+					$this->formulario($idUsuario,$validacion,$usuario);
+				}
 			}
 			else{
-				$this->formulario($idUsuario,$validacion,$usuario);
+				$idUsuario = $_SESSION['usuarioAModificar'];
+				$this-redireccion("/index.php/usuario/$idUsuario/edicion");
 			}
-
     	}
     	else{
     		$this->redireccion("/index.php");

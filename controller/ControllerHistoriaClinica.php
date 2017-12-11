@@ -80,17 +80,23 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPermiso.php');
 		public function editar($idControl){ //edit
 
 			if($this->hayPermiso('control_update') && $this->tokenValido($_POST['token'])){
-				$control = new Control($_POST);
-				$validacion = $control->esValido();
-				if($validacion['ok']){					
-					RepositorioHistoriaClinica::getInstance()->editarControl($control);
-					$idPaciente = $control->getIdPaciente();
-					$this->redireccion("/index.php/paciente/$idPaciente/control/$idControl");
+				if($_SESSION['controlAModificar'] == $idControl){
+					$control = new Control($_POST);
+					$validacion = $control->esValido();
+					if($validacion['ok']){					
+						RepositorioHistoriaClinica::getInstance()->editarControl($control);
+						$idPaciente = $control->getIdPaciente();
+						$this->redireccion("/index.php/paciente/$idPaciente/control/$idControl");
+					}
+					else{
+						$parametrosTemplate['validacion'] = $validacion;
+						$parametrosTemplate['control'] = $control;
+						$this->formulario($control->getIdPaciente(),$parametrosTemplate,$control->getId());
+					}
 				}
-				else{
-					$parametrosTemplate['validacion'] = $validacion;
-					$parametrosTemplate['control'] = $control;
-					$this->formulario($control->getIdPaciente(),$parametrosTemplate,$control->getId());
+				else {
+					$idControl = $_SESSION['controlAModificar'];
+					$this->redireccion("/index.php/paciente/$idPaciente/control/edicion/$idControl");
 				}
 			}
 			else{

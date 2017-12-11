@@ -35,16 +35,9 @@
 				if(isset($url[3])){
 					switch ($url[3]) {
 						case 'editar':
-							if($_SESSION['usuarioAModificar'] == $idUsuario){
-								ControllerUsuario::getInstance()->editar($idUsuario);
-							}
-							else{
-								$idUsuario = $_SESSION['usuarioAModificar'];
-								header("Location: /index.php/usuario/$idUsuario/edicion");
-							}
+							ControllerUsuario::getInstance()->editar($idUsuario);
 							break;
 						case 'edicion':
-							$_SESSION['usuarioAModificar'] = $idUsuario;
 							ControllerUsuario::getInstance()->formulario($idUsuario);
 							break;
 						case 'eliminar':
@@ -122,16 +115,9 @@
 					if(isset($url[3])){
 						switch ($url[3]) {
 							case 'editar': //Editar paciente
-								if($_SESSION['pacienteAModificar'] == $idPaciente){
-									ControllerPaciente::getInstance()->modificar($idPaciente);
-								}
-								else{
-									$idPaciente = $_SESSION['pacienteAModificar'];
-									header("Location: /index.php/paciente/$idPaciente/edicion");
-								}
+								ControllerPaciente::getInstance()->modificar($idPaciente);
 								break;
 							case 'edicion':
-								$_SESSION['pacienteAModificar'] = $idPaciente;
 								ControllerPaciente::getInstance()->formulario($idPaciente);
 								break;
 							case 'eliminar':
@@ -199,6 +185,7 @@
 										case 'edicion':
 											if( is_numeric($url[5]) ){
 												$idControl = $url[5];
+												$_SESSION['controlAModificar'] = $idControl;
 												ControllerHistoriaClinica::getInstance()->formulario($idPaciente,[],$idControl);
 											}
 											else{

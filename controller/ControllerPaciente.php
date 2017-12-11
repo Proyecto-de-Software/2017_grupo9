@@ -43,6 +43,7 @@ class ControllerPaciente extends Controller{
                   $parametrosTemplate = $this->tiposDeDatos();
                   $parametrosTemplate['validacion'] = $validacion;
                   if($idPaciente != null){
+                        $_SESSION['pacienteAModificar'] = $idPaciente;
                         $parametrosTemplate['paciente'] = RepositorioPaciente::getInstance()->buscarPorId($idPaciente);
                   }
                   $this->render($template,$parametrosTemplate);
@@ -53,18 +54,24 @@ class ControllerPaciente extends Controller{
 
       public function modificar($id){
             if($this->hayPermiso('paciente_update') && $this->tokenValido($_POST['token'])){
-                  $paciente = $this->crear();
-                  $paciente->setId($id);
-                  $validacion = $paciente->esValido(true);
-                  
-                  $id = $paciente->getId();
-                  if($validacion['ok']){
-                        if(RepositorioPaciente::getInstance()->modificar($paciente)){
-                              $this->redireccion("/index.php/paciente/$id");
+                  if($_SESSION['pacienteAModificar'] == $id){
+                        $paciente = $this->crear();
+                        $paciente->setId($id);
+                        $validacion = $paciente->esValido(true);
+                        
+                        $id = $paciente->getId();
+                        if($validacion['ok']){
+                              if(RepositorioPaciente::getInstance()->modificar($paciente)){
+                                    $this->redireccion("/index.php/paciente/$id");
+                              }
+                        }
+                        else {
+                              $this->formulario($id,$validacion,$paciente);
                         }
                   }
-                  else {
-                        $this->formulario($id,$validacion,$paciente);
+                  else{
+                        $idPaciente = $_SESSION['pacienteAModificar'];
+                        $this->redireccion("/index.php/paciente/$idPaciente/edicion");
                   }
             } else {
                   $this->redireccion('/index.php');
