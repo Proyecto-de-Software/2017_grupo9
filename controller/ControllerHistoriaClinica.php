@@ -33,6 +33,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPermiso.php');
 			if($this->hayPermiso('control_new') || $this->hayPermiso('control_update')){
 				$_SESSION['controlAModificar'] = $idControl;
 				$_SESSION['pacienteControlAModificar'] = $idPaciente;
+				var_dump($paciente);die();
 				$edad = $this->calcularEdad(RepositorioPaciente::getInstance()->buscarPorId($idPaciente)->getFechaNacimiento());
 				$parametrosTemplate = $argsTmp;
 				$parametrosTemplate['edad'] = $edad;
