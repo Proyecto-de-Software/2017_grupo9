@@ -98,7 +98,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPermiso.php');
 					}
 				}
 				else {
-					$idCPaciente = $_SESSION['pacienteControlAModificar'];
+					$idPaciente = $_SESSION['pacienteControlAModificar'];
 					$idControl = $_SESSION['controlAModificar'];
 					$this->redireccion("/index.php/paciente/$idPaciente/control/edicion/$idControl");
 				}
