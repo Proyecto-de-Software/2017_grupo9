@@ -102,6 +102,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPermiso.php');
 				}
 			}
 			else{
+				var_dump("permiso");die();
 				$this->redireccion("/index.php/pacientes");
 			}
 		}
