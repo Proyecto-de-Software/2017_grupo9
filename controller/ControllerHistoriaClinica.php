@@ -110,12 +110,10 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPermiso.php');
             $pesos = []; $tallas = []; $ppc = [];
             foreach ($controles as $control) {
             	$semanas = (int)$this->calcularPeriodo(new DateTime($control['fecha']), new DateTime ($paciente->getFechaNacimiento()), 13, '%a', 7);
-            	$meses = (int)$this->calcularPeriodo(new DateTime($control['fecha']), new DateTime ($paciente->getFechaNacimiento()), 2, '%m', 1);
-            	if($semanas == -1){
-            		$this->redireccion("/index.php/paciente/$id/historiaClinica");
-            	}
+            	$meses = (int)$this->calcularPeriodo(new DateTime($control['fecha']), new DateTime ($paciente->getFechaNacimiento()), 2, '%m', 30);
+            	
         		array_push($pesos, [$semanas, (float)$control['peso']* 1000]);
-        		array_push($tallas, [$semanas, (float)$control['talla']]);
+        		array_push($tallas, [$meses, (float)$control['talla']]);
         		array_push($ppc, [$semanas, (float)$control['ppc']]);
             }
             $parametrosTemplate['pesos'] = $pesos;
@@ -128,11 +126,8 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPermiso.php');
 
       	public function calcularPeriodo($fechaControl, $fechaNacimiento, $periodoAControlar, $periodo, $numero){
 			$interval = $fechaNacimiento->diff($fechaControl);
-			$periodo = floor($interval->format($periodo) / $numero);
-			if($periodo <= $periodoAControlar){
-				return $periodo;
-			}
-			return -1;
+			return floor($interval->days/$numero);
+			
       	}
 	}
 

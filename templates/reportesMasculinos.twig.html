@@ -88,7 +88,8 @@
                                     [7, 6500], [8, 6800], [9, 7100], [10, 7300], [11, 7500], [12, 7700], [13, 7900] ]
                         },{
                             name:'Paciente',
-                            data: {{ pesos|json_encode }}
+                            data: {{ pesos|json_encode }},
+                            lineWidth:2,
                         }
                     ],
             navigation: {
@@ -103,7 +104,7 @@
                 type: 'spline'
             },
             title: {
-                text: 'Curva de Crecimiento Para Niños de hasta 13 semanas'
+                text: 'Curva de Crecimiento Para Niños de hasta 24 meses'
             },
             subtitle: {
                 text: 'Curva de crecimiento por Talla'
@@ -114,7 +115,7 @@
                     overflow: 'justify'
                 },
                 min:0,
-                max:13,
+                max:24,
                 minorTickInterval:1,
             },
             yAxis: {
@@ -125,7 +126,7 @@
                 gridLineWidth: 0,
                 alternateGridColor: null,
                 min:40 ,
-                max:80,
+                max:100,
                 minorTickInterval:0.1,
 
             },
@@ -160,7 +161,7 @@
             },{
                 name:'Paciente',
                 data: {{ tallas|json_encode }},
-                lineWidth:4,
+                lineWidth:2,
                 //color:'rgba(191,0,0,0.8)' 
             }
             ],
@@ -197,8 +198,8 @@
                 minorGridLineWidth: 0,
                 gridLineWidth: 0,
                 alternateGridColor: null,
-                min:25,
-                max:50,
+                min:28,
+                max:45,
                 minorTickInterval:0.1,
 
             },
@@ -243,7 +244,7 @@
                     },{
                         name:'Paciente',
                         data:{{ ppc|json_encode }},
-                        lineWidth:4,
+                        lineWidth:2,
                         //color:'rgba(191,0,0,0.8)' 
                         } 
                 ],

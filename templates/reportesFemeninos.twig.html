@@ -12,8 +12,7 @@
     <div id="chartReportePeso" class='col-md-10 mb-5' style="height: 370px; width: 50%;"></div>
     <div id="chartReporteTalla" class='col-md-10  mb-5' style="height: 370px; width: 50%;"></div>
     <div id="chartReportePPC" class='col-md-10  mb-5' style="height: 370px; width: 50%;"></div>
-</div>
-
+</div> 
 <script>
 $(document).ready(function(){
  Highcharts.chart('chartReportePeso', {
@@ -88,7 +87,7 @@ $(document).ready(function(){
                     },{
                         name:'Paciente',
                         data: {{ pesos|json_encode }},
-                        lineWidth:4,
+                        lineWidth:2,
                         //color:'rgba(191,0,0,0.8)' 
                         }
                 ],
@@ -104,7 +103,7 @@ $(document).ready(function(){
             type: 'spline'
         },
         title: {
-            text: 'Curva de Crecimiento Para Niñas de hasta 13 semanas'
+            text: 'Curva de Crecimiento Para Niñas de hasta 24 meses'
         },
         subtitle: {
             text: 'Curva de Percentil de talla de niñas hasta 2 años'
@@ -115,8 +114,8 @@ $(document).ready(function(){
                 overflow: 'justify'
             },
             min:0,
-            max:13,
-            minorTickInterval:1,
+            max:24,
+            minorTickInterval:0.1,
         },
         yAxis: {
             title: {
@@ -126,7 +125,7 @@ $(document).ready(function(){
             gridLineWidth: 0,
             alternateGridColor: null,
             min:40,
-            max:85,
+            max:90,
             minorTickInterval:0.1,
 
         },
@@ -162,7 +161,7 @@ $(document).ready(function(){
         },{
             name:'Paciente',
             data: {{ tallas|json_encode }},
-            lineWidth:4,
+            lineWidth:2,
             //color:'rgba(191,0,0,0.8)' 
         }
         ],
@@ -198,7 +197,7 @@ $(document).ready(function(){
             minorGridLineWidth: 0,
             gridLineWidth: 0,
             alternateGridColor: null,
-            min:25,
+            min:28,
             max:45,
             minorTickInterval:0.1,
 
@@ -244,7 +243,7 @@ $(document).ready(function(){
                     },{
                         name:'Paciente',
                         data: {{ ppc|json_encode }},
-                        lineWidth:4,
+                        lineWidth:2,
                         //color:'rgba(191,0,0,0.8)' 
                         }
                 ],
