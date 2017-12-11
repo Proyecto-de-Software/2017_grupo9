@@ -64,7 +64,7 @@
             $query->bindParam(':id',$control->getId());
 
             if($query->execute()){
-                $control->setId($conexion->lastInsertId());
+                
                 return $control;
             }
             else{
