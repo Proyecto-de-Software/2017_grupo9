@@ -86,6 +86,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPermiso.php');
 				$control->setId($idControl);
 				$idPaciente = $control->getIdPaciente();
 				if($_SESSION['controlAModificar'] == $idControl && $_SESSION['pacienteControlAModificar'] == $idPaciente){
+					var_dump($idPaciente);die();
 					$validacion = $control->esValido();
 					if($validacion['ok']){					
 						RepositorioHistoriaClinica::getInstance()->editarControl($control);
