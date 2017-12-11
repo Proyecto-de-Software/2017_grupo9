@@ -82,6 +82,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPermiso.php');
 
 			if($this->hayPermiso('control_update') && $this->tokenValido($_POST['token'])){
 				if($_SESSION['controlAModificar'] == $idControl){
+					$idPaciente = $control->getIdPaciente();
 					$control = new Control($_POST);
 					$control->setId($idControl);
 					$validacion = $control->esValido();
@@ -97,7 +98,6 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPermiso.php');
 					}
 				}
 				else {
-					var_dump("permiso");die();
 					$idControl = $_SESSION['controlAModificar'];
 					$this->redireccion("/index.php/paciente/$idPaciente/control/edicion/$idControl");
 				}
