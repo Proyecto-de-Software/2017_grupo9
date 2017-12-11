@@ -107,33 +107,32 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPermiso.php');
 			$template = 'administracionReportesHistoriaClinica.twig';
 			$paciente = RepositorioPaciente::getInstance()->buscarPorId($id);
             $controles = RepositorioHistoriaClinica::getInstance()->devolverControles($id);
-            $semanas = [];
-            $datos = [];
-            $peso = 0; $talla = 0; $ppc = 0;
+            $pesos = []; $tallas = []; $ppc = [];
             foreach ($controles as $control) {
-            	$semanas= $this->calcularSemanas(new DateTime($control['fecha']), new DateTime ($paciente->getFechaNacimiento()), 13);
+            	$semanas = (int)$this->calcularPeriodo(new DateTime($control['fecha']), new DateTime ($paciente->getFechaNacimiento()), 13, '%a', 7);
+            	$meses = (int)$this->calcularPeriodo(new DateTime($control['fecha']), new DateTime ($paciente->getFechaNacimiento()), 2, '%m', 1);
             	if($semanas == -1){
             		$this->redireccion("/index.php/paciente/$id/historiaClinica");
             	}
-        		$peso[$semanas] = $control['peso'];
-        		$talla[$semanas] = $control['talla'];
-        		$ppc[$semanas] = $control['ppc'];
+        		array_push($pesos, [$semanas, (float)$control['peso']* 1000]);
+        		array_push($tallas, [$semanas, (float)$control['talla']]);
+        		array_push($ppc, [$semanas, (float)$control['ppc']]);
             }
-            $parametrosTemplate['pesos'] = $peso;
-            $parametrosTemplate['tallas'] = $talla;
+            $parametrosTemplate['pesos'] = $pesos;
+            $parametrosTemplate['tallas'] = $tallas;
             $parametrosTemplate['ppc'] = $ppc;
             $parametrosTemplate['genero'] = $paciente->getGenero();
+            //var_dump($parametrosTemplate['tallas']);die();
             $this->render($template,$parametrosTemplate);
       	}
 
-      	public function calcularSemanas($fechaControl, $fechaNacimiento, $semanasAControlar){
+      	public function calcularPeriodo($fechaControl, $fechaNacimiento, $periodoAControlar, $periodo, $numero){
 			$interval = $fechaNacimiento->diff($fechaControl);
-			$semanas = floor($interval->format('%a') / 7);
-			if($semanas <= $semanasAControlar){
-				return $semanas;
+			$periodo = floor($interval->format($periodo) / $numero);
+			if($periodo <= $periodoAControlar){
+				return $periodo;
 			}
 			return -1;
-
       	}
 	}
 

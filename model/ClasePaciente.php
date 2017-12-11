@@ -103,7 +103,7 @@
     		$this->numeroDoc = $numeroDoc;
     	}
         public function esValido($edicion=false){
-            $retorno['ok'] = false;
+            $retorno['ok'] = true;
             $nombre = $this->getNombre() != null && trim($this->getNombre()) !='';
             if(!$nombre){
               array_push($retorno, 'El nombre no debe estar vacio');

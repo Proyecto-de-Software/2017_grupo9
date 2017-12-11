@@ -12,7 +12,8 @@
 
 		var chartDatosDemograficos = new CanvasJS.Chart("chartDatosDemograficos", {
 			animationEnabled: true,
-			theme: "light2", // "light1", "light2", "dark1", "dark2"
+			theme: "light1", // "light1", "light2", "dark1", "dark2"
+			exportEnabled: true,
 			title:{
 				text: "Pacientes con servicios"
 			},
@@ -25,13 +26,13 @@
 				legendMarkerColor: "grey",
 				legendText: "",
 				dataPoints: [
-					{ y: {{datosDemograficos['electricidad'] | number_format(2, '.', '') }}, label: "Heladera" },
+					{ y: {{datosDemograficos['heladera'] | number_format(2, '.', '') }}, label: "Heladera" },
 					{ y: {{datosDemograficos['electricidad'] | number_format(2, '.', '') }}, label: "Electricidad" },
 					{ y: {{datosDemograficos['mascota'] | number_format(2, '.', '') }}, label: "Mascota" }
 				]
 			}]
 		});
-		chartDatosDemograficos.render();
+	 	
 	
 		var chartTipoVivienda = new CanvasJS.Chart("chartTipoVivienda", {
 			theme: "light2", // "light1", "light2", "dark1", "dark2"
@@ -55,7 +56,6 @@
 				]
 			}]
 		});
-		chartTipoVivienda.render();
 	
 		var chartTipoCalefaccion = new CanvasJS.Chart("chartTipoCalefaccion", {
 			theme: "light2", // "light1", "light2", "dark1", "dark2"
@@ -78,7 +78,7 @@
 				]
 			}]
 		});
-		chartTipoCalefaccion.render(); 
+		 
 
 		var chartTipoAgua = new CanvasJS.Chart("chartTipoAgua", {
 			theme: "light2", // "light1", "light2", "dark1", "dark2"
@@ -101,7 +101,13 @@
 				]
 			}]
 		});
+
+
+		chartDatosDemograficos.render();
+		chartTipoVivienda.render();
+		chartTipoCalefaccion.render();
 		chartTipoAgua.render();
+
 
 	}
 	</script>

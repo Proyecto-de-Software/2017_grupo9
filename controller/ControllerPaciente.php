@@ -56,6 +56,7 @@ class ControllerPaciente extends Controller{
                   $paciente = $this->crear();
                   $paciente->setId($id);
                   $validacion = $paciente->esValido(true);
+                  
                   $id = $paciente->getId();
                   if($validacion['ok']){
                         if(RepositorioPaciente::getInstance()->modificar($paciente)){
