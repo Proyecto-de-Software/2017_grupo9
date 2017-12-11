@@ -185,7 +185,6 @@
 										case 'edicion':
 											if( is_numeric($url[5]) ){
 												$idControl = $url[5];
-												$_SESSION['controlAModificar'] = $idControl;
 												ControllerHistoriaClinica::getInstance()->formulario($idPaciente,[],$idControl);
 											}
 											else{
