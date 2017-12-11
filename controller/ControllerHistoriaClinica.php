@@ -79,14 +79,12 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPermiso.php');
 				$this->redireccion("/index.php/pacientes");
 			}
 		}
-		public function editar($idControl){ //edit
+		public function editar($idControl, $idPaciente){ //edit
 
 			if($this->hayPermiso('control_update') && $this->tokenValido($_POST['token'])){
 				$control = new Control($_POST);
 				$control->setId($idControl);
-				$idPaciente = $control->getIdPaciente();
 				if($_SESSION['controlAModificar'] == $idControl && $_SESSION['pacienteControlAModificar'] == $idPaciente){
-					var_dump($idPaciente);die();
 					$validacion = $control->esValido();
 					if($validacion['ok']){					
 						RepositorioHistoriaClinica::getInstance()->editarControl($control);

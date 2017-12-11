@@ -167,7 +167,7 @@
 										case 'editar':
 											if( is_numeric($url[5]) ){
 												$idControl = $url[5];
-												ControllerHistoriaClinica::getInstance()->editar($idControl);
+												ControllerHistoriaClinica::getInstance()->editar($idControl,$idPaciente);
 											}
 											else{
 												header("Location: /index.php/paciente/$idPaciente/historiaClinica");
