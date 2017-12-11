@@ -81,9 +81,9 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/model/RepositorioPermiso.php');
 		public function editar($idControl){ //edit
 
 			if($this->hayPermiso('control_update') && $this->tokenValido($_POST['token'])){
+				$control = new Control($_POST);
+				$control->setId($idControl);
 				if($_SESSION['controlAModificar'] == $idControl){
-					$control = new Control($_POST);
-					$control->setId($idControl);
 					$validacion = $control->esValido();
 					if($validacion['ok']){					
 						RepositorioHistoriaClinica::getInstance()->editarControl($control);
