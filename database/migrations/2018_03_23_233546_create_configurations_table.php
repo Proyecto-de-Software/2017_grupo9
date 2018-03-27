@@ -15,7 +15,7 @@ class CreateConfigurationsTable extends Migration
     {
         Schema::create('configurations', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('tittle');
+            $table->string('title');
             $table->string('email_contact');
             $table->integer('elements_for_page');
             $table->enum('state',array('enabled','disabled'));
