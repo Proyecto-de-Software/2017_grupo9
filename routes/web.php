@@ -18,7 +18,7 @@ Route::resource('user', 'UserController');
 Route::resource('medicalCheckup', 'MedicalCheckupController');
 Route::resource('demographicData', 'DemographicDataController');
 Route::resource('rol', 'RolController');
-Route::resource('permission', 'PermissionController');
+Route::resource('permit', 'PermitController');
 
 
 Route::get('/', function () {
