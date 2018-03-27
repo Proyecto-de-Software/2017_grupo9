@@ -23,17 +23,17 @@
     ];
 });
 */
-$factory->define(App\User::class, function ($faker) {
+$factory->define(App\Patient::class, function ($faker) {
     return [
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
-        'email' => $faker->email,
-        'password' => $faker->password,
-        'username' => $faker->userName,
-        'active' => 1,
+        'address' => $faker->streetAddress,
+        'phone' => $faker->phoneNumber,
+        'birthdate' => date($format = 'Y-m-d', $max = 'now'),
+        'gender' => 1,
+        'document_number' => $faker->dni,
         'created_at' => date('Y-m-d H:m:s'),
         'updated_at' => date('Y-m-d H:m:s'),
-        'remember_token' => str_random(10),
     ];
 });
 
