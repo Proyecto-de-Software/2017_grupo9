@@ -18,6 +18,10 @@ class CreateDemographicDatasTable extends Migration
             $table->boolean('electricity');
             $table->boolean('pet');
             $table->boolean('refrigerator');
+            $table->integer('patient_id')->unsigned();
+            $table->foreign('patient_id')->references('id')->on('patients');
+            $table->integer('typeHeating_id')->unsigned();
+            $table->foreign('typeHeating_id')->references('id')->on('type_heating');
             $table->timestamps();
         });
     }

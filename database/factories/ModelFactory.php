@@ -24,16 +24,31 @@
 });
 */
 $factory->define(App\Patient::class, function ($faker) {
+	$genders = array('m', 'f');
     return [
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
         'address' => $faker->streetAddress,
-        'phone' => $faker->phoneNumber,
-        'birthdate' => date($format = 'Y-m-d', $max = 'now'),
-        'gender' => 1,
-        'document_number' => $faker->dni,
+        'phone' => '234440',
+        'birthdate' => date('2018-01-01'),
+        'gender' => $genders[array_rand($genders, 1)],
+        'document_number' => $faker->numberBetween($min = 30000000, $max = 40000000),
         'created_at' => date('Y-m-d H:m:s'),
         'updated_at' => date('Y-m-d H:m:s'),
+    ];
+});
+
+$factory->define(App\User::class, function ($faker) {
+    return [
+        'first_name' => $faker->firstName,
+        'last_name' => $faker->lastName,
+        'email' => $faker->email,
+        'password' => Hash::make('123'),
+        'username' => $faker->userName,
+        'active' => 1,
+        'created_at' => date('Y-m-d H:m:s'),
+        'updated_at' => date('Y-m-d H:m:s'),
+        'remember_token' => str_random(10),
     ];
 });
 
