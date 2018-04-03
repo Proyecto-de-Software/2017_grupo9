@@ -103,14 +103,20 @@
 				<hr>
 					<div class="form-group row form-check " >
 						<div class="col-sm-2 mt-3 col-form-label ">Roles:</div>
-						<div class="col-sm-9 mt-3 ">
+						<div class="col-sm-9 mt-3 ">//verificar porque tira un uno
+							{{ $set = false }}
 							@foreach($rols as $rol)
+								@if(isset($userRols))
+									@foreach($userRols as $actualRol)
+										{{$set = in_array($rol->id,$actualRol)}}
+										
+									@endforeach									
+								@endif
 								{!! Form::label('rol', $rol->name) !!}
-								{!! Form::checkbox('rol[]', $rol->id, false, array(
+								{!! Form::checkbox('rol[]', $rol->id, $set, array(
 								 	'class' => 'checkbox col-sm-1 '
 								 	)) 
-							 	!!}
-								
+							 	!!}	
 			     			@endforeach
 			     		</div>		
 	  				</div>

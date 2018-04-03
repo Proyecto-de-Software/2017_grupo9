@@ -9,91 +9,55 @@ use App\UserRol;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
         $users = User::get();
         return view('users.index')->with('users', $users);
-    
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     }
+
     public function create()
     {
         $rols = Rol::get();
         return view('users.create')->with('rols',$rols);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {   
-        $user = User::create(
-            [
-                'first_name' => $request->input('nombre'),
-                'last_name' => $request->input('apellido'),
-                'username' => $request->input('usuario'),
-                'password' => $request->input('password'),
-                'active' => true,
-                'email' => $request->input('email')
-            ]
-        );
-    
-      
+        $user = new User();
+
+        $user->first_name = $request->input('nombre');
+        $user->last_name = $request->input('apellido');
+        $user->active = true;
+        $user->username = $request->input('usuario');
+        $user->password = $request->input('password');
+        $user->email = $request->input('email');
+        $user->save();
         foreach($request->input('rol') as $idRol){
-            $userRol = new UserRol();
-            $userRol->user_id = $user->id;
-            $userRol->rol_id = $idRol;
-            $userRol->save();
+            $user->rols()->attach($idRol);
         }
+        $user->save();
        
-        return redirect()->route('user.index');
+        return redirect()->route('user.show',$user->id);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function show($id)
     {
-        //
+        $user = User::find($id);
+        $rols = $user->rols()->get();
+      
+        return view('users.show')->with('user',$user)->with('rols',$rols);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $rols = Rol::get();
         $user = User::find($id);
-        
-        return view('users.edit')->with('user',$user)->with('rols', $rols);
+        $userRols = $user->rols()->get()->toArray();
+        return view('users.edit')->with('user',$user)->with('rols', $rols)->with('userRols',$userRols);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $user = User::find($id);
@@ -103,11 +67,27 @@ class UserController extends Controller
         $user->username = $request->input('usuario');
         $user->password = $request->input('password');
         $user->email = $request->input('email');
-
-       
-
+        $newRols = $request->input('rol');
+        if(!isset($newRols)){
+            $newRols = array();
+        }
+        
+        $actualRols = $user->rols()->get()->toArray();
+        foreach ($newRols as $idRol){
+            foreach ($actualRols as $actualRol) {
+                $ok = ! in_array($idRol, $actualRol);
+                if($ok){
+                    $user->rols()->attach($idRol);
+                }
+                if(in_array($actualRol['id'], $newRols)){
+                    $user->rols()->detach($idRol);
+                }
+            }
+            
+        }
         $user->save();
-        return redirect()->route('user.index');
+        
+        return redirect()->route('user.show',$id);
 
     }
 

@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Rol;
 
 class User extends Authenticatable
 {
@@ -28,6 +29,6 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
     public function rols(){
-        return $this->belongsToMany('\App\Rol','user_rol')->withPivot('rol_id','status');
+        return $this->belongsToMany('\App\Rol','user_rol');
     }
 }
