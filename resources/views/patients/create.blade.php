@@ -1,8 +1,8 @@
 @extends('base')
 @section('title') 
-	Administracion pacientes
+	Nuevo paciente
 @stop
 
 @section('container')
-	@include('patients.partials.patientList')
+	@include('patients.partials.patientForm')
 @stop

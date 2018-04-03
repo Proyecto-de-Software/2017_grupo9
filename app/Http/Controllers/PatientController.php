@@ -15,9 +15,9 @@ class PatientController extends Controller
     public function index()
     {
         $patients = Patient::get();
-        dd($patients);
-        return view('patients.index');
+        return view('patients.index')->with('patients',$patients);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -26,7 +26,7 @@ class PatientController extends Controller
      */
     public function create()
     {
-        //
+        return view('patients.create');
     }
 
     /**
@@ -37,7 +37,18 @@ class PatientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $patient = new Patient();
+
+        $patient->first_name = $request->first_name;
+        $patient->last_name = $request->last_name;
+        $patient->address = $request->address;
+        $patient->phone = $request->phone;
+        $patient->birthday  = '1980-01-01';
+        $patient->gender = $request->gender;
+        $patient->type_document = $request->type_document;
+        $patient->document_number = $request->document_number;
+
+        $patient->save();
     }
 
     /**
@@ -59,7 +70,7 @@ class PatientController extends Controller
      */
     public function edit(Patient $patient)
     {
-        //
+        return view('patients.edit')->with('patient',$patient);
     }
 
     /**
