@@ -21,7 +21,8 @@ class CreateDemographicDatasTable extends Migration
             $table->integer('patient_id')->unsigned();
             $table->foreign('patient_id')->references('id')->on('patients');
             $table->integer('typeHeating_id')->unsigned();
-            $table->foreign('typeHeating_id')->references('id')->on('type_heating');
+            $table->integer('typeLivingPlace_id')->unsigned();
+            $table->integer('typeWater_id')->unsigned();
             $table->timestamps();
         });
     }

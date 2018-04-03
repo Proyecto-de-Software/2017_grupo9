@@ -16,16 +16,16 @@
 				    <tr>
 				    	<td>{{ $user->username }}</td>
 				    	<td>
-				    		<a href="{{url('/user/create')}}" class="btn btn-outline-success btn-own-info">Editar</a>
+				    		<a href="{{url('/user/$user->id/edit')}}" class="btn btn-outline-success btn-own-info">Editar</a>
 				    	</td>
 				    	<td>
 				    		<a onclick="return confirm('Seguro?')"  href="{{url('/user/$user->id')}}" class="btn btn-outline-success btn-own-info">Eliminar </a>
 				    	</td>
 			      		<td>
 				      		@if($user->activo)
-				      			<a href="{{url('user/$user->id/block' }}" class="btn btn-outline-success btn-own-info"> Bloquear </a>
+				      			<a href="{{url('user/$user->id/block') }}" class="btn btn-outline-success btn-own-info"> Bloquear </a>
 				      		@else
-				      			<a href="{{url('user/$user->id/unblock' }}" class="btn btn-outline-success btn-own-info"> Activar </a>
+				      			<a href="{{url('user/$user->id/unblock') }}" class="btn btn-outline-success btn-own-info"> Activar </a>
 			      			@endif	
 				      	</td>
 				      	<td>
@@ -36,7 +36,7 @@
 			    
 			</tbody>
 		</table>
-		<a class="btn btn-success btn-own mt-3 mb-5 text-right" role="button" href="/index.php/usuarios/nuevo">
+		<a class="btn btn-success btn-own mt-3 mb-5 text-right" role="button" href="{{url('/user/create')}}">
 			Agregar nuevo usuario
 		</a>
 		
