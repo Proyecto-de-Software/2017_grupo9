@@ -1,17 +1,25 @@
 <head>
+
+
+			<link href="{{ asset('css/styles1.css') }}" rel="stylesheet" type="text/css" >
+
+			<link href="{{ asset('css/stylesNew.css') }}" rel="stylesheet" type="text/css" >
+
+			<link href="{{ asset('css/jquery-ui.min.css') }}" rel="stylesheet" type="text/css" >
 		
-			<link rel="stylesheet" type="text/css" href="/templates/css/styles1.css">
-			<link rel="stylesheet" type="text/css" href="/templates/css/stylesNew.css">
-			<link rel="stylesheet" type="text/css" href="/templates/css/jquery-ui.min.css">
-			<link rel="stylesheet" type="text/css" href="/templates/bootstrap/css/bootstrap.css">
-			<script type="text/javascript" src="/templates/js/jquery.js"></script>
-		  	<script type="text/javascript" src="/templates/js/jquery-ui.min.js"></script>
-		  	<script type="text/javascript" src="/templates/js/canvasjs.min.js"></script>
-		  	<script type="text/javascript" src="/templates/js/jquery.canvasjs.min.js"></script>
-			<script src="/templates/js/popper.js" type="text/javascript"></script>
-			<script src="/templates/js/js-own/validaciones.js" type="text/javascript"></script>
-			<script src="/templates/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-			<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+			<link href="{{ asset('bootstrap/css/bootstrap.css') }}" rel="stylesheet" type="text/css" >
+			
+
+			<script src="{{ asset('js/jquery.js') }}"></script>
+			<script src="{{ asset('js/jquery-ui.min.js') }}"></script>
+			<script src="{{ asset('js/canvasjs.min.js') }}"></script>
+			<script src="{{ asset('js/jquery.canvasjs.min.js') }}"></script>
+			<script src="{{ asset('js/popper.js') }}"></script>
+			<script src="{{ asset('js/js-own/validaciones.js') }}"></script>
+			<script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
+
+
+			<meta http-equiv="Content-Type" content="text/html charset=utf-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1">
 		  	<title> @section('title') Home @show </title>
 </head>

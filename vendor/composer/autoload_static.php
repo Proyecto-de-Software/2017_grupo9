@@ -15,6 +15,7 @@ class ComposerStaticInita01da414a166b1cb1a7259d4dc75f069
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         'e7223560d890eab89cda23685e711e2c' => __DIR__ . '/..' . '/psy/psysh/src/Psy/functions.php',
+        '752af1c2bdb339e8474c3c31b22b7d54' => __DIR__ . '/..' . '/illuminate/html/helpers.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
     );
@@ -75,6 +76,7 @@ class ComposerStaticInita01da414a166b1cb1a7259d4dc75f069
         ),
         'I' => 
         array (
+            'Illuminate\\Html\\' => 16,
             'Illuminate\\' => 11,
         ),
         'F' => 
@@ -205,6 +207,10 @@ class ComposerStaticInita01da414a166b1cb1a7259d4dc75f069
         array (
             0 => __DIR__ . '/..' . '/laravel/tinker/src',
         ),
+        'Illuminate\\Html\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/illuminate/html',
+        ),
         'Illuminate\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/framework/src/Illuminate',
@@ -313,6 +319,9 @@ class ComposerStaticInita01da414a166b1cb1a7259d4dc75f069
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
         'App\\Rol' => __DIR__ . '/../..' . '/app/Rol.php',
         'App\\Turn' => __DIR__ . '/../..' . '/app/Turn.php',
+        'App\\TypeHeating' => __DIR__ . '/../..' . '/app/TypeHeating.php',
+        'App\\TypeLivingPlace' => __DIR__ . '/../..' . '/app/TypeLivingPlace.php',
+        'App\\TypeWater' => __DIR__ . '/../..' . '/app/TypeWater.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
         'ArithmeticError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/ArithmeticError.php',
         'AssertionError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/AssertionError.php',
@@ -329,9 +338,6 @@ class ComposerStaticInita01da414a166b1cb1a7259d4dc75f069
         'CreateRolPermitTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_23_234422_create_rol_permit_table.php',
         'CreateRolsTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_23_234129_create_rols_table.php',
         'CreateTurnsTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_23_233709_create_turns_table.php',
-        'CreateTypeHeatingTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_28_195316_create_type_heating_table.php',
-        'CreateTypeLivingPlaceTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_28_195230_create_type_living_place_table.php',
-        'CreateTypeWaterTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_28_195208_create_type_water_table.php',
         'CreateUserRolTable' => __DIR__ . '/../..' . '/database/migrations/2018_03_23_234444_create_user_rol_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
         'Cron\\AbstractField' => __DIR__ . '/..' . '/mtdowling/cron-expression/src/Cron/AbstractField.php',
@@ -1279,6 +1285,11 @@ class ComposerStaticInita01da414a166b1cb1a7259d4dc75f069
         'Illuminate\\Foundation\\Validation\\ValidatesRequests' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/Validation/ValidatesRequests.php',
         'Illuminate\\Hashing\\BcryptHasher' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Hashing/BcryptHasher.php',
         'Illuminate\\Hashing\\HashServiceProvider' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Hashing/HashServiceProvider.php',
+        'Illuminate\\Html\\FormBuilder' => __DIR__ . '/..' . '/illuminate/html/FormBuilder.php',
+        'Illuminate\\Html\\FormFacade' => __DIR__ . '/..' . '/illuminate/html/FormFacade.php',
+        'Illuminate\\Html\\HtmlBuilder' => __DIR__ . '/..' . '/illuminate/html/HtmlBuilder.php',
+        'Illuminate\\Html\\HtmlFacade' => __DIR__ . '/..' . '/illuminate/html/HtmlFacade.php',
+        'Illuminate\\Html\\HtmlServiceProvider' => __DIR__ . '/..' . '/illuminate/html/HtmlServiceProvider.php',
         'Illuminate\\Http\\Concerns\\InteractsWithContentTypes' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php',
         'Illuminate\\Http\\Concerns\\InteractsWithFlashData' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithFlashData.php',
         'Illuminate\\Http\\Concerns\\InteractsWithInput' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithInput.php',

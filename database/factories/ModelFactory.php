@@ -30,11 +30,10 @@ $factory->define(App\Patient::class, function ($faker) {
         'last_name' => $faker->lastName,
         'address' => $faker->streetAddress,
         'phone' => '234440',
-        'birthdate' => date('2018-01-01'),
+        'birthdate' => $faker->date($format = 'Y-m-d', $max = 'now'),
         'gender' => $genders[array_rand($genders, 1)],
         'document_number' => $faker->numberBetween($min = 30000000, $max = 40000000),
-        'created_at' => date('Y-m-d H:m:s'),
-        'updated_at' => date('Y-m-d H:m:s'),
+
     ];
 });
 
@@ -45,9 +44,7 @@ $factory->define(App\User::class, function ($faker) {
         'email' => $faker->email,
         'password' => Hash::make('123'),
         'username' => $faker->userName,
-        'active' => 1,
-        'created_at' => date('Y-m-d H:m:s'),
-        'updated_at' => date('Y-m-d H:m:s'),
+        'active' => true,
         'remember_token' => str_random(10),
     ];
 });

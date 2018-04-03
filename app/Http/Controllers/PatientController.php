@@ -14,7 +14,9 @@ class PatientController extends Controller
      */
     public function index()
     {
-        //
+        $patients = Patient::get();
+        dd($patients);
+        return view('patients.index');
     }
 
     /**
