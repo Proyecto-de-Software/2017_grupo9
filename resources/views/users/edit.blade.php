@@ -1,6 +1,6 @@
 @extends('base')
 @section('title') 
-	Nuevo usuario
+	Edicion usuario
 @stop
 
 @section('container')

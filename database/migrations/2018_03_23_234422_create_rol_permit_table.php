@@ -17,6 +17,8 @@ class CreateRolPermitTable extends Migration
             $table->increments('id');
             $table->integer('permit_id')->unsigned();
             $table->foreign('permit_id')->references('id')->on('permits');
+            $table->integer('rol_id')->unsigned();
+            $table->foreign('rol_id')->references('id')->on('rols');
         });
     }
 

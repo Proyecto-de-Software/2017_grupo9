@@ -1,59 +1,133 @@
 
 <section class="row mx-auto mt-5 ">
 	<div class="login col-md-7  mx-auto mt-4 mb-4 pb-5 pt-5 pr-5 pl-5 border rounded ">
+
 		@if(isset($user))
 			@php 
 				$titulo = 'Editar usuario';
-				$firstNameValue = 'value='.$user->first_name;
-				$lastNameValue = 'value='.$user->last_name;
-				$userNameValue = 'value='.$user->username;
-				$emailValue = 'value='.$user->email;
+				$firstNameValue = $user->first_name;
+				$lastNameValue = $user->last_name;
+				$userNameValue = $user->username;
+				$emailValue = $user->email;
+				$route = ['user.update',$user->id];
+				$method = 'PUT';
+				
 
 			@endphp
 		@else
 			@php 
 				$titulo = 'Nuevo usuario';
-				$firstNameValue = '';
-				$lastNameValue = '';
-				$userNameValue = '';
-				$emailValue = '';
+				$firstNameValue = null;
+				$lastNameValue = null;
+				$userNameValue =null;
+				$emailValue = null;
+				$route = 'user.store';
+				$method = 'POST';
 			@endphp
 		@endif
-			<h3 class="card-header text-center myHeader"> {{ $titulo }}</h3>
-			<form class="text-center" role="form" method="POST" " action="{{url('/user')}}">
+			<h3 class="card-header text-center myHeader"> {!! $titulo !!}</h3>
+			{!! Form::open(array('route' => $route, 'method' => $method), array('role' => 'form', 'class' => 'text-center')) !!}
 		
 				<div class="form-group row ">
-					    <label for="nombre"  class="col-sm-3 mt-3 col-form-label">Nombre</label>
-					    <input type="text" class="form-control mt-3 col-sm-8" id="nombre" name="nombre" placeholder="Nombre" {{$firstNameValue}} required>
+					{!! Form::label('nombre', 'Nombre',[
+						'class'=>'col-sm-3 mt-3 col-form-label'
+						]) 
+					!!}
+					{!! Form::text('nombre', $firstNameValue, array(
+						'placeholder' => 'Nombre',
+					 	'class' => 'form-control mt-3 col-sm-8', 
+					 	'required' =>true
+					 	)) 
+					 !!}
+					    
 				 </div>
 			  	<div class="form-group row ">
-				    <label for="apellido" class="col-sm-3 mt-3 col-form-label">Apellido</label>
-				    <input type="text" class="form-control mt-3 col-sm-8" id="apellido" name="apellido" placeholder="Apellido" {{$lastNameValue}} required>
+				    {!! Form::label('apellido', 'Apellido',[
+					    'class'=>'col-sm-3 mt-3 col-form-label'
+					    ]) 
+				    !!}
+					{!! Form::text('apellido', $lastNameValue, array(
+						'placeholder' => 'Apellido',
+					 	'class' => 'form-control mt-3 col-sm-8', 
+					 	'required' =>true
+					 	)) 
+					 !!}
 			  	</div>
 			  	<div class="form-group row ">
-				    <label for="usuario" class="col-sm-3 mt-3 col-form-label">Usuario</label>
-				    <input type="text" class="form-control mt-3 col-sm-8" id="usuario"  name="usuario" placeholder="Usuario"  {{$userNameValue}} required >
+			  		{!! Form::label('usuario', 'Usuario',[
+			  			'class'=>'col-sm-3 mt-3 col-form-label'
+			  			]) 
+			  		!!}
+					{!! Form::text('usuario', $userNameValue, array(
+						'placeholder' => 'Nombre de usuario',
+					 	'class' => 'form-control mt-3 col-sm-8', 
+					 	'required' =>true
+					 	)) 
+					 !!}
 			  	</div>
 			  	<div class="form-group row">
-			    	<label for="email" class="col-sm-3 mt-3 col-form-label">Email</label>
-			   		<input type="text" class="form-control mt-3 col-sm-8" id="email" name="email" placeholder="Email" {{$emailValue}} required>
+			  		{!! Form::label('email', 'Email',[
+				  		'class'=>'col-sm-3 mt-3 col-form-label'
+				  		]) 
+			  		!!}
+					{!! Form::text('email', $emailValue, array(
+						'placeholder' => 'Email',
+					 	'class' => 'form-control mt-3 col-sm-8', 
+					 	'required' =>true
+					 	)) 
+					 !!}
 				</div>
 			 	<div class="form-group row">
-			    	<label for="password" class="col-sm-3 mt-3 col-form-label">Contraseña</label>
-			   		<input type="password" class="form-control mt-3 col-sm-8" id="password" name="password" placeholder="Contraseña" " required>
+			  		{!! Form::label('password', 'Contraseña',[
+			  			'class'=>'col-sm-3 mt-3 col-form-label'
+			  			]) !!}
+					{!! Form::password('password',array(
+						'placeholder' => 'Contraseña',
+					 	'class' => 'form-control mt-3 col-sm-8', 
+					 	'required' =>true
+					 	)) 
+					 !!}
 				</div>
 				
-				<div class="form-group row">
-			    	<label for="password2" class="col-sm-3 mt-3 col-form-label">Confirmación</label>
-			   		<input type="password" class="form-control mt-3 col-sm-8" id="password2" name="password2" placeholder="Repita contraseña" required>
+			 	<div class="form-group row">
+			  		{!! Form::label('password2', 'Contraseña',[
+			  		'class'=>'col-sm-3 mt-3 col-form-label'
+			  		]) !!}
+					{!! Form::password('password2',array(
+						'placeholder' => 'Repita contraseña',
+					 	'class' => 'form-control mt-3 col-sm-8', 
+					 	'required' =>true
+					 	)) 
+					 !!}
 				</div>
-		
-				
-				
-				agregar parte de roles
 				<hr>
+					<div class="form-group row form-check " >
+						<div class="col-sm-2 mt-3 col-form-label ">Roles:</div>
+						<div class="col-sm-9 mt-3 ">
+							@foreach($rols as $rol)
+								{!! Form::label('rol', $rol->name) !!}
+								{!! Form::checkbox('rol[]', $rol->id, false, array(
+								 	'class' => 'checkbox col-sm-1 '
+								 	)) 
+							 	!!}
+								
+			     			@endforeach
+			     		</div>		
+	  				</div>
+				
 
-				<button type="submit" class="btn btn-outline-success  btn-own-info">Agregar</button>
-		</form>
+				{!! Form::hidden('_token',csrf_token()) !!}
+				<hr>
+				<div class="text-center">
+				{!! Form::button('Listo', array(
+					'type' => 'submit',
+					 'class' => 'btn btn-outline-success  pl-4 pr-4 btn-own-info'
+					 )) 
+				!!}
+				</div>  
+
+
+				{!! Form::close() !!}
+		
 	</div>
 </section>

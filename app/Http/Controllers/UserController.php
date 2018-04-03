@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Rol;
+use App\UserRol;
 
 class UserController extends Controller
 {
@@ -15,18 +17,19 @@ class UserController extends Controller
     public function index()
     {
         $users = User::get();
-       // dd($users);
-        return view('users.index')->with('users',$users);
-    }
+        return view('users.index')->with('users', $users);
+    
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
+    }
     public function create()
     {
-        return view('users.create');
+        $rols = Rol::get();
+        return view('users.create')->with('rols',$rols);
     }
 
     /**
@@ -36,8 +39,27 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {   
+        $user = User::create(
+            [
+                'first_name' => $request->input('nombre'),
+                'last_name' => $request->input('apellido'),
+                'username' => $request->input('usuario'),
+                'password' => $request->input('password'),
+                'active' => true,
+                'email' => $request->input('email')
+            ]
+        );
+    
+      
+        foreach($request->input('rol') as $idRol){
+            $userRol = new UserRol();
+            $userRol->user_id = $user->id;
+            $userRol->rol_id = $idRol;
+            $userRol->save();
+        }
+       
+        return redirect()->route('user.index');
     }
 
     /**
@@ -59,8 +81,10 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        $rols = Rol::get();
         $user = User::find($id);
-        return view('users.edit')->with('user',$user);
+        
+        return view('users.edit')->with('user',$user)->with('rols', $rols);
     }
 
     /**
@@ -72,7 +96,19 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+
+        $user->first_name = $request->input('nombre');
+        $user->last_name = $request->input('apellido');
+        $user->username = $request->input('usuario');
+        $user->password = $request->input('password');
+        $user->email = $request->input('email');
+
+       
+
+        $user->save();
+        return redirect()->route('user.index');
+
     }
 
     /**

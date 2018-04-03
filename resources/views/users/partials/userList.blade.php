@@ -16,7 +16,7 @@
 				    <tr>
 				    	<td>{{ $user->username }}</td>
 				    	<td>
-				    		<a href="{{url('/user/$user->id/edit')}}" class="btn btn-outline-success btn-own-info">Editar</a>
+				    		<a href='{{url("/user/$user->id/edit")}}' class="btn btn-outline-success btn-own-info">Editar</a>
 				    	</td>
 				    	<td>
 				    		<a onclick="return confirm('Seguro?')"  href="{{url('/user/$user->id')}}" class="btn btn-outline-success btn-own-info">Eliminar </a>
