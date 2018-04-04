@@ -19,8 +19,9 @@ class CreatePatientsTable extends Migration
             $table->string('last_name');
             $table->string('address');
             $table->integer('phone');
-            $table->date('birthdate');
+            $table->date('birthday');
             $table->enum('gender',array('m', 'f'));
+            $table->string('type_document');
             $table->integer('document_number');
             $table->timestamps();
         });

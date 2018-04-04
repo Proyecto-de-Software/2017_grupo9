@@ -30,8 +30,9 @@ $factory->define(App\Patient::class, function ($faker) {
         'last_name' => $faker->lastName,
         'address' => $faker->streetAddress,
         'phone' => '234440',
-        'birthdate' => $faker->date($format = 'Y-m-d', $max = 'now'),
+        'birthday' => $faker->date($format = 'Y-m-d', $max = 'now'),
         'gender' => $genders[array_rand($genders, 1)],
+        'type_document' => 'dni',
         'document_number' => $faker->numberBetween($min = 30000000, $max = 40000000),
 
     ];
