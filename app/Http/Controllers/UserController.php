@@ -45,8 +45,10 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        $rols = $user->rols()->get();
-      
+        $rols = $user->rols()->get()->map(function($rol,$key){
+                                             return $rol->name;
+                                             })->toArray();
+        
         return view('users.show')->with('user',$user)->with('rols',$rols);
     }
 
@@ -54,7 +56,10 @@ class UserController extends Controller
     {
         $rols = Rol::get();
         $user = User::find($id);
-        $userRols = $user->rols()->get()->toArray();
+        $userRols = $user->rols()->get()->map(function($rol,$key){
+                                                return $rol->id; 
+                                            })->toArray();
+        
         return view('users.edit')->with('user',$user)->with('rols', $rols)->with('userRols',$userRols);
     }
 
@@ -67,23 +72,14 @@ class UserController extends Controller
         $user->username = $request->input('usuario');
         $user->password = $request->input('password');
         $user->email = $request->input('email');
-        $newRols = $request->input('rol');
-        if(!isset($newRols)){
-            $newRols = array();
-        }
         
+
         $actualRols = $user->rols()->get()->toArray();
-        foreach ($newRols as $idRol){
-            foreach ($actualRols as $actualRol) {
-                $ok = ! in_array($idRol, $actualRol);
-                if($ok){
-                    $user->rols()->attach($idRol);
-                }
-                if(in_array($actualRol['id'], $newRols)){
-                    $user->rols()->detach($idRol);
-                }
-            }
-            
+        foreach ($actualRols as $actualRol) {
+            $user->rols()->detach($actualRol['id']);
+        }
+        foreach($request->input('rol') as $idRol){
+            $user->rols()->attach($idRol);
         }
         $user->save();
         
@@ -91,14 +87,23 @@ class UserController extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $user->delete();
+        return redirect()->route('user.index');
+    }
+
+    public function block($id){
+        $user = User::find($id);
+        $user->active = false;
+        $user->save();
+        return redirect()->route('user.index');
+    }
+    public function unblock($id){
+        $user = User::find($id);
+        $user->active = true;
+        $user->save();
+        return redirect()->route('user.index');
     }
 }

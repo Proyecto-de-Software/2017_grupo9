@@ -43,14 +43,17 @@
 	     			 <th scope="row">Roles: </th>
 	     			 <td>
 	     			 	@foreach($rols as $rol)
-	     			 		{{$rol->name}}
+	     			 		{{$rol}}
 	     			 	@endforeach
 	     			 </td>
 	     		</tr>
  			 </tbody>
 		</table>
-		<div class="text-center">
-			<a href='{{url("/user/$user->id/edit")}}' class="btn btn-outline-success btn-own-info">Editar</a>
+		<div class="text-center row">
+			<a href='{{url("/user")}}' class="col-md-3 mr-3 ml-3 btn btn-outline-success btn-own-info"> Volver a usuarios</a>
+			<a href='{{url("/user/$user->id/edit")}}' class="col-md-3 mr-3 ml-3 btn btn-outline-success btn-own-info">Editar</a>
+
+
 		</div>
 	</div>
 

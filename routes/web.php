@@ -20,6 +20,11 @@ Route::resource('demographicData', 'DemographicDataController');
 Route::resource('rol', 'RolController');
 Route::resource('permit', 'PermitController');
 
+Route::post('/user/{id}/block',['as' => 'user.block', 'uses' => 'UserController@block']);
+Route::post('/user/{id}/unblock',['as' => 'user.unblock', 'uses' => 'UserController@unblock']);
+
+Route::get('/login',['as' => 'session.loginView', 'uses' => 'SessionController@loginView']);
+Route::post('/login',['as' => 'session.login', 'uses' => 'SessionController@login']);
 
 Route::get('/', function () {
     return view('welcome');

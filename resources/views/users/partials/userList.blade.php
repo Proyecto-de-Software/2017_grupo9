@@ -19,17 +19,50 @@
 				    		<a href='{{url("/user/$user->id/edit")}}' class="btn btn-outline-success btn-own-info">Editar</a>
 				    	</td>
 				    	<td>
-				    		<a onclick="return confirm('Seguro?')"  href="{{url('/user/$user->id')}}" class="btn btn-outline-success btn-own-info">Eliminar </a>
+				    		{!! Form::open(
+									array(
+										'route' => ['user.destroy',$user->id],
+										'method' => 'DELETE',
+										'onsubmit' => 'return confirm("Seguro?")'), 
+									array(
+										'role' => 'form')
+									)
+								!!}
+									{!! Form::button('Eliminar', array(
+											'type' => 'submit',
+									 		'class' => 'btn btn-outline-success btn-own-info'
+									 )) 
+									!!} 
+								{!! Form::close() !!}
 				    	</td>
 			      		<td>
-				      		@if($user->activo)
-				      			<a href="{{url('user/$user->id/block') }}" class="btn btn-outline-success btn-own-info"> Bloquear </a>
+
+				      		@if($user->active)
+					      		@php
+				      				$route = 'user.block';
+				      				$buttonName = 'Bloquear';
+				      			@endphp
 				      		@else
-				      			<a href="{{url('user/$user->id/unblock') }}" class="btn btn-outline-success btn-own-info"> Activar </a>
-			      			@endif	
+				      			@php
+				      				$route = 'user.unblock';
+				      				$buttonName = 'Activar';
+				      			@endphp
+				      		@endif
+								{!! Form::open(
+									array('route' => [$route,$user->id], 'method' => 'POST'), 
+									array('role' => 'form')
+									)
+								!!}
+									{!! Form::button($buttonName, array(
+											'type' => 'submit',
+									 		'class' => 'btn btn-outline-success btn-own-info'
+									 )) 
+									!!} 
+								{!! Form::close() !!}
+
 				      	</td>
 				      	<td>
-				      		<a href="/index.php/usuario/{{ $user->id }}" class="btn btn-outline-success btn-own-info">Mas información</a>
+				      		<a href='{{url("user/$user->id") }}' class="btn btn-outline-success btn-own-info">Mas información</a>
 				      	</td>
 				    </tr>
 			     @endforeach
