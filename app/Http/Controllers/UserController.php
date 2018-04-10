@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Rol;
 use App\UserRol;
+use App\Http\Requests\UserRequest;
 
 class UserController extends Controller
 {
@@ -22,7 +23,7 @@ class UserController extends Controller
         return view('users.create')->with('rols',$rols);
     }
 
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {   
         $user = new User();
 
@@ -63,7 +64,7 @@ class UserController extends Controller
         return view('users.edit')->with('user',$user)->with('rols', $rols)->with('userRols',$userRols);
     }
 
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
         $user = User::find($id);
 

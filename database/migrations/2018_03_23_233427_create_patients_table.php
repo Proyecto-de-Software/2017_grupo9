@@ -22,7 +22,7 @@ class CreatePatientsTable extends Migration
             $table->date('birthday');
             $table->enum('gender',array('m', 'f'));
             $table->string('type_document');
-            $table->integer('document_number');
+            $table->integer('document_number')->unique();
             $table->timestamps();
         });
     }

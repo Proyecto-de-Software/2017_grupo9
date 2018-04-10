@@ -1,5 +1,8 @@
 <section class="row mx-auto mt-5 ">
 	<div class="login col-md-7  mx-auto mt-4 mb-4 pb-5 pt-5 pr-5 pl-5 border rounded ">
+
+		@include('partials.error')
+		
 		@if(isset($patient))
 			@php 
 				$title = 'Editar paciente';
@@ -25,6 +28,7 @@
 				$phoneValue = null;
 			@endphp
 		@endif
+		
 		<h3 class="card-header text-center myHeader"> {{ $title }}</h3>
 		{!! Form::open(['url' => '/patient', 'method' => 'post']) !!}
 	
@@ -32,20 +36,18 @@
 			    <label for="first_name"  class="col-sm-3 mt-3 col-form-label">Nombre</label>
 			    {!! Form::text('first_name', $firstNameValue, array(
 			    	'placeholder' => 'Nombre',
-			    	'class' => 'form-control mt-3 col-sm-8', 
-			    	'required' => true
+			    	'class' => 'form-control mt-3 col-sm-8'
 			    )) !!}
 			</div>
 		  	<div class="form-group row ">
 			    <label for="last_name" class="col-sm-3 mt-3 col-form-label">Apellido</label>
 			    {!! Form::text('last_name', $lastNameValue, array(
 			    	'placeholder' => 'Apellido',
-			    	'class' => 'form-control mt-3 col-sm-8', 
-			    	'required' => true
+			    	'class' => 'form-control mt-3 col-sm-8'
 			    )) !!}
 		  	</div>
 		  	<div class="form-group row">
-			    <label for="birthaday" class="col-sm-3 mt-3 col-form-label" >Fecha de nacimiento</label>
+			    <label for="birthday" class="col-sm-3 mt-3 col-form-label" >Fecha de nacimiento</label>
 		  	</div>
 		  	<div class="form-group row">
 			    <label for="gender" class="col-sm-3 mt-3 col-form-label">Género</label>
@@ -56,7 +58,7 @@
       			@endif
 		  	</div>
 		  	<div class="form-group row">
-			    <label for="birthaday" class="col-sm-3 mt-3 col-form-label" >Tipo de documento</label>
+			    <label for="type_document" class="col-sm-3 mt-3 col-form-label" >Tipo de documento</label>
 			    @if($typeDocumentValue == 'a')
 		    		{!! Form::select('type_document', array('dni' => 'DNI', 'a' => 'A'), 'a', ['class'=>'form-control mt-3 col-sm-8']) !!}
 	      		@else
@@ -64,27 +66,24 @@
       			@endif
 		  	</div>
 		  	<div class="form-group row ">
-			    <label for="first_name"  class="col-sm-3 mt-3 col-form-label">Número de documento</label>
+			    <label for="document_number"  class="col-sm-3 mt-3 col-form-label">Número de documento</label>
 			    {!! Form::text('document_number', $documentNumberValue, array(
 			    	'placeholder' => 'Número de documento',
-			    	'class' => 'form-control mt-3 col-sm-8', 
-			    	'required' => true
+			    	'class' => 'form-control mt-3 col-sm-8'
 			    )) !!}
 			</div>
 			<div class="form-group row ">
-			    <label for="first_name"  class="col-sm-3 mt-3 col-form-label">Dirección</label>
+			    <label for="address"  class="col-sm-3 mt-3 col-form-label">Dirección</label>
 			    {!! Form::text('address', $addressValue, array(
 			    	'placeholder' => 'Teléfono',
-			    	'class' => 'form-control mt-3 col-sm-8', 
-			    	'required' => true
+			    	'class' => 'form-control mt-3 col-sm-8'
 			    )) !!}
 			</div>
 			<div class="form-group row ">
-			    <label for="first_name"  class="col-sm-3 mt-3 col-form-label">Teléfono</label>
+			    <label for="phone"  class="col-sm-3 mt-3 col-form-label">Teléfono</label>
 			    {!! Form::text('phone', $phoneValue, array(
 			    	'placeholder' => 'Teléfono',
-			    	'class' => 'form-control mt-3 col-sm-8', 
-			    	'required' => true
+			    	'class' => 'form-control mt-3 col-sm-8'
 			    )) !!}
 			</div>
 			<div class="text-center">

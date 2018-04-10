@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Patient;
 use Illuminate\Http\Request;
+use App\Http\Requests\PatientRequest;
+
 
 class PatientController extends Controller
 {
@@ -35,7 +37,7 @@ class PatientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PatientRequest $request)
     {
         $patient = new Patient();
 
@@ -49,6 +51,8 @@ class PatientController extends Controller
         $patient->document_number = $request->document_number;
 
         $patient->save();
+
+        return redirect()->route('patient.show',$patient->id);
     }
 
     /**
@@ -80,7 +84,7 @@ class PatientController extends Controller
      * @param  \App\Patient  $patient
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Patient $patient)
+    public function update(PatientRequest $request, Patient $patient)
     {
         //
     }

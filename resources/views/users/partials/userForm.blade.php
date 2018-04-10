@@ -2,6 +2,8 @@
 <section class="row mx-auto mt-5 ">
 	<div class="login col-md-7  mx-auto mt-4 mb-4 pb-5 pt-5 pr-5 pl-5 border rounded ">
 
+		@include('partials.error')
+
 		@if(isset($user))
 			@php 
 				$titulo = 'Editar usuario';
