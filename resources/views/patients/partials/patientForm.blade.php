@@ -8,7 +8,7 @@
 				$title = 'Editar paciente';
 				$firstNameValue = 'value='.$patient->first_name;
 				$lastNameValue = 'value='.$patient->last_name;
-				$birthdateValue ='value='.$patient->birthday;
+				$birthdayValue ='value='.$patient->birthday;
 				$genderValue = 'value='.$patient->gender;
 				$typeDocumentValue = 'value='.$patient->type_document;
 				$documentNumberValue = 'value='.$patient->document_number;
@@ -20,7 +20,7 @@
 				$title = 'Nuevo paciente';
 				$firstNameValue = null;
 				$lastNameValue = null;
-				$birthdateValue = null;
+				$birthdayValue = null;
 				$genderValue = null;
 				$typeDocumentValue = null;
 				$documentNumberValue = null;
@@ -47,7 +47,8 @@
 			    )) !!}
 		  	</div>
 		  	<div class="form-group row">
-			    <label for="birthday" class="col-sm-3 mt-3 col-form-label" >Fecha de nacimiento</label>
+			    <label for="birthday" class="col-sm-3 mt-3 col-form-label" >Fechaaa de nacimiento</label>
+			    <input type="date" min="2005-01-01" class="form-control mt-3 col-sm-8" id="birthday" name="birthday" value="{{ birthdayValue }}" required>
 		  	</div>
 		  	<div class="form-group row">
 			    <label for="gender" class="col-sm-3 mt-3 col-form-label">Género</label>
@@ -75,7 +76,7 @@
 			<div class="form-group row ">
 			    <label for="address"  class="col-sm-3 mt-3 col-form-label">Dirección</label>
 			    {!! Form::text('address', $addressValue, array(
-			    	'placeholder' => 'Teléfono',
+			    	'placeholder' => 'Dirección',
 			    	'class' => 'form-control mt-3 col-sm-8'
 			    )) !!}
 			</div>

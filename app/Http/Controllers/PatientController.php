@@ -45,7 +45,7 @@ class PatientController extends Controller
         $patient->last_name = $request->last_name;
         $patient->address = $request->address;
         $patient->phone = $request->phone;
-        $patient->birthday  = '1980-01-01';
+        $patient->birthday  = $request->birthday;
         $patient->gender = $request->gender;
         $patient->type_document = $request->type_document;
         $patient->document_number = $request->document_number;
