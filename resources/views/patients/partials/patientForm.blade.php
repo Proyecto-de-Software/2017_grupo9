@@ -74,7 +74,7 @@
 			    )) !!}
 			</div>
 			<div class="form-group row ">
-			    <label for="address"  class="col-sm-3 mt-3 col-form-label">Dirección</label>
+			    <label for="address2"  class="col-sm-3 mt-3 col-form-label">Dirección2</label>
 			    {!! Form::text('address', $addressValue, array(
 			    	'placeholder' => 'Dirección',
 			    	'class' => 'form-control mt-3 col-sm-8'
