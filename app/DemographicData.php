@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class DemographicData extends Model
 {
@@ -10,6 +11,10 @@ class DemographicData extends Model
         //'name', 'email', 'password',
         'electricity', 'pet', 'refrigerator', 'created_at', 'update_at',
     ];
+
+    public static function getPatientId($id){
+       $id = DB::table('demographic_datas')->where('patient_id', $id)->value('patient_id');
+    }
 
     public function patient(){
         return $this->hasOne('\App\Patient');

@@ -8,7 +8,7 @@
 				$title = 'Editar paciente';
 				$firstNameValue = 'value='.$patient->first_name;
 				$lastNameValue = 'value='.$patient->last_name;
-				$birthdayValue ='value='.$patient->birthday;
+				$birthdateValue ='value='.$patient->birthday;
 				$genderValue = 'value='.$patient->gender;
 				$typeDocumentValue = 'value='.$patient->type_document;
 				$documentNumberValue = 'value='.$patient->document_number;
@@ -20,7 +20,7 @@
 				$title = 'Nuevo paciente';
 				$firstNameValue = null;
 				$lastNameValue = null;
-				$birthdayValue = null;
+				$birthdateValue = null;
 				$genderValue = null;
 				$typeDocumentValue = null;
 				$documentNumberValue = null;
@@ -47,8 +47,8 @@
 			    )) !!}
 		  	</div>
 		  	<div class="form-group row">
-			    <label for="birthday" class="col-sm-3 mt-3 col-form-label" >Fechaaa de nacimiento</label>
-			    <input type="date" min="2005-01-01" class="form-control mt-3 col-sm-8" id="birthday" name="birthday" value="{{ birthdayValue }}" required>
+			    <label for="birthdate" class="col-sm-3 mt-3 col-form-label" >Fecha de nacimiento</label>
+			    <input type="date" min="2005-01-01" class="form-control mt-3 col-sm-8" id="birthdate" name="birthdate" value="{{ $birthdateValue }}" required>
 		  	</div>
 		  	<div class="form-group row">
 			    <label for="gender" class="col-sm-3 mt-3 col-form-label">Género</label>

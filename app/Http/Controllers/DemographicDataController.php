@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DemographicData;
 use Illuminate\Http\Request;
+use App\Http\Requests\DemographicDataRequest;
 
 class DemographicDataController extends Controller
 {
@@ -33,7 +34,7 @@ class DemographicDataController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DemographicDataRequest $request)
     {
         //
     }
@@ -67,7 +68,7 @@ class DemographicDataController extends Controller
      * @param  \App\DemographicData  $demographicData
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, DemographicData $demographicData)
+    public function update(Request $request, DemographicDataRequest $demographicData)
     {
         //
     }

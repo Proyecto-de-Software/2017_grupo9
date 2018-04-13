@@ -28,7 +28,7 @@
 				    		<a href='{{url("/patient/$patient->id")}}' name="_method" value="delete" class="btn btn-outline-success btn-own-info">Eliminar</a>
 						</td>
 				      	<td>
-				      		<a href='{{url("/patient/$patient->id")}}' class="btn btn-outline-success btn-own-info">Mas información</a>
+				      		<a href='{{url("patient/$patient->id")}}' class="btn btn-outline-success btn-own-info">Mas información</a>
 				      	</td>
 				    </tr>
 			     @endforeach

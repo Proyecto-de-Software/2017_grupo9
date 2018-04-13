@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Patient;
+use App\DemographicData;
 use Illuminate\Http\Request;
 use App\Http\Requests\PatientRequest;
 
@@ -45,7 +46,7 @@ class PatientController extends Controller
         $patient->last_name = $request->last_name;
         $patient->address = $request->address;
         $patient->phone = $request->phone;
-        $patient->birthday  = $request->birthday;
+        $patient->birthdate  = $request->birthdate;
         $patient->gender = $request->gender;
         $patient->type_document = $request->type_document;
         $patient->document_number = $request->document_number;
@@ -61,9 +62,11 @@ class PatientController extends Controller
      * @param  \App\Patient  $patient
      * @return \Illuminate\Http\Response
      */
-    public function show(Patient $patient)
+    public function show($id)
     {
-        //
+        $patient = Patient::find($id);
+        DemographicData::getPatientId($id);
+        return view('patients.show')->with('patient',$patient);
     }
 
     /**
@@ -97,6 +100,8 @@ class PatientController extends Controller
      */
     public function destroy(Patient $patient)
     {
-        //
+        $patient = Patient::find($id);
+        $patient->delete();
+        return redirect()->route('patient.index');
     }
 }
