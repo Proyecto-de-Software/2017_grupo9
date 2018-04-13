@@ -6,14 +6,14 @@
 		@if(isset($patient))
 			@php 
 				$title = 'Editar paciente';
-				$firstNameValue = 'value='.$patient->first_name;
-				$lastNameValue = 'value='.$patient->last_name;
-				$birthdateValue ='value='.$patient->birthday;
-				$genderValue = 'value='.$patient->gender;
-				$typeDocumentValue = 'value='.$patient->type_document;
-				$documentNumberValue = 'value='.$patient->document_number;
-				$addressValue = 'value='.$patient->address;
-				$phoneValue = 'value='.$patient->phone;
+				$firstNameValue = $patient->first_name;
+				$lastNameValue = $patient->last_name;
+				$birthdateValue =$patient->birthday;
+				$genderValue = $patient->gender;
+				$typeDocumentValue = $patient->type_document;
+				$documentNumberValue = $patient->document_number;
+				$addressValue = $patient->address;
+				$phoneValue = $patient->phone;
 			@endphp
 		@else
 			@php 
@@ -33,25 +33,37 @@
 		{!! Form::open(['url' => '/patient', 'method' => 'post']) !!}
 	
 			<div class="form-group row ">
-			    <label for="first_name"  class="col-sm-3 mt-3 col-form-label">Nombre</label>
-			    {!! Form::text('first_name', $firstNameValue, array(
+			    {!! Form::label('first_name', 'Nombre',[
+					    'class'=>'col-sm-3 mt-3 col-form-label'
+					    ]) 
+			    !!}
+			    {!! Form::text('first_name', $firstNameValue, [
 			    	'placeholder' => 'Nombre',
 			    	'class' => 'form-control mt-3 col-sm-8'
-			    )) !!}
+			    ]) !!}
 			</div>
 		  	<div class="form-group row ">
-			    <label for="last_name" class="col-sm-3 mt-3 col-form-label">Apellido</label>
+			    {!! Form::label('last_name', 'Apellido',[
+					    'class'=>'col-sm-3 mt-3 col-form-label'
+					    ]) 
+				!!}
 			    {!! Form::text('last_name', $lastNameValue, array(
 			    	'placeholder' => 'Apellido',
 			    	'class' => 'form-control mt-3 col-sm-8'
 			    )) !!}
 		  	</div>
 		  	<div class="form-group row">
-			    <label for="birthdate" class="col-sm-3 mt-3 col-form-label" >Fecha de nacimiento</label>
+			    {!! Form::label('birthdate', 'Fecha de nacimiento',[
+					    'class'=>'col-sm-3 mt-3 col-form-label'
+					    ]) 
+				!!}
 			    <input type="date" min="2005-01-01" class="form-control mt-3 col-sm-8" id="birthdate" name="birthdate" value="{{ $birthdateValue }}" required>
 		  	</div>
 		  	<div class="form-group row">
-			    <label for="gender" class="col-sm-3 mt-3 col-form-label">Género</label>
+		  		{!! Form::label('gender', 'Género',[
+					    'class'=>'col-sm-3 mt-3 col-form-label'
+					    ]) 
+				!!}
 		    	@if($genderValue == 'm')
 		    		{!! Form::select('gender', array('m' => 'Masculino', 'f' => 'Femenino'), 'm', ['class'=>'form-control mt-3 col-sm-8']) !!}
 	      		@else
@@ -59,7 +71,10 @@
       			@endif
 		  	</div>
 		  	<div class="form-group row">
-			    <label for="type_document" class="col-sm-3 mt-3 col-form-label" >Tipo de documento</label>
+		  		{!! Form::label('type_document', 'Tipo de documento',[
+					    'class'=>'col-sm-3 mt-3 col-form-label'
+					    ]) 
+				!!}
 			    @if($typeDocumentValue == 'a')
 		    		{!! Form::select('type_document', array('dni' => 'DNI', 'a' => 'A'), 'a', ['class'=>'form-control mt-3 col-sm-8']) !!}
 	      		@else
@@ -67,21 +82,30 @@
       			@endif
 		  	</div>
 		  	<div class="form-group row ">
-			    <label for="document_number"  class="col-sm-3 mt-3 col-form-label">Número de documento</label>
+		  		{!! Form::label('document_number', 'Número de documento',[
+					    'class'=>'col-sm-3 mt-3 col-form-label'
+					    ]) 
+				!!}
 			    {!! Form::text('document_number', $documentNumberValue, array(
 			    	'placeholder' => 'Número de documento',
 			    	'class' => 'form-control mt-3 col-sm-8'
 			    )) !!}
 			</div>
 			<div class="form-group row ">
-			    <label for="address2"  class="col-sm-3 mt-3 col-form-label">Dirección2</label>
+		  		{!! Form::label('address', 'Dirección',[
+					    'class'=>'col-sm-3 mt-3 col-form-label'
+					    ]) 
+				!!}
 			    {!! Form::text('address', $addressValue, array(
 			    	'placeholder' => 'Dirección',
 			    	'class' => 'form-control mt-3 col-sm-8'
 			    )) !!}
 			</div>
 			<div class="form-group row ">
-			    <label for="phone"  class="col-sm-3 mt-3 col-form-label">Teléfono</label>
+				{!! Form::label('phone', 'Teléfono',[
+					    'class'=>'col-sm-3 mt-3 col-form-label'
+					    ]) 
+				!!}
 			    {!! Form::text('phone', $phoneValue, array(
 			    	'placeholder' => 'Teléfono',
 			    	'class' => 'form-control mt-3 col-sm-8'
