@@ -5,10 +5,12 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Rol;
+use Zizaco\Entrust\Traits\EntrustUserTrait;//importamos la clase HasRole
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use EntrustUserTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -28,7 +30,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-    public function rols(){
-        return $this->belongsToMany('\App\Rol','user_rol');
+    public function roles(){
+        return $this->belongsToMany('\App\Role','role_user');
     }
 }
