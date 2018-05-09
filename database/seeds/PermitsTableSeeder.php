@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class PermitsTableSeeder extends Seeder
+class PermissionsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,11 +12,11 @@ class PermitsTableSeeder extends Seeder
     public function run()
     {
     	$resources = ['patient', 'user', 'demographicData', 'configuration','medicalCheckup' ];
-    	$permits = ['show','index','update','destroy', 'new'];
+    	$permission = ['show','index','update','destroy', 'new'];
     	foreach ($resources as $resource) {
-    		foreach ($permits as $permit) {
-    			$name = $resource.'_'.$permit;
-    			DB::table('permits')->insert(array('name' =>$name));
+    		foreach (permissions as permission) {
+    			$name = $resource.'_'.permission;
+    			DB::table('permission')->insert(array('name' =>$name));
     		}
     	}
     }
