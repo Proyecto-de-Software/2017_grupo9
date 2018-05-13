@@ -106,14 +106,14 @@
 					<div class="form-group row form-check " >
 						<div class="col-sm-2 mt-3 col-form-label ">Roles:</div>
 						<div class="col-sm-9 mt-3 ">
-							@if(!isset($userRols))
+							@if(!isset($userRoles))
 								@php
-									$userRols = array();
+									$userRoles = array();
 								@endphp
 							@endif
-							@foreach($rols as $rol)
-								{!! Form::label('rol', $rol->name) !!}
-								{!! Form::checkbox('rol[]', $rol->id, in_array($rol->id,$userRols), array(
+							@foreach($roles as $role)
+								{!! Form::label('role', $role->name) !!}
+								{!! Form::checkbox('role[]', $role->id, in_array($role->id,$userRoles), array(
 								 	'class' => 'checkbox col-sm-1 '
 								 	)) 
 							 	!!}	

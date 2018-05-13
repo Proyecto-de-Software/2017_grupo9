@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-use App\Rol;
-use App\UserRol;
+use App\Role;
 use App\Http\Requests\UserRequest;
 
 class UserController extends Controller
@@ -19,8 +18,8 @@ class UserController extends Controller
 
     public function create()
     {
-        $rols = Rol::get();
-        return view('users.create')->with('rols',$rols);
+        $roles = Role::get();
+        return view('users.create')->with('roles',$roles);
     }
 
     public function store(UserRequest $request)
@@ -34,8 +33,8 @@ class UserController extends Controller
         $user->password = $request->input('password');
         $user->email = $request->input('email');
         $user->save();
-        foreach($request->input('rol') as $idRol){
-            $user->rols()->attach($idRol);
+        foreach($request->input('role') as $idRole){
+            $user->roles()->attach($idRole);
         }
         $user->save();
        
@@ -46,22 +45,22 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        $rols = $user->rols()->get()->map(function($rol,$key){
+        $role = $user->role()->get()->map(function($rol,$key){
                                              return $rol->name;
                                              })->toArray();
         
-        return view('users.show')->with('user',$user)->with('rols',$rols);
+        return view('users.show')->with('user',$user)->with('role',$role);
     }
 
     public function edit($id)
     {
-        $rols = Rol::get();
+        $roles = Role::get();
         $user = User::find($id);
-        $userRols = $user->rols()->get()->map(function($rol,$key){
-                                                return $rol->id; 
+        $userRole = $user->roles()->get()->map(function($role,$key){
+                                                return $role->id; 
                                             })->toArray();
         
-        return view('users.edit')->with('user',$user)->with('rols', $rols)->with('userRols',$userRols);
+        return view('users.edit')->with('user',$user)->with('roles', $roles)->with('userRole',$userRole);
     }
 
     public function update(UserRequest $request, $id)
@@ -75,12 +74,12 @@ class UserController extends Controller
         $user->email = $request->input('email');
         
 
-        $actualRols = $user->rols()->get()->toArray();
-        foreach ($actualRols as $actualRol) {
-            $user->rols()->detach($actualRol['id']);
+        $actualRole = $user->role()->get()->toArray();
+        foreach ($actualrole as $actualRol) {
+            $user->role()->detach($actualRole['id']);
         }
-        foreach($request->input('rol') as $idRol){
-            $user->rols()->attach($idRol);
+        foreach($request->input('role') as $e){
+            $user->role()->attach($idRole);
         }
         $user->save();
         

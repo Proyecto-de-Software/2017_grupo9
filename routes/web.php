@@ -38,3 +38,4 @@ Route::get('/api', function($url, $id=''){
 	
 	return json_decode($resp->getBody()->getContents());
 });
+

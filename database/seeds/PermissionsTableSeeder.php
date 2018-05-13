@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
+use App\Permission;
 class PermissionsTableSeeder extends Seeder
 {
     /**
@@ -12,11 +12,11 @@ class PermissionsTableSeeder extends Seeder
     public function run()
     {
     	$resources = ['patient', 'user', 'demographicData', 'configuration','medicalCheckup' ];
-    	$permission = ['show','index','update','destroy', 'new'];
+    	$permissions = ['show','index','update','destroy', 'new'];
     	foreach ($resources as $resource) {
-    		foreach (permissions as permission) {
-    			$name = $resource.'_'.permission;
-    			DB::table('permission')->insert(array('name' =>$name));
+    		foreach ($permissions as $permission) {
+    			$name = $resource.'_'.$permission;
+    			DB::table('permissions')->insert(array('name' =>$name));
     		}
     	}
     }
