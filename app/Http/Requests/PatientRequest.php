@@ -30,6 +30,7 @@ class PatientRequest extends FormRequest
             'gender' => 'required',
             'type_document' => 'required',
             'document_number' => 'required',
+            'health_insurance' => 'required',
             'address' => 'required',
             'phone' => 'required'
         ];

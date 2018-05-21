@@ -12,6 +12,7 @@
 				$genderValue = $patient->gender;
 				$typeDocumentValue = $patient->type_document;
 				$documentNumberValue = $patient->document_number;
+				$healthInsuranceValue = $patient->health_insurance;
 				$addressValue = $patient->address;
 				$phoneValue = $patient->phone;
 			@endphp
@@ -24,6 +25,7 @@
 				$genderValue = null;
 				$typeDocumentValue = null;
 				$documentNumberValue = null;
+				$healthInsuranceValue = null;
 				$addressValue = null;
 				$phoneValue = null;
 			@endphp
@@ -91,6 +93,15 @@
 			    	'class' => 'form-control mt-3 col-sm-8'
 			    )) !!}
 			</div>
+			<div class="form-group row">
+		  		{!! Form::label('health_insurance', 'Obra social',[
+					    'class'=>'col-sm-3 mt-3 col-form-label'
+					    ]) 
+				!!}
+				@foreach ($healthsInsurance as $healthInsurance)
+				    {{ $healthInsurance->id }}
+				@endforeach
+		  	</div>
 			<div class="form-group row ">
 		  		{!! Form::label('address', 'Dirección',[
 					    'class'=>'col-sm-3 mt-3 col-form-label'

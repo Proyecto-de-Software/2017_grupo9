@@ -6,6 +6,7 @@ use App\Patient;
 use App\DemographicData;
 use Illuminate\Http\Request;
 use App\Http\Requests\PatientRequest;
+use App\Http\Controllers\HealthInsuranceController;
 
 
 class PatientController extends Controller
@@ -29,7 +30,9 @@ class PatientController extends Controller
      */
     public function create()
     {
-        return view('patients.create');
+        $healthInsurance = new HealthInsuranceController();
+        $healthsInsurance = $healthInsurance->get();
+        return view('patients.create')->with('healthsInsurance',$healthsInsurance);
     }
 
     /**
@@ -50,6 +53,7 @@ class PatientController extends Controller
         $patient->gender = $request->gender;
         $patient->type_document = $request->type_document;
         $patient->document_number = $request->document_number;
+        $patient->health_insurance = $request->health_insurance;
 
         $patient->save();
 

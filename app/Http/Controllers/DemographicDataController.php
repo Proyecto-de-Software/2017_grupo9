@@ -83,4 +83,25 @@ class DemographicDataController extends Controller
     {
         //
     }
+
+    public function getAllTypes(){
+        $types = [];
+        $types['typeLivingPlace'] = GuzzleAppController::get('tipo-vivienda');
+        $types['typeWater'] = GuzzleAppController::get('tipo-agua');
+        $types['typeHeating'] = GuzzleAppController::get('tipo-calefaccion');
+        
+        return $types;
+    }
+
+    public function getTypeLivingPlace($id){
+        return GuzzleAppController::get('tipo-vivienda',$id);
+    }
+
+    public function getTypeHeating($id){
+        return GuzzleAppController::get('tipo-calefaccion',$id);
+    }
+
+    public function getTypeWater($id){
+        return GuzzleAppController::get('tipo-agua',$id);
+    }
 }
