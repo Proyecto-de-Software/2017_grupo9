@@ -95,12 +95,18 @@
 			</div>
 			<div class="form-group row">
 		  		{!! Form::label('health_insurance', 'Obra social',[
-					    'class'=>'col-sm-3 mt-3 col-form-label'
-					    ]) 
+				    'class'=>'col-sm-3 mt-3 col-form-label'
+				    ]) 
 				!!}
-				@foreach ($healthsInsurance as $healthInsurance)
-				    {{ $healthInsurance->id }}
-				@endforeach
+				<select class="form-control mt-3 col-sm-8" name="health_insurance">
+					@foreach($healthsInsurance as $value)
+						@if($healthInsuranceValue == $value->id)
+							<option value="{{ $value->id }}" selected>{{ $value->nombre }}</option>
+						@else
+							<option value="{{ $value->id }}">{{ $value->nombre }}</option>
+						@endif
+					@endforeach
+				</select>
 		  	</div>
 			<div class="form-group row ">
 		  		{!! Form::label('address', 'Dirección',[
