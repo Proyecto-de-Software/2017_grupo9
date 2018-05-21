@@ -12,6 +12,10 @@ use GuzzleHttp\Client;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::post('/user/{id}/block',['as' => 'user.block', 'uses' => 'UserController@block']);
+Route::post('/user/{id}/unblock',['as' => 'user.unblock', 'uses' => 'UserController@unblock']);
+
 Route::resource('user', 'UserController');
 Route::resource('patient', 'PatientController');
 Route::resource('configuration', 'ConfigurationController');
@@ -25,7 +29,7 @@ Route::post('/user/{id}/unblock',['as' => 'user.unblock', 'uses' => 'UserControl
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('base');
 });
 
 Route::get('/api', function($url, $id=''){
