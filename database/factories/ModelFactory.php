@@ -34,6 +34,7 @@ $factory->define(App\Patient::class, function ($faker) {
         'gender' => $genders[array_rand($genders, 1)],
         'type_document' => 'dni',
         'document_number' => $faker->numberBetween($min = 30000000, $max = 40000000),
+        'health_insurance' => '1',
 
     ];
 });
