@@ -23,6 +23,7 @@ class CreatePatientsTable extends Migration
             $table->enum('gender',array('m', 'f'));
             $table->string('type_document');
             $table->integer('document_number')->unique();
+            $table->integer('health_insurance');
             $table->timestamps();
         });
     }

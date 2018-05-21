@@ -1,6 +1,5 @@
 <?php
 
-use GuzzleHttp\Client;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,14 +27,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/api', function($url, $id=''){
-	$client = new Client([
-	    'base_uri' => 'https://api-referencias.proyecto2017.linti.unlp.edu.ar',
-	    'timeout'  => 2.0,
-	]);
-
-	$response = $client->request('GET','/$url'.'/$id');
-	
-	return json_decode($resp->getBody()->getContents());
-});
 

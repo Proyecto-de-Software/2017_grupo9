@@ -82,4 +82,12 @@ class HealthInsuranceController extends Controller
     {
         //
     }
+
+    public function get(){
+        return GuzzleAppController::get('obra-social');
+    }
+
+    public function getHealthInsurance($id){
+        return GuzzleAppController::get('obra-social','/'.$id);
+    }
 }
