@@ -42,7 +42,7 @@
 			    <tr>
 	     			 <th scope="row">Roles: </th>
 	     			 <td>
-	     			 	@foreach($rols as $rol)
+	     			 	@foreach($roles as $rol)
 	     			 		{{$rol}}
 	     			 	@endforeach
 	     			 </td>

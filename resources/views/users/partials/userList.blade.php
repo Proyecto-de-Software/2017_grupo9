@@ -13,7 +13,7 @@
 		  	</thead>
 		  	<tbody>
 			  	@foreach($users as $user)
-				    <tr>
+				    <tr id="{{ $user->id }}" >
 				    	<td>{{ $user->username }}</td>
 				    	<td>
 				    		<a href='{{url("/user/$user->id/edit")}}' class="btn btn-outline-success btn-own-info">Editar</a>
@@ -23,14 +23,16 @@
 									array(
 										'route' => ['user.destroy',$user->id],
 										'method' => 'DELETE',
-										'onsubmit' => 'return confirm("Seguro?")'), 
+										'class' => 'eliminar',
+										'id' => "$user->id"),
+										
 									array(
 										'role' => 'form')
 									)
 								!!}
 									{!! Form::button('Eliminar', array(
 											'type' => 'submit',
-									 		'class' => 'btn btn-outline-success btn-own-info'
+									 		'class' => 'btn btn-outline-success btn-own-info eliminar'
 									 )) 
 									!!} 
 								{!! Form::close() !!}

@@ -45,11 +45,11 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        $role = $user->role()->get()->map(function($rol,$key){
+        $roles = $user->roles()->get()->map(function($rol,$key){
                                              return $rol->name;
                                              })->toArray();
         
-        return view('users.show')->with('user',$user)->with('role',$role);
+        return view('users.show')->with('user',$user)->with('roles',$roles);
     }
 
     public function edit($id)
@@ -91,7 +91,8 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $user->delete();
-        return redirect()->route('user.index');
+        return "hola";
+
     }
 
     public function block($id){

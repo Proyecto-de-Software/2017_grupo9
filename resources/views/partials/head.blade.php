@@ -9,7 +9,8 @@
 		
 			<link href="{{ asset('bootstrap/css/bootstrap.css') }}" rel="stylesheet" type="text/css" >
 			
-
+			<script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+			<script src="{{ asset('js/script.js') }}"></script>
 			<script src="{{ asset('js/jquery.js') }}"></script>
 			<script src="{{ asset('js/jquery-ui.min.js') }}"></script>
 			<script src="{{ asset('js/canvasjs.min.js') }}"></script>

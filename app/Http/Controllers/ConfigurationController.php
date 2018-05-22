@@ -46,7 +46,7 @@ class ConfigurationController extends Controller
      */
     public function show(Configuration $configuration)
     {
-        //
+        return $configuration;
     }
 
     /**
