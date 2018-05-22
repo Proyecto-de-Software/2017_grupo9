@@ -47,7 +47,12 @@ class DemographicDataController extends Controller
      */
     public function show(DemographicData $demographicData)
     {
-        //
+        $types = getAllTypes();
+        $typeHeating = getTypeHeating($demographicData->typeHeating_id);
+        $typeWater = getTypeWater($demographicData->typeWater_id);
+        $typeLivingPlace = getTypeLivingPlace($demographicData->typeLivingPlace_id); 
+        $typeDocument = TypeDocumentController::find($patient->type_document);
+        return view('patients.show')->with('patient',$patient)->with('typeHeating',$typeHeating)->with('typeWater',$typeWater)->with('typeLivingPlace',$typeLivingPlace);
     }
 
     /**

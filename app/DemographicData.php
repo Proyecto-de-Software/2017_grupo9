@@ -9,7 +9,7 @@ class DemographicData extends Model
 {
     protected $fillable = [
         //'name', 'email', 'password',
-        'electricity', 'pet', 'refrigerator', 'created_at', 'update_at',
+        'electricity', 'pet', 'refrigerator', 'typeHeating_id', 'typeLivingPlace_id', 'typeWater_id', 'created_at', 'update_at',
     ];
 
     public static function getPatientId($id){

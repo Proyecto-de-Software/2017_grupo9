@@ -36,11 +36,11 @@
 			    </tr>
 			    <tr>
 	     			 <th scope="row">Obra social</th>
-	     			 <td>{{ obraSocial.nombre }}</td>
+	     			 <td>{{ $healthInsurance->nombre }}</td>
 			    </tr>
 			    <tr>
 	     			 <th scope="row">Tipo de documento</th>
-	     			 <td>{{ tipoDeDocumento.nombre }}</td>
+	     			 <td>{{ $typeDocument->nombre }}</td>
 			    </tr>
 			    <tr>
 	     			 <th scope="row">Nro de documento</th>
@@ -56,13 +56,15 @@
 				<a href='{{url("/patient/$patient->id/edit")}}' class="btn btn-outline-success btn-own-info">Editar</a>
 			</div>
 			<div class="text-center col-md-4 mx-auto">
-				<a href='{{url("/patient/$patient->id/edit")}}' class="btn btn-outline-success btn-own-info">Ver datos demográficos</a>
+				<a href='{{url("/demographicData/$patient->")}}' class="btn btn-outline-success btn-own-info">Ver datos demográficos</a>
 			</div>
 			
 			<div class="text-center col-md-4 mx-auto">
-				<a href="/index.php/paciente/{{paciente.id }}/historiaClinica" class="btn btn-outline-success btn-own-info">Historia clínica</a>
+				<a href="" class="btn btn-outline-success btn-own-info">Historia clínica</a>
 			</div>
 		</div>
 	</div>
 
 </section>
+
+@stop

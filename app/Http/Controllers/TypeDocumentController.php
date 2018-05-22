@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 
 class TypeDocumentController extends Controller
 {
-	 public function get(){
+	 public static function get(){
         return GuzzleAppController::get('tipo-documento');
     }
 
-    public function getHealthInsurance($id){
+    public static function find($id){
         return GuzzleAppController::get('tipo-documento','/'.$id);
     }
 }

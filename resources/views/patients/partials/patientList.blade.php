@@ -25,8 +25,22 @@
 				    		<a href='{{url("/patient/$patient->id/edit")}}' class="btn btn-outline-success btn-own-info">Editar</a>
 				    	</td>
 				    	<td>
-				    		<a href='{{url("/patient/$patient->id")}}' name="_method" value="delete" class="btn btn-outline-success btn-own-info">Eliminar</a>
-						</td>
+				    		{!! Form::open(
+									array(
+										'route' => ['patient.destroy',$patient->id],
+										'method' => 'DELETE',
+										'onsubmit' => 'return confirm("Seguro?")'), 
+									array(
+										'role' => 'form')
+									)
+								!!}
+									{!! Form::button('Eliminar', array(
+											'type' => 'submit',
+									 		'class' => 'btn btn-outline-success btn-own-info'
+									 )) 
+									!!} 
+								{!! Form::close() !!}
+				    	</td>
 				      	<td>
 				      		<a href='{{url("patient/$patient->id")}}' class="btn btn-outline-success btn-own-info">Mas información</a>
 				      	</td>

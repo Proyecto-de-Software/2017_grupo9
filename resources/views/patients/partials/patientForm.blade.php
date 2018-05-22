@@ -6,9 +6,11 @@
 		@if(isset($patient))
 			@php 
 				$title = 'Editar paciente';
+				$url = '/patient/'.$patient->id;
+				$method = 'put';
 				$firstNameValue = $patient->first_name;
 				$lastNameValue = $patient->last_name;
-				$birthdateValue =$patient->birthday;
+				$birthdateValue = $patient->birthdate;
 				$genderValue = $patient->gender;
 				$typeDocumentValue = $patient->type_document;
 				$documentNumberValue = $patient->document_number;
@@ -19,6 +21,8 @@
 		@else
 			@php 
 				$title = 'Nuevo paciente';
+				$url = '/patient';
+				$method = 'post';
 				$firstNameValue = null;
 				$lastNameValue = null;
 				$birthdateValue = null;
@@ -32,8 +36,8 @@
 		@endif
 		
 		<h3 class="card-header text-center myHeader"> {{ $title }}</h3>
-		{!! Form::open(['url' => '/patient', 'method' => 'post']) !!}
 	
+		{!! Form::open(['url' => $url, 'method' => $method]) !!} 
 			<div class="form-group row ">
 			    {!! Form::label('first_name', 'Nombre',[
 					    'class'=>'col-sm-3 mt-3 col-form-label'
@@ -77,11 +81,15 @@
 					    'class'=>'col-sm-3 mt-3 col-form-label'
 					    ]) 
 				!!}
-			    @if($typeDocumentValue == 'a')
-		    		{!! Form::select('type_document', array('dni' => 'DNI', 'a' => 'A'), 'a', ['class'=>'form-control mt-3 col-sm-8']) !!}
-	      		@else
-	      			{!! Form::select('type_document', array('dni' => 'DNI', 'a' => 'A'), 'dni', ['class'=>'form-control mt-3 col-sm-8']) !!}
-      			@endif
+				<select class="form-control mt-3 col-sm-8" name="type_document">
+					@foreach($typesDocument as $value)
+						@if($typeDocumentValue == $value->id)
+							<option value="{{ $value->id }}" selected>{{ $value->nombre }}</option>
+						@else
+							<option value="{{ $value->id }}">{{ $value->nombre }}</option>
+						@endif
+					@endforeach
+				</select>
 		  	</div>
 		  	<div class="form-group row ">
 		  		{!! Form::label('document_number', 'Número de documento',[
@@ -128,9 +136,15 @@
 			    	'class' => 'form-control mt-3 col-sm-8'
 			    )) !!}
 			</div>
-			<div class="text-center">
-				<button type="submit" class="btn btn-outline-success btn-own-info">Agregar</button>
-			</div>
+			@if(isset($patient))
+				<div class="text-center">
+					<button type="submit" class="btn btn-outline-success btn-own-info">Editar</button>
+				</div>	
+			@else
+				<div class="text-center">
+					<button type="submit" class="btn btn-outline-success btn-own-info">Agregar</button>
+				</div>	
+			@endif
 		{!! Form::close() !!}
 	</div>
 </section>

@@ -30,9 +30,7 @@ class PatientController extends Controller
      */
     public function create()
     {
-        $healthInsurance = new HealthInsuranceController();
-        $healthsInsurance = $healthInsurance->get();
-        return view('patients.create')->with('healthsInsurance',$healthsInsurance);
+        return view('patients.create');
     }
 
     /**
@@ -66,11 +64,11 @@ class PatientController extends Controller
      * @param  \App\Patient  $patient
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Patient $patient)
     {
-        $patient = Patient::find($id);
-        DemographicData::getPatientId($id);
-        return view('patients.show')->with('patient',$patient);
+        $healthInsurance = HealthInsuranceController::find($patient->health_insurance);
+        $typeDocument = TypeDocumentController::find($patient->type_document);
+        return view('patients.show')->with('patient',$patient)->with('healthInsurance',$healthInsurance)->with('typeDocument',$typeDocument);
     }
 
     /**
@@ -81,7 +79,9 @@ class PatientController extends Controller
      */
     public function edit(Patient $patient)
     {
-        return view('patients.edit')->with('patient',$patient);
+        $healthsInsurance = HealthInsuranceController::get();
+        $typesDocument = TypeDocumentController::get();
+        return view('patients.edit')->with('patient',$patient)->with('healthsInsurance',$healthsInsurance)->with('typesDocument',$typesDocument);
     }
 
     /**
@@ -93,7 +93,19 @@ class PatientController extends Controller
      */
     public function update(PatientRequest $request, Patient $patient)
     {
-        //
+        $patient->first_name = $request->input('first_name');
+        $patient->last_name = $request->input('last_name');
+        $patient->address = $request->input('address');
+        $patient->phone = $request->input('phone');
+        $patient->birthdate = $request->input('birthdate');
+        $patient->gender = $request->input('gender');
+        $patient->type_document = $request->input('type_document');
+        $patient->document_number = $request->input('document_number');
+        $patient->health_insurance = $request->input('health_insurance');
+        
+        $patient->save();
+        
+        return redirect()->route('patient.show',$patient);
     }
 
     /**
@@ -104,7 +116,6 @@ class PatientController extends Controller
      */
     public function destroy(Patient $patient)
     {
-        $patient = Patient::find($id);
         $patient->delete();
         return redirect()->route('patient.index');
     }
