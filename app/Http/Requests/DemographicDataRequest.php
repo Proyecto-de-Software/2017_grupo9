@@ -24,13 +24,13 @@ class DemographicDataRequest extends FormRequest
     public function rules()
     {
         return [
-            'electricity' => 'required';
-            'pet' => 'required';
-            'refrigerator' => 'required';
-            'patient_id' => 'required';
-            'typeHeating_id' => 'required';
-            'typeLivingPlace_id' => 'required';
-            'typeWater_id' => 'required';
+            'electricity' => 'required',
+            'pet' => 'required',
+            'refrigerator' => 'required',
+            'patient_id' => 'required',
+            'typeHeating_id' => 'required',
+            'typeLivingPlace_id' => 'required',
+            'typeWater_id' => 'required'
         ];
     }
 }

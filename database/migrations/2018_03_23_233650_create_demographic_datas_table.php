@@ -19,7 +19,6 @@ class CreateDemographicDatasTable extends Migration
             $table->boolean('pet');
             $table->boolean('refrigerator');
             $table->integer('patient_id')->unsigned();
-            $table->foreign('patient_id')->references('id')->on('patients');
             $table->integer('typeHeating_id')->unsigned();
             $table->integer('typeLivingPlace_id')->unsigned();
             $table->integer('typeWater_id')->unsigned();

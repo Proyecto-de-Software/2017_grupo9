@@ -23,6 +23,8 @@ Route::resource('user', 'UserController');
 Route::resource('medicalCheckup', 'MedicalCheckupController');
 Route::resource('demographicData', 'DemographicDataController');
 
+Route::get('/demographicData/create/{id}', 'DemographicDataController@create');
+
 Route::post('/user/{id}/block',['as' => 'user.block', 'uses' => 'UserController@block']);
 Route::post('/user/{id}/unblock',['as' => 'user.unblock', 'uses' => 'UserController@unblock']);
 

@@ -55,10 +55,15 @@
 			<div class="text-center col-md-4 mx-auto">
 				<a href='{{url("/patient/$patient->id/edit")}}' class="btn btn-outline-success btn-own-info">Editar</a>
 			</div>
-			<div class="text-center col-md-4 mx-auto">
-				<a href='{{url("/demographicData/$patient->")}}' class="btn btn-outline-success btn-own-info">Ver datos demográficos</a>
-			</div>
-			
+			@if($patient->demographic_data_id == null)
+				<div class="text-center col-md-4 mx-auto">
+					<a href='{{url("/demographicData/create/$patient->id")}}' class="btn btn-outline-success btn-own-info">Agregar datos demográficos</a>
+				</div>
+			@else
+				<div class="text-center col-md-4 mx-auto">
+					<a href='{{url("/demographicData/$patient->demographic_data_id")}}' class="btn btn-outline-success btn-own-info">Ver datos demográficos</a>
+				</div>
+			@endif
 			<div class="text-center col-md-4 mx-auto">
 				<a href="" class="btn btn-outline-success btn-own-info">Historia clínica</a>
 			</div>

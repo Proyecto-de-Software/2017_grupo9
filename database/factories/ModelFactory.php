@@ -35,6 +35,7 @@ $factory->define(App\Patient::class, function ($faker) {
         'type_document' => '1',
         'document_number' => $faker->numberBetween($min = 30000000, $max = 40000000),
         'health_insurance' => '1',
+        'demographic_data_id' => null,
 
     ];
 });
