@@ -9,19 +9,34 @@ use App\Http\Requests\UserRequest;
 
 class UserController extends Controller
 {
-    
+    /**
+    * Display a listing of the resource.
+    *
+    * @return \Illuminate\Http\Response
+    */    
     public function index()
     {
         $users = User::get();
         return view('users.index')->with('users', $users);
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
         $roles = Role::get();
         return view('users.create')->with('roles',$roles);
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(UserRequest $request)
     {   
         $user = new User();
@@ -41,10 +56,14 @@ class UserController extends Controller
         return redirect()->route('user.show',$user->id);
     }
 
-    
-    public function show($id)
+    /**
+    * Display the specified resource.
+    *
+    * @param  \App\User  $user
+    * @return \Illuminate\Http\Response
+    */
+    public function show(User $user)
     {
-        $user = User::find($id);
         $roles = $user->roles()->get()->map(function($rol,$key){
                                              return $rol->name;
                                              })->toArray();
@@ -52,10 +71,15 @@ class UserController extends Controller
         return view('users.show')->with('user',$user)->with('roles',$roles);
     }
 
-    public function edit($id)
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(User $user)
     {
         $roles = Role::get();
-        $user = User::find($id);
         $userRole = $user->roles()->get()->map(function($role,$key){
                                                 return $role->id; 
                                             })->toArray();
@@ -63,10 +87,15 @@ class UserController extends Controller
         return view('users.edit')->with('user',$user)->with('roles', $roles)->with('userRole',$userRole);
     }
 
-    public function update(UserRequest $request, $id)
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function update(UserRequest $request, User $user)
     {
-        $user = User::find($id);
-
         $user->first_name = $request->input('nombre');
         $user->last_name = $request->input('apellido');
         $user->username = $request->input('usuario');
@@ -87,22 +116,38 @@ class UserController extends Controller
 
     }
 
-    public function destroy($id)
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(User $user)
     {
-        $user = User::find($id);
         $user->delete();
         return "hola";
 
     }
 
-    public function block($id){
-        $user = User::find($id);
+    /**
+     * Block the specified resource from storage.
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function block(User $user){
         $user->active = false;
         $user->save();
         return redirect()->route('user.index');
     }
-    public function unblock($id){
-        $user = User::find($id);
+
+     /**
+     * Unblock the specified resource from storage.
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */   
+    public function unblock(User $user){
         $user->active = true;
         $user->save();
         return redirect()->route('user.index');
