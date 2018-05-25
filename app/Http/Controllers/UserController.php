@@ -16,7 +16,7 @@ class UserController extends Controller
     */    
     public function index()
     {
-        $users = User::orderBy('id', 'ASC')->paginate();
+        $users = User::orderBy('id', 'ASC')->paginate(5);
         return view('users.index', compact('users'));
     }
 
@@ -39,12 +39,13 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {   
+
         $user = new User();
 
-        $user->first_name = $request->input('nombre');
-        $user->last_name = $request->input('apellido');
+        $user->first_name = $request->input('first_name');
+        $user->last_name = $request->input('last_name');
         $user->active = true;
-        $user->username = $request->input('usuario');
+        $user->username = $request->input('username');
         $user->password = $request->input('password');
         $user->email = $request->input('email');
         $user->save();
@@ -80,11 +81,8 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $roles = Role::get();
-        $userRole = $user->roles()->get()->map(function($role,$key){
-                                                return $role->id; 
-                                            })->toArray();
-        
-        return view('users.edit')->with('user',$user)->with('roles', $roles)->with('userRole',$userRole);
+       
+        return view('users.edit')->with('user',$user)->with('roles', $roles);
     }
 
     /**
@@ -96,23 +94,25 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
-        $user->first_name = $request->input('nombre');
-        $user->last_name = $request->input('apellido');
-        $user->username = $request->input('usuario');
+
+        $user->first_name = $request->input('first_name');
+        $user->last_name = $request->input('last_name');
+        $user->username = $request->input('username');
         $user->password = $request->input('password');
         $user->email = $request->input('email');
-        
 
-        $actualRole = $user->role()->get()->toArray();
-        foreach ($actualrole as $actualRol) {
-            $user->role()->detach($actualRole['id']);
+        $actualRoles = $user->roles()->get()->toArray();
+
+        foreach ($actualRoles as $actualRol) {
+            $user->roles()->detach($actualRol['id']);
         }
-        foreach($request->input('role') as $e){
-            $user->role()->attach($idRole);
+        foreach($request->input('role') as $idRol){
+            $user->roles()->attach($idRol);
         }
         $user->save();
         
-        return redirect()->route('user.show',$id);
+        
+        return redirect()->route('user.show',$user->id);
 
     }
 

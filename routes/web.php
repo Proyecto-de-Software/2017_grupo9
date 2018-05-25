@@ -12,8 +12,12 @@
 |
 */
 
-Route::post('/user/{id}/block',['as' => 'user.block', 'uses' => 'UserController@block']);
-Route::post('/user/{id}/unblock',['as' => 'user.unblock', 'uses' => 'UserController@unblock']);
+Route::post('/user/{user}/block',['as' => 'user.block', 'uses' => 'UserController@block']);
+Route::post('/user/{user}/unblock',['as' => 'user.unblock', 'uses' => 'UserController@unblock']);
+
+Route::get('/demographicData/create/{id}', 'DemographicDataController@create');
+Route::get('/medicalCheckup/create/{id}', 'MedicalCheckupController@create');
+Route::get('/medicalCheckup/{id}', 'MedicalCheckupController@index');
 
 Route::resource('user', 'UserController');
 Route::resource('patient', 'PatientController');
@@ -23,13 +27,7 @@ Route::resource('user', 'UserController');
 Route::resource('medicalCheckup', 'MedicalCheckupController');
 Route::resource('demographicData', 'DemographicDataController');
 
-Route::get('/demographicData/create/{id}', 'DemographicDataController@create');
 
-Route::get('/medicalCheckup/create/{id}', 'MedicalCheckupController@create');
-Route::get('/medicalCheckup/{id}', 'MedicalCheckupController@index');
-
-Route::post('/user/{id}/block',['as' => 'user.block', 'uses' => 'UserController@block']);
-Route::post('/user/{id}/unblock',['as' => 'user.unblock', 'uses' => 'UserController@unblock']);
 
 
 Route::get('/', function () {

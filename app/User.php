@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Rol;
+use App\Role;
 use Zizaco\Entrust\Traits\EntrustUserTrait;//importamos la clase HasRole
 
 class User extends Authenticatable
@@ -31,4 +31,7 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function roles(){
+       return $this->belongsToMany('App\Role','role_user');
+    }
 }

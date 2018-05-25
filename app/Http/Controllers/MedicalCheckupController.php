@@ -10,13 +10,13 @@ class MedicalCheckupController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
+     * @param  \App\Patient  $patient
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index(Patient $patient)
     {
         $controls = MedicalCheckup::where('patient_id', $id)->get();
-        return view('medicalCheckups.partials.medicalCheckupList')->with('controls',$controls);
+        return view('medicalCheckups.index')->with('controls',$controls);
     }
 
     /**
@@ -26,7 +26,7 @@ class MedicalCheckupController extends Controller
      */
     public function create()
     {
-        return view('medicalCheckups.partials.create');
+        return view('medicalCheckups.create');
     }
 
     /**
@@ -48,7 +48,7 @@ class MedicalCheckupController extends Controller
      */
     public function show(MedicalCheckup $medicalCheckup)
     {
-        return view('medicalCheckups.partials.show');
+        return view('medicalCheckups.show');
     }
 
     /**

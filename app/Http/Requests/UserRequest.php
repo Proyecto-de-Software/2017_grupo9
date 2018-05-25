@@ -24,12 +24,26 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombre' => 'required',
-            'apellido' => 'required',
-            'usuario' => 'required',
-            'password' => 'required',
-            'email' => 'required',
-            'rol' => 'required'
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'username' => 'required|unique:users,username,'.$this->user->id,
+            'email' => 'required|unique:users,email,'.$this->user->id,
+            'role' => 'required',
+            'password' => 'required|confirmed',
+            'password_confirmation' => 'required'
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'first_name.required' => 'El nombre es obligatorio',
+            'last_name.required'  => 'El apellido es obligatorio',
+            'username.required'  => 'El nombre de usuario es obligatorio',
+            'password.required'  => 'La contraseña es obligatoria',
+            'email.required'  => 'El email es obligatorio',
+            'role.required'  => 'Es obligatorio elegir al menos un rol',
+            'password.confirmed' => 'Ambas contraseñas deben coincidir'
+    ];
+}
 }

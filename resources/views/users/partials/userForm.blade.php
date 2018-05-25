@@ -11,9 +11,12 @@
 				$lastNameValue = $user->last_name;
 				$userNameValue = $user->username;
 				$emailValue = $user->email;
+				$userRoles = $user->roles()->get()->map(function($rol,$key){
+                                             return $rol->id;
+                                             })->toArray();
 				$route = ['user.update',$user->id];
 				$method = 'PUT';
-				
+				//dd($userRoles);
 
 			@endphp
 		@else
@@ -35,7 +38,7 @@
 						'class'=>'col-sm-3 mt-3 col-form-label'
 						]) 
 					!!}
-					{!! Form::text('nombre', $firstNameValue, array(
+					{!! Form::text('first_name', $firstNameValue, array(
 						'placeholder' => 'Nombre',
 					 	'class' => 'form-control mt-3 col-sm-8', 
 					 	'required' =>true
@@ -48,7 +51,7 @@
 					    'class'=>'col-sm-3 mt-3 col-form-label'
 					    ]) 
 				    !!}
-					{!! Form::text('apellido', $lastNameValue, array(
+					{!! Form::text('last_name', $lastNameValue, array(
 						'placeholder' => 'Apellido',
 					 	'class' => 'form-control mt-3 col-sm-8', 
 					 	'required' =>true
@@ -60,7 +63,7 @@
 			  			'class'=>'col-sm-3 mt-3 col-form-label'
 			  			]) 
 			  		!!}
-					{!! Form::text('usuario', $userNameValue, array(
+					{!! Form::text('username', $userNameValue, array(
 						'placeholder' => 'Nombre de usuario',
 					 	'class' => 'form-control mt-3 col-sm-8', 
 					 	'required' =>true
@@ -92,10 +95,10 @@
 				</div>
 				
 			 	<div class="form-group row">
-			  		{!! Form::label('password2', 'Contraseña',[
+			  		{!! Form::label('password_confirmation', 'Confirmacion',[
 			  		'class'=>'col-sm-3 mt-3 col-form-label'
 			  		]) !!}
-					{!! Form::password('password2',array(
+					{!! Form::password('password_confirmation',array(
 						'placeholder' => 'Repita contraseña',
 					 	'class' => 'form-control mt-3 col-sm-8', 
 					 	'required' =>true
@@ -114,7 +117,7 @@
 							@foreach($roles as $role)
 								{!! Form::label('role', $role->name) !!}
 								{!! Form::checkbox('role[]', $role->id, in_array($role->id,$userRoles), array(
-								 	'class' => 'checkbox col-sm-1 '
+								 	'class' => 'checkbox col-sm-1',
 								 	)) 
 							 	!!}	
 			     			@endforeach
