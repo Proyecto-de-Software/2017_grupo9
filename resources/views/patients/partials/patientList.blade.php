@@ -3,7 +3,7 @@
 		<div class="mb-4 mt-4">
 	
 		</div>
-		<table class="table table-hover">
+		<table class="table table-hover table-scripted">
 		  	<thead>
 			    <tr>
 			      	<th>Nombre</th>
@@ -48,9 +48,9 @@
 			    
 			</tbody>
 		</table>
+		{!! $patients->render() !!}
 		<a class="btn btn-success btn-own mt-3 mb-5 text-right" role="button" href="{{url('/patient/create')}}">
 			Agregar nuevo paciente
 		</a>
 		
-
 </section>

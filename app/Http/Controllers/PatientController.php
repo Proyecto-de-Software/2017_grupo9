@@ -18,8 +18,8 @@ class PatientController extends Controller
      */
     public function index()
     {
-        $patients = Patient::get();
-        return view('patients.index')->with('patients',$patients);
+        $patients = Patient::orderBy('last_name', 'ASC')->paginate(5);
+        return view('patients.index', compact('patients'));
     }
 
 

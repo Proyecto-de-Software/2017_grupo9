@@ -7,3 +7,5 @@
 	@include('medicalCheckups.partials.medicalCheckupList')
 	
 @stop
+@section('scripts')
+@stop

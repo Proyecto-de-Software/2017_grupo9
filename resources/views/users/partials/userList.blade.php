@@ -71,6 +71,7 @@
 			    
 			</tbody>
 		</table>
+		{!! $patients->render() !!}
 		<a class="btn btn-success btn-own mt-3 mb-5 text-right" role="button" href="{{url('/user/create')}}">
 			Agregar nuevo usuario
 		</a>
