@@ -1,0 +1,158 @@
+<section class="row mx-auto mt-5 ">
+	<div class="login col-md-10  mx-auto mt-4 mb-4 pb-5 pt-5 pr-5 pl-5 border rounded ">
+
+		@include('partials.error')
+
+		if(isset($control))
+			@php
+				$title = 'Editar control';
+				$url = '/medicalCheckup/'.$medicalCheckup->id;
+				$method = 'put';
+				$ageValue = $age;
+				$weightValue = $control->weight;
+				$heightValue = $control->height;
+				$completeVaccinesValue  = $control->complete_vaccines ;
+				$completeVaccinesObservationValue = $control->complete_vaccines_observation;
+				$correctMadurationValue = $control->correct_maduration;
+				$correctMadurationObservationValue = $control->correct_maduration_observation;
+				$normalPhysicalExaminationValue = $control->normal_physical_examination;
+				$normalPhysicalExaminationObservationValue = $control->normal_physical_examination_observation;
+				$pcValue = $control->pc;
+				$ppcValue = $control->ppc;
+				$foodDescriptionValue = $control->food_description;
+				$generalObservationValue = $control->general_observation;
+			@endphp
+		@else
+			@php
+				$title = 'Nuevo control';
+				$url = '/medicalCheckup';
+				$method = 'post';
+				$ageValue = null;
+				$weightValue = null;
+				$heightValue = null;
+				$completeVaccinesValue = true;
+				$completeVaccinesObservationValue = null;
+				$correctMadurationValue = true;
+				$correctMadurationObservationValue = null;
+				$normalPhysicalExaminationValue = true;
+				$normalPhysicalExaminationObservationValue = null ;
+				$pcValue = null;
+				$ppcValue = null;
+				$foodDescriptionValue = null;
+				$generalObservationValue = null;
+			@endphp
+		@endif
+		
+		<h3 class="card-header text-center myHeader"> {{ $title }}</h3>
+	
+		{!! Form::open(['url' => $url, 'method' => $method]) !!} 
+			<div class="form-group row mt-3">
+			   {!! Form::label('date', 'Fecha actual',[
+					    'class'=>'col-sm-3 mt-3 col-form-label'
+					    ]) 
+				!!}
+			    <input type="text" readonly class="text-center form-control col-sm-2" id="fecha" name="fecha" value='{{"now" | date("Y-m-d") }}'>
+		 	</div>
+		 	<div class="form-group row ">
+			    {!! Form::label('age', 'Edad de paciente',[
+					    'class'=>'col-sm-3 mt-3 col-form-label'
+					    ]) 
+			    !!}
+			    {!! Form::text('age', $ageValue, [
+			    	'placeholder' => 'Nombre',
+			    	'class' => 'form-control mt-3 col-sm-8'
+			    ]) !!
+			<div class="form-group row">
+			    <label for="edad" class="col-sm-5 col-form-label">Edad de paciente</label>
+			    <input type="text" readonly class="text-center form-control col-sm-2" id="edad" name="edad" value='{{edad}}'>
+			</div>
+			<div class="form-group row ">
+			     <label for="peso" class="col-sm-5 col-form-label">Peso</label>
+			    <input type="number" step='any' class="form-control col-sm-2 mt-3" id="peso" name="peso" placeholder="Peso en Kg" value="{{peso}}" required> 
+			</div>
+			<div class="form-group row ">
+			   <label for="vacunas_completas" class="col-sm-5 col-form-label">Vacunas completas</label>
+			   <select class="form-control col-sm-5 mt-3" name="vacunas_completas">
+			   	{% if vacunasCompletas == 1 %}
+  					<option value="1" selected>Si</option>
+					<option value="0" >No</option>
+				{% else %}
+					<option value="1" >Si</option>
+					<option value="0" selected>No</option>
+				{% endif %}
+				</select>
+			</div>
+
+			<div class="form-group row ">
+			<label for="vacunas_completas_observaciones" class="col-sm-5 col-form-label">Observaciones vacunas </label>
+				<textarea class="form-control col-sm-5 mt-3" rows ="4" id="vacunas_completas_observaciones" name="vacunas_completas_observaciones" placeholder="Observaciones de vacunas" required>{{observacionesVacunas}}</textarea>
+			</div>
+
+			<div class="form-group row">
+			   <label for="maduracion_acorde" class="col-sm-5 col-form-label" >Maduracion acorde</label>
+			    <select name="maduracion_acorde" class="form-control col-sm-5 mt-3">
+  					{% if maduracionAcorde == 1 %}
+  					<option value="1" selected>Si</option>
+					<option value="0" >No</option>
+					{% else %}
+					<option value="1" >Si</option>
+					<option value="0" selected>No</option>
+					{% endif %}
+				</select>
+			</div>
+			<div class="form-group row">
+			<label for="maduracion_acorde_observaciones" class="col-sm-5 col-form-label" > Observaciones maduracion</label>
+				<textarea class="form-control col-sm-5 mt-3" rows ="4" id="maduracion_acorde_observaciones" name="maduracion_acorde_observaciones" placeholder="Observaciones de maduracion" required>{{observacionesMaduracion}}</textarea>
+			</div>
+
+
+			<div class="form-group row">
+			   <label for="ex_fisico_normal" class="col-sm-5 col-form-label"  > Examen fisico normal</label>
+			    <select name="ex_fisico_normal" class="form-control col-sm-5 mt-3">
+  					{% if examenFisicoNormal == 1 %}
+  					<option value="1" selected>Si</option>
+					<option value="0" >No</option>
+					{% else %}
+					<option value="1" >Si</option>
+					<option value="0" selected>No</option>
+					{% endif %}
+				</select>
+			</div>
+
+			<div class="form-group row">
+			<label for="ex_fisico_observaciones" class="col-sm-5 col-form-label" > Observaciones examen fisico</label>
+				<textarea class="form-control col-sm-5 mt-3" rows ="4" id="ex_fisico_observaciones" name="ex_fisico_observaciones" placeholder="Observaciones de examen fiscio" required>{{observacionesExamen}}</textarea>
+			</div>
+
+			<div class="form-group row">
+				<label for="pc"  class="col-sm-5 col-form-label" > Percentilo cefálico</label>
+				<input class="form-control col-sm-1 mt-3" type="number" name="pc" placeholder="PC" value="{{pc}}">
+			</div>
+
+			<div class="form-group row">
+				<label for="ppc" class="col-sm-5 col-form-label" > Percentilo perimetro cefálico</label>
+				<input class="form-control col-sm-1 mt-3" type="number" name="ppc" placeholder="PPC" value="{{ppc}}">
+			</div>
+
+			<div class="form-group row">
+				<label for="talla" class="col-sm-5 col-form-label " > Talla</label>
+				<input class="form-control col-sm-1 mt-3" type="number" placeholder="Talla" name="talla" value="{{talla}}">
+			</div>
+
+			<div class="form-group row">
+			<label for="alimentacion" class="col-sm-5 col-form-label"> Descripcion de alimentacion</label>
+				<textarea class="form-control col-sm-5 mt-3" rows ="4" id="alimentacion" name="alimentacion" placeholder="Descripcion de alimentacion">{{descripcionAlimentacion}}</textarea>
+			</div>
+			<div class="form-group row">
+			<label for="observaciones_generales" class="col-sm-5 col-form-label"> Observaciones generales</label>
+				<textarea class="form-control col-sm-5 mt-3" rows ="4" id="observaciones_generales" name="observaciones_generales" placeholder="Observaciones generales">{{observacionesGenerales}}</textarea>
+			</div>
+			<input type="hidden" name="user_id" value="{{usuarioActual.idUsuario}}">
+			<input type="hidden" name="paciente_id" value="{{idPaciente}}">
+			<input type="hidden" name="token" value={{usuarioActual.token}}>
+			
+			<button type="submit" class="btn btn-outline-success  btn-own-info">{{boton}}</button>
+
+		</form>
+	</div>
+</section>

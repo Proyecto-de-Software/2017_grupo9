@@ -12,9 +12,10 @@ class MedicalCheckupController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        //
+        $controls = App\MedicalCheckup::where('patient_id', $id);
+        return view('medicalCheckups.partials.medicalCheckupList')->with('controls',$controls);
     }
 
     /**

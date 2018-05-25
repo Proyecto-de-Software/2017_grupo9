@@ -4,25 +4,25 @@
 			@php
 				$url = '/demographicData/'.$demographicData->id;
 				$method = 'put';
+				$title = 'Editar datos demográficos';
 				$refrigeratorValue = $demographicData->refrigerator;
 				$electricityValue = $demographicData->electricity;
 				$petValue = $demographicData->pet;
 				$typeLivingPlaceValue = $demographicData->typeLivingPlace_id;
 				$typeHeatingValue = $demographicData->typeHeating_id;
 				$typeWaterValue = $demographicData->typeWater_id;
-				$title = 'Editar datos demográficos';
 			@endphp
 		@else
 			@php
 				$url = '/demographicData';
 				$method = 'post';
+				$title = 'Agregar datos demográficos';
 				$refrigeratorValue = null;
 				$electricityValue = null;
 				$petValue = null;
 				$typeLivingPlaceValue = null;
 				$typeHeatingValue = null;
 				$typeWaterValue = null;
-				$title = 'Agregar datos demográficos';
 			@endphp
 		@endif
 		<h3 class="card-header text-center myHeader">{{ $title }} </h3><br>

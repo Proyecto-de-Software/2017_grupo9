@@ -1,0 +1,53 @@
+<section>
+	<h2> Historia Clinica</h2><br>
+		<div class="mb-4 mt-4">
+			<h3 >Controles </h3> 
+			<a class="btn btn-success btn-own mt-3 mb-5 text-right" role="button" href='{{url("/medicalCheckup/create/$medicalCheckup->patient_id")}}'>
+			Agregar control </a>
+			<a class="btn btn-success btn-own mt-3 mb-5 text-right" role="button" href=''>
+			Estadisticas gráficas </a>
+			<table class="table table-hover">
+			  	<thead>
+				    <tr>
+				    	<th> Fecha</th>
+				    	<th> Medico</th>
+				    </tr>
+			  	</thead>
+			  	<tbody>
+			  		@foreach($controls as $control)
+					    <tr>
+					    	<td>{{ control->date}}</td>
+					    	<td>
+					    		{{ Doctor }}
+					    	</td>
+					    	<td>
+					    		<a href='{{url("/medicalCheckup/$medicalCheckup->id")}}' class="btn btn-outline-success btn-own-info"> Ver control </a>
+					    	</td>
+					    	<!-- Aca van los permisos -->
+					    	<td>
+					    		<td>
+					    			{!! Form::open(
+										array(
+											'route' => ['patient.destroy',$patient->id],
+											'method' => 'DELETE',
+											'onsubmit' => 'return confirm("Seguro?")'), 
+										array(
+											'role' => 'form')
+										)
+									!!}
+										{!! Form::button('Eliminar', array(
+												'type' => 'submit',
+										 		'class' => 'btn btn-outline-success btn-own-info'
+										 )) 
+										!!} 
+									{!! Form::close() !!}
+				    			</td>
+					    	</td>
+					    	<!-- Aca van los permisos -->
+					    </tr>
+				     @endforeach
+				</tbody>
+			</table>
+		</div>
+
+</section>

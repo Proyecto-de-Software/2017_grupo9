@@ -65,7 +65,7 @@
 				</div>
 			@endif
 			<div class="text-center col-md-4 mx-auto">
-				<a href="" class="btn btn-outline-success btn-own-info">Historia clínica</a>
+				<a href='{{url("/medicalCheckup/$patient->id")}}' class="btn btn-outline-success btn-own-info">Historia clínica</a>
 			</div>
 		</div>
 	</div>

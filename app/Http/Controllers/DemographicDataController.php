@@ -99,11 +99,14 @@ class DemographicDataController extends Controller
      * @param  \App\DemographicData  $demographicData
      * @return \Illuminate\Http\Response
      */
-    public function update(DemographicDataRequest $request, DemographicData $demographicData)
+    public function update(DemographicDataRequest $request, $id)
     {
+
+        $demographicData = DemographicData::find($id);
         $demographicData->electricity = $request->input('electricity');
         $demographicData->pet = $request->input('pet');
         $demographicData->refrigerator = $request->input('refrigerator');
+        $demographicData->patient_id = $request->input('patient_id');
         $demographicData->typeLivingPlace_id = $request->input('typeLivingPlace_id');
         $demographicData->typeHeating_id = $request->input('typeHeating_id');
         $demographicData->typeWater_id = $request->input('typeWater_id');

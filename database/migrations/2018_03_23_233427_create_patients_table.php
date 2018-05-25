@@ -18,12 +18,12 @@ class CreatePatientsTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('address');
-            $table->integer('phone');
+            $table->integer('phone')->nullable();
             $table->date('birthdate');
             $table->enum('gender',array('m', 'f'));
             $table->string('type_document');
             $table->integer('document_number')->unique();
-            $table->integer('health_insurance');
+            $table->integer('health_insurance')->nullable();
             $table->integer('demographic_data_id')->nullable();
             $table->timestamps();
         });
