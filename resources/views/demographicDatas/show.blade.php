@@ -56,6 +56,14 @@
  			 </tbody>
 		</table>
 		@endif
+		<div class="text-center row">
+			<div class="text-center col-md-4 mx-auto">
+				<a href='{{url("/patient")}}' class="col-md-3 mr-3 ml-3 btn btn-outline-success btn-own-info"> Volver a pacientes</a>
+			</div>
+			<div class="text-center col-md-4 mx-auto">
+				<a href='{{url("/demographicData/$demographicData->id/edit")}}' class="btn btn-outline-success btn-own-info">Editar</a>
+			</div>
+		</div>
 	</div>
 </section>
 @stop

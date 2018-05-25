@@ -4,5 +4,5 @@
 @stop
 
 @section('container')
-	@include('demographicDatas.partials.demographicDataForm')
+	@include('demographicDatas.partials.demographicDatasForm')
 @stop

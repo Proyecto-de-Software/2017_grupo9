@@ -81,9 +81,15 @@ class DemographicDataController extends Controller
      * @param  \App\DemographicData  $demographicData
      * @return \Illuminate\Http\Response
      */
-    public function edit(DemographicData $demographicData)
+    public function edit($id)
     {
-        //
+
+        $demographicData = DemographicData::find($id);
+        $types = $this->getAllTypes();
+        $typeHeating = $this->getTypeHeating($demographicData->typeHeating_id);
+        $typeWater = $this->getTypeWater($demographicData->typeWater_id);
+        $typeLivingPlace = $this->getTypeLivingPlace($demographicData->typeLivingPlace_id);
+        return view('demographicDatas.edit')->with('demographicData',$demographicData)->with('patient_id',$id)->with('typesLivingPlace',$types['typesLivingPlace'])->with('typesHeating',$types['typesHeating'])->with('typesWater',$types['typesWater']);
     }
 
     /**
@@ -93,9 +99,18 @@ class DemographicDataController extends Controller
      * @param  \App\DemographicData  $demographicData
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, DemographicDataRequest $demographicData)
+    public function update(DemographicDataRequest $request, DemographicData $demographicData)
     {
-        //
+        $demographicData->electricity = $request->input('electricity');
+        $demographicData->pet = $request->input('pet');
+        $demographicData->refrigerator = $request->input('refrigerator');
+        $demographicData->typeLivingPlace_id = $request->input('typeLivingPlace_id');
+        $demographicData->typeHeating_id = $request->input('typeHeating_id');
+        $demographicData->typeWater_id = $request->input('typeWater_id');
+
+        $demographicData->save();
+        
+        return redirect()->route('demographicData.show',$demographicData);
     }
 
     /**

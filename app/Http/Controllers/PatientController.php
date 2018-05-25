@@ -102,7 +102,7 @@ class PatientController extends Controller
         $patient->type_document = $request->input('type_document');
         $patient->document_number = $request->input('document_number');
         $patient->health_insurance = $request->input('health_insurance');
-        
+
         $patient->save();
         
         return redirect()->route('patient.show',$patient);

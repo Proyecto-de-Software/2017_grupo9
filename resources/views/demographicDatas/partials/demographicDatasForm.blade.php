@@ -1,30 +1,30 @@
 <section class="row mx-auto mt-5 ">
 	<div class="login col-md-7  mx-auto mt-4 mb-4 pb-5 pt-5 pr-5 pl-5 border rounded ">
-	@if(isset($demographicData))
-		@php
-			$url = '/demographicData/'.$demographicData->id;
-			$method = 'put';
-			$refrigeratorValue = demographicData.refrigerator;
-			$electricityValue = demographicData.electricity;
-			$petValue = demographicData.pet;
-			$typeLivingPlaceValue = demographicData.typeLivingPlace;
-			$typeHeatingValue = demographicData.typeHeating;
-			$typeWaterValue = demographicData.typeWater;
-			$title = 'Editar datos demográficos';
-		@endphp
-	@else
-		@php
-			$url = '/demographicData';
-			$method = 'post';
-			$refrigeratorValue = null;
-			$electricityValue = null;
-			$petValue = null;
-			$typeLivingPlaceValue = null;
-			$typeHeatingValue = null;
-			$typeWaterValue = null;
-			$title = 'Agregar datos demográficos';
-		@endphp
-	@endif
+		@if(isset($demographicData))
+			@php
+				$url = '/demographicData/'.$demographicData->id;
+				$method = 'put';
+				$refrigeratorValue = $demographicData->refrigerator;
+				$electricityValue = $demographicData->electricity;
+				$petValue = $demographicData->pet;
+				$typeLivingPlaceValue = $demographicData->typeLivingPlace_id;
+				$typeHeatingValue = $demographicData->typeHeating_id;
+				$typeWaterValue = $demographicData->typeWater_id;
+				$title = 'Editar datos demográficos';
+			@endphp
+		@else
+			@php
+				$url = '/demographicData';
+				$method = 'post';
+				$refrigeratorValue = null;
+				$electricityValue = null;
+				$petValue = null;
+				$typeLivingPlaceValue = null;
+				$typeHeatingValue = null;
+				$typeWaterValue = null;
+				$title = 'Agregar datos demográficos';
+			@endphp
+		@endif
 		<h3 class="card-header text-center myHeader">{{ $title }} </h3><br>
 		
 		{!! Form::open(['url' => $url, 'method' => $method]) !!}
