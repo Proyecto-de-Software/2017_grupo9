@@ -24,7 +24,7 @@ class ConfigurationController extends Controller
      */
     public function create()
     {
-        //
+        return view('configurations.create');
     }
 
     /**
@@ -35,7 +35,7 @@ class ConfigurationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
@@ -46,7 +46,8 @@ class ConfigurationController extends Controller
      */
     public function show(Configuration $configuration)
     {
-        return $configuration;
+        $configuration = Configuration::get()->first();
+        return view('configurations.show')->with('configuration',$configuration);
     }
 
     /**
@@ -55,9 +56,10 @@ class ConfigurationController extends Controller
      * @param  \App\Configuration  $configuration
      * @return \Illuminate\Http\Response
      */
-    public function edit(Configuration $configuration)
+    public function edit($id)
     {
-        //
+        $configuration = Configuration::find($id);
+        return view('configurations.edit')->with('configuration',$configuration);
     }
 
     /**
