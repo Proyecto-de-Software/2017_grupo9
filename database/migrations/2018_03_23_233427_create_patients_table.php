@@ -24,7 +24,7 @@ class CreatePatientsTable extends Migration
             $table->string('type_document');
             $table->integer('document_number')->unique();
             $table->integer('health_insurance')->nullable();
-            $table->integer('demographic_data_id')->nullable();
+            $table->integer('demographic_data_id')->unsigned()->nullable();
             $table->timestamps();
         });
     }

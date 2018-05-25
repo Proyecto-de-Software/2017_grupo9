@@ -30,7 +30,9 @@ class PatientController extends Controller
      */
     public function create()
     {
-        return view('patients.create');
+        $healthsInsurance = HealthInsuranceController::get();
+        $typesDocument = TypeDocumentController::get();
+        return view('patients.create')->with('healthsInsurance',$healthsInsurance)->with('typesDocument',$typesDocument);
     }
 
     /**
