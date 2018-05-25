@@ -48,7 +48,7 @@
 			    
 			</tbody>
 		</table>
-		{!! $patients->render() !!}
+		{!! $patients->links() !!}
 		<a class="btn btn-success btn-own mt-3 mb-5 text-right" role="button" href="{{url('/patient/create')}}">
 			Agregar nuevo paciente
 		</a>

@@ -3886,6 +3886,15 @@ tbody.collapse.show {
   border-radius: 0.25rem;
 }
 
+.pagination > li > a,
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span,
+.pagination > li > span:hover {
+    color: #28a745;
+}
+
+
 .page-item:first-child .page-link {
   margin-left: 0;
   border-top-left-radius: 0.25rem;
@@ -3902,6 +3911,8 @@ tbody.collapse.show {
   color: #fff;
   background-color: #007bff;
   border-color: #007bff;
+  background-color: #28a745;
+    border-color: #28a745;
 }
 
 .page-item.disabled .page-link {
@@ -8183,3 +8194,17 @@ a.text-dark:focus, a.text-dark:hover {
   visibility: hidden !important;
 }
 /*# sourceMappingURL=bootstrap.css.map */
+/*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
