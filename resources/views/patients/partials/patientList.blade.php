@@ -1,4 +1,3 @@
-
 <section>
 	<h2> Pacientes </h2><br>
 		<div class="mb-4 mt-4">

@@ -12,7 +12,7 @@
 			<tbody>
    				 <tr>
 	     			 <th scope="row">Fecha</th>
-	     			 <td>{{$control->fecha}}</td>
+	     			 <td>{{$control->date}}</td>
     			</tr>
 			    <tr>
 	     			 <th scope="row">Edad</th>
@@ -20,24 +20,23 @@
 			    </tr>
 			    <tr>
 	     			 <th scope="row">Peso</th>
-	     			 <td>{{$control->peso}}</td>
+	     			 <td>{{$control->weight}}</td>
 			    </tr>
 			    <tr>
 	     			 <th scope="row">Vacunas completas</th>
-	     			 @if($control->vacunasCompletas)
+	     			 @if($control->complete_vaccines == 1)
 	     			 	<td>Si</td>
 	     			 @else
 	     			 	<td>No</td>
 	     			 @endif
-	     			 
 			    </tr>
 			    <tr>
 	     			 <th scope="row">Observaciones vacunas</th>
-	     			 <td>{{$control->observacionesVacunas}}</td>
+	     			 <td>{{$control->complete_vaccines_observation}}</td>
 			    </tr>
 			    <tr>
 	     			 <th scope="row">Maduracion acorde</th>
-	     			 {% if $control->maduracionAcorde %}
+	     			 @if($control->correct_maturation == 1)
 	     			 	<td>Si</td>
 	     			 @else
 	     			 	<td>No</td>
@@ -45,11 +44,11 @@
 			    </tr>
 			    <tr>
 	     			 <th scope="row">Observaciones maduracion</th>
-	     			 <td>{{$control->observacionesMaduracion}}</td>
+	     			 <td>{{$control->correct_maturation_observation}}</td>
 			    </tr>
 			    <tr>
 	     			 <th scope="row">Examen fisico normal</th>
-	     			 {% if $control->examenFisicoNormal %}
+	     			 @if($control->normal_physical_examination == 1)
 	     			 	<td>Si</td>
 	     			 @else
 	     			 	<td>No</td>
@@ -57,7 +56,7 @@
 			    </tr>
 			    <tr>
 	     			 <th scope="row">Observaciones examen fisico</th>
-	     			 <td>{{$control->observacionesExamen}}</td>
+	     			 <td>{{$control->normal_physical_examination_observation}}</td>
 			    </tr>
 			    <tr>
 	     			 <th scope="row">Percentilo cefálico</th>
@@ -69,31 +68,27 @@
 			    </tr>
 			     <tr>
 	     			 <th scope="row">Talla</th>
-	     			 <td>{{$control->talla}}</td>
+	     			 <td>{{$control->height}}</td>
 			    </tr>
 			    <tr>
 	     			 <th scope="row">Descripción de alimientación</th>
-	     			 <td>{{$control->descripcionAlimentacion}}</td>
+	     			 <td>{{$control->food_description}}</td>
 			    </tr>
 			    <tr>
 	     			 <th scope="row">Observaciones generales</th>
-	     			 <td>{{$control->observacionesGenerales}}</td>
+	     			 <td>{{$control->general_observation}}</td>
 			    </tr>
  			 </tbody>
 		</table>
-		@php
-			$idPaciente = $control->idPaciente;
-			$idControl = $control->id;
-		@endphp
 		<div class="row">
 			<div class="text-center col-md-4">
-				<a href='{{url("/patient/$idPaciente")}}' class="btn btn-outline-success btn-own-info">Volver al paciente</a>
+				<a href='{{url("/patient/$control->idPaciente")}}' class="btn btn-outline-success btn-own-info">Volver al paciente</a>
 			</div>
 			<div class="text-center  col-md-4">
-				<a href="/index.php/paciente/{{idPaciente}}/historiaClinica" class="btn btn-outline-success btn-own-info">Volver a historia clinica</a>
+				<a href='{{url("/medicalCheckup/$control->patient_id")}}' class="btn btn-outline-success btn-own-info">Volver a historia clinica</a>
 			</div>
 			<div class="text-center  col-md-4 ">
-				<a href="/index.php/paciente/{{idPaciente}}/control/edicion/{{idControl}}" class="btn btn-outline-success btn-own-info">Editar</a>
+				<a href='{{url("/medicalCheckup/$control->id/edit")}}' class="btn btn-outline-success btn-own-info">Editar</a>
 			</div>
 		</div>
 	</div>

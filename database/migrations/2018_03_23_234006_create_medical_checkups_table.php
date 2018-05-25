@@ -28,6 +28,8 @@ class CreateMedicalCheckupsTable extends Migration
             $table->float('height')->nullable();
             $table->string('food_description')->nullable();
             $table->string('general_observation')->nullable();
+            $table->string('patient_id');
+            $table->string('user_id');
             $table->timestamps();
         });
     }

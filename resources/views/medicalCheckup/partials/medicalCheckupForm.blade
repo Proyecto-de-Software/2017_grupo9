@@ -59,99 +59,147 @@
 					    ]) 
 			    !!}
 			    {!! Form::text('age', $ageValue, [
-			    	'placeholder' => 'Nombre',
+			    	'placeholder' => 'Edad',
 			    	'class' => 'form-control mt-3 col-sm-8'
 			    ]) !!
-			<div class="form-group row">
-			    <label for="edad" class="col-sm-5 col-form-label">Edad de paciente</label>
-			    <input type="text" readonly class="text-center form-control col-sm-2" id="edad" name="edad" value='{{edad}}'>
+			</div>
+		 	<div class="form-group row ">
+			    {!! Form::label('weight', 'Peso',[
+					    'class'=>'col-sm-3 mt-3 col-form-label'
+					    ]) 
+			    !!}
+			    {!! Form::text('weight', $weightValue, [
+			    	'placeholder' => 'Peso',
+			    	'class' => 'form-control mt-3 col-sm-8'
+			    ]) !!
 			</div>
 			<div class="form-group row ">
-			     <label for="peso" class="col-sm-5 col-form-label">Peso</label>
-			    <input type="number" step='any' class="form-control col-sm-2 mt-3" id="peso" name="peso" placeholder="Peso en Kg" value="{{peso}}" required> 
+			    {!! Form::label('complete_vaccines', 'Vacunas completas',[
+					    'class'=>'col-sm-3 mt-3 col-form-label'
+					    ]) 
+			    !!}
+			    @if($completeVaccinesValue == 1)
+		    		{!! Form::select('complete_vaccines', array('1' => 'Si', '0' => 'No'), '1', ['class'=>'form-control mt-3 col-sm-8']) !!}
+	      		@else
+	      			{!! Form::select('complete_vaccines', array('1' => 'Si', '0' => 'No'), '0', ['class'=>'form-control mt-3 col-sm-8']) !!}
+      			@endif
 			</div>
 			<div class="form-group row ">
-			   <label for="vacunas_completas" class="col-sm-5 col-form-label">Vacunas completas</label>
-			   <select class="form-control col-sm-5 mt-3" name="vacunas_completas">
-			   	{% if vacunasCompletas == 1 %}
-  					<option value="1" selected>Si</option>
-					<option value="0" >No</option>
-				{% else %}
-					<option value="1" >Si</option>
-					<option value="0" selected>No</option>
-				{% endif %}
-				</select>
+			    {!! Form::label('complete_vaccines_observation', 'Observaciones vacunas',[
+					    'class'=>'col-sm-3 mt-3 col-form-label'
+					    ]) 
+			    !!}
+			    {!! Form::text('complete_vaccines_observation', $completeVaccinesObservationValue, [
+			    	'placeholder' => 'Observaciones vacunas',
+			    	'class' => 'form-control mt-3 col-sm-8'
+			    ]) !!
 			</div>
-
 			<div class="form-group row ">
-			<label for="vacunas_completas_observaciones" class="col-sm-5 col-form-label">Observaciones vacunas </label>
-				<textarea class="form-control col-sm-5 mt-3" rows ="4" id="vacunas_completas_observaciones" name="vacunas_completas_observaciones" placeholder="Observaciones de vacunas" required>{{observacionesVacunas}}</textarea>
+			    {!! Form::label('correct_maduration', 'Maduracion acorde',[
+					    'class'=>'col-sm-3 mt-3 col-form-label'
+					    ]) 
+			    !!}
+			    @if($correctMadurationValue == 1)
+		    		{!! Form::select('correct_maduration', array('1' => 'Si', '0' => 'No'), '1', ['class'=>'form-control mt-3 col-sm-8']) !!}
+	      		@else
+	      			{!! Form::select('correct_maduration', array('1' => 'Si', '0' => 'No'), '0', ['class'=>'form-control mt-3 col-sm-8']) !!}
+      			@endif
 			</div>
-
-			<div class="form-group row">
-			   <label for="maduracion_acorde" class="col-sm-5 col-form-label" >Maduracion acorde</label>
-			    <select name="maduracion_acorde" class="form-control col-sm-5 mt-3">
-  					{% if maduracionAcorde == 1 %}
-  					<option value="1" selected>Si</option>
-					<option value="0" >No</option>
-					{% else %}
-					<option value="1" >Si</option>
-					<option value="0" selected>No</option>
-					{% endif %}
-				</select>
+			<div class="form-group row ">
+			    {!! Form::label('correct_maduration_observation', 'Observaciones maduracion',[
+					    'class'=>'col-sm-3 mt-3 col-form-label'
+					    ]) 
+			    !!}
+			    {!! Form::text('correct_maduration_observation', $correctMadurationObservationValue, [
+			    	'placeholder' => 'Observaciones maduracion',
+			    	'class' => 'form-control mt-3 col-sm-8'
+			    ]) !!
 			</div>
-			<div class="form-group row">
-			<label for="maduracion_acorde_observaciones" class="col-sm-5 col-form-label" > Observaciones maduracion</label>
-				<textarea class="form-control col-sm-5 mt-3" rows ="4" id="maduracion_acorde_observaciones" name="maduracion_acorde_observaciones" placeholder="Observaciones de maduracion" required>{{observacionesMaduracion}}</textarea>
+			<div class="form-group row ">
+			    {!! Form::label('normal_physical_examination', 'Examen fisico normal',[
+					    'class'=>'col-sm-3 mt-3 col-form-label'
+					    ]) 
+			    !!}
+			    @if($normalPhysicalExaminationValue == 1)
+		    		{!! Form::select('normal_physical_examination', array('1' => 'Si', '0' => 'No'), '1', ['class'=>'form-control mt-3 col-sm-8']) !!}
+	      		@else
+	      			{!! Form::select('normal_physical_examination', array('1' => 'Si', '0' => 'No'), '0', ['class'=>'form-control mt-3 col-sm-8']) !!}
+      			@endif
+      		</div>
+			<div class="form-group row ">
+			    {!! Form::label('normal_physical_examination_observation', 'Observaciones examen fisico',[
+					    'class'=>'col-sm-3 mt-3 col-form-label'
+					    ]) 
+			    !!}
+			    {!! Form::text('normal_physical_examination_observation', $normalPhysicalExaminationObservationValue, [
+			    	'placeholder' => 'Observaciones examen fisico',
+			    	'class' => 'form-control mt-3 col-sm-8'
+			    ]) !!
 			</div>
-
-
-			<div class="form-group row">
-			   <label for="ex_fisico_normal" class="col-sm-5 col-form-label"  > Examen fisico normal</label>
-			    <select name="ex_fisico_normal" class="form-control col-sm-5 mt-3">
-  					{% if examenFisicoNormal == 1 %}
-  					<option value="1" selected>Si</option>
-					<option value="0" >No</option>
-					{% else %}
-					<option value="1" >Si</option>
-					<option value="0" selected>No</option>
-					{% endif %}
-				</select>
+			<div class="form-group row ">
+			    {!! Form::label('pc', 'pc',[
+					    'class'=>'col-sm-3 mt-3 col-form-label'
+					    ]) 
+			    !!}
+			    {!! Form::text('pc', $pcValue, [
+			    	'placeholder' => 'pc',
+			    	'class' => 'form-control mt-3 col-sm-8'
+			    ]) !!
 			</div>
-
-			<div class="form-group row">
-			<label for="ex_fisico_observaciones" class="col-sm-5 col-form-label" > Observaciones examen fisico</label>
-				<textarea class="form-control col-sm-5 mt-3" rows ="4" id="ex_fisico_observaciones" name="ex_fisico_observaciones" placeholder="Observaciones de examen fiscio" required>{{observacionesExamen}}</textarea>
+			<div class="form-group row ">
+			    {!! Form::label('ppc', 'ppc',[
+					    'class'=>'col-sm-3 mt-3 col-form-label'
+					    ]) 
+			    !!}
+			    {!! Form::text('ppc', $ppcValue, [
+			    	'placeholder' => 'ppc',
+			    	'class' => 'form-control mt-3 col-sm-8'
+			    ]) !!
 			</div>
-
-			<div class="form-group row">
-				<label for="pc"  class="col-sm-5 col-form-label" > Percentilo cefálico</label>
-				<input class="form-control col-sm-1 mt-3" type="number" name="pc" placeholder="PC" value="{{pc}}">
+			<div class="form-group row ">
+			    {!! Form::label('food_description', 'Descripcion de alimentacion',[
+					    'class'=>'col-sm-3 mt-3 col-form-label'
+					    ]) 
+			    !!}
+			    {!! Form::text('food_description', $foodDescriptionValue, [
+			    	'placeholder' => 'Descripcion de alimentacion',
+			    	'class' => 'form-control mt-3 col-sm-8'
+			    ]) !!
 			</div>
-
-			<div class="form-group row">
-				<label for="ppc" class="col-sm-5 col-form-label" > Percentilo perimetro cefálico</label>
-				<input class="form-control col-sm-1 mt-3" type="number" name="ppc" placeholder="PPC" value="{{ppc}}">
+			<div class="form-group row ">
+			    {!! Form::label('height', 'Talla',[
+					    'class'=>'col-sm-3 mt-3 col-form-label'
+					    ]) 
+			    !!}
+			    {!! Form::text('height', $heightValue, [
+			    	'placeholder' => 'Talla',
+			    	'class' => 'form-control mt-3 col-sm-8'
+			    ]) !!
 			</div>
-
-			<div class="form-group row">
-				<label for="talla" class="col-sm-5 col-form-label " > Talla</label>
-				<input class="form-control col-sm-1 mt-3" type="number" placeholder="Talla" name="talla" value="{{talla}}">
+			<div class="form-group row ">
+			    {!! Form::label('general_observation', ' Observaciones generales',[
+					    'class'=>'col-sm-3 mt-3 col-form-label'
+					    ]) 
+			    !!}
+			    {!! Form::text('general_observation', $generalObservationValue, [
+			    	'placeholder' => ' Observaciones generales',
+			    	'class' => 'form-control mt-3 col-sm-8'
+			    ]) !!
 			</div>
-
-			<div class="form-group row">
-			<label for="alimentacion" class="col-sm-5 col-form-label"> Descripcion de alimentacion</label>
-				<textarea class="form-control col-sm-5 mt-3" rows ="4" id="alimentacion" name="alimentacion" placeholder="Descripcion de alimentacion">{{descripcionAlimentacion}}</textarea>
-			</div>
-			<div class="form-group row">
-			<label for="observaciones_generales" class="col-sm-5 col-form-label"> Observaciones generales</label>
-				<textarea class="form-control col-sm-5 mt-3" rows ="4" id="observaciones_generales" name="observaciones_generales" placeholder="Observaciones generales">{{observacionesGenerales}}</textarea>
-			</div>
+			<!-- Ver despues de hechas las sesiones-->
 			<input type="hidden" name="user_id" value="{{usuarioActual.idUsuario}}">
 			<input type="hidden" name="paciente_id" value="{{idPaciente}}">
-			<input type="hidden" name="token" value={{usuarioActual.token}}>
-			
-			<button type="submit" class="btn btn-outline-success  btn-own-info">{{boton}}</button>
+			<!-- Ver despues de hechas las sesiones-->
+			@if(isset($control))
+				<div class="text-center">
+					<button type="submit" class="btn btn-outline-success btn-own-info">Editar</button>
+				</div>	
+			@else
+				<div class="text-center">
+					<button type="submit" class="btn btn-outline-success btn-own-info">Agregar</button>
+				</div>	
+			@endif
+		{!! Form::close() !!}
 
 		</form>
 	</div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\MedicalCheckup;
 use Illuminate\Http\Request;
+use App\Http\Requests\MedicalCheckupRequest;
 
 class MedicalCheckupController extends Controller
 {
@@ -14,7 +15,7 @@ class MedicalCheckupController extends Controller
      */
     public function index($id)
     {
-        $controls = App\MedicalCheckup::where('patient_id', $id);
+        $controls = MedicalCheckup::where('patient_id', $id)->get();
         return view('medicalCheckups.partials.medicalCheckupList')->with('controls',$controls);
     }
 
@@ -25,7 +26,7 @@ class MedicalCheckupController extends Controller
      */
     public function create()
     {
-        //
+        return view('medicalCheckups.partials.create');
     }
 
     /**
@@ -47,7 +48,7 @@ class MedicalCheckupController extends Controller
      */
     public function show(MedicalCheckup $medicalCheckup)
     {
-        //
+        return view('medicalCheckups.partials.show');
     }
 
     /**
