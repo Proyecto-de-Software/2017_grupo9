@@ -96,7 +96,7 @@
 					    'class'=>'col-sm-3 mt-3 col-form-label'
 					    ]) 
 				!!}
-			    {!! Form::text('document_number', $documentNumberValue, array(
+			    {!! Form::input('number', 'document_number', $documentNumberValue, array(
 			    	'placeholder' => 'Número de documento',
 			    	'class' => 'form-control mt-3 col-sm-8'
 			    )) !!}
@@ -136,7 +136,7 @@
 					    'class'=>'col-sm-3 mt-3 col-form-label'
 					    ]) 
 				!!}
-			    {!! Form::text('phone', $phoneValue, array(
+			    {!! Form::input('number', 'phone', $phoneValue, array(
 			    	'placeholder' => 'Teléfono',
 			    	'class' => 'form-control mt-3 col-sm-8'
 			    )) !!}

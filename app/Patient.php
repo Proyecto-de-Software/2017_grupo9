@@ -15,10 +15,21 @@ class Patient extends Model
     	return $this->hasOne('App\DemographicData');
     }
 
+    public function medicalCheckup()
+	{
+	    return $this->hasMany('App\medicalCheckup');
+	}
+
     public function scopeName($query, $name){
     	if(trim($name) != ""){
 
     		$query->where(\DB::raw("CONCAT(first_name, ' ', last_name)"), "LIKE", "$name%");
+    	}
+    }
+
+    public function scopeDocument($query, $typeDocument, $documentNumber){
+    	if(trim($documentNumber) != ""){
+    		$query->where('document_number', $documentNumber)->get();
     	}
     }
 

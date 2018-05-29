@@ -19,6 +19,7 @@ Route::get('/demographicData/create/{id}', 'DemographicDataController@create');
 Route::get('/medicalCheckup/create/{id}', 'MedicalCheckupController@create');
 Route::get('/medicalCheckup/patient/{id}', 'MedicalCheckupController@index');
 
+
 Route::resource('user', 'UserController');
 Route::resource('patient', 'PatientController');
 Route::resource('configuration', 'ConfigurationController');

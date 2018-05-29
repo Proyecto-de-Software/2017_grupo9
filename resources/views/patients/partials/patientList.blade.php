@@ -3,9 +3,24 @@
 		<div class="mb-4 mt-4">
 	
 		</div>
-		{!! Form::open(['route' => 'patient.index', 'method' => 'GET', 'class' => 'navbar-form navbar-left d-flex', 'role' => 'search']) !!}
-			<div class="form-group">
-				{!! Form::text('name', null, ['class' => 'form-control ml-auto']) !!}
+		{!! Form::open(['route' => 'patient.index', 'method' => 'GET', 'class' => 'navbar-form navbar-left d-flex span4', 'role' => 'search']) !!}
+			<div class="form-group row">
+				{!! Form::text('name', null, ['class' => 'form-control ml-auto', 'placeholder' => 'Ingrese nombre']) !!}
+			</div>
+			<button type="submit" class="btn btn-outline-success btn-own-info"> Buscar </button>
+		{!! Form::close() !!}
+		{!! Form::open(['route' => 'patient.index', 'method' => 'GET', 'class' => 'navbar-form navbar-left d-flex span8', 'role' => 'search']) !!}
+			<div class="form-group row">
+				<select class="form-control mt-3 col-sm-8" name="type_document">
+					@foreach($typesDocument as $value)
+						@if($typeDocument == $value->id)
+							<option value="{{ $value->id }}" selected>{{ $value->nombre }}</option>
+						@else
+							<option value="{{ $value->id }}">{{ $value->nombre }}</option>
+						@endif
+					@endforeach
+				</select>
+				{!! Form::input('number', 'document_number', null, ['class' => 'form-control ml-auto', 'placeholder' => 'Ingrese número de documento']) !!}
 			</div>
 			<button type="submit" class="btn btn-outline-success btn-own-info"> Buscar </button>
 		{!! Form::close() !!}
@@ -31,21 +46,22 @@
 				    	</td>
 				    	<td>
 				    		{!! Form::open(
-									array(
-										'route' => ['patient.destroy',$patient->id],
-										'method' => 'DELETE',
-										'onsubmit' => 'return confirm("Seguro?")'), 
-									array(
-										'role' => 'form')
-									)
-								!!}
-									{!! Form::button('Eliminar', array(
-											'type' => 'submit',
-									 		'class' => 'btn btn-outline-success btn-own-info'
-									 )) 
-									!!} 
-								{!! Form::close() !!}
-				    	</td>
+								array(
+									'route' => ['patient.destroy',$patient->id],
+									'method' => 'DELETE',
+									'onsubmit' => 'return confirm("Seguro?")'), 
+								array(
+									'role' => 'form')
+								)
+							!!}
+							{!! Form::button('Eliminar', 
+								array(
+									'type' => 'submit',
+							 		'class' => 'btn btn-outline-success btn-own-info'
+							 )) 
+							!!} 
+							{!! Form::close() !!}
+			    	</td>
 				      	<td>
 				      		<a href='{{url("patient/$patient->id")}}' class="btn btn-outline-success btn-own-info">Mas información</a>
 				      	</td>
