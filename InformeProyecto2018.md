@@ -1,132 +1,4 @@
-
-	<ul>
-		
-		<li>
-			<h2>
-				FundamentaciÃ³n sobre la elecciÃ³n del framework elegido.
-			</h2>
-
-			<ul>
-				<p>
-					Principalmente evaluamos dos framework, laravel y symfony. Tuvimos en cuenta en los dos ya que son los mÃ¡s usados actualmente, para el lenguaje PHP.
-				</p>
-				<p>
-					Se terminÃ³ eligiendo laravel porque:
-				</p>
-				<li>
-					Ambos tenÃ­amos conocimientos previos bÃ¡sicos sobre el framework.
-				</li>
-				<li>
-					TenÃ­amos conocimiento de una librerÃ­a en laravel (Entrust), que manejaba perfectamente el sistema de roles y permisos.
-				</li>
-				<li>
-					Estructura: en symfony nos costÃ³ tiempo entender el porquÃ© y el uso de los Bundles. En cambio, en laravel fÃ¡cilmente entendimos todo.
-				</li>
-				<li>
-					Nos pareciÃ³ mÃ¡s cÃ³modo el ORM de Laravel (Eloquent), ya que usa active record
-				</li>
-				<li>
-					Migraciones: Se tiene registros de todas las migraciones
-				</li>
-				<li>
-					Seeders: Laravel tiene seeders que ya vienen por defecto, por lo cual es facil y rapido llenar la base con datos de prueba.
-				</li>	
-			</ul>
-		</li>
-		<li>
-			<h2>
-				Referencias
-			</h2>
-
-			<ul>
-				<li>
-					<a href="https://laravel.com/docs/5.4"> Documentacon oficial </a>
-				</li>
-				<li>
-					<a href="https://laravel.com/docs/5.4"> Libreria Entrust </a>
-				</li>
-				<li>
-					<a href="https://styde.net/laravel-5/"> Articulo en styde.net</a>
-				</li>
-				<li>
-					<a href="https://www.tutorialspoint.com/laravel/index.htm">Articulo en tutorialspoint</a>
-				</li>
-			</ul>
-		</li>
-		<li>
-			<h2>
-				DescripciÃ³n de los mÃ³dulos desarrollados en el trabajo de la cursada que pudieron ser aprovechados para ser usados por el framework.
-			</h2>
-			<ul>
-				<li>
-					MÃ³dulo de roles y de permisos. Ambos mÃ³dulos fueron implementados con la librerÃ­a de Entrust. 
-					Las clases Role y Permission, heredan de EntrustRole y EntrustPerm ission respectivamente. AsÃ­ heredan toda la funcionalidad para manejar el sistema de roles y permisos. Por ejemplo, facilmente se puede crear un permiso un rol y asociarlo a un usuario. ((PONER EJEMPLO ACA))
-				</li>
-				<li>
-					MÃ³dulo de sesiÃ³n: Laravel implementa un sistema de autenticaciÃ³n muy simple, el cual se usa en el proyecto. Si bien se generan archivos para registrar, cambiar contraseÃ±a, recuperar contraseÃ±a, etc, se usa solo la parte de login. Ya que el registro, estÃ¡ contemplado en el mÃ³dulo de usuarios manejado por el administrador.
-					Usando la autenticaciÃ³n de laravel es muy simple comprobar si un usuario existe, a partir de su contraseÃ±a y un dato (email, usuario, etc). Nos abstraemos de todas las comprobaciones.
-
-				</li>
-				<li>
-					En todos los mÃ³dulos, se aprovechan los mecanismos de validaciÃ³n del framework. Por ejemplo validar que un email o nombre de usuario se Ãºnico en la base, y todas las demÃ¡s comprobaciones del lado del servidor. Laravel provee un mecanismo muy simple. En nuestro caso, usamos la clase FormRequest para validar los datos. Existe un Form request por modelo (excepto roles  y permisos que no se implementa CRUD).
-					AquÃ­ un ejemplo de validaciÃ³n de alta de usuario.
-					((PONER EJEMPLO))
-
-				</li>
-				<li>
-					TambiÃ©n, en todos los mÃ³dulos se aprovecha el CRUD de laravel, el cual se explica en un item posterior.
-				</li>
-
-			</ul>
-		</li>
-
-		<li>
-			<h2>
-				Mecanismos de seguridad y routing
-			</h2>
-			<ul>
-				<li>
-					CSRF: se usa un token csrf en los formularios, para comprobar la procedencia del request.
-				</li>
-				<li>
-					Se usan middlewares en los controllers para impedir acceso a rutas por parte de usuarios que no tienen autorizaciÃ³n
-				</li>
-			</ul>
-		</li>
-
-		<li>
-			<h2>
-				Mecanismo operaciones CRUD
-			</h2>
-			<ul>
-				<li>
-					Cuando se crea un modelo (con la consola) se envÃ­a el parÃ¡metro -r para especificar que es un recurso. Este comando es muy potente, ya que automÃ¡ticamente crea el modelo, un controlador con los acciones CRUD, y modifica el archivo de rutas ruteando a los mÃ©todos del controlador correspondientes. Luego se modifican las migraciones a gusto, y se ejecutan. Por Ãºltimo, se maneja todo mediante objetos (los modelos) haciendo uso del ORM, que, como se dijo al principio, usa el patrÃ³n active record. Una tabla se mapea a una clase en particular. Si uno acata las restricciones de nombres que pone laravel, es todo automÃ¡tico. Por ejemplo: nombre de la clase en singular (y en inglÃ©s), genera una tabla con el mismo nombre en plural.
-				</li>
-			</ul>
-		</li>
-
-		<li>
-			<h2>
-				Manejo MVC
-			</h2>
-			<ul>
-				<li>
-					La forma de manejar el MVC: explicando detalladamente el Ã¡rbol de directorios.
-					Los directorios mÃ¡s usados durante el proyecto son:
-					<ul>
-						<li>
-							App: se ubican modelos, controladores, y los request y middlewares antes mencionados, entre otros.
-						</li>
-						<li>
-							Database: se ubican migraciones y seeders. TambiÃ©n factorÃ­as, las cuales pueden usar los seeders para generar datos.
-						</li>
-						<li>
-							Routes: se ubica, entre otros, el archivo web.php donde se especifican los ruteos.
-						</li>
-					</ul>
-					Si bien, segÃºn el creador de laravel, este no es un framework MVC. Se puede notar fÃ¡cilmente en nuestro proyecto este patrÃ³n. El modelo se ubica en la carpeta /app en archivos sueltos (tambien podria estar en una carpeta â€˜modelsâ€™, eso lo definimos nosotros). El controlador se ubica en /app/http/controllers. Y la vista en /resources/views, aqui estan todos los templates
-				</li>
-			</ul>
-		</li>
-
-	</ul>
+ºYb‡anÖ¦z{Zr)ì¡ºŞ•§¥yÇ"×¥~¶¦{
++‘é^‚'hş®–“ëŠw"¥©fz{^zö¥¹©¨±Ú,~¶¦{
++’V«j÷¥ÊÌ¦~‰òNëâš‹ËÖZ,v‹2j«²‰å¢É¬ºÆ¢Æœ¶æ¥™éíz–«iéezx.j7ÿé¥'­z¹¢éb‚'§v‰Z­«Ş–š+ªç¿¦X€™º,µéÚš‹¢zŠhÚ,¦·¯Š‹²'(²Ê­ç¥~¶¦{
++“ùb–$Ş©¨±Ê'¡È¦‰éí¡×®©bn·«iéåj¶¯zQ'¶»¬¶«™©Ş¦Ú¥êßyËZ™éíyélŠË^™§^®‰^³*^®h¬¢ÏåŠX„²ÚîrÛ«iéìÊgèŸ)è±Ê,¶Øšš×§uêŞ–š+ªì–ë(uéh°§vW¬w™¸¨zyZ­«Ş•÷"–g§µç§µéİŠj,¶‡hşX¥ˆÚ,¥ªŞr)¬rj¡éNDÇ^-ªÚ½éD–Š®z{rj«ºÆšrØ¯z·œ¢·–)b2(+iÈ¨ëzØêŞ‚+-®‹zÚjÉZ²h ­§"¢w¬şX¥‰'uêì-ªÚ½ém‰éŞ±çz»*¹ìš¾'§zzh­×ŸyËh¦Šå¡Ëš•ëiÈ¥Ê¶©‰Ú%•éÚ®V›jÇœ¢wZ¶‹zšîy¶¿–/î—ùb–(vEçŞ­éÜ‰«?‡k¥–&¡­ç
