@@ -9,12 +9,6 @@
 			</div>
 			<button type="submit" class="btn btn-outline-success btn-own-info"> Buscar </button>
 		{!! Form::close() !!}
-		<form class="navbar-form navbar-left d-flex" role="search">
-			<div class="form-group">
-				<input type="text" class="form-control ml-auto" name="">
-			</div>
-			<button type="submit" class="btn btn-outline-success btn-own-info"> Buscar </button>
-		</form>
 		<table class="table table-hover table-scripted">
 		  	<thead>
 			    <tr>
