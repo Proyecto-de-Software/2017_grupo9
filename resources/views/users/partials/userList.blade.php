@@ -2,7 +2,30 @@
 <section>
 	<h2> Usuarios</h2><br>
 		<div class="mb-4 mt-4">
-	
+			<h3 >Filtrado </h3> 
+			<form  id="form" class="form-inline my-2 my-lg-0 ml-auto mr-5 d-flex justify-content-start" action="/index.php/usuarios/filtrado" method="POST">
+				<input type="hidden" name="filtrado">		
+				@if(isset($filtrado))
+	      			<input class="form-control mr-sm-2 " type="text" placeholder="Buscar" aria-label="Buscar" name="buscar" id="buscar" value="{{filtrado.campoBuscar}}">
+	      		@else
+	      			<input class="form-control mr-sm-2 " type="text" placeholder="Buscar" aria-label="Buscar" name="buscar" id="buscar">
+	      		@endif
+
+	      		@if(filtrado->activo) 
+					<input type="checkbox" name="activo" id="activo" class="checkbox mr-2 ml-2" value="activo" checked> 
+				@else
+					<input type="checkbox" name="activo" id="activo" class="checkbox mr-2 ml-2" value="activo">  
+				@endif
+    			<label for="rol">Activo</label><br/>
+
+    			@if filtrado.bloqueado 
+					<input type="checkbox" name="bloqueado" id="bloqueado" class="checkbox mr-2 ml-2" value="bloqueado" checked={{filtrado.bloqueado}}>
+				@else
+					<input type="checkbox" name="bloqueado" id="bloqueado" class="checkbox mr-2 ml-2" value="bloqueado">
+				@endif
+    			<label for="rol">Bloqueado</label><br/>
+	      		<button class="btn btn-success btn-search btn-own  my-2 my-sm-0 mr-2 ml-2" type="submit">Filtrar</button>
+		    </form>
 		</div>
 		<table class="table table-hover">
 		  	<thead>
