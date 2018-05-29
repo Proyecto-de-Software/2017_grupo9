@@ -36,7 +36,11 @@
 			    </tr>
 			    <tr>
 	     			 <th scope="row">Obra social</th>
-	     			 <td>{{ $healthInsurance->nombre }}</td>
+	     			 @if($healthInsurance == null)
+	     			 	<td> No posee obra social </td>
+	     			 @else
+	     			 	<td>{{ $healthInsurance->nombre }}</td>
+			    	@endif
 			    </tr>
 			    <tr>
 	     			 <th scope="row">Tipo de documento</th>

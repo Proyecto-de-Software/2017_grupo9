@@ -107,6 +107,11 @@
 				    ]) 
 				!!}
 				<select class="form-control mt-3 col-sm-8" name="health_insurance">
+					@if($healthInsuranceValue == null)
+						<option value="" selected>Ingrese obra social</option>
+					@else
+						<option value="">Ingrese obra social</option>
+					@endif
 					@foreach($healthsInsurance as $value)
 						@if($healthInsuranceValue == $value->id)
 							<option value="{{ $value->id }}" selected>{{ $value->nombre }}</option>

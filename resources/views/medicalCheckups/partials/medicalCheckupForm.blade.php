@@ -3,7 +3,7 @@
 
 		@include('partials.error')
 
-		if(isset($control))
+		@if(isset($control))
 			@php
 				$title = 'Editar control';
 				$url = '/medicalCheckup/'.$medicalCheckup->id;
@@ -11,7 +11,7 @@
 				$ageValue = $age;
 				$weightValue = $control->weight;
 				$heightValue = $control->height;
-				$completeVaccinesValue  = $control->complete_vaccines ;
+				$completeVaccinesValue  = $control->complete_vaccines;
 				$completeVaccinesObservationValue = $control->complete_vaccines_observation;
 				$correctMadurationValue = $control->correct_maduration;
 				$correctMadurationObservationValue = $control->correct_maduration_observation;
@@ -51,27 +51,18 @@
 					    'class'=>'col-sm-3 mt-3 col-form-label'
 					    ]) 
 				!!}
-			    <input type="text" readonly class="text-center form-control col-sm-2" id="fecha" name="fecha" value='{{"now" | date("Y-m-d") }}'>
+			    <input type="text" readonly class="text-center form-control col-sm-2" id="date" name="date" value='{{ date("Y-m-d") }}'>
 		 	</div>
-		 	<div class="form-group row ">
-			    {!! Form::label('age', 'Edad de paciente',[
-					    'class'=>'col-sm-3 mt-3 col-form-label'
-					    ]) 
-			    !!}
-			    {!! Form::text('age', $ageValue, [
-			    	'placeholder' => 'Edad',
-			    	'class' => 'form-control mt-3 col-sm-8'
-			    ]) !!
-			</div>
 		 	<div class="form-group row ">
 			    {!! Form::label('weight', 'Peso',[
 					    'class'=>'col-sm-3 mt-3 col-form-label'
 					    ]) 
 			    !!}
-			    {!! Form::text('weight', $weightValue, [
-			    	'placeholder' => 'Peso',
-			    	'class' => 'form-control mt-3 col-sm-8'
-			    ]) !!
+			    {!! Form::input('number', 'weight', $weightValue, [
+			    	'placeholder' => 'Peso en kg',
+			    	'class' => 'form-control mt-3 col-sm-8',
+			    	'required' => true
+			    ]) !!}
 			</div>
 			<div class="form-group row ">
 			    {!! Form::label('complete_vaccines', 'Vacunas completas',[
@@ -91,8 +82,9 @@
 			    !!}
 			    {!! Form::text('complete_vaccines_observation', $completeVaccinesObservationValue, [
 			    	'placeholder' => 'Observaciones vacunas',
-			    	'class' => 'form-control mt-3 col-sm-8'
-			    ]) !!
+			    	'class' => 'form-control mt-3 col-sm-8',
+			    	'required' => true
+			    ]) !!}
 			</div>
 			<div class="form-group row ">
 			    {!! Form::label('correct_maduration', 'Maduracion acorde',[
@@ -112,8 +104,9 @@
 			    !!}
 			    {!! Form::text('correct_maduration_observation', $correctMadurationObservationValue, [
 			    	'placeholder' => 'Observaciones maduracion',
-			    	'class' => 'form-control mt-3 col-sm-8'
-			    ]) !!
+			    	'class' => 'form-control mt-3 col-sm-8',
+			    	'required' => true
+			    ]) !!}
 			</div>
 			<div class="form-group row ">
 			    {!! Form::label('normal_physical_examination', 'Examen fisico normal',[
@@ -133,28 +126,29 @@
 			    !!}
 			    {!! Form::text('normal_physical_examination_observation', $normalPhysicalExaminationObservationValue, [
 			    	'placeholder' => 'Observaciones examen fisico',
-			    	'class' => 'form-control mt-3 col-sm-8'
-			    ]) !!
+			    	'class' => 'form-control mt-3 col-sm-8',
+			    	'required' => true
+			    ]) !!}
 			</div>
 			<div class="form-group row ">
 			    {!! Form::label('pc', 'pc',[
 					    'class'=>'col-sm-3 mt-3 col-form-label'
 					    ]) 
 			    !!}
-			    {!! Form::text('pc', $pcValue, [
+			    {!! Form::input('number', 'pc', $pcValue, [
 			    	'placeholder' => 'pc',
 			    	'class' => 'form-control mt-3 col-sm-8'
-			    ]) !!
+			    ]) !!}
 			</div>
 			<div class="form-group row ">
 			    {!! Form::label('ppc', 'ppc',[
 					    'class'=>'col-sm-3 mt-3 col-form-label'
 					    ]) 
 			    !!}
-			    {!! Form::text('ppc', $ppcValue, [
+			    {!! Form::input('number', 'ppc', $ppcValue, [
 			    	'placeholder' => 'ppc',
 			    	'class' => 'form-control mt-3 col-sm-8'
-			    ]) !!
+			    ]) !!}
 			</div>
 			<div class="form-group row ">
 			    {!! Form::label('food_description', 'Descripcion de alimentacion',[
@@ -164,17 +158,17 @@
 			    {!! Form::text('food_description', $foodDescriptionValue, [
 			    	'placeholder' => 'Descripcion de alimentacion',
 			    	'class' => 'form-control mt-3 col-sm-8'
-			    ]) !!
+			    ]) !!}
 			</div>
 			<div class="form-group row ">
 			    {!! Form::label('height', 'Talla',[
 					    'class'=>'col-sm-3 mt-3 col-form-label'
 					    ]) 
 			    !!}
-			    {!! Form::text('height', $heightValue, [
+			    {!! Form::input('number', 'height', $heightValue, [
 			    	'placeholder' => 'Talla',
 			    	'class' => 'form-control mt-3 col-sm-8'
-			    ]) !!
+			    ]) !!}
 			</div>
 			<div class="form-group row ">
 			    {!! Form::label('general_observation', ' Observaciones generales',[
@@ -184,23 +178,23 @@
 			    {!! Form::text('general_observation', $generalObservationValue, [
 			    	'placeholder' => ' Observaciones generales',
 			    	'class' => 'form-control mt-3 col-sm-8'
-			    ]) !!
+			    ]) !!}
 			</div>
-			<!-- Ver despues de hechas las sesiones-->
-			<input type="hidden" name="user_id" value="{{usuarioActual.idUsuario}}">
-			<input type="hidden" name="paciente_id" value="{{idPaciente}}">
-			<!-- Ver despues de hechas las sesiones-->
 			@if(isset($control))
 				<div class="text-center">
 					<button type="submit" class="btn btn-outline-success btn-own-info">Editar</button>
 				</div>	
 			@else
 				<div class="text-center">
+			{{-- Ver despues de hechas las sesiones --}}
+				{!! Form::hidden('patient_id', $patient_id) !!}
+				@php
+					$user_id = Auth::user()->id;
+				@endphp
+			{{-- Ver despues de hechas las sesiones --}}
 					<button type="submit" class="btn btn-outline-success btn-own-info">Agregar</button>
 				</div>	
 			@endif
 		{!! Form::close() !!}
-
-		</form>
 	</div>
 </section>

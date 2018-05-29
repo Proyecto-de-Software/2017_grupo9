@@ -44,6 +44,6 @@ class UserRequest extends FormRequest
             'email.required'  => 'El email es obligatorio',
             'role.required'  => 'Es obligatorio elegir al menos un rol',
             'password.confirmed' => 'Ambas contraseñas deben coincidir'
-    ];
-}
+        ];
+    }
 }

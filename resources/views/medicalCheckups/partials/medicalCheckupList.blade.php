@@ -2,7 +2,7 @@
 	<h2> Historia Clinica</h2><br>
 		<div class="mb-4 mt-4">
 			<h3 >Controles </h3> 
-			<a class="btn btn-success btn-own mt-3 mb-5 text-right" role="button" href='{{url("/medicalCheckup/create/$medicalCheckup->patient_id")}}'>
+			<a class="btn btn-success btn-own mt-3 mb-5 text-right" role="button" href='{{url("/medicalCheckup/create/$patient_id")}}'>
 			Agregar control </a>
 			<a class="btn btn-success btn-own mt-3 mb-5 text-right" role="button" href=''>
 			Estadisticas gráficas </a>
@@ -16,7 +16,7 @@
 			  	<tbody>
 			  		@foreach($controls as $control)
 					    <tr>
-					    	<td>{{ control->date}}</td>
+					    	<td>{{ $control->date}}</td>
 					    	<td>
 					    		{{ Doctor }}
 					    	</td>
@@ -28,7 +28,7 @@
 					    		<td>
 					    			{!! Form::open(
 										array(
-											'route' => ['patient.destroy',$patient->id],
+											'route' => ['patient.destroy',$patient_id],
 											'method' => 'DELETE',
 											'onsubmit' => 'return confirm("Seguro?")'), 
 										array(

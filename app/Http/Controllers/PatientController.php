@@ -70,8 +70,11 @@ class PatientController extends Controller
      */
     public function show(Patient $patient)
     {
-        $healthInsurance = HealthInsuranceController::find($patient->health_insurance);
+        $healthInsurance = null;
         $typeDocument = TypeDocumentController::find($patient->type_document);
+        if($patient->health_insurance != null){
+            $healthInsurance = HealthInsuranceController::find($patient->health_insurance);
+        }
         return view('patients.show')->with('patient',$patient)->with('healthInsurance',$healthInsurance)->with('typeDocument',$typeDocument);
     }
 
