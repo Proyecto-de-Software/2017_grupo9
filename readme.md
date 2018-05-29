@@ -1,4 +1,3 @@
-
 <p align="center">
     <img width="48px" height="48px" src="public/img/logo.JPG">
     <h1> Hospital </h1>
