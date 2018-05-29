@@ -32,7 +32,7 @@ Route::get('/config/{configuration}', ['as' => 'config.show', 'uses' => 'ConfigC
 Route::post('/config/{configuration}', ['as' => 'config.store', 'uses' => 'ConfigController@store']);
 
 
-Route::get('/', ['as' => 'home', 'uses' => 'Controller@index']);
+Route::get('/', ['as' => 'home', 'uses' => 'Controller@indexHome']);
 
 
 
