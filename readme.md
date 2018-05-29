@@ -1,3 +1,7 @@
+## Grupo 9
+-   Ignacio Zampelunghe
+-   Gabriel Brañeiro
+
 ## Directorio final
 -   Se considera el directorio raiz del proyecto, como directorio final del trabajo.
 
