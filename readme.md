@@ -1,4 +1,8 @@
-<p align="center"><img width="48px" height="48px" src="public/img/logo.JPG"></p>
+<p align="center">
+    <img width="48px" height="48px" src="public/img/logo.JPG">
+    <h1> Hospital </h1>
+
+</p>
 
 <p align="center">
 <a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
