@@ -6,15 +6,15 @@
 		@if(isset($control))
 			@php
 				$title = 'Editar control';
-				$url = '/medicalCheckup/'.$medicalCheckup->id;
+				$url = '/medicalCheckup/'.$control->id;
 				$method = 'put';
-				$ageValue = $age;
+				{{-- $ageValue = $age; --}}
 				$weightValue = $control->weight;
 				$heightValue = $control->height;
 				$completeVaccinesValue  = $control->complete_vaccines;
 				$completeVaccinesObservationValue = $control->complete_vaccines_observation;
-				$correctMadurationValue = $control->correct_maduration;
-				$correctMadurationObservationValue = $control->correct_maduration_observation;
+				$correctMaturationValue = $control->correct_maturation;
+				$correctMaturationObservationValue = $control->correct_maturation_observation;
 				$normalPhysicalExaminationValue = $control->normal_physical_examination;
 				$normalPhysicalExaminationObservationValue = $control->normal_physical_examination_observation;
 				$pcValue = $control->pc;
@@ -32,8 +32,8 @@
 				$heightValue = null;
 				$completeVaccinesValue = true;
 				$completeVaccinesObservationValue = null;
-				$correctMadurationValue = true;
-				$correctMadurationObservationValue = null;
+				$correctMaturationValue = true;
+				$correctMaturationObservationValue = null;
 				$normalPhysicalExaminationValue = true;
 				$normalPhysicalExaminationObservationValue = null ;
 				$pcValue = null;
@@ -87,22 +87,22 @@
 			    ]) !!}
 			</div>
 			<div class="form-group row ">
-			    {!! Form::label('correct_maduration', 'Maduracion acorde',[
+			    {!! Form::label('correct_maturation', 'Maduracion acorde',[
 					    'class'=>'col-sm-3 mt-3 col-form-label'
 					    ]) 
 			    !!}
-			    @if($correctMadurationValue == 1)
-		    		{!! Form::select('correct_maduration', array('1' => 'Si', '0' => 'No'), '1', ['class'=>'form-control mt-3 col-sm-8']) !!}
+			    @if($correctMaturationValue == 1)
+		    		{!! Form::select('correct_maturation', array('1' => 'Si', '0' => 'No'), '1', ['class'=>'form-control mt-3 col-sm-8']) !!}
 	      		@else
-	      			{!! Form::select('correct_maduration', array('1' => 'Si', '0' => 'No'), '0', ['class'=>'form-control mt-3 col-sm-8']) !!}
+	      			{!! Form::select('correct_maturation', array('1' => 'Si', '0' => 'No'), '0', ['class'=>'form-control mt-3 col-sm-8']) !!}
       			@endif
 			</div>
 			<div class="form-group row ">
-			    {!! Form::label('correct_maduration_observation', 'Observaciones maduracion',[
+			    {!! Form::label('correct_maturation_observation', 'Observaciones maduracion',[
 					    'class'=>'col-sm-3 mt-3 col-form-label'
 					    ]) 
 			    !!}
-			    {!! Form::text('correct_maduration_observation', $correctMadurationObservationValue, [
+			    {!! Form::text('correct_maturation_observation', $correctMaturationObservationValue, [
 			    	'placeholder' => 'Observaciones maduracion',
 			    	'class' => 'form-control mt-3 col-sm-8',
 			    	'required' => true
@@ -179,7 +179,8 @@
 			    	'placeholder' => ' Observaciones generales',
 			    	'class' => 'form-control mt-3 col-sm-8'
 			    ]) !!}
-			</div>
+			</div>		
+			{!! Form::hidden('patient_id', $patient_id) !!}
 			@if(isset($control))
 				<div class="text-center">
 					<button type="submit" class="btn btn-outline-success btn-own-info">Editar</button>
@@ -187,7 +188,6 @@
 			@else
 				<div class="text-center">
 			{{-- Ver despues de hechas las sesiones --}}
-				{!! Form::hidden('patient_id', $patient_id) !!}
 				@php
 					$user_id = Auth::user()->id;
 				@endphp

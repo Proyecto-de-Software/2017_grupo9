@@ -16,10 +16,10 @@ class PatientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
 
-        $patients = Patient::orderBy('last_name', 'ASC')->paginate(5);
+        $patients = Patient::name($request->get('name'))->orderBy('last_name', 'ASC')->paginate(5);
 
         return view('patients.index', compact('patients'));
     }

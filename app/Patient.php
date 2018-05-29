@@ -15,4 +15,11 @@ class Patient extends Model
     	return $this->hasOne('App\DemographicData');
     }
 
+    public function scopeName($query, $name){
+    	if(trim($name) != ""){
+
+    		$query->where(\DB::raw("CONCAT(first_name, ' ', last_name)"), "LIKE", "$name%");
+    	}
+    }
+
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Patient;
+use App\User;
 use App\MedicalCheckup;
 use Illuminate\Http\Request;
 use App\Http\Requests\MedicalCheckupRequest;
@@ -16,7 +17,12 @@ class MedicalCheckupController extends Controller
      */
     public function index($id)
     {
-        $controls = MedicalCheckup::where('patient_id', $id)->get();
+        $id = $id;
+        $controls = User::join('medical_checkups', function ($join) use ($id){
+            $join->on('medical_checkups.user_id', '=', 'users.id')
+                ->where('medical_checkups.patient_id', '=', $id);
+        })
+        ->get();
         return view('medicalCheckups.index', compact('controls'))->with('patient_id',$id);
     }
 
@@ -36,7 +42,7 @@ class MedicalCheckupController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(MedicalCheckupRequest $medicalCheckup)
+    public function store(MedicalCheckupRequest $request)
     {
         $medicalCheckup = new MedicalCheckup();
 
@@ -44,8 +50,8 @@ class MedicalCheckupController extends Controller
         $medicalCheckup->weight = $request->weight;
         $medicalCheckup->complete_vaccines = $request->complete_vaccines;
         $medicalCheckup->complete_vaccines_observation = $request->complete_vaccines_observation;
-        $medicalCheckup->correct_maduration = $request->correct_maduration;
-        $medicalCheckup->correct_maturation_observation = $request->correct_maduration_observation;
+        $medicalCheckup->correct_maturation = $request->correct_maturation;
+        $medicalCheckup->correct_maturation_observation = $request->correct_maturation_observation;
         $medicalCheckup->normal_physical_examination = $request->normal_physical_examination;
         $medicalCheckup->normal_physical_examination_observation = $request->normal_physical_examination_observation;
         $medicalCheckup->pc = $request->pc;
@@ -54,7 +60,7 @@ class MedicalCheckupController extends Controller
         $medicalCheckup->food_description = $request->food_description;
         $medicalCheckup->general_observation = $request->general_observation;
         $medicalCheckup->patient_id = $request->patient_id;
-        $medicalCheckup->user_id = Auth::user()->id;
+        $medicalCheckup->user_id = 2; //Auth::user()->id;
 
         $medicalCheckup->save();
 
@@ -69,7 +75,7 @@ class MedicalCheckupController extends Controller
      */
     public function show(MedicalCheckup $medicalCheckup)
     {
-        return view('medicalCheckups.show');
+        return view('medicalCheckups.show')->with('control',$medicalCheckup);
     }
 
     /**
@@ -80,7 +86,7 @@ class MedicalCheckupController extends Controller
      */
     public function edit(MedicalCheckup $medicalCheckup)
     {
-        //
+        return view('medicalCheckups.edit')->with('control',$medicalCheckup)->with('patient_id',$medicalCheckup->patient_id);
     }
 
     /**
@@ -92,7 +98,24 @@ class MedicalCheckupController extends Controller
      */
     public function update(Request $request, MedicalCheckup $medicalCheckup)
     {
-        //
+        $medicalCheckup->date = $request->input('date');
+        $medicalCheckup->weight = $request->input('weight');
+        $medicalCheckup->complete_vaccines = $request->input('complete_vaccines');
+        $medicalCheckup->complete_vaccines_observation = $request->input('complete_vaccines_observation');
+        $medicalCheckup->correct_maturation = $request->input('correct_maturation');
+        $medicalCheckup->correct_maturation_observation = $request->input('correct_maturation_observation');
+        $medicalCheckup->normal_physical_examination = $request->input('normal_physical_examination');
+        $medicalCheckup->normal_physical_examination_observation = $request->input('normal_physical_examination_observation');
+        $medicalCheckup->pc = $request->input('pc');
+        $medicalCheckup->ppc = $request->input('ppc');
+        $medicalCheckup->height = $request->input('height');
+        $medicalCheckup->food_description = $request->input('food_description');
+        $medicalCheckup->general_observation = $request->input('general_observation');
+        $medicalCheckup->user_id = 2; //Auth::user()->id;
+
+        $medicalCheckup->save();
+
+        return redirect()->route('medicalCheckup.show',$medicalCheckup->id);
     }
 
     /**

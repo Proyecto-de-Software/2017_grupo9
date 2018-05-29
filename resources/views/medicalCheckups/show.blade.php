@@ -1,6 +1,6 @@
 @extends('base')
 @section('title') 
-	Controles
+	Control
 @stop
 
 @section('container')
@@ -85,12 +85,12 @@
 				<a href='{{url("/patient/$control->idPaciente")}}' class="btn btn-outline-success btn-own-info">Volver al paciente</a>
 			</div>
 			<div class="text-center  col-md-4">
-				<a href='{{url("/medicalCheckup/$control->patient_id")}}' class="btn btn-outline-success btn-own-info">Volver a historia clinica</a>
+				<a href='{{url("/medicalCheckup/patient/$control->patient_id")}}' class="btn btn-outline-success btn-own-info">Volver a historia clinica</a>
 			</div>
 			<div class="text-center  col-md-4 ">
 				<a href='{{url("/medicalCheckup/$control->id/edit")}}' class="btn btn-outline-success btn-own-info">Editar</a>
 			</div>
 		</div>
 	</div>
-
 </section>
+@stop

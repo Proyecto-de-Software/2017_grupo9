@@ -18,10 +18,10 @@
 					    <tr>
 					    	<td>{{ $control->date}}</td>
 					    	<td>
-					    		{{ Doctor }}
+					    		{{ $control->first_name }} {{ $control->last_name }} 
 					    	</td>
 					    	<td>
-					    		<a href='{{url("/medicalCheckup/$medicalCheckup->id")}}' class="btn btn-outline-success btn-own-info"> Ver control </a>
+					    		<a href='{{url("/medicalCheckup/$control->id")}}' class="btn btn-outline-success btn-own-info"> Ver control </a>
 					    	</td>
 					    	<!-- Aca van los permisos -->
 					    	<td>
@@ -49,5 +49,4 @@
 				</tbody>
 			</table>
 		</div>
-
 </section>
