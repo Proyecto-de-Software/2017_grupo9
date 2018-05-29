@@ -28,7 +28,7 @@
 					    		<td>
 					    			{!! Form::open(
 										array(
-											'route' => ['patient.destroy',$patient_id],
+											'route' => ['medicalCheckup.destroy',$control->id],
 											'method' => 'DELETE',
 											'onsubmit' => 'return confirm("Seguro?")'), 
 										array(

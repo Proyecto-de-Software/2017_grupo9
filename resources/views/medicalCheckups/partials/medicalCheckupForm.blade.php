@@ -187,11 +187,6 @@
 				</div>	
 			@else
 				<div class="text-center">
-			{{-- Ver despues de hechas las sesiones --}}
-				@php
-					$user_id = Auth::user()->id;
-				@endphp
-			{{-- Ver despues de hechas las sesiones --}}
 					<button type="submit" class="btn btn-outline-success btn-own-info">Agregar</button>
 				</div>	
 			@endif

@@ -60,7 +60,7 @@ class MedicalCheckupController extends Controller
         $medicalCheckup->food_description = $request->food_description;
         $medicalCheckup->general_observation = $request->general_observation;
         $medicalCheckup->patient_id = $request->patient_id;
-        $medicalCheckup->user_id = 2; //Auth::user()->id;
+        $medicalCheckup->user_id = \Auth::user()->id; //Auth::user()->id;
 
         $medicalCheckup->save();
 
@@ -126,6 +126,7 @@ class MedicalCheckupController extends Controller
      */
     public function destroy(MedicalCheckup $medicalCheckup)
     {
-        //
+        $medicalCheckup->delete();
+        return redirect('/medicalCheckup/patient/'.$medicalCheckup->patient_id);
     }
 }
