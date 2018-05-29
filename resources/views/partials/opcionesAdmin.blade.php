@@ -9,7 +9,7 @@
 				<a class="dropdown-item dropdown-item-own" href="#">Roles</a>
 				<a class="dropdown-item dropdown-item-own" href="#">Permisos</a>
 				<div class="dropdown-divider"></div>
-				<a class="dropdown-item dropdown-item-own" href="{{ url('/configuration')}}">Configuración</a>
+				<a class="dropdown-item dropdown-item-own" href="{{ url('/config/1')}}">Configuración</a>
 			</div>
 	    </li>
 	</ul>

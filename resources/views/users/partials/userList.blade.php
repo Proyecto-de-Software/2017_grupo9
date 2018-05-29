@@ -8,7 +8,7 @@
 		  	<thead>
 			    <tr>
 			    	<th>Nombre de usuario</th>
-
+			    	<th colspan="4">
 			    </tr>
 		  	</thead>
 		  	<tbody>
@@ -71,7 +71,9 @@
 			    
 			</tbody>
 		</table>
-		{!! $users->render() !!}
+
+			{!! $users->render() !!}
+
 		<a class="btn btn-success btn-own mt-3 mb-5 text-right" role="button" href="{{url('/user/create')}}">
 			Agregar nuevo usuario
 		</a>
