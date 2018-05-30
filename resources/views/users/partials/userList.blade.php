@@ -3,29 +3,35 @@
 	<h2> Usuarios</h2><br>
 		<div class="mb-4 mt-4">
 			<h3 >Filtrado </h3> 
-			<form  id="form" class="form-inline my-2 my-lg-0 ml-auto mr-5 d-flex justify-content-start" action="/index.php/usuarios/filtrado" method="POST">
+			{!! Form::open(['route' => 'user.index', 'method' => 'GET', 'class' => 'navbar-form navbar-left d-flex span4', 'role' => 'search']) !!}
 				<input type="hidden" name="filtrado">		
-				@if(isset($filtrado))
-	      			<input class="form-control mr-sm-2 " type="text" placeholder="Buscar" aria-label="Buscar" name="buscar" id="buscar" value="{{filtrado.campoBuscar}}">
+				@if($username != '')
+					{!! Form::text('username', $username, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Nombre de usuario']) !!}
 	      		@else
-	      			<input class="form-control mr-sm-2 " type="text" placeholder="Buscar" aria-label="Buscar" name="buscar" id="buscar">
+	      			{!! Form::text('username', null, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Nombre de usuario']) !!}
 	      		@endif
 
-	      		@if(filtrado->activo) 
-					<input type="checkbox" name="activo" id="activo" class="checkbox mr-2 ml-2" value="activo" checked> 
+	      		@if($active == 1)
+					{!! Form::checkbox('active', 1, true, array(
+								 	'class' => 'checkbox mr-2 ml-2 '
+								 	)) 
+				 	!!}
+				 	{!! Form::label('active', 'see',[
+						    'for' => 'rol'
+						    ]) 
+				    !!}
 				@else
-					<input type="checkbox" name="activo" id="activo" class="checkbox mr-2 ml-2" value="activo">  
+				    {!! Form::checkbox('active', 1, false, array(
+								 	'class' => 'checkbox mr-2 ml-2'
+								 	)) 
+				 	!!}	
+					{!! Form::label('active', 'Activo',[
+						    'for' => 'rol'
+						    ]) 
+				    !!}
 				@endif
-    			<label for="rol">Activo</label><br/>
-
-    			@if filtrado.bloqueado 
-					<input type="checkbox" name="bloqueado" id="bloqueado" class="checkbox mr-2 ml-2" value="bloqueado" checked={{filtrado.bloqueado}}>
-				@else
-					<input type="checkbox" name="bloqueado" id="bloqueado" class="checkbox mr-2 ml-2" value="bloqueado">
-				@endif
-    			<label for="rol">Bloqueado</label><br/>
 	      		<button class="btn btn-success btn-search btn-own  my-2 my-sm-0 mr-2 ml-2" type="submit">Filtrar</button>
-		    </form>
+		    {!! Form::close() !!}
 		</div>
 		<table class="table table-hover">
 		  	<thead>

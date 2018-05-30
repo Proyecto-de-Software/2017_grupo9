@@ -16,9 +16,12 @@ class UserController extends Controller
     */    
     public function index(Request $request)
     {
-        $filtrado = [];
-        $users = User::orderBy('id', 'ASC')->paginate(5);
-        return view('users.index', compact('users'));
+        $username = $request->get('username');
+        $active = $request->get('active');
+
+        $users = User::filter($username, $active)->orderBy('id', 'ASC')->paginate(5);
+
+        return view('users.index', compact('users'))->with('username', $username)->with('active',$active);
     }
 
     /**
@@ -126,7 +129,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
-        return "hola";
+        return redirect()->route('user.index');
 
     }
 

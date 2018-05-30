@@ -34,4 +34,17 @@ class User extends Authenticatable
     public function roles(){
        return $this->belongsToMany('App\Role','role_user');
     }
+
+    public function scopeFilter($query, $username, $active){
+        if(!is_numeric($active)){
+            $active = 0;
+        }
+        if(trim($username) != ""){
+            var_dump($username." ". $active);
+            $query->where('username', $username)->where('active',$active)->get();
+        }
+        if($active != null){
+            $query->where('active',$active)->get();            
+        }
+    }
 }
