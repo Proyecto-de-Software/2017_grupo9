@@ -16,7 +16,7 @@
 								 	'class' => 'checkbox mr-2 ml-2 '
 								 	)) 
 				 	!!}
-				 	{!! Form::label('active', 'see',[
+				 	{!! Form::label('active', 'Activo',[
 						    'for' => 'rol'
 						    ]) 
 				    !!}
