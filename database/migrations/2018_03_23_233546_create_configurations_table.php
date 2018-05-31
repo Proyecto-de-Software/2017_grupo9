@@ -19,9 +19,9 @@ class CreateConfigurationsTable extends Migration
             $table->string('email_contact');
             $table->integer('elements_for_page');
             $table->enum('state',array('enabled','disabled'));
-            $table->string('hospital_description');
-            $table->string('guard_description');
-            $table->string('specialties_description');
+            $table->text('hospital_description');
+            $table->text('guard_description');
+            $table->text('specialties_description');
             $table->timestamps();
         });
     }

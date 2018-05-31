@@ -1,6 +1,6 @@
-@extends('base')
 
-@section('container')
+
+
     <section class="row mx-auto mt-5 ">
         <div class="login col-md-4  mx-auto mt-4 mb-4 pb-5 pt-5 pr-5 pl-5 border rounded ">
             <h3 class="card-header text-center myHeader">Iniciar sesión </h3>
@@ -28,4 +28,5 @@
             </form>
         </div>
     </section>
-@endsection
+
+

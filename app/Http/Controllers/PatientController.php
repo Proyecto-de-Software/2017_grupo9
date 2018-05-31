@@ -11,6 +11,12 @@ use App\Http\Controllers\HealthInsuranceController;
 
 class PatientController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+
+    }
+        
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +27,7 @@ class PatientController extends Controller
 
         $patients = Patient::name($request->get('name'))->orderBy('last_name', 'ASC')->paginate(5);
 
-        return view('patients.index', compact('patients'));
+        return view('patients.index', compact('patients'))->with('config',$this->getConfiguration());
     }
 
 
@@ -34,7 +40,7 @@ class PatientController extends Controller
     {
         $healthsInsurance = HealthInsuranceController::get();
         $typesDocument = TypeDocumentController::get();
-        return view('patients.create')->with('healthsInsurance',$healthsInsurance)->with('typesDocument',$typesDocument);
+        return view('patients.create')->with('healthsInsurance',$healthsInsurance)->with('typesDocument',$typesDocument)->with('config',$this->getConfiguration());
     }
 
     /**
@@ -75,7 +81,7 @@ class PatientController extends Controller
         if($patient->health_insurance != null){
             $healthInsurance = HealthInsuranceController::find($patient->health_insurance);
         }
-        return view('patients.show')->with('patient',$patient)->with('healthInsurance',$healthInsurance)->with('typeDocument',$typeDocument);
+        return view('patients.show')->with('patient',$patient)->with('healthInsurance',$healthInsurance)->with('typeDocument',$typeDocument)->with('config',$this->getConfiguration());
     }
 
     /**
@@ -88,7 +94,7 @@ class PatientController extends Controller
     {
         $healthsInsurance = HealthInsuranceController::get();
         $typesDocument = TypeDocumentController::get();
-        return view('patients.edit')->with('patient',$patient)->with('healthsInsurance',$healthsInsurance)->with('typesDocument',$typesDocument);
+        return view('patients.edit')->with('patient',$patient)->with('healthsInsurance',$healthsInsurance)->with('typesDocument',$typesDocument)->with('config',$this->getConfiguration());
     }
 
     /**

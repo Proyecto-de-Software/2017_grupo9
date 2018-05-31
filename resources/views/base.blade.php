@@ -10,6 +10,7 @@
 				@show
 			</div>
 		</body>
-		@include('partials.footer')
-		
+		@section('footer')
+			@include('partials.footer')
+		@show
 	</html>	

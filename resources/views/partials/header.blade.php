@@ -1,9 +1,9 @@
 <header>
 	<nav class="navbar navbar-expand-lg navbar-light nav-own">
-		<a class="navbar-brand nav-bar-link-own " href="">
-			<img class="mr-2 d-inline-block align-center" src="{{ asset('img/logo.JPG') }}" alt="logo del hospital" style="width:48px; height: 49px;">	
+		<a class="navbar-brand nav-bar-link-own " href="{{route('home')}}">
+			<img class="mr-2 d-inline-block align-center" src="{{ asset('img/logo.JPG') }}" alt="logo del hospital" style="width:48px; height: 49px;">	{{$config->title}}
 		</a>
-	
+		
 	  	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>

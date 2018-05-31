@@ -9,6 +9,12 @@ use App\Http\Requests\DemographicDataRequest;
 
 class DemographicDataController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +33,7 @@ class DemographicDataController extends Controller
     public function create($id)
     {
         $types = $this->getAllTypes();
-        return view('demographicDatas.create')->with('patient_id',$id)->with('typesLivingPlace',$types['typesLivingPlace'])->with('typesHeating',$types['typesHeating'])->with('typesWater',$types['typesWater']);
+        return view('demographicDatas.create')->with('patient_id',$id)->with('typesLivingPlace',$types['typesLivingPlace'])->with('typesHeating',$types['typesHeating'])->with('typesWater',$types['typesWater'])->with('config',$this->getConfiguration());
     }
 
     /**
@@ -72,7 +78,7 @@ class DemographicDataController extends Controller
         $typeHeating = $this->getTypeHeating($demographicData->typeHeating_id);
         $typeWater = $this->getTypeWater($demographicData->typeWater_id);
         $typeLivingPlace = $this->getTypeLivingPlace($demographicData->typeLivingPlace_id);
-        return view('demographicDatas.show')->with('demographicData',$demographicData)->with('typeHeating',$typeHeating)->with('typeWater',$typeWater)->with('typeLivingPlace',$typeLivingPlace);
+        return view('demographicDatas.show')->with('demographicData',$demographicData)->with('typeHeating',$typeHeating)->with('typeWater',$typeWater)->with('typeLivingPlace',$typeLivingPlace)->with('config',$this->getConfiguration());
     }
 
     /**
@@ -89,7 +95,7 @@ class DemographicDataController extends Controller
         $typeHeating = $this->getTypeHeating($demographicData->typeHeating_id);
         $typeWater = $this->getTypeWater($demographicData->typeWater_id);
         $typeLivingPlace = $this->getTypeLivingPlace($demographicData->typeLivingPlace_id);
-        return view('demographicDatas.edit')->with('demographicData',$demographicData)->with('patient_id',$id)->with('typesLivingPlace',$types['typesLivingPlace'])->with('typesHeating',$types['typesHeating'])->with('typesWater',$types['typesWater']);
+        return view('demographicDatas.edit')->with('demographicData',$demographicData)->with('patient_id',$id)->with('typesLivingPlace',$types['typesLivingPlace'])->with('typesHeating',$types['typesHeating'])->with('typesWater',$types['typesWater'])->with('config',$this->getConfiguration());
     }
 
     /**

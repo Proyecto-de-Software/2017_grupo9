@@ -9,6 +9,14 @@ use App\Http\Requests\UserRequest;
 
 class UserController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+
+    }
+
+    
     /**
     * Display a listing of the resource.
     *
@@ -17,7 +25,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::orderBy('id', 'ASC')->paginate(5);
-        return view('users.index', compact('users'));
+        return view('users.index', compact('users'))->with('config',$this->getConfiguration());
     }
 
     /**
@@ -28,7 +36,7 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::get();
-        return view('users.create')->with('roles',$roles);
+        return view('users.create')->with('roles',$roles)->with('config',$this->getConfiguration());
     }
 
     /**
@@ -69,7 +77,7 @@ class UserController extends Controller
                                              return $rol->name;
                                              })->toArray();
         
-        return view('users.show')->with('user',$user)->with('roles',$roles);
+        return view('users.show')->with('user',$user)->with('roles',$roles)->with('config',$this->getConfiguration());
     }
 
     /**
@@ -82,7 +90,7 @@ class UserController extends Controller
     {
         $roles = Role::get();
        
-        return view('users.edit')->with('user',$user)->with('roles', $roles);
+        return view('users.edit')->with('user',$user)->with('roles', $roles)->with('config',$this->getConfiguration());
     }
 
     /**

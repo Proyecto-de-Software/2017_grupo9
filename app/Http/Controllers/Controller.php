@@ -11,9 +11,6 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function indexHome(){
-    	return view('base', ['config' => $this->getConfiguration()]);
-    }
     
     public function getConfiguration(){
     	return Configuration::get()->first();

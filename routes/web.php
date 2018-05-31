@@ -31,10 +31,9 @@ Route::get('/config/{configuration}', ['as' => 'config.show', 'uses' => 'ConfigC
 Route::post('/config/{configuration}', ['as' => 'config.store', 'uses' => 'ConfigController@store']);
 
 
-Route::get('/', ['as' => 'home', 'uses' => 'Controller@indexHome']);
+Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
 
 
 
 Auth::routes();
-
 // Route::get('/home', 'HomeController@index')->name('home');

@@ -10,6 +10,12 @@ use App\Http\Requests\MedicalCheckupRequest;
 
 class MedicalCheckupController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+
+    }
+    
     /**
      * Display a listing of the resource.
      * @param  \App\Patient  $patient
@@ -23,7 +29,7 @@ class MedicalCheckupController extends Controller
                 ->where('medical_checkups.patient_id', '=', $id);
         })
         ->get();
-        return view('medicalCheckups.index', compact('controls'))->with('patient_id',$id);
+        return view('medicalCheckups.index', compact('controls'))->with('patient_id',$id)->with('config',$this->getConfiguration());
     }
 
     /**
@@ -33,7 +39,7 @@ class MedicalCheckupController extends Controller
      */
     public function create($id)
     {
-        return view('medicalCheckups.create')->with('patient_id',$id);
+        return view('medicalCheckups.create')->with('patient_id',$id)->with('config',$this->getConfiguration());
     }
 
     /**
@@ -75,7 +81,7 @@ class MedicalCheckupController extends Controller
      */
     public function show(MedicalCheckup $medicalCheckup)
     {
-        return view('medicalCheckups.show')->with('control',$medicalCheckup);
+        return view('medicalCheckups.show')->with('control',$medicalCheckup)->with('config',$this->getConfiguration());
     }
 
     /**
@@ -86,7 +92,7 @@ class MedicalCheckupController extends Controller
      */
     public function edit(MedicalCheckup $medicalCheckup)
     {
-        return view('medicalCheckups.edit')->with('control',$medicalCheckup)->with('patient_id',$medicalCheckup->patient_id);
+        return view('medicalCheckups.edit')->with('control',$medicalCheckup)->with('patient_id',$medicalCheckup->patient_id)->with('config',$this->getConfiguration());
     }
 
     /**
