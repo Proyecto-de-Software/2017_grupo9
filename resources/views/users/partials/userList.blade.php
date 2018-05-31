@@ -2,7 +2,36 @@
 <section>
 	<h2> Usuarios</h2><br>
 		<div class="mb-4 mt-4">
-	
+			<h3 >Filtrado </h3> 
+			{!! Form::open(['route' => 'user.index', 'method' => 'GET', 'class' => 'navbar-form navbar-left d-flex span4', 'role' => 'search']) !!}
+				<input type="hidden" name="filtrado">		
+				@if($username != '')
+					{!! Form::text('username', $username, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Nombre de usuario']) !!}
+	      		@else
+	      			{!! Form::text('username', null, ['class' => 'form-control mr-sm-2', 'placeholder' => 'Nombre de usuario']) !!}
+	      		@endif
+
+	      		@if($active == 1)
+					{!! Form::checkbox('active', 1, true, array(
+								 	'class' => 'checkbox mr-2 ml-2 '
+								 	)) 
+				 	!!}
+				 	{!! Form::label('active', 'Activo',[
+						    'for' => 'rol'
+						    ]) 
+				    !!}
+				@else
+				    {!! Form::checkbox('active', 1, false, array(
+								 	'class' => 'checkbox mr-2 ml-2'
+								 	)) 
+				 	!!}	
+					{!! Form::label('active', 'Activo',[
+						    'for' => 'rol'
+						    ]) 
+				    !!}
+				@endif
+	      		<button class="btn btn-success btn-search btn-own  my-2 my-sm-0 mr-2 ml-2" type="submit">Filtrar</button>
+		    {!! Form::close() !!}
 		</div>
 		<table class="table table-hover">
 		  	<thead>

@@ -12,7 +12,7 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+      //  $this->middleware('auth');
 
     }
 
@@ -22,10 +22,16 @@ class UserController extends Controller
     *
     * @return \Illuminate\Http\Response
     */    
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::orderBy('id', 'ASC')->paginate(5);
-        return view('users.index', compact('users'))->with('config',$this->getConfiguration());
+
+        $username = $request->get('username');
+        $active = $request->get('active');
+
+        $users = User::filter($username, $active)->orderBy('id', 'ASC')->paginate(5);
+
+        return view('users.index', compact('users'))->with('username', $username)->with('active',$active)->with('config',$this->getConfiguration());
+
     }
 
     /**
@@ -133,7 +139,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
-        return "hola";
+        return redirect()->route('user.index');
 
     }
 

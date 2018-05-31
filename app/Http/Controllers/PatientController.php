@@ -13,7 +13,7 @@ class PatientController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
 
     }
         
@@ -25,9 +25,19 @@ class PatientController extends Controller
     public function index(Request $request)
     {
 
-        $patients = Patient::name($request->get('name'))->orderBy('last_name', 'ASC')->paginate(5);
+        if($request->get('type_document') != null){
+            $typeDocument = $request->get('type_document');
+            $patients = Patient::document($request->get('type_document'), $request->get('document_number'))->orderBy('last_name', 'ASC')->paginate(5);
+        }
+        else{
+            $typeDocument = null;
+            $patients = Patient::name($request->get('name'))->orderBy('last_name', 'ASC')->paginate(5);
+        }
+        $typesDocument = TypeDocumentController::get();
 
-        return view('patients.index', compact('patients'))->with('config',$this->getConfiguration());
+
+        return view('patients.index', compact('patients'))->with('typesDocument', $typesDocument)->with('typeDocument', $typeDocument)->with('config',$this->getConfiguration());
+
     }
 
 
