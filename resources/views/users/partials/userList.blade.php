@@ -48,56 +48,62 @@
 			  	@foreach($users as $user)
 				    <tr id="{{ $user->id }}" >
 				    	<td>{{ $user->username }}</td>
-				    	<td>
-				    		<a href='{{url("/user/$user->id/edit")}}' class="btn btn-outline-success btn-own-info">Editar</a>
-				    	</td>
-				    	<td>
-				    		{!! Form::open(
-									array(
-										'route' => ['user.destroy',$user->id],
-										'method' => 'DELETE',
-										'onsubmit' => 'return confirm("Seguro?")'), 
-									
-									array(
-									'role' => 'form')
-									)
-								!!}
-									{!! Form::button('Eliminar', array(
-											'type' => 'submit',
-									 		'class' => 'btn btn-outline-success btn-own-info eliminar'
-									 )) 
-									!!} 
-								{!! Form::close() !!}
-				    	</td>
-			      		<td>
+				    	@if(Auth::user()->can('user_update'))
+					    	<td>
+					    		<a href='{{url("/user/$user->id/edit")}}' class="btn btn-outline-success btn-own-info">Editar</a>
+					    	</td>
+					    @endif
+				    	@if(Auth::user()->can('user_destroy'))
+					    	<td>
+					    		{!! Form::open(
+										array(
+											'route' => ['user.destroy',$user->id],
+											'method' => 'DELETE',
+											'onsubmit' => 'return confirm("Seguro?")'), 
+										
+										array(
+										'role' => 'form')
+										)
+									!!}
+										{!! Form::button('Eliminar', array(
+												'type' => 'submit',
+										 		'class' => 'btn btn-outline-success btn-own-info eliminar'
+										 )) 
+										!!} 
+									{!! Form::close() !!}
+					    	</td>
+				    	@endif
+				    	@if(Auth::user()->can('user_update'))
+				      		<td>
 
-				      		@if($user->active)
-					      		@php
-				      				$route = 'user.block';
-				      				$buttonName = 'Bloquear';
-				      			@endphp
-				      		@else
-				      			@php
-				      				$route = 'user.unblock';
-				      				$buttonName = 'Activar';
-				      			@endphp
-				      		@endif
-								{!! Form::open(
-									array('route' => [$route,$user->id], 'method' => 'POST'), 
-									array('role' => 'form')
-									)
-								!!}
-									{!! Form::button($buttonName, array(
-											'type' => 'submit',
-									 		'class' => 'btn btn-outline-success btn-own-info'
-									 )) 
-									!!} 
-								{!! Form::close() !!}
+					      		@if($user->active)
+						      		@php
+					      				$route = 'user.block';
+					      				$buttonName = 'Bloquear';
+					      			@endphp
+					      		@else
+					      			@php
+					      				$route = 'user.unblock';
+					      				$buttonName = 'Activar';
+					      			@endphp
+					      		@endif
+									{!! Form::open(
+										array('route' => [$route,$user->id], 'method' => 'POST'), 
+										array('role' => 'form')
+										)
+									!!}
+										{!! Form::button($buttonName, array(
+												'type' => 'submit',
+										 		'class' => 'btn btn-outline-success btn-own-info'
+										 )) 
+										!!} 
+									{!! Form::close() !!}
 
-				      	</td>
-				      	<td>
-				      		<a href='{{url("user/$user->id") }}' class="btn btn-outline-success btn-own-info">Mas información</a>
-				      	</td>
+					      	</td>
+					    @endif
+					      	<td>
+					      		<a href='{{url("user/$user->id") }}' class="btn btn-outline-success btn-own-info">Mas información</a>
+					      	</td>
 				    </tr>
 			     @endforeach
 			    

@@ -32,6 +32,9 @@ class DemographicDataController extends Controller
      */
     public function create($id)
     {
+        if(!$this->can('demographicData_new')){
+            return redirect()->route('home'); 
+        }
         $types = $this->getAllTypes();
         return view('demographicDatas.create')->with('patient_id',$id)->with('typesLivingPlace',$types['typesLivingPlace'])->with('typesHeating',$types['typesHeating'])->with('typesWater',$types['typesWater'])->with('config',$this->getConfiguration());
     }
@@ -44,7 +47,9 @@ class DemographicDataController extends Controller
      */
     public function store(DemographicDataRequest $request)
     {
-
+        if(!$this->can('demographicData_new')){
+            return redirect()->route('home'); 
+        }
         
         $demographicData = new DemographicData();
 
@@ -74,6 +79,9 @@ class DemographicDataController extends Controller
      */
     public function show($id)
     {
+        if(!$this->can('demographicData_show')){
+            return redirect()->route('home'); 
+        }
         $demographicData = DemographicData::find($id);
         $typeHeating = $this->getTypeHeating($demographicData->typeHeating_id);
         $typeWater = $this->getTypeWater($demographicData->typeWater_id);
@@ -89,7 +97,9 @@ class DemographicDataController extends Controller
      */
     public function edit($id)
     {
-
+        if(!$this->can('demographicData_update')){
+            return redirect()->route('home'); 
+        }
         $demographicData = DemographicData::find($id);
         $types = $this->getAllTypes();
         $typeHeating = $this->getTypeHeating($demographicData->typeHeating_id);
@@ -107,7 +117,9 @@ class DemographicDataController extends Controller
      */
     public function update(DemographicDataRequest $request, $id)
     {
-
+        if(!$this->can('demographicData_update')){
+            return redirect()->route('home'); 
+        }
         $demographicData = DemographicData::find($id);
         $demographicData->electricity = $request->input('electricity');
         $demographicData->pet = $request->input('pet');
