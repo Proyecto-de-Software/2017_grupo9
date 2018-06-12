@@ -23,13 +23,19 @@ class PatientRequest extends FormRequest
      */
     public function rules()
     {
+       if($this->patient == null){
+            $id = '';
+        }
+        else{
+            $id = ', '.$this->patient->id;
+        }
         return [
             'first_name' => 'required',
             'last_name' => 'required',
             'birthdate' => 'required',
             'gender' => 'required',
             'type_document' => 'required',
-            'document_number' => 'required',
+            'document_number' => 'required|unique:patients,document_number'.$id,
             'address' => 'required'
         ];
     }
