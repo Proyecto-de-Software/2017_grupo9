@@ -58,10 +58,12 @@
 					    'class'=>'col-sm-3 mt-3 col-form-label'
 					    ]) 
 			    !!}
-			    {!! Form::input('number', 'weight', $weightValue, [
+			    {!! Form::input('number','weight', $weightValue, [
 			    	'placeholder' => 'Peso en kg',
 			    	'class' => 'form-control mt-3 col-sm-8',
-			    	'required' => true
+			    	'step'=>'any',
+			    	'required' => true,
+			    	
 			    ]) !!}
 			</div>
 			<div class="form-group row ">
@@ -136,6 +138,7 @@
 					    ]) 
 			    !!}
 			    {!! Form::input('number', 'pc', $pcValue, [
+			    	'step'=>'any',
 			    	'placeholder' => 'pc',
 			    	'class' => 'form-control mt-3 col-sm-8'
 			    ]) !!}
@@ -146,6 +149,7 @@
 					    ]) 
 			    !!}
 			    {!! Form::input('number', 'ppc', $ppcValue, [
+			    	'step'=>'any',
 			    	'placeholder' => 'ppc',
 			    	'class' => 'form-control mt-3 col-sm-8'
 			    ]) !!}
@@ -166,6 +170,7 @@
 					    ]) 
 			    !!}
 			    {!! Form::input('number', 'height', $heightValue, [
+			    	'step'=>'any',
 			    	'placeholder' => 'Talla',
 			    	'class' => 'form-control mt-3 col-sm-8'
 			    ]) !!}
