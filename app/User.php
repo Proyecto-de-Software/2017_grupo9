@@ -40,8 +40,8 @@ class User extends Authenticatable
             $active = 0;
         }
         if(trim($username) != ""){
-            var_dump($username." ". $active);
-            $query->where('username', $username)->where('active',$active)->get();
+            //var_dump($username." ". $active);
+            $query->where('username', 'like', "%$username%")->where('active',$active)->get();
         }
         if($active != null){
             $query->where('active',$active)->get();            
