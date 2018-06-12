@@ -17,7 +17,8 @@
 
 	      		@if($active == 1)
 					{!! Form::checkbox('active', 1, true, array(
-								 	'class' => 'checkbox mr-2 ml-2 '
+								 	'class' => 'checkbox mr-2 ml-2 ',
+								 	'checked' => 'true'
 								 	)) 
 				 	!!}
 				 	{!! Form::label('active', 'Activo',[
