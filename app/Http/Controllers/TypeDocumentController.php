@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 
 class TypeDocumentController extends Controller
 {
+    public function __construct()
+    {
+      $this->middleware('auth');
+
+    }
 	 public static function get(){
         return GuzzleAppController::get('tipo-documento');
     }
