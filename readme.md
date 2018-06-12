@@ -1,5 +1,4 @@
 ## Cosas que faltan
--	verificar todos los destroy y ponerle un alert
 -	middleware roles
 -	detalles estilos
 
@@ -16,14 +15,14 @@
 
 ## Usuarios en base de datos
 -	Administrador
-	-	email: 
-	-	pass:
+	-	email: admin@gmail.com
+	-	pass: 123
 
 -	Recepcionistas
-	-	email:
-	-	pass:
+	-	email: recepcionista@gmail.com
+	-	pass: 123
 
 -	Pediatras
-	-	email:
-	-	pass:
+	-	email: paciente@gmail.com
+	-	pass: 123
 

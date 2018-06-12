@@ -157,7 +157,7 @@ class UserController extends Controller
             return redirect()->route('home'); 
         }
         $user->delete();
-        return redirect()->route('user.index');
+        return redirect()->route('user.index')->with('alert', 'Usuario eliminado con éxito.');
 
     }
 
