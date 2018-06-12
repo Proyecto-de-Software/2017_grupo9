@@ -28,7 +28,7 @@ Route::resource('user', 'UserController');
 Route::resource('medicalCheckup', 'MedicalCheckupController');
 Route::resource('demographicData', 'DemographicDataController');
 
-Route::get('/config/{configuration}', ['as' => 'config.show', 'uses' => 'ConfigController@show']);
+Route::get('/config/{configuration}', ['as' => 'config.show', 'uses' => 'ConfigController@show'])->middleware(CheckPermission::class);
 Route::post('/config/{configuration}', ['as' => 'config.store', 'uses' => 'ConfigController@store']);
 
 
@@ -38,3 +38,4 @@ Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
+

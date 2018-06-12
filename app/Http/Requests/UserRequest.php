@@ -23,11 +23,17 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
+        if($this->user == null){
+            $id = '';
+        }
+        else{
+            $id = ', '.$this->user->id;
+        }
         return [
             'first_name' => 'required',
             'last_name' => 'required',
-            'username' => 'required|unique:users,username,'.$this->user->id,
-            'email' => 'required|unique:users,email,'.$this->user->id,
+            'username' => 'required|unique:users,username'.$id,
+            'email' => 'required|unique:users,email'.$id,
             'role' => 'required',
             'password' => 'required|confirmed',
             'password_confirmation' => 'required'
