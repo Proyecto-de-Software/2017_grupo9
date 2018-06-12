@@ -15,4 +15,11 @@ class Controller extends BaseController
     public function getConfiguration(){
     	return Configuration::get()->first();
     }
+
+    public function can($permission){
+        if(\Auth::user()->can($permission)){
+            return true;
+        }
+        return false;
+    }
 }

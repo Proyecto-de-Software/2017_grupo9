@@ -24,7 +24,9 @@ class UserController extends Controller
     */    
     public function index(Request $request)
     {
-
+        if(!$this->can('user_index')){
+            return redirect()->route('home'); 
+        }
         $username = $request->get('username');
         $active = $request->get('active');
 
@@ -41,6 +43,9 @@ class UserController extends Controller
      */
     public function create()
     {
+        if(!$this->can('user_new')){
+            return redirect()->route('home'); 
+        }
         $roles = Role::get();
         return view('users.create')->with('roles',$roles)->with('config',$this->getConfiguration());
     }
@@ -53,7 +58,9 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {   
-
+        if(!$this->can('user_new')){
+            return redirect()->route('home'); 
+        }
         $user = new User();
 
         $user->first_name = $request->input('first_name');
@@ -79,6 +86,9 @@ class UserController extends Controller
     */
     public function show(User $user)
     {
+        if(!$this->can('user_show')){
+            return redirect()->route('home'); 
+        }
         $roles = $user->roles()->get()->map(function($rol,$key){
                                              return $rol->name;
                                              })->toArray();
@@ -94,6 +104,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        if(!$this->can('user_update')){
+            return redirect()->route('home'); 
+        }
         $roles = Role::get();
        
         return view('users.edit')->with('user',$user)->with('roles', $roles)->with('config',$this->getConfiguration());
@@ -108,7 +121,9 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
-
+        if(!$this->can('user_update')){
+            return redirect()->route('home'); 
+        }
         $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
         $user->username = $request->input('username');
@@ -138,6 +153,9 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        if(!$this->can('user_destroy')){
+            return redirect()->route('home'); 
+        }
         $user->delete();
         return redirect()->route('user.index');
 
@@ -150,6 +168,9 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function block(User $user){
+        if(!$this->can('user_update')){
+            return redirect()->route('home'); 
+        }
         $user->active = false;
         $user->save();
         return redirect()->route('user.index');
@@ -162,6 +183,9 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */   
     public function unblock(User $user){
+        if(!$this->can('user_update')){
+            return redirect()->route('home'); 
+        }
         $user->active = true;
         $user->save();
         return redirect()->route('user.index');
