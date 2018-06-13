@@ -135,4 +135,46 @@ class MedicalCheckupController extends Controller
         $medicalCheckup->delete();
         return redirect('/medicalCheckup/patient/'.$medicalCheckup->patient_id)->with('alert', 'Control eliminado con éxito.');
     }
+
+    public function showReports(Patient $patient){
+
+        $id = $patient->id;
+
+        $controls = User::join('medical_checkups', function ($join) use ($id){
+            $join->on('medical_checkups.user_id', '=', 'users.id')
+                ->where('medical_checkups.patient_id', '=', $id);
+        })
+        ->get();
+
+
+           // $template = 'administracionReportesHistoriaClinica.twig';
+           // $paciente = RepositorioPaciente::getInstance()->buscarPorId($id);
+           // $controles = RepositorioHistoriaClinica::getInstance()->devolverControles($id);
+            // $control['fecha']
+        // $patient->getFechaNacimiento()
+
+        $weights = []; $heights = []; $ppc = [];
+        foreach ($controls as $control) {
+            $weeks = (int)$this->calculatePeriod(new DateTime($control['fecha']), new DateTime ($patient->birthdate()), 13, '%a', 7);
+            $months = (int)$this->calculatePeriod(new DateTime($control['fecha']), new DateTime ($patient->birthdate()), 2, '%m', 30);
+            
+            array_push($weights, [$weeks, (float)$control->weight * 1000]);
+            array_push($heights, [$months, (float)$control->height]);
+            array_push($ppc, [$weeks, (float)$control->ppc]);
+        }
+       // $parametrosTemplate['weights'] = $weights;
+       // $parametrosTemplate['heights'] = $heights;
+       // $parametrosTemplate['ppc'] = $ppc;
+       // $parametrosTemplate['gender'] = $patient->gender();
+
+        return view('medicalCheckups.showReports')->with('weights',$weights)->with('heights',$heights)->with('ppc',$ppc)->with('gender',$patient->gender)->with('config',$this->getConfiguration());
+
+        //$this->render($template,$parametrosTemplate);
+    }
+
+        public function calculatePeriod($dateControl, $birthDate, $periodoAControlar, $periodo, $number){
+            $interval = $birthDate->diff($dateControl);
+            return floor($interval->days/$number);
+            
+        }
 }

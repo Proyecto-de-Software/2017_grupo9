@@ -9,7 +9,7 @@
 			<h3 >Controles </h3> 
 			<a class="btn btn-success btn-own mt-3 mb-5 text-right" role="button" href='{{url("/medicalCheckup/create/$patient_id")}}'>
 			Agregar control </a>
-			<a class="btn btn-success btn-own mt-3 mb-5 text-right" role="button" href=''>
+			<a class="btn btn-success btn-own mt-3 mb-5 text-right" role="button" href='{{url("/medicalCheckup/patient/reports/$patient_id")}}'>
 			Estadisticas gráficas </a>
 			<table class="table table-hover">
 			  	<thead>

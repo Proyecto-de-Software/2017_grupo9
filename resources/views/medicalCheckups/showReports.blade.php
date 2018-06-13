@@ -4,7 +4,7 @@
 @stop
 
 @section('container')
-	@if(genero == 'masculino')
+	@if($gender == 'masculino')
 		@include('medicalCheckups.partials.reportsMale')
 	@else
 		@include('medicalCheckups.partials.reportsFemale')
