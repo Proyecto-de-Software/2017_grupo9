@@ -1,9 +1,7 @@
 ## Cosas que faltan
 -	verificar todos los destroy y ponerle un alert
 -	middleware roles
--	like busquedas
 -	detalles estilos
--	problema con plantilla de login
 
 ## Grupo 9
 -   Ignacio Zampelunghe
