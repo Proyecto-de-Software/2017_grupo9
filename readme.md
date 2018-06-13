@@ -1,7 +1,3 @@
-## Cosas que faltan
--	middleware roles
--	detalles estilos
-
 ## Grupo 9
 -   Ignacio Zampelunghe
 -   Gabriel Brañeiro
@@ -9,6 +5,8 @@
 ## Directorio final
 -   Se considera el directorio raiz del proyecto, como directorio final del trabajo.
 
+## Ruta raiz
+- 	La ruta raiz es /public
 
 ## Informe
 -   El informe se encuentra en el archivo InformeProyecto2018.md
@@ -23,6 +21,5 @@
 	-	pass: 123
 
 -	Pediatras
-	-	email: paciente@gmail.com
+	-	email: pediatra@gmail.com
 	-	pass: 123
-
