@@ -19,7 +19,7 @@ Route::post('/user/{user}/unblock',['as' => 'user.unblock', 'uses' => 'UserContr
 Route::get('/demographicData/create/{id}', 'DemographicDataController@create');
 Route::get('/medicalCheckup/create/{id}', 'MedicalCheckupController@create');
 Route::get('/medicalCheckup/patient/{id}', 'MedicalCheckupController@index');
-Route::get('/medicalCheckup/patient/reports/{id}', 'MedicalCheckupController@showReports');
+Route::get('/medicalCheckup/patient/reports/{patient}', 'MedicalCheckupController@showReports');
 
 
 Route::resource('user', 'UserController');

@@ -159,14 +159,7 @@ class MedicalCheckupController extends Controller
 
     public function showReports(Patient $patient){
 
-        $id = $patient->id;
-
-        $controls = User::join('medical_checkups', function ($join) use ($id){
-            $join->on('medical_checkups.user_id', '=', 'users.id')
-                ->where('medical_checkups.patient_id', '=', $id);
-        })
-        ->get();
-
+        $controls = MedicalCheckup::where('patient_id', '=', $patient->id)->get();
 
            // $template = 'administracionReportesHistoriaClinica.twig';
            // $paciente = RepositorioPaciente::getInstance()->buscarPorId($id);
@@ -176,9 +169,8 @@ class MedicalCheckupController extends Controller
 
         $weights = []; $heights = []; $ppc = [];
         foreach ($controls as $control) {
-            $weeks = (int)$this->calculatePeriod(new DateTime($control['fecha']), new DateTime ($patient->birthdate()), 13, '%a', 7);
-            $months = (int)$this->calculatePeriod(new DateTime($control['fecha']), new DateTime ($patient->birthdate()), 2, '%m', 30);
-            
+            $weeks = (int)$this->calculatePeriod(new \DateTime($control->date), new \DateTime ($patient->birthdate), 13, '%a', 7);
+            $months = (int)$this->calculatePeriod(new \DateTime($control->date), new \DateTime ($patient->birthdate), 2, '%m', 30);
             array_push($weights, [$weeks, (float)$control->weight * 1000]);
             array_push($heights, [$months, (float)$control->height]);
             array_push($ppc, [$weeks, (float)$control->ppc]);
