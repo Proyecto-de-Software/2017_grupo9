@@ -29,11 +29,11 @@ class PatientController extends Controller
         }
         if($request->get('type_document') != null){
             $typeDocument = $request->get('type_document');
-            $patients = Patient::document($request->get('type_document'), $request->get('document_number'))->orderBy('last_name', 'ASC')->paginate(5);
+            $patients = Patient::document($request->get('type_document'), $request->get('document_number'))->orderBy('last_name', 'ASC')->paginate($this->getConfiguration()->elements_for_page);
         }
         else{
             $typeDocument = null;
-            $patients = Patient::name($request->get('name'))->orderBy('last_name', 'ASC')->paginate(5);
+            $patients = Patient::name($request->get('name'))->orderBy('last_name', 'ASC')->paginate($this->getConfiguration()->elements_for_page);
         }
         $typesDocument = TypeDocumentController::get();
 

@@ -31,7 +31,7 @@ class UserController extends Controller
         $username = $request->get('username');
         $active = $request->get('active');
 
-        $users = User::filter($username, $active)->orderBy('id', 'ASC')->paginate(5);
+        $users = User::filter($username, $active)->orderBy('id', 'ASC')->paginate($this->getConfiguration()->elements_for_page);
 
         return view('users.index', compact('users'))->with('username', $username)->with('active',$active)->with('config',$this->getConfiguration());
 
