@@ -15,16 +15,12 @@
 			  	<thead>
 				    <tr>
 				    	<th> Fecha</th>
-				    	<th> Medico</th>
 				    </tr>
 			  	</thead>
 			  	<tbody>
 			  		@foreach($controls as $control)
 					    <tr>
 					    	<td>{{ $control->date }}</td>
-					    	<td>
-					    		{{ $control->user()->username }} 
-					    	</td>
 					    	<td>
 					    		<a href='{{url("/medicalCheckup/$control->id")}}' class="btn btn-outline-success btn-own-info"> Ver control </a>
 					    	</td>
