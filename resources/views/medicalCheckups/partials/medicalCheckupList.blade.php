@@ -49,6 +49,5 @@
 				     @endforeach
 				</tbody>
 			</table>
-			{!! $controls->render() !!}
 		</div>
 </section>
