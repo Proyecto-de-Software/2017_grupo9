@@ -160,7 +160,7 @@ class MedicalCheckupController extends Controller
     public function showReports(Patient $patient){
 
         $controls = MedicalCheckup::where('patient_id', '=', $patient->id)->get();
-
+            dd($controls);
            // $template = 'administracionReportesHistoriaClinica.twig';
            // $paciente = RepositorioPaciente::getInstance()->buscarPorId($id);
            // $controles = RepositorioHistoriaClinica::getInstance()->devolverControles($id);
