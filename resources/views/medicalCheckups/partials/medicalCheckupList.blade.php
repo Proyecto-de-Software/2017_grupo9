@@ -21,9 +21,9 @@
 			  	<tbody>
 			  		@foreach($controls as $control)
 					    <tr>
-					    	<td>{{ $control->date}}</td>
+					    	<td>{{ $control->date }}</td>
 					    	<td>
-					    		{{ $control->first_name }} {{ $control->last_name }} 
+					    		{{ $control->user()->username }} 
 					    	</td>
 					    	<td>
 					    		<a href='{{url("/medicalCheckup/$control->id")}}' class="btn btn-outline-success btn-own-info"> Ver control </a>

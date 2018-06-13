@@ -27,7 +27,8 @@ class MedicalCheckupController extends Controller
             return redirect()->route('home'); 
         }
         $controls = MedicalCheckup::where('patient_id', '=', $id)->get();
-        return view('medicalCheckups.index', compact('controls'))->with('patient_id',$id)->with('config',$this->getConfiguration());
+        $username = User::find($control->user_id);
+        return view('medicalCheckups.index', compact('controls'))->with('patient_id',$id)->with('username',$username)->with('config',$this->getConfiguration());
     }
 
     /**
