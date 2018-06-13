@@ -1,3 +1,8 @@
+@if (session('alert'))
+    <div class="alert alert-success">
+        {{ session('alert') }}
+    </div>
+@endif
 <section>
 	<h2> Historia Clinica</h2><br>
 		<div class="mb-4 mt-4">

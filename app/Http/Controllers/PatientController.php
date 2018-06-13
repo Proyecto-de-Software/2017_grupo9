@@ -140,6 +140,6 @@ class PatientController extends Controller
     public function destroy(Patient $patient)
     {
         $patient->delete();
-        return redirect()->route('patient.index');
+        return redirect()->route('patient.index')->with('alert', 'Paciente eliminado con éxito.');
     }
 }

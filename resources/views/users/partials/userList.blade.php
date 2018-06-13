@@ -1,4 +1,8 @@
-
+@if (session('alert'))
+    <div class="alert alert-success">
+        {{ session('alert') }}
+    </div>
+@endif
 <section>
 	<h2> Usuarios</h2><br>
 		<div class="mb-4 mt-4">
@@ -52,11 +56,10 @@
 									array(
 										'route' => ['user.destroy',$user->id],
 										'method' => 'DELETE',
-										'class' => 'eliminar',
-										'id' => "$user->id"),
-										
+										'onsubmit' => 'return confirm("Seguro?")'), 
+									
 									array(
-										'role' => 'form')
+									'role' => 'form')
 									)
 								!!}
 									{!! Form::button('Eliminar', array(
