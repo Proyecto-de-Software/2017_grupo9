@@ -26,12 +26,7 @@ class MedicalCheckupController extends Controller
         if(!$this->can('medicalCheckup_index')){
             return redirect()->route('home'); 
         }
-        $id = $id;
-        $controls = User::join('medical_checkups', function ($join) use ($id){
-            $join->on('medical_checkups.user_id', '=', 'users.id')
-                ->where('medical_checkups.patient_id', '=', $id);
-        })
-        ->get();
+        $controls = MedicalCheckup::where('patient_id', '=', $patient->id)->get();
         return view('medicalCheckups.index', compact('controls'))->with('patient_id',$id)->with('config',$this->getConfiguration());
     }
 
@@ -160,7 +155,7 @@ class MedicalCheckupController extends Controller
     public function showReports(Patient $patient){
 
         $controls = MedicalCheckup::where('patient_id', '=', $patient->id)->get();
-            dd($controls);
+
            // $template = 'administracionReportesHistoriaClinica.twig';
            // $paciente = RepositorioPaciente::getInstance()->buscarPorId($id);
            // $controles = RepositorioHistoriaClinica::getInstance()->devolverControles($id);
