@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Role;
 use App\Http\Requests\UserRequest;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -67,7 +68,7 @@ class UserController extends Controller
         $user->last_name = $request->input('last_name');
         $user->active = true;
         $user->username = $request->input('username');
-        $user->password = $request->input('password');
+        $user->password = Hash::make($request->input('password'));
         $user->email = $request->input('email');
         $user->save();
         foreach($request->input('role') as $idRole){
@@ -127,7 +128,7 @@ class UserController extends Controller
         $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
         $user->username = $request->input('username');
-        $user->password = $request->input('password');
+        $user->password = Hash::make($request->input('password'));
         $user->email = $request->input('email');
 
         $actualRoles = $user->roles()->get()->toArray();

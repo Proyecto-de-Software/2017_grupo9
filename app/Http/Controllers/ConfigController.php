@@ -16,12 +16,17 @@ class ConfigController extends Controller
     
     public function show(Configuration $configuration)
     {	
-    	
+        if(!$this->can('configuration_update')){
+            return redirect()->route('home'); 
+        }
     	return view('configurations.show', ['config' => $configuration]);
     }
 
     public function store(ConfigRequest $request, Configuration $configuration)
     {
+        if(!$this->can('configuration_update')){
+            return redirect()->route('home'); 
+        }
     	$configuration->title = $request->get('title');
     	$configuration->email_contact = $request->get('email_contact');
     	$configuration->elements_for_page = $request->get('elements_for_page');

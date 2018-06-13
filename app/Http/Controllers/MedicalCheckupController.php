@@ -23,6 +23,9 @@ class MedicalCheckupController extends Controller
      */
     public function index($id)
     {
+        if(!$this->can('medicalCheckup_index')){
+            return redirect()->route('home'); 
+        }
         $id = $id;
         $controls = User::join('medical_checkups', function ($join) use ($id){
             $join->on('medical_checkups.user_id', '=', 'users.id')
@@ -39,6 +42,9 @@ class MedicalCheckupController extends Controller
      */
     public function create($id)
     {
+        if(!$this->can('medicalCheckup_new')){
+            return redirect()->route('home'); 
+        } 
         return view('medicalCheckups.create')->with('patient_id',$id)->with('config',$this->getConfiguration());
     }
 
@@ -50,6 +56,9 @@ class MedicalCheckupController extends Controller
      */
     public function store(MedicalCheckupRequest $request)
     {
+        if(!$this->can('medicalCheckup_new')){
+            return redirect()->route('home'); 
+        }
         $medicalCheckup = new MedicalCheckup();
 
         $medicalCheckup->date = $request->date;
@@ -81,6 +90,9 @@ class MedicalCheckupController extends Controller
      */
     public function show(MedicalCheckup $medicalCheckup)
     {
+        if(!$this->can('medicalCheckup_show')){
+            return redirect()->route('home'); 
+        }
         return view('medicalCheckups.show')->with('control',$medicalCheckup)->with('config',$this->getConfiguration());
     }
 
@@ -92,6 +104,9 @@ class MedicalCheckupController extends Controller
      */
     public function edit(MedicalCheckup $medicalCheckup)
     {
+        if(!$this->can('medicalCheckup_update')){
+            return redirect()->route('home'); 
+        }
         return view('medicalCheckups.edit')->with('control',$medicalCheckup)->with('patient_id',$medicalCheckup->patient_id)->with('config',$this->getConfiguration());
     }
 
@@ -104,6 +119,9 @@ class MedicalCheckupController extends Controller
      */
     public function update(Request $request, MedicalCheckup $medicalCheckup)
     {
+        if(!$this->can('medicalCheckup_update')){
+            return redirect()->route('home'); 
+        }
         $medicalCheckup->date = $request->input('date');
         $medicalCheckup->weight = $request->input('weight');
         $medicalCheckup->complete_vaccines = $request->input('complete_vaccines');
@@ -132,6 +150,9 @@ class MedicalCheckupController extends Controller
      */
     public function destroy(MedicalCheckup $medicalCheckup)
     {
+        if(!$this->can('medicalCheckup_destroy')){
+            return redirect()->route('home'); 
+        }
         $medicalCheckup->delete();
         return redirect('/medicalCheckup/patient/'.$medicalCheckup->patient_id)->with('alert', 'Control eliminado con éxito.');
     }

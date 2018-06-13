@@ -24,7 +24,9 @@ class PatientController extends Controller
      */
     public function index(Request $request)
     {
-
+        if(!$this->can('patient_index')){
+            return redirect()->route('home'); 
+        }
         if($request->get('type_document') != null){
             $typeDocument = $request->get('type_document');
             $patients = Patient::document($request->get('type_document'), $request->get('document_number'))->orderBy('last_name', 'ASC')->paginate(5);
@@ -48,6 +50,9 @@ class PatientController extends Controller
      */
     public function create()
     {
+        if(!$this->can('patient_new')){
+            return redirect()->route('home'); 
+        }
         $healthsInsurance = HealthInsuranceController::get();
         $typesDocument = TypeDocumentController::get();
         return view('patients.create')->with('healthsInsurance',$healthsInsurance)->with('typesDocument',$typesDocument)->with('config',$this->getConfiguration());
@@ -61,6 +66,9 @@ class PatientController extends Controller
      */
     public function store(PatientRequest $request)
     {
+        if(!$this->can('patient_new')){
+            return redirect()->route('home'); 
+        }
         $patient = new Patient();
 
         $patient->first_name = $request->first_name;
@@ -86,6 +94,9 @@ class PatientController extends Controller
      */
     public function show(Patient $patient)
     {
+        if(!$this->can('patient_show')){
+            return redirect()->route('home'); 
+        }
         $healthInsurance = null;
         $typeDocument = TypeDocumentController::find($patient->type_document);
         if($patient->health_insurance != null){
@@ -102,6 +113,9 @@ class PatientController extends Controller
      */
     public function edit(Patient $patient)
     {
+        if(!$this->can('patient_update')){
+            return redirect()->route('home'); 
+        }
         $healthsInsurance = HealthInsuranceController::get();
         $typesDocument = TypeDocumentController::get();
         return view('patients.edit')->with('patient',$patient)->with('healthsInsurance',$healthsInsurance)->with('typesDocument',$typesDocument)->with('config',$this->getConfiguration());
@@ -116,6 +130,9 @@ class PatientController extends Controller
      */
     public function update(PatientRequest $request, Patient $patient)
     {
+        if(!$this->can('patient_update')){
+            return redirect()->route('home'); 
+        }
         $patient->first_name = $request->input('first_name');
         $patient->last_name = $request->input('last_name');
         $patient->address = $request->input('address');
@@ -139,6 +156,9 @@ class PatientController extends Controller
      */
     public function destroy(Patient $patient)
     {
+        if(!$this->can('patient_destroy')){
+            return redirect()->route('home'); 
+        }
         $patient->delete();
         return redirect()->route('patient.index')->with('alert', 'Paciente eliminado con éxito.');
     }

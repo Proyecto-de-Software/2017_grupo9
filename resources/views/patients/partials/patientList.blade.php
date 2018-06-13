@@ -45,30 +45,36 @@
 				    	<td>{{ $patient->first_name }}</td>
 				    	<td>{{ $patient->last_name }}</td>
 				    	<td>{{ $patient->document_number }}</td>
-				    	<td>
-				    		<a href='{{url("/patient/$patient->id/edit")}}' class="btn btn-outline-success btn-own-info">Editar</a>
-				    	</td>
-				    	<td>
-				    		{!! Form::open(
-								array(
-									'route' => ['patient.destroy',$patient->id],
-									'method' => 'DELETE',
-									'onsubmit' => 'return confirm("Seguro?")'), 
-								array(
-									'role' => 'form')
-								)
-							!!}
-							{!! Form::button('Eliminar', 
-								array(
-									'type' => 'submit',
-							 		'class' => 'btn btn-outline-success btn-own-info'
-							 )) 
-							!!} 
-							{!! Form::close() !!}
-			    	</td>
-				      	<td>
-				      		<a href='{{url("patient/$patient->id")}}' class="btn btn-outline-success btn-own-info">Mas información</a>
-				      	</td>
+				    	@if(Auth::user()->can('patient_update'))
+					    	<td>
+					    		<a href='{{url("/patient/$patient->id/edit")}}' class="btn btn-outline-success btn-own-info">Editar</a>
+					    	</td>
+				    	@endif
+				    	@if(Auth::user()->can('patient_destroy'))
+					    	<td>
+					    		{!! Form::open(
+									array(
+										'route' => ['patient.destroy',$patient->id],
+										'method' => 'DELETE',
+										'onsubmit' => 'return confirm("Seguro?")'), 
+									array(
+										'role' => 'form')
+									)
+								!!}
+								{!! Form::button('Eliminar', 
+									array(
+										'type' => 'submit',
+								 		'class' => 'btn btn-outline-success btn-own-info'
+								 )) 
+								!!} 
+								{!! Form::close() !!}
+				    		</td>
+			    		@endif
+			    		@if(Auth::user()->can('patient_show'))
+					      	<td>
+					      		<a href='{{url("patient/$patient->id")}}' class="btn btn-outline-success btn-own-info">Mas información</a>
+					      	</td>
+					    @endif
 				    </tr>
 			     @endforeach
 			    
